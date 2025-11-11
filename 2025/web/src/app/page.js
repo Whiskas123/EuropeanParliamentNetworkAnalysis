@@ -68,15 +68,10 @@ export default function Home() {
             })}
           </svg>
         </div>
-        <h1 className="landingTitle">
-          European Parliament
-          <br />
-          Network Analysis
-        </h1>
+        <h1 className="landingTitle">European Parliament Network</h1>
         <p className="landingDescription">
           Explore voting patterns and political alliances in the European
-          Parliament across mandates 6-10. Interactive network visualization
-          powered by D3.js.
+          Parliament through an interactive network visualization
         </p>
         <button className="enterButton" onClick={handleEnter}>
           Enter Visualization

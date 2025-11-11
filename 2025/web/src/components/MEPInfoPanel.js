@@ -1,15 +1,72 @@
 "use client";
 
-import { useState } from "react";
-import { getGroupFamily, getGroupAcronym, getGroupDisplayName, getCountryFlag } from "@/lib/utils";
+import { useState, useRef, useEffect } from "react";
+import {
+  getGroupFamily,
+  getGroupAcronym,
+  getGroupDisplayName,
+  getCountryFlag,
+  getGroupColor,
+} from "@/lib/utils";
 
 export default function MEPInfoPanel({ node, graphData, mandate }) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);
+  const [showPartyTooltip, setShowPartyTooltip] = useState(false);
+  const [groupTooltipPosition, setGroupTooltipPosition] = useState("right");
+  const [partyTooltipPosition, setPartyTooltipPosition] = useState("right");
+
+  const groupTooltipTriggerRef = useRef(null);
+  const partyTooltipTriggerRef = useRef(null);
+  const groupTooltipRef = useRef(null);
+  const partyTooltipRef = useRef(null);
+
+  // Check tooltip position when it's shown
+  useEffect(() => {
+    if (showGroupTooltip && groupTooltipTriggerRef.current) {
+      const trigger = groupTooltipTriggerRef.current;
+      const triggerRect = trigger.getBoundingClientRect();
+      const windowWidth = window.innerWidth;
+
+      // Estimate tooltip width (approximately 200px) and check if it would overflow
+      const estimatedTooltipWidth = 200;
+      const tooltipRight = triggerRect.right + 25 + estimatedTooltipWidth;
+
+      if (tooltipRight > windowWidth) {
+        setGroupTooltipPosition("left");
+      } else {
+        setGroupTooltipPosition("right");
+      }
+    } else if (!showGroupTooltip) {
+      setGroupTooltipPosition("right"); // Reset when hidden
+    }
+  }, [showGroupTooltip]);
+
+  useEffect(() => {
+    if (showPartyTooltip && partyTooltipTriggerRef.current) {
+      const trigger = partyTooltipTriggerRef.current;
+      const triggerRect = trigger.getBoundingClientRect();
+      const windowWidth = window.innerWidth;
+
+      // Estimate tooltip width (approximately 200px) and check if it would overflow
+      const estimatedTooltipWidth = 200;
+      const tooltipRight = triggerRect.right + 25 + estimatedTooltipWidth;
+
+      if (tooltipRight > windowWidth) {
+        setPartyTooltipPosition("left");
+      } else {
+        setPartyTooltipPosition("right");
+      }
+    } else if (!showPartyTooltip) {
+      setPartyTooltipPosition("right"); // Reset when hidden
+    }
+  }, [showPartyTooltip]);
 
   if (!node) return null;
 
   const nodeData = graphData?.nodeMap.get(node.id);
   const groups = nodeData?.groups || [];
+  const partyNames = nodeData?.partyNames || [];
+  const photoURL = nodeData?.photoURL || null;
 
   // Check if MEP changed groups (has multiple different group families)
   const uniqueGroupFamilies = new Set(
@@ -56,29 +113,103 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
     }
   }
 
+  // Process party names - handle both string arrays and object arrays
+  const hasMultipleParties = partyNames.length > 1;
+  const displayPartyName =
+    partyNames.length > 0
+      ? typeof partyNames[0] === "string"
+        ? partyNames[0]
+        : partyNames[0].name || partyNames[0].partyName || ""
+      : null;
+
   return (
     <div>
       <div className="mep-info-section">
-        <h3 className="mep-info-title">
-          {node.label}
-        </h3>
-        {node.country && (
-          <div className="mep-info-country">
-            <span className="mep-info-country-flag">
-              {getCountryFlag(node.country)}
-            </span>
-            <span className="mep-info-country-name">
-              {node.country}
-            </span>
+        <div className="mep-info-header">
+          {photoURL && (
+            <img
+              src={photoURL}
+              alt={node.label}
+              className="mep-info-photo"
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+            />
+          )}
+          <div className="mep-info-header-content">
+            <h3 className="mep-info-title">{node.label}</h3>
+            {node.country && (
+              <div className="mep-info-country">
+                <span className="mep-info-country-flag">
+                  {getCountryFlag(node.country)}
+                </span>
+                <span className="mep-info-country-name">{node.country}</span>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
+
+      {displayPartyName && (
+        <div className="mep-info-section">
+          <div className="mep-info-group-label">National Party</div>
+          <div className="mep-info-group-content">
+            <span className="mep-info-group-name">{displayPartyName}</span>
+            {hasMultipleParties && (
+              <div
+                ref={partyTooltipTriggerRef}
+                className="mep-info-group-tooltip-trigger"
+                onMouseEnter={() => setShowPartyTooltip(true)}
+                onMouseLeave={() => setShowPartyTooltip(false)}
+              >
+                <span className="mep-info-group-tooltip-icon">ⓘ</span>
+                {showPartyTooltip && (
+                  <div
+                    ref={partyTooltipRef}
+                    className={`mep-info-group-tooltip ${
+                      partyTooltipPosition === "left"
+                        ? "mep-info-group-tooltip-left"
+                        : ""
+                    }`}
+                  >
+                    {[...partyNames].reverse().map((party, idx) => {
+                      const partyName =
+                        typeof party === "string"
+                          ? party
+                          : party.name || party.partyName || "";
+                      const startYear = party.start
+                        ? new Date(party.start).getFullYear()
+                        : null;
+                      const endYear = party.end
+                        ? new Date(party.end).getFullYear()
+                        : null;
+
+                      return (
+                        <div key={idx} className="mep-info-group-tooltip-item">
+                          <div className="mep-info-group-tooltip-content">
+                            <div className="mep-info-group-tooltip-name">
+                              {partyName}
+                            </div>
+                            {(startYear || endYear) && (
+                              <div className="mep-info-group-tooltip-years">
+                                {startYear || "?"} - {endYear || "Now"}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {node.groupId && (
         <div className="mep-info-section">
-          <div className="mep-info-group-label">
-            Political Group
-          </div>
+          <div className="mep-info-group-label">Political Group</div>
           <div className="mep-info-group-content">
             <div
               className="mep-info-group-color"
@@ -92,33 +223,33 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
             </span>
             {changedGroups && (
               <div
+                ref={groupTooltipTriggerRef}
                 className="mep-info-group-tooltip-trigger"
                 onMouseEnter={() => setShowGroupTooltip(true)}
                 onMouseLeave={() => setShowGroupTooltip(false)}
               >
-                <span className="mep-info-group-tooltip-icon">
-                  ⓘ
-                </span>
+                <span className="mep-info-group-tooltip-icon">ⓘ</span>
                 {showGroupTooltip && (
-                  <div className="mep-info-group-tooltip">
+                  <div
+                    ref={groupTooltipRef}
+                    className={`mep-info-group-tooltip ${
+                      groupTooltipPosition === "left"
+                        ? "mep-info-group-tooltip-left"
+                        : ""
+                    }`}
+                  >
                     {mergedGroups.map((group, idx) => {
                       const startYear = group.start
                         ? new Date(group.start).getFullYear()
                         : "?";
                       const endYear = group.end
                         ? new Date(group.end).getFullYear()
-                        : "?";
+                        : "Now";
                       const groupId = group.groupid || group.groupId;
-                      const groupNode = graphData?.nodes.find(
-                        (n) => n.groupId === groupId
-                      );
-                      const groupColor = groupNode?.color || "#CCCCCC";
+                      const groupColor = getGroupColor(groupId);
 
                       return (
-                        <div
-                          key={idx}
-                          className="mep-info-group-tooltip-item"
-                        >
+                        <div key={idx} className="mep-info-group-tooltip-item">
                           <div
                             className="mep-info-group-tooltip-color"
                             style={{ backgroundColor: groupColor }}
@@ -144,4 +275,3 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
     </div>
   );
 }
-

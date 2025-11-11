@@ -251,6 +251,26 @@ a {
   box-sizing: border-box;
 }
 
+.visualization-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.visualization-logo {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.network-logo-svg {
+  width: 100%;
+  height: 100%;
+}
+
 .visualization-header h1 {
   margin: 0;
   font-size: 24px;
@@ -604,6 +624,8 @@ a {
 .landingTitle {
   font-size: 56px;
   font-weight: normal;
+  font-family: "Helvetica Neue Extended", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
   margin: 0 0 24px 0;
   line-height: 1.2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -744,6 +766,26 @@ a {
   margin-bottom: 20px;
 }
 
+.mep-info-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.mep-info-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.mep-info-header-content {
+  flex: 1;
+  min-width: 0;
+}
+
 .mep-info-title {
   margin: 0 0 10px 0;
   font-size: 20px;
@@ -821,6 +863,11 @@ a {
   z-index: 1000;
   width: max-content;
   font-size: 12px;
+
+  &.mep-info-group-tooltip-left {
+    left: auto;
+    right: 25px;
+  }
 }
 
 .mep-info-group-tooltip-item {
@@ -879,9 +926,13 @@ a {
 }
 
 .similarity-scores-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  .similarity-score-item {
+    margin-bottom: 15px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .similarity-score-header {
@@ -909,7 +960,7 @@ a {
 }
 
 .similarity-scores-agreement {
-  margin-top: 30px;
+  margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
 }

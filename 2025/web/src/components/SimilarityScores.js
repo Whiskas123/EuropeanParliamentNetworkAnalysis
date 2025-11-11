@@ -86,7 +86,7 @@ export default function SimilarityScores({
                     <div key={item.groupId} className="similarity-scores-agreement-item">
                       <div className="similarity-scores-agreement-header">
                         <div className="similarity-scores-agreement-group">
-                          <div
+                        <div
                             className="similarity-scores-agreement-color"
                             style={{ backgroundColor: groupColor }}
                           />

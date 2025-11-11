@@ -239,11 +239,14 @@ export default function NetworkCanvas({
       );
 
       // Find hovered node
+      // Use a minimum hover radius in screen space (8 pixels) for better UX when zoomed
+      const minHoverRadius = 8 / currentTransform.k; // Convert to data space
+      const hoverRadius = Math.max(nodeSize, minHoverRadius);
       const hovered = graphData.nodes.find((node) => {
         const dx = node.x - x;
         const dy = node.y - y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        return distance < nodeSize / currentTransform.k;
+        return distance < hoverRadius;
       });
 
       if (hovered) {
@@ -282,11 +285,14 @@ export default function NetworkCanvas({
       );
 
       // Find clicked node
+      // Use a minimum clickable radius in screen space (8 pixels) for better UX when zoomed
+      const minClickableRadius = 8 / currentTransform.k; // Convert to data space
+      const clickableRadius = Math.max(nodeSize, minClickableRadius);
       const clickedNode = graphData.nodes.find((node) => {
         const dx = node.x - x;
         const dy = node.y - y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        return distance < nodeSize / currentTransform.k;
+        return distance < clickableRadius;
       });
 
       if (clickedNode) {
