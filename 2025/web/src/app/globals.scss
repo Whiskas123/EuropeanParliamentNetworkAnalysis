@@ -761,6 +761,56 @@ a {
   position: relative;
 }
 
+.network-zoom-controls {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.network-zoom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.2s;
+  padding: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: #f5f5f5;
+    color: #003399;
+  }
+
+  &:active {
+    background: #e0e0e0;
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
 // MEP Info Panel
 .mep-info-section {
   margin-bottom: 20px;
@@ -1372,6 +1422,323 @@ a {
 
 .hover-tooltip-flag {
   font-size: 12px;
+}
+
+// Clickable elements
+.clickable {
+  cursor: pointer;
+  transition: opacity 0.2s, background-color 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Group Info Panel
+.group-info-panel {
+  margin-top: 20px;
+}
+
+.group-info-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.group-info-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.group-info-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.group-info-section {
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.group-info-section-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.group-info-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.group-info-stat-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.group-info-stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #003399;
+}
+
+.group-info-events-wrapper {
+  position: relative;
+  max-height: 300px;
+
+  // Add fade gradient at top to indicate scrollable content above
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  // Add fade gradient at bottom to indicate scrollable content below
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  // Show top gradient when scrolled down (not at top)
+  &:has(
+      .group-info-events[data-scrollable="true"]:not([data-at-top="true"])
+    )::before {
+    opacity: 1;
+  }
+
+  // Show bottom gradient when inner list is scrollable and not at bottom
+  &:has(
+      .group-info-events[data-scrollable="true"]:not([data-at-bottom="true"])
+    )::after {
+    opacity: 1;
+  }
+}
+
+.group-info-events {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.group-info-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+      border-color: #003399;
+    }
+  }
+}
+
+.group-info-event-type {
+  font-size: 16px;
+  color: #666;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.group-info-event-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.group-info-event-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.group-info-event-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #666;
+}
+
+.group-info-event-country {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.group-info-event-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.group-info-event-group-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.group-info-event-date {
+  font-weight: 500;
+}
+
+.group-info-meps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group-info-mep-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s;
+
+  &.clickable:hover {
+    background-color: #f0f0f0;
+    border-color: #003399;
+  }
+}
+
+.group-info-mep-rank {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  min-width: 24px;
+  padding-top: 2px;
+}
+
+.group-info-mep-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.group-info-mep-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.group-info-mep-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #666;
+}
+
+.group-info-mep-country {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.group-info-mep-score {
+  margin-left: auto;
+  font-weight: 600;
+  color: #003399;
+}
+
+.group-info-back-button {
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+
+  &:hover {
+    background-color: #e0e0e0;
+    border-color: #003399;
+    color: #003399;
+  }
+}
+
+// Make heatmap elements clickable
+.cohesion-heatmap-th-group.clickable,
+.cohesion-heatmap-td-label.clickable,
+.cohesion-heatmap-td-score {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.intragroup-cohesion-item.clickable {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 // Responsive Design

@@ -6,6 +6,7 @@ export default function IntragroupCohesion({
   intragroupCohesion,
   graphData,
   mandate,
+  onGroupClick,
 }) {
   if (!intragroupCohesion || intragroupCohesion.length === 0) return null;
   if (!graphData) return null; // Don't render if no graphData
@@ -14,8 +15,6 @@ export default function IntragroupCohesion({
     (item) => item.group !== "NonAttached"
   );
   if (filteredCohesion.length === 0) return null;
-  
-  const maxScore = Math.max(...filteredCohesion.map((i) => i.score));
 
   // Create a color map from graphData nodes for fast lookup
   const groupColorMap = new Map();
@@ -25,17 +24,27 @@ export default function IntragroupCohesion({
     }
   });
 
+  const handleGroupClick = (groupId) => {
+    if (onGroupClick) {
+      onGroupClick(groupId);
+    }
+  };
+
   return (
     <div>
-      <h3 className="intragroup-cohesion-title">Intra-group Cohesion Score</h3>
+      <h3 className="intragroup-cohesion-title">Group Average Similarity</h3>
       <div className="intragroup-cohesion-list">
         {filteredCohesion.map((item) => {
-          const widthPercent = maxScore > 0 ? (item.score / maxScore) * 100 : 0;
+          const widthPercent = item.score * 100;
           // Use the color map for fast lookup
           const nodeColor = groupColorMap.get(item.group) || "#CCCCCC";
 
           return (
-            <div key={item.group} className="intragroup-cohesion-item">
+            <div
+              key={item.group}
+              className="intragroup-cohesion-item clickable"
+              onClick={() => handleGroupClick(item.group)}
+            >
               <div className="intragroup-cohesion-header">
                 <span className="intragroup-cohesion-name">
                   {getGroupDisplayName(item.group, mandate)}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import {
   getGroupFamily,
   getGroupAcronym,
@@ -14,6 +15,7 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
   const [showPartyTooltip, setShowPartyTooltip] = useState(false);
   const [groupTooltipPosition, setGroupTooltipPosition] = useState("right");
   const [partyTooltipPosition, setPartyTooltipPosition] = useState("right");
+  const [imageError, setImageError] = useState(false);
 
   const groupTooltipTriggerRef = useRef(null);
   const partyTooltipTriggerRef = useRef(null);
@@ -126,14 +128,15 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
     <div>
       <div className="mep-info-section">
         <div className="mep-info-header">
-          {photoURL && (
-            <img
+          {photoURL && !imageError && (
+            <Image
               src={photoURL}
               alt={node.label}
+              width={80}
+              height={80}
               className="mep-info-photo"
-              onError={(e) => {
-                e.target.style.display = "none";
-              }}
+              onError={() => setImageError(true)}
+              unoptimized
             />
           )}
           <div className="mep-info-header-content">

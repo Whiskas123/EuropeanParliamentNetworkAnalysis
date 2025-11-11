@@ -7,11 +7,13 @@ import SimilarityScores from "./SimilarityScores";
 import ClosestMEPs from "./ClosestMEPs";
 import CohesionHeatmap from "./CohesionHeatmap";
 import IntragroupCohesion from "./IntragroupCohesion";
+import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
 
 export default function Sidebar({
   mandate,
   selectedNode,
+  selectedGroup,
   graphData,
   groupSimilarityScore,
   countrySimilarityScore,
@@ -20,6 +22,9 @@ export default function Sidebar({
   intergroupCohesion,
   intragroupCohesion,
   onSelectNode,
+  onSelectNodeFromGroup,
+  onClearNodeKeepGroup,
+  onSelectGroup,
   loading = false,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,13 +41,35 @@ export default function Sidebar({
     setSearchOpen(false);
   };
 
+  const handleGroupClick = (groupId) => {
+    if (onSelectGroup) {
+      onSelectGroup(groupId);
+    }
+  };
+
+  const handleMEPClick = (mep) => {
+    // Use the special handler that doesn't clear group selection when clicking from group view
+    if (onSelectNodeFromGroup) {
+      onSelectNodeFromGroup(mep);
+    } else if (onSelectNode) {
+      // Fallback to regular handler if special one not provided
+      onSelectNode(mep);
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
         <div
           className={`sidebar-header-top ${searchOpen ? "search-open" : ""}`}
         >
-          <h2>{selectedNode ? "MEP Information" : "Network"}</h2>
+          <h2>
+            {selectedNode
+              ? "MEP Information"
+              : selectedGroup
+              ? "Group Information"
+              : "Network"}
+          </h2>
           <button
             onClick={() => {
               setSearchOpen(!searchOpen);
@@ -52,7 +79,7 @@ export default function Sidebar({
               }
             }}
             className="sidebar-search-button"
-            title="Search MEP by name"
+            title="Search MEP by name or country"
           >
             <span>Search MEP</span>
 
@@ -86,7 +113,7 @@ export default function Sidebar({
 
       <div className="sidebar-content">
         {/* Network Statistics */}
-        {graphData && !selectedNode && (
+        {graphData && !selectedNode && !selectedGroup && (
           <div className="network-stats">
             <div className="network-stat-item">
               <div className="network-stat-header">
@@ -114,6 +141,22 @@ export default function Sidebar({
 
         {selectedNode ? (
           <>
+            {selectedGroup && (
+              <button
+                className="group-info-back-button"
+                onClick={() => {
+                  // Clear node selection but keep group selection
+                  if (onClearNodeKeepGroup) {
+                    onClearNodeKeepGroup();
+                  } else if (onSelectNode) {
+                    // Fallback: clear node (will also clear group, but better than nothing)
+                    onSelectNode(null);
+                  }
+                }}
+              >
+                ← Back to Group View
+              </button>
+            )}
             <MEPInfoPanel
               node={selectedNode}
               graphData={graphData}
@@ -128,12 +171,29 @@ export default function Sidebar({
             />
             <ClosestMEPs meps={closestMEPs} onSelectMEP={onSelectNode} />
           </>
+        ) : selectedGroup ? (
+          <>
+            <GroupInfoPanel
+              groupId={selectedGroup}
+              graphData={graphData}
+              intragroupCohesion={intragroupCohesion}
+              mandate={mandate}
+              onSelectMEP={handleMEPClick}
+            />
+            <button
+              className="group-info-back-button"
+              onClick={() => onSelectGroup && onSelectGroup(null)}
+            >
+              ← Back to Network View
+            </button>
+          </>
         ) : (
           <>
             {intergroupCohesion && (
               <CohesionHeatmap
                 intergroupCohesion={intergroupCohesion}
                 mandate={mandate}
+                onGroupClick={handleGroupClick}
               />
             )}
             {intragroupCohesion && graphData && (
@@ -141,6 +201,7 @@ export default function Sidebar({
                 intragroupCohesion={intragroupCohesion}
                 graphData={graphData}
                 mandate={mandate}
+                onGroupClick={handleGroupClick}
               />
             )}
             {!intergroupCohesion && !intragroupCohesion && graphData && (

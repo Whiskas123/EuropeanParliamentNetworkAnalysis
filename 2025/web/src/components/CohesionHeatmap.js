@@ -6,12 +6,22 @@ import {
   getRedGreenColor,
 } from "../lib/utils.js";
 
-export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
+export default function CohesionHeatmap({
+  intergroupCohesion,
+  mandate,
+  onGroupClick,
+}) {
   if (!intergroupCohesion) return null;
+
+  const handleGroupClick = (groupId) => {
+    if (onGroupClick) {
+      onGroupClick(groupId);
+    }
+  };
 
   return (
     <div className="cohesion-heatmap">
-      <h3 className="cohesion-heatmap-title">Intergroup Cohesion Score</h3>
+      <h3 className="cohesion-heatmap-title">Cross Group Average Similarity</h3>
       <div className="cohesion-heatmap-container">
         <div className="cohesion-heatmap-inner">
           <table className="cohesion-heatmap-table">
@@ -24,8 +34,9 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                   return (
                     <th
                       key={group}
-                      className="cohesion-heatmap-th-group"
+                      className="cohesion-heatmap-th-group clickable"
                       title={getGroupDisplayName(group, mandate)}
+                      onClick={() => handleGroupClick(group)}
                     >
                       <div className="cohesion-heatmap-th-group-content">
                         <span>{getGroupAcronym(group, mandate)}</span>
@@ -42,7 +53,10 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
             <tbody>
               {intergroupCohesion.groups.map((group1, i) => (
                 <tr key={group1}>
-                  <td className="cohesion-heatmap-td-label">
+                  <td
+                    className="cohesion-heatmap-td-label clickable"
+                    onClick={() => handleGroupClick(group1)}
+                  >
                     <span>{getGroupAcronym(group1, mandate)}</span>
                     {intergroupCohesion.groupColors?.get(group1) && (
                       <span
@@ -113,6 +127,7 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                           intergroupCohesion.groups[j],
                           mandate
                         )}: ${(score * 100).toFixed(1)}%`}
+                        onClick={() => handleGroupClick(group1)}
                       >
                         {(score * 100).toFixed(1)}%
                       </td>

@@ -12,6 +12,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 export default function VisualizationPage() {
   const [mandate, setMandate] = useState(10);
   const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,10 @@ export default function VisualizationPage() {
         }
 
         const { d3, Graph, forceAtlas2 } = modulesRef.current;
+
+        // Clear selections when loading new data
+        setSelectedNode(null);
+        setSelectedGroup(null);
 
         // Load data (may be precomputed with positions already)
         const { nodes, edges, agreementScores, metadata } =
@@ -588,6 +593,24 @@ export default function VisualizationPage() {
 
   const handleNodeClick = useCallback((node) => {
     setSelectedNode(node);
+    setSelectedGroup(null); // Clear group selection when selecting a node
+  }, []);
+
+  const handleNodeClickFromGroup = useCallback((node) => {
+    // When clicking a MEP from group view, keep the group context
+    setSelectedNode(node);
+    // Don't clear selectedGroup - allows user to navigate back
+  }, []);
+
+  const handleClearNodeKeepGroup = useCallback(() => {
+    // Clear node selection but keep group selection
+    setSelectedNode(null);
+    // Don't clear selectedGroup
+  }, []);
+
+  const handleGroupClick = useCallback((groupId) => {
+    setSelectedGroup(groupId);
+    setSelectedNode(null); // Clear node selection when selecting a group
   }, []);
 
   const handleNodeHover = useCallback((node) => {
@@ -704,6 +727,7 @@ export default function VisualizationPage() {
         <Sidebar
           mandate={mandate}
           selectedNode={selectedNode}
+          selectedGroup={selectedGroup}
           graphData={graphData || previousGraphDataRef.current}
           groupSimilarityScore={groupSimilarityScore}
           countrySimilarityScore={countrySimilarityScore}
@@ -722,6 +746,9 @@ export default function VisualizationPage() {
               : null
           }
           onSelectNode={handleNodeClick}
+          onSelectNodeFromGroup={handleNodeClickFromGroup}
+          onClearNodeKeepGroup={handleClearNodeKeepGroup}
+          onSelectGroup={handleGroupClick}
           loading={loading}
         />
       )}

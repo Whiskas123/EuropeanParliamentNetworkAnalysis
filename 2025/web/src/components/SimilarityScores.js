@@ -59,7 +59,7 @@ export default function SimilarityScores({
         {agreementScores && agreementScores.length > 0 && (
           <div className="similarity-scores-agreement">
             <h4 className="similarity-scores-agreement-title">
-              Agreement Score with Groups
+              Average Similarity with Group Members
             </h4>
             <div className="similarity-scores-agreement-list">
               {(() => {
@@ -67,18 +67,14 @@ export default function SimilarityScores({
                 const filteredScores = agreementScores.filter(
                   (item) => item.groupId !== "NonAttached"
                 );
-                const maxScore = Math.max(
-                  ...filteredScores.map((i) => i.score)
-                );
-                
+
                 return filteredScores.map((item) => {
                   // Get group color
                   const groupNode = graphData?.nodes.find(
                     (n) => n.groupId === item.groupId
                   );
                   const groupColor = groupNode?.color || "#CCCCCC";
-                  const widthPercent =
-                    maxScore > 0 ? (item.score / maxScore) * 100 : 0;
+                  const widthPercent = item.score * 100;
 
                   return (
                     <div
@@ -87,7 +83,7 @@ export default function SimilarityScores({
                     >
                       <div className="similarity-scores-agreement-header">
                         <div className="similarity-scores-agreement-group">
-                        <div
+                          <div
                             className="similarity-scores-agreement-color"
                             style={{ backgroundColor: groupColor }}
                           />

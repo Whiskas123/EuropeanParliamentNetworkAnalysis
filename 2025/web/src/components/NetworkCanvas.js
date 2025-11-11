@@ -14,14 +14,21 @@ export default function NetworkCanvas({
   const transformRef = useRef({ x: 0, y: 0, k: 1 });
   const zoomRef = useRef(null);
   const graphDataRef = useRef(null);
-  const handlersRef = useRef({ mouseMove: null, mouseLeave: null, click: null });
+  const handlersRef = useRef({
+    mouseMove: null,
+    mouseLeave: null,
+    click: null,
+  });
+  const initialScaleRef = useRef(1);
+  const initialTransformRef = useRef({ x: 0, y: 0, k: 1 });
   const [canvasReady, setCanvasReady] = useState(false);
   const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
+  const [isAtMinZoom, setIsAtMinZoom] = useState(false);
 
   // Render canvas - render immediately when data is available
   useEffect(() => {
     if (!graphData || !canvasRef.current) return;
-    
+
     // If canvas isn't ready yet, try to set it up
     if (!canvasReady && containerRef.current) {
       const width = containerRef.current.clientWidth;
@@ -33,7 +40,7 @@ export default function NetworkCanvas({
       }
       setCanvasReady(true);
     }
-    
+
     if (!canvasReady) return;
 
     const canvas = canvasRef.current;
@@ -158,7 +165,10 @@ export default function NetworkCanvas({
     }
 
     // Only create canvas if it doesn't exist
-    if (canvasRef.current && canvasRef.current.parentNode === containerRef.current) {
+    if (
+      canvasRef.current &&
+      canvasRef.current.parentNode === containerRef.current
+    ) {
       if (!canvasReady) {
         setCanvasReady(true);
       }
@@ -175,9 +185,18 @@ export default function NetworkCanvas({
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.style.cursor = "grab";
+    canvas.style.position = "absolute";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.zIndex = "1";
 
-    // Clear container and add canvas
-    containerRef.current.innerHTML = "";
+    // Remove existing canvas if present, but preserve zoom controls
+    const existingCanvas = containerRef.current.querySelector("canvas");
+    if (existingCanvas) {
+      existingCanvas.remove();
+    }
+
+    // Append canvas (zoom controls should already be in the container from JSX)
     containerRef.current.appendChild(canvas);
     canvasRef.current = canvas;
     setCanvasReady(true);
@@ -199,21 +218,34 @@ export default function NetworkCanvas({
 
     // Set up zoom behavior (only once)
     if (!zoomRef.current) {
+      const zoomSelection = d3.select(canvas);
       const zoom = d3
         .zoom()
-        .scaleExtent([0.1, 10])
+        .scaleExtent([initialScaleRef.current, 10]) // Use initial scale as minimum
         .filter((event) => {
           // Disable double-click zoom
           return event.type !== "dblclick";
         })
         .on("zoom", (event) => {
           const t = event.transform;
+          // Enforce minimum scale (don't allow zooming out more than initial view)
+          const minScale = initialScaleRef.current;
+          if (t.k < minScale) {
+            // Constrain the transform to minimum scale
+            const constrainedTransform = d3.zoomIdentity
+              .translate(t.x, t.y)
+              .scale(minScale);
+            zoomSelection.call(zoom.transform, constrainedTransform);
+            setIsAtMinZoom(true);
+            return;
+          }
           transformRef.current = { x: t.x, y: t.y, k: t.k };
           setTransform({ x: t.x, y: t.y, k: t.k });
+          // Check if at minimum zoom (with small tolerance for floating point)
+          setIsAtMinZoom(Math.abs(t.k - minScale) < 0.001);
         });
 
       zoomRef.current = zoom;
-      const zoomSelection = d3.select(canvas);
       zoomSelection.call(zoom);
     }
 
@@ -329,7 +361,12 @@ export default function NetworkCanvas({
 
   // Update transform when graphData changes
   useEffect(() => {
-    if (!containerRef.current || !graphData || !canvasRef.current || !zoomRef.current) {
+    if (
+      !containerRef.current ||
+      !graphData ||
+      !canvasRef.current ||
+      !zoomRef.current
+    ) {
       return;
     }
 
@@ -352,11 +389,23 @@ export default function NetworkCanvas({
       y: height / 2 - scale * centerY,
       k: scale,
     };
+
+    // Store initial scale and transform to prevent zooming out more than this
+    initialScaleRef.current = scale;
+    initialTransformRef.current = { ...initialTransform };
+
     transformRef.current = initialTransform;
     setTransform(initialTransform);
+    setIsAtMinZoom(true); // At minimum zoom when reset
 
     // Update transform when graphData changes
     const zoomSelection = d3.select(canvas);
+
+    // Update scale extent with the new initial scale
+    if (zoomRef.current) {
+      zoomRef.current.scaleExtent([scale, 10]);
+    }
+
     zoomSelection.call(
       zoomRef.current.transform,
       d3.zoomIdentity
@@ -365,10 +414,110 @@ export default function NetworkCanvas({
     );
   }, [graphData]);
 
+  const handleZoomIn = () => {
+    if (!zoomRef.current || !canvasRef.current) return;
+    const d3 = require("d3");
+    const zoomSelection = d3.select(canvasRef.current);
+    const currentTransform = transformRef.current;
+    const newScale = Math.min(currentTransform.k * 1.5, 10);
+    const newTransform = d3.zoomIdentity
+      .translate(currentTransform.x, currentTransform.y)
+      .scale(newScale);
+    zoomSelection.call(zoomRef.current.transform, newTransform);
+  };
+
+  const handleZoomOut = () => {
+    if (!zoomRef.current || !canvasRef.current || isAtMinZoom) return;
+    const d3 = require("d3");
+    const zoomSelection = d3.select(canvasRef.current);
+    const currentTransform = transformRef.current;
+    const minScale = initialScaleRef.current;
+    const newScale = Math.max(currentTransform.k / 1.5, minScale);
+    const newTransform = d3.zoomIdentity
+      .translate(currentTransform.x, currentTransform.y)
+      .scale(newScale);
+    zoomSelection.call(zoomRef.current.transform, newTransform);
+  };
+
+  const handleResetZoom = () => {
+    if (!zoomRef.current || !canvasRef.current) return;
+    const d3 = require("d3");
+    const zoomSelection = d3.select(canvasRef.current);
+    const initialTransform = initialTransformRef.current;
+    const newTransform = d3.zoomIdentity
+      .translate(initialTransform.x, initialTransform.y)
+      .scale(initialTransform.k);
+    zoomSelection.call(zoomRef.current.transform, newTransform);
+  };
+
   return (
-    <div
-      ref={containerRef}
-      className="network-canvas-container"
-    />
+    <div ref={containerRef} className="network-canvas-container">
+      <div className="network-zoom-controls">
+        <button
+          className="network-zoom-button"
+          onClick={handleZoomIn}
+          title="Zoom In"
+          aria-label="Zoom In"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
+        <button
+          className="network-zoom-button"
+          onClick={handleZoomOut}
+          title="Zoom Out"
+          aria-label="Zoom Out"
+          disabled={isAtMinZoom}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
+        <button
+          className="network-zoom-button"
+          onClick={handleResetZoom}
+          title="Reset Zoom"
+          aria-label="Reset Zoom"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+            <path d="M3 21v-5h5"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }

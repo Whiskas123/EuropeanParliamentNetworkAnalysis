@@ -19,7 +19,7 @@ export default function SearchBar({
         <div className="search-bar-container">
           <input
             type="text"
-            placeholder="Search MEP by name..."
+            placeholder="Search MEP by name or country..."
             value={searchQuery}
             autoFocus
             className="search-bar-input"
@@ -27,17 +27,40 @@ export default function SearchBar({
               const query = e.target.value;
               setSearchQuery(query);
               if (query.trim() && graphData) {
-                const results = graphData.nodes
-                  .filter((node) =>
-                    node.label.toLowerCase().includes(query.toLowerCase())
-                  )
-                  .slice(0, 10)
-                  .map((node) => ({
+                const queryLower = query.toLowerCase().trim();
+                
+                // First, try to match by country name (exact or partial match)
+                const countryMatches = graphData.nodes.filter((node) => {
+                  if (!node.country) return false;
+                  return node.country.toLowerCase().includes(queryLower);
+                });
+                
+                // If we have country matches, show all MEPs from matching countries
+                // Otherwise, search by MEP name
+                let results;
+                if (countryMatches.length > 0) {
+                  // Show all MEPs from matching countries
+                  results = countryMatches.map((node) => ({
                     id: node.id,
                     label: node.label,
                     country: node.country,
                     groupId: node.groupId,
                   }));
+                } else {
+                  // Search by MEP name
+                  results = graphData.nodes
+                    .filter((node) =>
+                      node.label.toLowerCase().includes(queryLower)
+                    )
+                    .slice(0, 10)
+                    .map((node) => ({
+                      id: node.id,
+                      label: node.label,
+                      country: node.country,
+                      groupId: node.groupId,
+                    }));
+                }
+                
                 setSearchResults(results);
               } else {
                 setSearchResults([]);
