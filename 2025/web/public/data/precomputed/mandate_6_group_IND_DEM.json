@@ -1,0 +1,446 @@
+{
+  "mandate": 6,
+  "groupId": "IND/DEM",
+  "nodes": [
+    {
+      "id": "M28493",
+      "label": "Derek Roland CLARK",
+      "country": "United Kingdom",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 436.33831787109375,
+      "y": 402.95135498046875
+    },
+    {
+      "id": "M28506",
+      "label": "Mike NATTRASS",
+      "country": "United Kingdom",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 429.39752197265625,
+      "y": 397.4825134277344
+    },
+    {
+      "id": "M28142",
+      "label": "Nils LUNDGREN",
+      "country": "Sweden",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 448.2871398925781,
+      "y": 373.13446044921875
+    },
+    {
+      "id": "M28119",
+      "label": "Kathy SINNOTT",
+      "country": "Ireland",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 452.6761474609375,
+      "y": 337.8534240722656
+    },
+    {
+      "id": "M24089",
+      "label": "Witold TOMCZAK",
+      "country": "Poland",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 418.3173828125,
+      "y": 354.3737487792969
+    },
+    {
+      "id": "M34720",
+      "label": "Bernard WOJCIECHOWSKI",
+      "country": "Poland",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 421.3659973144531,
+      "y": 338.1344299316406
+    },
+    {
+      "id": "M28357",
+      "label": "Vladimír ŽELEZNÝ",
+      "country": "Czechia",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 428.8620300292969,
+      "y": 376.7008056640625
+    },
+    {
+      "id": "M1969",
+      "label": "Johannes BLOKLAND",
+      "country": "Netherlands",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 436.88043212890625,
+      "y": 333.6154479980469
+    },
+    {
+      "id": "M1275",
+      "label": "Jens-Peter BONDE",
+      "country": "Denmark",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 462.84918212890625,
+      "y": 353.70794677734375
+    },
+    {
+      "id": "M28146",
+      "label": "Hélène GOUDIN",
+      "country": "Sweden",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 459.9159851074219,
+      "y": 376.0144348144531
+    },
+    {
+      "id": "M28497",
+      "label": "Gerard BATTEN",
+      "country": "United Kingdom",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 441.4751281738281,
+      "y": 394.60528564453125
+    },
+    {
+      "id": "M28334",
+      "label": "Urszula KRUPA",
+      "country": "Poland",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 429.3538818359375,
+      "y": 358.6236267089844
+    },
+    {
+      "id": "M4507",
+      "label": "Bas BELDER",
+      "country": "Netherlands",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 440.7240295410156,
+      "y": 344.70989990234375
+    }
+  ],
+  "edges": [
+    {
+      "source": "M1969",
+      "target": "M4507",
+      "weight": 0.991
+    },
+    {
+      "source": "M1969",
+      "target": "M28334",
+      "weight": 0.253
+    },
+    {
+      "source": "M1969",
+      "target": "M24089",
+      "weight": 0.246
+    },
+    {
+      "source": "M1969",
+      "target": "M28142",
+      "weight": 0.182
+    },
+    {
+      "source": "M1969",
+      "target": "M28146",
+      "weight": 0.148
+    },
+    {
+      "source": "M1969",
+      "target": "M34720",
+      "weight": 0.338
+    },
+    {
+      "source": "M1969",
+      "target": "M28119",
+      "weight": 0.515
+    },
+    {
+      "source": "M1969",
+      "target": "M28357",
+      "weight": 0.264
+    },
+    {
+      "source": "M1969",
+      "target": "M28497",
+      "weight": 0.006
+    },
+    {
+      "source": "M1969",
+      "target": "M28506",
+      "weight": 0.005
+    },
+    {
+      "source": "M1969",
+      "target": "M1275",
+      "weight": 0.128
+    },
+    {
+      "source": "M4507",
+      "target": "M28334",
+      "weight": 0.251
+    },
+    {
+      "source": "M4507",
+      "target": "M24089",
+      "weight": 0.237
+    },
+    {
+      "source": "M4507",
+      "target": "M28142",
+      "weight": 0.187
+    },
+    {
+      "source": "M4507",
+      "target": "M28146",
+      "weight": 0.155
+    },
+    {
+      "source": "M4507",
+      "target": "M34720",
+      "weight": 0.325
+    },
+    {
+      "source": "M4507",
+      "target": "M28119",
+      "weight": 0.519
+    },
+    {
+      "source": "M4507",
+      "target": "M28357",
+      "weight": 0.268
+    },
+    {
+      "source": "M4507",
+      "target": "M28497",
+      "weight": 0.022
+    },
+    {
+      "source": "M4507",
+      "target": "M28506",
+      "weight": 0.021
+    },
+    {
+      "source": "M4507",
+      "target": "M1275",
+      "weight": 0.119
+    },
+    {
+      "source": "M28334",
+      "target": "M24089",
+      "weight": 0.93
+    },
+    {
+      "source": "M28334",
+      "target": "M28142",
+      "weight": 0.133
+    },
+    {
+      "source": "M28334",
+      "target": "M28146",
+      "weight": 0.091
+    },
+    {
+      "source": "M28334",
+      "target": "M34720",
+      "weight": 0.46
+    },
+    {
+      "source": "M28334",
+      "target": "M28119",
+      "weight": 0.17
+    },
+    {
+      "source": "M28334",
+      "target": "M28493",
+      "weight": 0.144
+    },
+    {
+      "source": "M28334",
+      "target": "M28357",
+      "weight": 0.365
+    },
+    {
+      "source": "M28334",
+      "target": "M28497",
+      "weight": 0.152
+    },
+    {
+      "source": "M28334",
+      "target": "M28506",
+      "weight": 0.146
+    },
+    {
+      "source": "M28334",
+      "target": "M1275",
+      "weight": 0.118
+    },
+    {
+      "source": "M24089",
+      "target": "M28142",
+      "weight": 0.091
+    },
+    {
+      "source": "M24089",
+      "target": "M28146",
+      "weight": 0.064
+    },
+    {
+      "source": "M24089",
+      "target": "M34720",
+      "weight": 0.503
+    },
+    {
+      "source": "M24089",
+      "target": "M28119",
+      "weight": 0.186
+    },
+    {
+      "source": "M24089",
+      "target": "M28493",
+      "weight": 0.116
+    },
+    {
+      "source": "M24089",
+      "target": "M28357",
+      "weight": 0.342
+    },
+    {
+      "source": "M24089",
+      "target": "M28497",
+      "weight": 0.128
+    },
+    {
+      "source": "M24089",
+      "target": "M28506",
+      "weight": 0.113
+    },
+    {
+      "source": "M24089",
+      "target": "M1275",
+      "weight": 0.101
+    },
+    {
+      "source": "M28142",
+      "target": "M28146",
+      "weight": 0.916
+    },
+    {
+      "source": "M28142",
+      "target": "M28119",
+      "weight": 0.165
+    },
+    {
+      "source": "M28142",
+      "target": "M28493",
+      "weight": 0.288
+    },
+    {
+      "source": "M28142",
+      "target": "M28357",
+      "weight": 0.288
+    },
+    {
+      "source": "M28142",
+      "target": "M28497",
+      "weight": 0.304
+    },
+    {
+      "source": "M28142",
+      "target": "M28506",
+      "weight": 0.281
+    },
+    {
+      "source": "M28142",
+      "target": "M1275",
+      "weight": 0.362
+    },
+    {
+      "source": "M28146",
+      "target": "M28119",
+      "weight": 0.189
+    },
+    {
+      "source": "M28146",
+      "target": "M28493",
+      "weight": 0.278
+    },
+    {
+      "source": "M28146",
+      "target": "M28357",
+      "weight": 0.212
+    },
+    {
+      "source": "M28146",
+      "target": "M28497",
+      "weight": 0.282
+    },
+    {
+      "source": "M28146",
+      "target": "M28506",
+      "weight": 0.259
+    },
+    {
+      "source": "M28146",
+      "target": "M1275",
+      "weight": 0.426
+    },
+    {
+      "source": "M34720",
+      "target": "M28119",
+      "weight": 0.24
+    },
+    {
+      "source": "M34720",
+      "target": "M28357",
+      "weight": 0.21
+    },
+    {
+      "source": "M34720",
+      "target": "M1275",
+      "weight": 0.028
+    },
+    {
+      "source": "M28119",
+      "target": "M28357",
+      "weight": 0.051
+    },
+    {
+      "source": "M28119",
+      "target": "M1275",
+      "weight": 0.351
+    },
+    {
+      "source": "M28493",
+      "target": "M28357",
+      "weight": 0.483
+    },
+    {
+      "source": "M28493",
+      "target": "M28497",
+      "weight": 0.991
+    },
+    {
+      "source": "M28493",
+      "target": "M28506",
+      "weight": 0.99
+    },
+    {
+      "source": "M28357",
+      "target": "M28497",
+      "weight": 0.473
+    },
+    {
+      "source": "M28357",
+      "target": "M28506",
+      "weight": 0.473
+    },
+    {
+      "source": "M28497",
+      "target": "M28506",
+      "weight": 0.986
+    }
+  ],
+  "computedAt": "2025-11-09T13:43:11.798Z"
+}

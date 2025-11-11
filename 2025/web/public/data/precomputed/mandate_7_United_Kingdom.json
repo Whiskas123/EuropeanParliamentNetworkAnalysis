@@ -1,0 +1,10099 @@
+{
+  "mandate": 7,
+  "country": "United Kingdom",
+  "nodes": [
+    {
+      "id": "M4537",
+      "label": "Sir Robert ATKINS",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 632.6449930907177,
+      "y": 402.61424686804963
+    },
+    {
+      "id": "M112014",
+      "label": "Phil BENNION",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 359.44486484651554,
+      "y": 461.70423232353835
+    },
+    {
+      "id": "M33570",
+      "label": "Sharon BOWLES",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 317.04070321760753,
+      "y": 436.26326694929116
+    },
+    {
+      "id": "M96749",
+      "label": "Andrew Henry William BRONS",
+      "country": "United Kingdom",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 789.5506553944415,
+      "y": 481.0824530419656
+    },
+    {
+      "id": "M4532",
+      "label": "Michael CASHMAN",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 195.12542445092146,
+      "y": 482.00364999308397
+    },
+    {
+      "id": "M2097",
+      "label": "Giles CHICHESTER",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 572.6832218958069,
+      "y": 479.5422631181832
+    },
+    {
+      "id": "M28493",
+      "label": "Derek Roland CLARK",
+      "country": "United Kingdom",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 773.6891878327458,
+      "y": 412.62666209108033
+    },
+    {
+      "id": "M4554",
+      "label": "Chris DAVIES",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 313.4596509226502,
+      "y": 498.92719149059053
+    },
+    {
+      "id": "M4514",
+      "label": "Andrew DUFF",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 269.87182740726587,
+      "y": 461.43518097590874
+    },
+    {
+      "id": "M96751",
+      "label": "Nick GRIFFIN",
+      "country": "United Kingdom",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 797.1080095299467,
+      "y": 455.63879992125834
+    },
+    {
+      "id": "M28477",
+      "label": "Fiona HALL",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 286.5079557558685,
+      "y": 492.38422142634244
+    },
+    {
+      "id": "M1407",
+      "label": "Stephen HUGHES",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 188.989180544929,
+      "y": 452.91670105511525
+    },
+    {
+      "id": "M96954",
+      "label": "Marta ANDREASEN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 721.7989351968293,
+      "y": 439.2668276814259
+    },
+    {
+      "id": "M4529",
+      "label": "Baroness Sarah LUDFORD",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 335.16004106240484,
+      "y": 412.5150381845766
+    },
+    {
+      "id": "M96959",
+      "label": "George LYON",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 342.0510496641779,
+      "y": 493.5359999639818
+    },
+    {
+      "id": "M2173",
+      "label": "Arlene McCARTHY",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 212.5029020959748,
+      "y": 414.5343132915235
+    },
+    {
+      "id": "M1405",
+      "label": "Edward MCMILLAN-SCOTT",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 345.84511194947294,
+      "y": 434.7927168320592
+    },
+    {
+      "id": "M28506",
+      "label": "Mike NATTRASS",
+      "country": "United Kingdom",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 762.9322869588286,
+      "y": 488.5450579371733
+    },
+    {
+      "id": "M1394",
+      "label": "Bill NEWTON DUNN",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 299.3551031491543,
+      "y": 409.5130769880076
+    },
+    {
+      "id": "M1309",
+      "label": "Brian SIMPSON",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 190.5649583098986,
+      "y": 396.3838677671955
+    },
+    {
+      "id": "M2081",
+      "label": "Peter SKINNER",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 210.80967118343509,
+      "y": 473.0719636212071
+    },
+    {
+      "id": "M4546",
+      "label": "Struan STEVENSON",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 606.9900835852502,
+      "y": 422.6062963517061
+    },
+    {
+      "id": "M2037",
+      "label": "Robert STURDY",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 625.0556172328545,
+      "y": 375.757498702211
+    },
+    {
+      "id": "M2155",
+      "label": "Sir Graham WATSON",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 287.9825362575789,
+      "y": 434.45970746259195
+    },
+    {
+      "id": "M96944",
+      "label": "Marina YANNAKOUDAKIS",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 649.3058261598492,
+      "y": 471.3097082191952
+    },
+    {
+      "id": "M112620",
+      "label": "Rebecca TAYLOR",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 308.3942220985651,
+      "y": 466.79855032180615
+    },
+    {
+      "id": "M4540",
+      "label": "Philip BRADBOURN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 665.9830976617446,
+      "y": 513.9572436246171
+    },
+    {
+      "id": "M4536",
+      "label": "Martin CALLANAN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 684.5091575695546,
+      "y": 485.3684820410324
+    },
+    {
+      "id": "M1419",
+      "label": "James ELLES",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 552.317033931762,
+      "y": 445.13632509266506
+    },
+    {
+      "id": "M4538",
+      "label": "Malcolm HARBOUR",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 618.473232019415,
+      "y": 466.8212605683555
+    },
+    {
+      "id": "M4513",
+      "label": "Geoffrey VAN ORDEN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 631.1106843572346,
+      "y": 503.8163539689296
+    },
+    {
+      "id": "M28481",
+      "label": "Sajjad KARIM",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 586.5298174317214,
+      "y": 446.1675140224173
+    },
+    {
+      "id": "M28132",
+      "label": "Richard ASHWORTH",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 583.4842171516337,
+      "y": 413.1991050319119
+    },
+    {
+      "id": "M4516",
+      "label": "Roger HELMER",
+      "country": "United Kingdom",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 743.0843277387567,
+      "y": 406.54728927300107
+    },
+    {
+      "id": "M4556",
+      "label": "Nirj DEVA",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 692.346374114851,
+      "y": 456.07295617912393
+    },
+    {
+      "id": "M111011",
+      "label": "Anthea McINTYRE",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 584.9202747440918,
+      "y": 517.0053209586372
+    },
+    {
+      "id": "M96920",
+      "label": "Kay SWINBURNE",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 689.508467395229,
+      "y": 387.32169530309255
+    },
+    {
+      "id": "M96919",
+      "label": "Emma McCLARKIN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 655.7988962827512,
+      "y": 375.1284922377368
+    },
+    {
+      "id": "M96918",
+      "label": "Derek VAUGHAN",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 169.03343767315135,
+      "y": 462.83238366544043
+    },
+    {
+      "id": "M96912",
+      "label": "David CAMPBELL BANNERMAN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 713.1785247836692,
+      "y": 475.5508549302193
+    },
+    {
+      "id": "M4542",
+      "label": "Timothy KIRKHOPE",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 592.5220631549774,
+      "y": 487.1105065019059
+    },
+    {
+      "id": "M5846",
+      "label": "Mary HONEYBALL",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 174.929916209821,
+      "y": 512.3904597450244
+    },
+    {
+      "id": "M2327",
+      "label": "Linda McAVAN",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 211.66413885651068,
+      "y": 441.81749042204115
+    },
+    {
+      "id": "M4531",
+      "label": "Jean LAMBERT",
+      "country": "United Kingdom",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 126.59596437550096,
+      "y": 441.98598118403345
+    },
+    {
+      "id": "M4550",
+      "label": "Jill EVANS",
+      "country": "United Kingdom",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 125.13466857544836,
+      "y": 474.38741322076567
+    },
+    {
+      "id": "M1318",
+      "label": "James NICHOLSON",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 690.1083809283354,
+      "y": 416.62805629006516
+    },
+    {
+      "id": "M96958",
+      "label": "William (The Earl of) DARTMOUTH",
+      "country": "United Kingdom",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 780.7312786373373,
+      "y": 435.47046811804495
+    },
+    {
+      "id": "M2338",
+      "label": "Ian HUDGHTON",
+      "country": "United Kingdom",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 137.09064951619592,
+      "y": 425.623993056447
+    },
+    {
+      "id": "M28497",
+      "label": "Gerard BATTEN",
+      "country": "United Kingdom",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 773.9088663499465,
+      "y": 466.1115152649256
+    },
+    {
+      "id": "M35743",
+      "label": "Dame Glenis WILLMOTT",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 206.62908953394071,
+      "y": 509.394551276718
+    },
+    {
+      "id": "M102931",
+      "label": "Keith TAYLOR",
+      "country": "United Kingdom",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 138.53764950411193,
+      "y": 459.21015108141177
+    },
+    {
+      "id": "M96949",
+      "label": "Vicky FORD",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 612.6674167962522,
+      "y": 534.4389563920622
+    },
+    {
+      "id": "M4545",
+      "label": "Catherine STIHLER",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 162.35037477571825,
+      "y": 409.36663162118555
+    },
+    {
+      "id": "M4553",
+      "label": "Jacqueline FOSTER",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 631.3524354697461,
+      "y": 437.96482914550444
+    },
+    {
+      "id": "M96956",
+      "label": "Julie GIRLING",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 645.5087813199467,
+      "y": 541.860636684454
+    },
+    {
+      "id": "M1403",
+      "label": "David MARTIN",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 186.3288572768089,
+      "y": 425.5812186377716
+    },
+    {
+      "id": "M28508",
+      "label": "Alyn SMITH",
+      "country": "United Kingdom",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 140.30460275293376,
+      "y": 491.2553178196825
+    },
+    {
+      "id": "M96955",
+      "label": "Catherine BEARDER",
+      "country": "United Kingdom",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 332.117421747054,
+      "y": 466.312855031136
+    },
+    {
+      "id": "M4519",
+      "label": "Claude MORAES",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 169.21810925570776,
+      "y": 440.1486543640767
+    },
+    {
+      "id": "M96951",
+      "label": "Diane DODDS",
+      "country": "United Kingdom",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 726.3261536031232,
+      "y": 508.90598910513785
+    },
+    {
+      "id": "M4555",
+      "label": "Daniel HANNAN",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 662.2901654603595,
+      "y": 435.68429009342316
+    },
+    {
+      "id": "M2073",
+      "label": "Richard HOWITT",
+      "country": "United Kingdom",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 163.25566150679197,
+      "y": 487.04849639011604
+    },
+    {
+      "id": "M33569",
+      "label": "Syed KAMALL",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 603.546692449341,
+      "y": 391.9062528243852
+    },
+    {
+      "id": "M113959",
+      "label": "Martina ANDERSON",
+      "country": "United Kingdom",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 99.8794282543904,
+      "y": 454.94434003687627
+    },
+    {
+      "id": "M96957",
+      "label": "Ashley FOX",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 663.6431517715346,
+      "y": 401.28381771627977
+    },
+    {
+      "id": "M4521",
+      "label": "Timothy Charles Ayrton TANNOCK",
+      "country": "United Kingdom",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 687.1264525061821,
+      "y": 532.2817097090197
+    },
+    {
+      "id": "M96897",
+      "label": "John Stuart AGNEW",
+      "country": "United Kingdom",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 762.0294893701473,
+      "y": 447.0014312619601
+    }
+  ],
+  "edges": [
+    {
+      "source": "M4514",
+      "target": "M1394",
+      "weight": 0.926
+    },
+    {
+      "source": "M4514",
+      "target": "M4521",
+      "weight": 0.072
+    },
+    {
+      "source": "M4514",
+      "target": "M96918",
+      "weight": 0.537
+    },
+    {
+      "source": "M4514",
+      "target": "M4546",
+      "weight": 0.095
+    },
+    {
+      "source": "M4514",
+      "target": "M4529",
+      "weight": 0.908
+    },
+    {
+      "source": "M4514",
+      "target": "M4531",
+      "weight": 0.355
+    },
+    {
+      "source": "M4514",
+      "target": "M28477",
+      "weight": 0.932
+    },
+    {
+      "source": "M4514",
+      "target": "M35743",
+      "weight": 0.528
+    },
+    {
+      "source": "M4514",
+      "target": "M96957",
+      "weight": 0.085
+    },
+    {
+      "source": "M4514",
+      "target": "M5846",
+      "weight": 0.518
+    },
+    {
+      "source": "M4514",
+      "target": "M4538",
+      "weight": 0.087
+    },
+    {
+      "source": "M4514",
+      "target": "M1403",
+      "weight": 0.532
+    },
+    {
+      "source": "M4514",
+      "target": "M1407",
+      "weight": 0.525
+    },
+    {
+      "source": "M4514",
+      "target": "M4550",
+      "weight": 0.345
+    },
+    {
+      "source": "M4514",
+      "target": "M33570",
+      "weight": 0.914
+    },
+    {
+      "source": "M4514",
+      "target": "M96919",
+      "weight": 0.094
+    },
+    {
+      "source": "M4514",
+      "target": "M96956",
+      "weight": 0.097
+    },
+    {
+      "source": "M4514",
+      "target": "M1309",
+      "weight": 0.533
+    },
+    {
+      "source": "M4514",
+      "target": "M4545",
+      "weight": 0.52
+    },
+    {
+      "source": "M4514",
+      "target": "M28132",
+      "weight": 0.101
+    },
+    {
+      "source": "M4514",
+      "target": "M102931",
+      "weight": 0.353
+    },
+    {
+      "source": "M4514",
+      "target": "M4554",
+      "weight": 0.938
+    },
+    {
+      "source": "M4514",
+      "target": "M2081",
+      "weight": 0.535
+    },
+    {
+      "source": "M4514",
+      "target": "M2155",
+      "weight": 0.924
+    },
+    {
+      "source": "M4514",
+      "target": "M2327",
+      "weight": 0.533
+    },
+    {
+      "source": "M4514",
+      "target": "M96944",
+      "weight": 0.095
+    },
+    {
+      "source": "M4514",
+      "target": "M96949",
+      "weight": 0.11
+    },
+    {
+      "source": "M4514",
+      "target": "M96955",
+      "weight": 0.911
+    },
+    {
+      "source": "M4514",
+      "target": "M1318",
+      "weight": 0.073
+    },
+    {
+      "source": "M4514",
+      "target": "M4553",
+      "weight": 0.105
+    },
+    {
+      "source": "M4514",
+      "target": "M4536",
+      "weight": 0.08
+    },
+    {
+      "source": "M4514",
+      "target": "M4519",
+      "weight": 0.519
+    },
+    {
+      "source": "M4514",
+      "target": "M2073",
+      "weight": 0.507
+    },
+    {
+      "source": "M4514",
+      "target": "M96920",
+      "weight": 0.059
+    },
+    {
+      "source": "M4514",
+      "target": "M28508",
+      "weight": 0.356
+    },
+    {
+      "source": "M4514",
+      "target": "M4513",
+      "weight": 0.09
+    },
+    {
+      "source": "M4514",
+      "target": "M96959",
+      "weight": 0.897
+    },
+    {
+      "source": "M4514",
+      "target": "M1405",
+      "weight": 0.871
+    },
+    {
+      "source": "M4514",
+      "target": "M2173",
+      "weight": 0.541
+    },
+    {
+      "source": "M4514",
+      "target": "M4555",
+      "weight": 0.077
+    },
+    {
+      "source": "M4514",
+      "target": "M2097",
+      "weight": 0.114
+    },
+    {
+      "source": "M4514",
+      "target": "M33569",
+      "weight": 0.092
+    },
+    {
+      "source": "M4514",
+      "target": "M4556",
+      "weight": 0.059
+    },
+    {
+      "source": "M4514",
+      "target": "M28481",
+      "weight": 0.119
+    },
+    {
+      "source": "M4514",
+      "target": "M4532",
+      "weight": 0.544
+    },
+    {
+      "source": "M4514",
+      "target": "M4537",
+      "weight": 0.084
+    },
+    {
+      "source": "M4514",
+      "target": "M2338",
+      "weight": 0.338
+    },
+    {
+      "source": "M4514",
+      "target": "M112620",
+      "weight": 0.942
+    },
+    {
+      "source": "M4514",
+      "target": "M4540",
+      "weight": 0.066
+    },
+    {
+      "source": "M4514",
+      "target": "M111011",
+      "weight": 0.103
+    },
+    {
+      "source": "M4514",
+      "target": "M112014",
+      "weight": 0.92
+    },
+    {
+      "source": "M4514",
+      "target": "M4542",
+      "weight": 0.138
+    },
+    {
+      "source": "M4514",
+      "target": "M1419",
+      "weight": 0.202
+    },
+    {
+      "source": "M4514",
+      "target": "M2037",
+      "weight": 0.085
+    },
+    {
+      "source": "M4514",
+      "target": "M113959",
+      "weight": 0.078
+    },
+    {
+      "source": "M1394",
+      "target": "M4521",
+      "weight": 0.112
+    },
+    {
+      "source": "M1394",
+      "target": "M96918",
+      "weight": 0.509
+    },
+    {
+      "source": "M1394",
+      "target": "M4546",
+      "weight": 0.136
+    },
+    {
+      "source": "M1394",
+      "target": "M4529",
+      "weight": 0.914
+    },
+    {
+      "source": "M1394",
+      "target": "M4531",
+      "weight": 0.318
+    },
+    {
+      "source": "M1394",
+      "target": "M28477",
+      "weight": 0.919
+    },
+    {
+      "source": "M1394",
+      "target": "M35743",
+      "weight": 0.5
+    },
+    {
+      "source": "M1394",
+      "target": "M96957",
+      "weight": 0.125
+    },
+    {
+      "source": "M1394",
+      "target": "M5846",
+      "weight": 0.489
+    },
+    {
+      "source": "M1394",
+      "target": "M4538",
+      "weight": 0.128
+    },
+    {
+      "source": "M1394",
+      "target": "M1403",
+      "weight": 0.503
+    },
+    {
+      "source": "M1394",
+      "target": "M1407",
+      "weight": 0.503
+    },
+    {
+      "source": "M1394",
+      "target": "M4550",
+      "weight": 0.303
+    },
+    {
+      "source": "M1394",
+      "target": "M33570",
+      "weight": 0.924
+    },
+    {
+      "source": "M1394",
+      "target": "M96919",
+      "weight": 0.136
+    },
+    {
+      "source": "M1394",
+      "target": "M96956",
+      "weight": 0.13
+    },
+    {
+      "source": "M1394",
+      "target": "M1309",
+      "weight": 0.506
+    },
+    {
+      "source": "M1394",
+      "target": "M4545",
+      "weight": 0.492
+    },
+    {
+      "source": "M1394",
+      "target": "M28132",
+      "weight": 0.142
+    },
+    {
+      "source": "M1394",
+      "target": "M102931",
+      "weight": 0.314
+    },
+    {
+      "source": "M1394",
+      "target": "M4554",
+      "weight": 0.917
+    },
+    {
+      "source": "M1394",
+      "target": "M2081",
+      "weight": 0.505
+    },
+    {
+      "source": "M1394",
+      "target": "M2155",
+      "weight": 0.916
+    },
+    {
+      "source": "M1394",
+      "target": "M2327",
+      "weight": 0.506
+    },
+    {
+      "source": "M1394",
+      "target": "M96944",
+      "weight": 0.141
+    },
+    {
+      "source": "M1394",
+      "target": "M96949",
+      "weight": 0.146
+    },
+    {
+      "source": "M1394",
+      "target": "M96955",
+      "weight": 0.917
+    },
+    {
+      "source": "M1394",
+      "target": "M1318",
+      "weight": 0.116
+    },
+    {
+      "source": "M1394",
+      "target": "M4553",
+      "weight": 0.143
+    },
+    {
+      "source": "M1394",
+      "target": "M4536",
+      "weight": 0.129
+    },
+    {
+      "source": "M1394",
+      "target": "M4519",
+      "weight": 0.491
+    },
+    {
+      "source": "M1394",
+      "target": "M2073",
+      "weight": 0.477
+    },
+    {
+      "source": "M1394",
+      "target": "M96920",
+      "weight": 0.1
+    },
+    {
+      "source": "M1394",
+      "target": "M28508",
+      "weight": 0.322
+    },
+    {
+      "source": "M1394",
+      "target": "M4513",
+      "weight": 0.134
+    },
+    {
+      "source": "M1394",
+      "target": "M96959",
+      "weight": 0.899
+    },
+    {
+      "source": "M1394",
+      "target": "M1405",
+      "weight": 0.862
+    },
+    {
+      "source": "M1394",
+      "target": "M2173",
+      "weight": 0.517
+    },
+    {
+      "source": "M1394",
+      "target": "M4555",
+      "weight": 0.113
+    },
+    {
+      "source": "M1394",
+      "target": "M2097",
+      "weight": 0.147
+    },
+    {
+      "source": "M1394",
+      "target": "M33569",
+      "weight": 0.138
+    },
+    {
+      "source": "M1394",
+      "target": "M4556",
+      "weight": 0.111
+    },
+    {
+      "source": "M1394",
+      "target": "M96912",
+      "weight": 0.017
+    },
+    {
+      "source": "M1394",
+      "target": "M28481",
+      "weight": 0.158
+    },
+    {
+      "source": "M1394",
+      "target": "M4532",
+      "weight": 0.515
+    },
+    {
+      "source": "M1394",
+      "target": "M4537",
+      "weight": 0.134
+    },
+    {
+      "source": "M1394",
+      "target": "M2338",
+      "weight": 0.308
+    },
+    {
+      "source": "M1394",
+      "target": "M112620",
+      "weight": 0.934
+    },
+    {
+      "source": "M1394",
+      "target": "M4540",
+      "weight": 0.109
+    },
+    {
+      "source": "M1394",
+      "target": "M111011",
+      "weight": 0.15
+    },
+    {
+      "source": "M1394",
+      "target": "M112014",
+      "weight": 0.92
+    },
+    {
+      "source": "M1394",
+      "target": "M4542",
+      "weight": 0.174
+    },
+    {
+      "source": "M1394",
+      "target": "M1419",
+      "weight": 0.243
+    },
+    {
+      "source": "M1394",
+      "target": "M2037",
+      "weight": 0.132
+    },
+    {
+      "source": "M1394",
+      "target": "M113959",
+      "weight": 0.027
+    },
+    {
+      "source": "M4521",
+      "target": "M4546",
+      "weight": 0.956
+    },
+    {
+      "source": "M4521",
+      "target": "M4529",
+      "weight": 0.163
+    },
+    {
+      "source": "M4521",
+      "target": "M28477",
+      "weight": 0.109
+    },
+    {
+      "source": "M4521",
+      "target": "M96957",
+      "weight": 0.98
+    },
+    {
+      "source": "M4521",
+      "target": "M4538",
+      "weight": 0.96
+    },
+    {
+      "source": "M4521",
+      "target": "M33570",
+      "weight": 0.149
+    },
+    {
+      "source": "M4521",
+      "target": "M96919",
+      "weight": 0.974
+    },
+    {
+      "source": "M4521",
+      "target": "M96956",
+      "weight": 0.967
+    },
+    {
+      "source": "M4521",
+      "target": "M28132",
+      "weight": 0.974
+    },
+    {
+      "source": "M4521",
+      "target": "M96954",
+      "weight": 0.812
+    },
+    {
+      "source": "M4521",
+      "target": "M4554",
+      "weight": 0.14
+    },
+    {
+      "source": "M4521",
+      "target": "M2155",
+      "weight": 0.115
+    },
+    {
+      "source": "M4521",
+      "target": "M96944",
+      "weight": 0.969
+    },
+    {
+      "source": "M4521",
+      "target": "M96949",
+      "weight": 0.962
+    },
+    {
+      "source": "M4521",
+      "target": "M96749",
+      "weight": 0.212
+    },
+    {
+      "source": "M4521",
+      "target": "M96955",
+      "weight": 0.174
+    },
+    {
+      "source": "M4521",
+      "target": "M1318",
+      "weight": 0.955
+    },
+    {
+      "source": "M4521",
+      "target": "M4553",
+      "weight": 0.968
+    },
+    {
+      "source": "M4521",
+      "target": "M4536",
+      "weight": 0.968
+    },
+    {
+      "source": "M4521",
+      "target": "M96920",
+      "weight": 0.968
+    },
+    {
+      "source": "M4521",
+      "target": "M4513",
+      "weight": 0.974
+    },
+    {
+      "source": "M4521",
+      "target": "M96959",
+      "weight": 0.165
+    },
+    {
+      "source": "M4521",
+      "target": "M96751",
+      "weight": 0.201
+    },
+    {
+      "source": "M4521",
+      "target": "M1405",
+      "weight": 0.172
+    },
+    {
+      "source": "M4521",
+      "target": "M4555",
+      "weight": 0.927
+    },
+    {
+      "source": "M4521",
+      "target": "M96897",
+      "weight": 0.39
+    },
+    {
+      "source": "M4521",
+      "target": "M4516",
+      "weight": 0.538
+    },
+    {
+      "source": "M4521",
+      "target": "M2097",
+      "weight": 0.971
+    },
+    {
+      "source": "M4521",
+      "target": "M33569",
+      "weight": 0.975
+    },
+    {
+      "source": "M4521",
+      "target": "M4556",
+      "weight": 0.937
+    },
+    {
+      "source": "M4521",
+      "target": "M96912",
+      "weight": 0.899
+    },
+    {
+      "source": "M4521",
+      "target": "M96951",
+      "weight": 0.785
+    },
+    {
+      "source": "M4521",
+      "target": "M28481",
+      "weight": 0.969
+    },
+    {
+      "source": "M4521",
+      "target": "M4537",
+      "weight": 0.965
+    },
+    {
+      "source": "M4521",
+      "target": "M28493",
+      "weight": 0.351
+    },
+    {
+      "source": "M4521",
+      "target": "M112620",
+      "weight": 0.14
+    },
+    {
+      "source": "M4521",
+      "target": "M4540",
+      "weight": 0.978
+    },
+    {
+      "source": "M4521",
+      "target": "M111011",
+      "weight": 0.977
+    },
+    {
+      "source": "M4521",
+      "target": "M112014",
+      "weight": 0.184
+    },
+    {
+      "source": "M4521",
+      "target": "M4542",
+      "weight": 0.962
+    },
+    {
+      "source": "M4521",
+      "target": "M1419",
+      "weight": 0.942
+    },
+    {
+      "source": "M4521",
+      "target": "M28506",
+      "weight": 0.406
+    },
+    {
+      "source": "M4521",
+      "target": "M2037",
+      "weight": 0.962
+    },
+    {
+      "source": "M4521",
+      "target": "M96958",
+      "weight": 0.351
+    },
+    {
+      "source": "M4521",
+      "target": "M28497",
+      "weight": 0.365
+    },
+    {
+      "source": "M96918",
+      "target": "M4529",
+      "weight": 0.485
+    },
+    {
+      "source": "M96918",
+      "target": "M4531",
+      "weight": 0.487
+    },
+    {
+      "source": "M96918",
+      "target": "M28477",
+      "weight": 0.538
+    },
+    {
+      "source": "M96918",
+      "target": "M35743",
+      "weight": 0.966
+    },
+    {
+      "source": "M96918",
+      "target": "M5846",
+      "weight": 0.95
+    },
+    {
+      "source": "M96918",
+      "target": "M1403",
+      "weight": 0.932
+    },
+    {
+      "source": "M96918",
+      "target": "M1407",
+      "weight": 0.934
+    },
+    {
+      "source": "M96918",
+      "target": "M4550",
+      "weight": 0.458
+    },
+    {
+      "source": "M96918",
+      "target": "M33570",
+      "weight": 0.506
+    },
+    {
+      "source": "M96918",
+      "target": "M1309",
+      "weight": 0.959
+    },
+    {
+      "source": "M96918",
+      "target": "M4545",
+      "weight": 0.964
+    },
+    {
+      "source": "M96918",
+      "target": "M28132",
+      "weight": 0.01
+    },
+    {
+      "source": "M96918",
+      "target": "M102931",
+      "weight": 0.483
+    },
+    {
+      "source": "M96918",
+      "target": "M4554",
+      "weight": 0.506
+    },
+    {
+      "source": "M96918",
+      "target": "M2081",
+      "weight": 0.936
+    },
+    {
+      "source": "M96918",
+      "target": "M2155",
+      "weight": 0.519
+    },
+    {
+      "source": "M96918",
+      "target": "M2327",
+      "weight": 0.958
+    },
+    {
+      "source": "M96918",
+      "target": "M96955",
+      "weight": 0.521
+    },
+    {
+      "source": "M96918",
+      "target": "M4519",
+      "weight": 0.947
+    },
+    {
+      "source": "M96918",
+      "target": "M2073",
+      "weight": 0.955
+    },
+    {
+      "source": "M96918",
+      "target": "M28508",
+      "weight": 0.48
+    },
+    {
+      "source": "M96918",
+      "target": "M96959",
+      "weight": 0.485
+    },
+    {
+      "source": "M96918",
+      "target": "M1405",
+      "weight": 0.498
+    },
+    {
+      "source": "M96918",
+      "target": "M2173",
+      "weight": 0.921
+    },
+    {
+      "source": "M96918",
+      "target": "M2097",
+      "weight": 0.005
+    },
+    {
+      "source": "M96918",
+      "target": "M28481",
+      "weight": 0.014
+    },
+    {
+      "source": "M96918",
+      "target": "M4532",
+      "weight": 0.963
+    },
+    {
+      "source": "M96918",
+      "target": "M4537",
+      "weight": 0.002
+    },
+    {
+      "source": "M96918",
+      "target": "M2338",
+      "weight": 0.454
+    },
+    {
+      "source": "M96918",
+      "target": "M112620",
+      "weight": 0.534
+    },
+    {
+      "source": "M96918",
+      "target": "M111011",
+      "weight": 0.008
+    },
+    {
+      "source": "M96918",
+      "target": "M112014",
+      "weight": 0.512
+    },
+    {
+      "source": "M96918",
+      "target": "M4542",
+      "weight": 0.002
+    },
+    {
+      "source": "M96918",
+      "target": "M1419",
+      "weight": 0.062
+    },
+    {
+      "source": "M96918",
+      "target": "M2037",
+      "weight": 0.022
+    },
+    {
+      "source": "M96918",
+      "target": "M113959",
+      "weight": 0.238
+    },
+    {
+      "source": "M4546",
+      "target": "M4529",
+      "weight": 0.181
+    },
+    {
+      "source": "M4546",
+      "target": "M28477",
+      "weight": 0.133
+    },
+    {
+      "source": "M4546",
+      "target": "M96957",
+      "weight": 0.969
+    },
+    {
+      "source": "M4546",
+      "target": "M4538",
+      "weight": 0.954
+    },
+    {
+      "source": "M4546",
+      "target": "M33570",
+      "weight": 0.171
+    },
+    {
+      "source": "M4546",
+      "target": "M96919",
+      "weight": 0.96
+    },
+    {
+      "source": "M4546",
+      "target": "M96956",
+      "weight": 0.959
+    },
+    {
+      "source": "M4546",
+      "target": "M28132",
+      "weight": 0.965
+    },
+    {
+      "source": "M4546",
+      "target": "M96954",
+      "weight": 0.793
+    },
+    {
+      "source": "M4546",
+      "target": "M4554",
+      "weight": 0.168
+    },
+    {
+      "source": "M4546",
+      "target": "M2155",
+      "weight": 0.133
+    },
+    {
+      "source": "M4546",
+      "target": "M2327",
+      "weight": 0.008
+    },
+    {
+      "source": "M4546",
+      "target": "M96944",
+      "weight": 0.955
+    },
+    {
+      "source": "M4546",
+      "target": "M96949",
+      "weight": 0.948
+    },
+    {
+      "source": "M4546",
+      "target": "M96749",
+      "weight": 0.188
+    },
+    {
+      "source": "M4546",
+      "target": "M96955",
+      "weight": 0.191
+    },
+    {
+      "source": "M4546",
+      "target": "M1318",
+      "weight": 0.961
+    },
+    {
+      "source": "M4546",
+      "target": "M4553",
+      "weight": 0.955
+    },
+    {
+      "source": "M4546",
+      "target": "M4536",
+      "weight": 0.959
+    },
+    {
+      "source": "M4546",
+      "target": "M4519",
+      "weight": 0.002
+    },
+    {
+      "source": "M4546",
+      "target": "M96920",
+      "weight": 0.977
+    },
+    {
+      "source": "M4546",
+      "target": "M4513",
+      "weight": 0.961
+    },
+    {
+      "source": "M4546",
+      "target": "M96959",
+      "weight": 0.186
+    },
+    {
+      "source": "M4546",
+      "target": "M96751",
+      "weight": 0.174
+    },
+    {
+      "source": "M4546",
+      "target": "M1405",
+      "weight": 0.188
+    },
+    {
+      "source": "M4546",
+      "target": "M2173",
+      "weight": 0.007
+    },
+    {
+      "source": "M4546",
+      "target": "M4555",
+      "weight": 0.912
+    },
+    {
+      "source": "M4546",
+      "target": "M96897",
+      "weight": 0.363
+    },
+    {
+      "source": "M4546",
+      "target": "M4516",
+      "weight": 0.519
+    },
+    {
+      "source": "M4546",
+      "target": "M2097",
+      "weight": 0.96
+    },
+    {
+      "source": "M4546",
+      "target": "M33569",
+      "weight": 0.957
+    },
+    {
+      "source": "M4546",
+      "target": "M4556",
+      "weight": 0.915
+    },
+    {
+      "source": "M4546",
+      "target": "M96912",
+      "weight": 0.875
+    },
+    {
+      "source": "M4546",
+      "target": "M96951",
+      "weight": 0.765
+    },
+    {
+      "source": "M4546",
+      "target": "M28481",
+      "weight": 0.956
+    },
+    {
+      "source": "M4546",
+      "target": "M4537",
+      "weight": 0.957
+    },
+    {
+      "source": "M4546",
+      "target": "M28493",
+      "weight": 0.331
+    },
+    {
+      "source": "M4546",
+      "target": "M112620",
+      "weight": 0.148
+    },
+    {
+      "source": "M4546",
+      "target": "M4540",
+      "weight": 0.964
+    },
+    {
+      "source": "M4546",
+      "target": "M111011",
+      "weight": 0.965
+    },
+    {
+      "source": "M4546",
+      "target": "M112014",
+      "weight": 0.187
+    },
+    {
+      "source": "M4546",
+      "target": "M4542",
+      "weight": 0.948
+    },
+    {
+      "source": "M4546",
+      "target": "M1419",
+      "weight": 0.936
+    },
+    {
+      "source": "M4546",
+      "target": "M28506",
+      "weight": 0.381
+    },
+    {
+      "source": "M4546",
+      "target": "M2037",
+      "weight": 0.949
+    },
+    {
+      "source": "M4546",
+      "target": "M96958",
+      "weight": 0.329
+    },
+    {
+      "source": "M4546",
+      "target": "M28497",
+      "weight": 0.329
+    },
+    {
+      "source": "M4529",
+      "target": "M4531",
+      "weight": 0.288
+    },
+    {
+      "source": "M4529",
+      "target": "M28477",
+      "weight": 0.94
+    },
+    {
+      "source": "M4529",
+      "target": "M35743",
+      "weight": 0.478
+    },
+    {
+      "source": "M4529",
+      "target": "M96957",
+      "weight": 0.174
+    },
+    {
+      "source": "M4529",
+      "target": "M5846",
+      "weight": 0.461
+    },
+    {
+      "source": "M4529",
+      "target": "M4538",
+      "weight": 0.173
+    },
+    {
+      "source": "M4529",
+      "target": "M1403",
+      "weight": 0.481
+    },
+    {
+      "source": "M4529",
+      "target": "M1407",
+      "weight": 0.462
+    },
+    {
+      "source": "M4529",
+      "target": "M4550",
+      "weight": 0.277
+    },
+    {
+      "source": "M4529",
+      "target": "M33570",
+      "weight": 0.947
+    },
+    {
+      "source": "M4529",
+      "target": "M96919",
+      "weight": 0.181
+    },
+    {
+      "source": "M4529",
+      "target": "M96956",
+      "weight": 0.179
+    },
+    {
+      "source": "M4529",
+      "target": "M1309",
+      "weight": 0.481
+    },
+    {
+      "source": "M4529",
+      "target": "M4545",
+      "weight": 0.47
+    },
+    {
+      "source": "M4529",
+      "target": "M28132",
+      "weight": 0.187
+    },
+    {
+      "source": "M4529",
+      "target": "M102931",
+      "weight": 0.288
+    },
+    {
+      "source": "M4529",
+      "target": "M96954",
+      "weight": 0.028
+    },
+    {
+      "source": "M4529",
+      "target": "M4554",
+      "weight": 0.912
+    },
+    {
+      "source": "M4529",
+      "target": "M2081",
+      "weight": 0.484
+    },
+    {
+      "source": "M4529",
+      "target": "M2155",
+      "weight": 0.925
+    },
+    {
+      "source": "M4529",
+      "target": "M2327",
+      "weight": 0.484
+    },
+    {
+      "source": "M4529",
+      "target": "M96944",
+      "weight": 0.185
+    },
+    {
+      "source": "M4529",
+      "target": "M96949",
+      "weight": 0.194
+    },
+    {
+      "source": "M4529",
+      "target": "M96955",
+      "weight": 0.902
+    },
+    {
+      "source": "M4529",
+      "target": "M1318",
+      "weight": 0.164
+    },
+    {
+      "source": "M4529",
+      "target": "M4553",
+      "weight": 0.183
+    },
+    {
+      "source": "M4529",
+      "target": "M4536",
+      "weight": 0.171
+    },
+    {
+      "source": "M4529",
+      "target": "M4519",
+      "weight": 0.473
+    },
+    {
+      "source": "M4529",
+      "target": "M2073",
+      "weight": 0.452
+    },
+    {
+      "source": "M4529",
+      "target": "M96920",
+      "weight": 0.149
+    },
+    {
+      "source": "M4529",
+      "target": "M28508",
+      "weight": 0.333
+    },
+    {
+      "source": "M4529",
+      "target": "M4513",
+      "weight": 0.183
+    },
+    {
+      "source": "M4529",
+      "target": "M96959",
+      "weight": 0.933
+    },
+    {
+      "source": "M4529",
+      "target": "M1405",
+      "weight": 0.897
+    },
+    {
+      "source": "M4529",
+      "target": "M2173",
+      "weight": 0.489
+    },
+    {
+      "source": "M4529",
+      "target": "M4555",
+      "weight": 0.16
+    },
+    {
+      "source": "M4529",
+      "target": "M2097",
+      "weight": 0.19
+    },
+    {
+      "source": "M4529",
+      "target": "M33569",
+      "weight": 0.183
+    },
+    {
+      "source": "M4529",
+      "target": "M4556",
+      "weight": 0.156
+    },
+    {
+      "source": "M4529",
+      "target": "M96912",
+      "weight": 0.071
+    },
+    {
+      "source": "M4529",
+      "target": "M96951",
+      "weight": 0.033
+    },
+    {
+      "source": "M4529",
+      "target": "M28481",
+      "weight": 0.203
+    },
+    {
+      "source": "M4529",
+      "target": "M4532",
+      "weight": 0.49
+    },
+    {
+      "source": "M4529",
+      "target": "M4537",
+      "weight": 0.167
+    },
+    {
+      "source": "M4529",
+      "target": "M2338",
+      "weight": 0.326
+    },
+    {
+      "source": "M4529",
+      "target": "M112620",
+      "weight": 0.931
+    },
+    {
+      "source": "M4529",
+      "target": "M4540",
+      "weight": 0.145
+    },
+    {
+      "source": "M4529",
+      "target": "M111011",
+      "weight": 0.204
+    },
+    {
+      "source": "M4529",
+      "target": "M112014",
+      "weight": 0.946
+    },
+    {
+      "source": "M4529",
+      "target": "M4542",
+      "weight": 0.209
+    },
+    {
+      "source": "M4529",
+      "target": "M1419",
+      "weight": 0.277
+    },
+    {
+      "source": "M4529",
+      "target": "M2037",
+      "weight": 0.158
+    },
+    {
+      "source": "M4529",
+      "target": "M113959",
+      "weight": 0.068
+    },
+    {
+      "source": "M4531",
+      "target": "M28477",
+      "weight": 0.342
+    },
+    {
+      "source": "M4531",
+      "target": "M35743",
+      "weight": 0.489
+    },
+    {
+      "source": "M4531",
+      "target": "M5846",
+      "weight": 0.487
+    },
+    {
+      "source": "M4531",
+      "target": "M1403",
+      "weight": 0.499
+    },
+    {
+      "source": "M4531",
+      "target": "M1407",
+      "weight": 0.495
+    },
+    {
+      "source": "M4531",
+      "target": "M4550",
+      "weight": 0.927
+    },
+    {
+      "source": "M4531",
+      "target": "M33570",
+      "weight": 0.297
+    },
+    {
+      "source": "M4531",
+      "target": "M1309",
+      "weight": 0.481
+    },
+    {
+      "source": "M4531",
+      "target": "M4545",
+      "weight": 0.515
+    },
+    {
+      "source": "M4531",
+      "target": "M102931",
+      "weight": 0.973
+    },
+    {
+      "source": "M4531",
+      "target": "M4554",
+      "weight": 0.327
+    },
+    {
+      "source": "M4531",
+      "target": "M2081",
+      "weight": 0.483
+    },
+    {
+      "source": "M4531",
+      "target": "M2155",
+      "weight": 0.351
+    },
+    {
+      "source": "M4531",
+      "target": "M2327",
+      "weight": 0.486
+    },
+    {
+      "source": "M4531",
+      "target": "M96955",
+      "weight": 0.314
+    },
+    {
+      "source": "M4531",
+      "target": "M4519",
+      "weight": 0.5
+    },
+    {
+      "source": "M4531",
+      "target": "M2073",
+      "weight": 0.495
+    },
+    {
+      "source": "M4531",
+      "target": "M28508",
+      "weight": 0.786
+    },
+    {
+      "source": "M4531",
+      "target": "M96959",
+      "weight": 0.288
+    },
+    {
+      "source": "M4531",
+      "target": "M1405",
+      "weight": 0.307
+    },
+    {
+      "source": "M4531",
+      "target": "M2173",
+      "weight": 0.459
+    },
+    {
+      "source": "M4531",
+      "target": "M4532",
+      "weight": 0.492
+    },
+    {
+      "source": "M4531",
+      "target": "M2338",
+      "weight": 0.757
+    },
+    {
+      "source": "M4531",
+      "target": "M112620",
+      "weight": 0.303
+    },
+    {
+      "source": "M4531",
+      "target": "M112014",
+      "weight": 0.278
+    },
+    {
+      "source": "M4531",
+      "target": "M113959",
+      "weight": 0.484
+    },
+    {
+      "source": "M28477",
+      "target": "M35743",
+      "weight": 0.528
+    },
+    {
+      "source": "M28477",
+      "target": "M96957",
+      "weight": 0.122
+    },
+    {
+      "source": "M28477",
+      "target": "M5846",
+      "weight": 0.513
+    },
+    {
+      "source": "M28477",
+      "target": "M4538",
+      "weight": 0.121
+    },
+    {
+      "source": "M28477",
+      "target": "M1403",
+      "weight": 0.531
+    },
+    {
+      "source": "M28477",
+      "target": "M1407",
+      "weight": 0.512
+    },
+    {
+      "source": "M28477",
+      "target": "M4550",
+      "weight": 0.332
+    },
+    {
+      "source": "M28477",
+      "target": "M33570",
+      "weight": 0.95
+    },
+    {
+      "source": "M28477",
+      "target": "M96919",
+      "weight": 0.127
+    },
+    {
+      "source": "M28477",
+      "target": "M96956",
+      "weight": 0.132
+    },
+    {
+      "source": "M28477",
+      "target": "M1309",
+      "weight": 0.534
+    },
+    {
+      "source": "M28477",
+      "target": "M4545",
+      "weight": 0.523
+    },
+    {
+      "source": "M28477",
+      "target": "M28132",
+      "weight": 0.137
+    },
+    {
+      "source": "M28477",
+      "target": "M102931",
+      "weight": 0.344
+    },
+    {
+      "source": "M28477",
+      "target": "M4554",
+      "weight": 0.927
+    },
+    {
+      "source": "M28477",
+      "target": "M2081",
+      "weight": 0.534
+    },
+    {
+      "source": "M28477",
+      "target": "M2155",
+      "weight": 0.956
+    },
+    {
+      "source": "M28477",
+      "target": "M2327",
+      "weight": 0.535
+    },
+    {
+      "source": "M28477",
+      "target": "M96944",
+      "weight": 0.131
+    },
+    {
+      "source": "M28477",
+      "target": "M96949",
+      "weight": 0.141
+    },
+    {
+      "source": "M28477",
+      "target": "M96955",
+      "weight": 0.942
+    },
+    {
+      "source": "M28477",
+      "target": "M1318",
+      "weight": 0.121
+    },
+    {
+      "source": "M28477",
+      "target": "M4553",
+      "weight": 0.134
+    },
+    {
+      "source": "M28477",
+      "target": "M4536",
+      "weight": 0.115
+    },
+    {
+      "source": "M28477",
+      "target": "M4519",
+      "weight": 0.523
+    },
+    {
+      "source": "M28477",
+      "target": "M2073",
+      "weight": 0.506
+    },
+    {
+      "source": "M28477",
+      "target": "M96920",
+      "weight": 0.092
+    },
+    {
+      "source": "M28477",
+      "target": "M28508",
+      "weight": 0.361
+    },
+    {
+      "source": "M28477",
+      "target": "M4513",
+      "weight": 0.127
+    },
+    {
+      "source": "M28477",
+      "target": "M96959",
+      "weight": 0.93
+    },
+    {
+      "source": "M28477",
+      "target": "M1405",
+      "weight": 0.905
+    },
+    {
+      "source": "M28477",
+      "target": "M2173",
+      "weight": 0.543
+    },
+    {
+      "source": "M28477",
+      "target": "M4555",
+      "weight": 0.112
+    },
+    {
+      "source": "M28477",
+      "target": "M2097",
+      "weight": 0.149
+    },
+    {
+      "source": "M28477",
+      "target": "M33569",
+      "weight": 0.128
+    },
+    {
+      "source": "M28477",
+      "target": "M4556",
+      "weight": 0.1
+    },
+    {
+      "source": "M28477",
+      "target": "M96912",
+      "weight": 0.025
+    },
+    {
+      "source": "M28477",
+      "target": "M28481",
+      "weight": 0.151
+    },
+    {
+      "source": "M28477",
+      "target": "M4532",
+      "weight": 0.544
+    },
+    {
+      "source": "M28477",
+      "target": "M4537",
+      "weight": 0.106
+    },
+    {
+      "source": "M28477",
+      "target": "M2338",
+      "weight": 0.348
+    },
+    {
+      "source": "M28477",
+      "target": "M112620",
+      "weight": 0.976
+    },
+    {
+      "source": "M28477",
+      "target": "M4540",
+      "weight": 0.08
+    },
+    {
+      "source": "M28477",
+      "target": "M111011",
+      "weight": 0.147
+    },
+    {
+      "source": "M28477",
+      "target": "M112014",
+      "weight": 0.954
+    },
+    {
+      "source": "M28477",
+      "target": "M4542",
+      "weight": 0.159
+    },
+    {
+      "source": "M28477",
+      "target": "M1419",
+      "weight": 0.218
+    },
+    {
+      "source": "M28477",
+      "target": "M2037",
+      "weight": 0.098
+    },
+    {
+      "source": "M28477",
+      "target": "M113959",
+      "weight": 0.073
+    },
+    {
+      "source": "M35743",
+      "target": "M5846",
+      "weight": 0.965
+    },
+    {
+      "source": "M35743",
+      "target": "M1403",
+      "weight": 0.951
+    },
+    {
+      "source": "M35743",
+      "target": "M1407",
+      "weight": 0.949
+    },
+    {
+      "source": "M35743",
+      "target": "M4550",
+      "weight": 0.459
+    },
+    {
+      "source": "M35743",
+      "target": "M33570",
+      "weight": 0.499
+    },
+    {
+      "source": "M35743",
+      "target": "M1309",
+      "weight": 0.98
+    },
+    {
+      "source": "M35743",
+      "target": "M4545",
+      "weight": 0.977
+    },
+    {
+      "source": "M35743",
+      "target": "M28132",
+      "weight": 0.009
+    },
+    {
+      "source": "M35743",
+      "target": "M102931",
+      "weight": 0.481
+    },
+    {
+      "source": "M35743",
+      "target": "M4554",
+      "weight": 0.503
+    },
+    {
+      "source": "M35743",
+      "target": "M2081",
+      "weight": 0.945
+    },
+    {
+      "source": "M35743",
+      "target": "M2155",
+      "weight": 0.505
+    },
+    {
+      "source": "M35743",
+      "target": "M2327",
+      "weight": 0.97
+    },
+    {
+      "source": "M35743",
+      "target": "M96955",
+      "weight": 0.506
+    },
+    {
+      "source": "M35743",
+      "target": "M4519",
+      "weight": 0.969
+    },
+    {
+      "source": "M35743",
+      "target": "M2073",
+      "weight": 0.976
+    },
+    {
+      "source": "M35743",
+      "target": "M28508",
+      "weight": 0.496
+    },
+    {
+      "source": "M35743",
+      "target": "M96959",
+      "weight": 0.477
+    },
+    {
+      "source": "M35743",
+      "target": "M1405",
+      "weight": 0.493
+    },
+    {
+      "source": "M35743",
+      "target": "M2173",
+      "weight": 0.942
+    },
+    {
+      "source": "M35743",
+      "target": "M2097",
+      "weight": 0.006
+    },
+    {
+      "source": "M35743",
+      "target": "M28481",
+      "weight": 0.02
+    },
+    {
+      "source": "M35743",
+      "target": "M4532",
+      "weight": 0.978
+    },
+    {
+      "source": "M35743",
+      "target": "M2338",
+      "weight": 0.469
+    },
+    {
+      "source": "M35743",
+      "target": "M112620",
+      "weight": 0.528
+    },
+    {
+      "source": "M35743",
+      "target": "M112014",
+      "weight": 0.504
+    },
+    {
+      "source": "M35743",
+      "target": "M1419",
+      "weight": 0.048
+    },
+    {
+      "source": "M35743",
+      "target": "M2037",
+      "weight": 0.023
+    },
+    {
+      "source": "M35743",
+      "target": "M113959",
+      "weight": 0.248
+    },
+    {
+      "source": "M96957",
+      "target": "M4538",
+      "weight": 0.975
+    },
+    {
+      "source": "M96957",
+      "target": "M33570",
+      "weight": 0.163
+    },
+    {
+      "source": "M96957",
+      "target": "M96919",
+      "weight": 0.981
+    },
+    {
+      "source": "M96957",
+      "target": "M96956",
+      "weight": 0.983
+    },
+    {
+      "source": "M96957",
+      "target": "M28132",
+      "weight": 0.987
+    },
+    {
+      "source": "M96957",
+      "target": "M96954",
+      "weight": 0.817
+    },
+    {
+      "source": "M96957",
+      "target": "M4554",
+      "weight": 0.16
+    },
+    {
+      "source": "M96957",
+      "target": "M2155",
+      "weight": 0.125
+    },
+    {
+      "source": "M96957",
+      "target": "M96944",
+      "weight": 0.978
+    },
+    {
+      "source": "M96957",
+      "target": "M96949",
+      "weight": 0.972
+    },
+    {
+      "source": "M96957",
+      "target": "M96749",
+      "weight": 0.207
+    },
+    {
+      "source": "M96957",
+      "target": "M96955",
+      "weight": 0.189
+    },
+    {
+      "source": "M96957",
+      "target": "M1318",
+      "weight": 0.961
+    },
+    {
+      "source": "M96957",
+      "target": "M4553",
+      "weight": 0.979
+    },
+    {
+      "source": "M96957",
+      "target": "M4536",
+      "weight": 0.981
+    },
+    {
+      "source": "M96957",
+      "target": "M96920",
+      "weight": 0.979
+    },
+    {
+      "source": "M96957",
+      "target": "M4513",
+      "weight": 0.986
+    },
+    {
+      "source": "M96957",
+      "target": "M96959",
+      "weight": 0.176
+    },
+    {
+      "source": "M96957",
+      "target": "M96751",
+      "weight": 0.196
+    },
+    {
+      "source": "M96957",
+      "target": "M1405",
+      "weight": 0.184
+    },
+    {
+      "source": "M96957",
+      "target": "M4555",
+      "weight": 0.934
+    },
+    {
+      "source": "M96957",
+      "target": "M96897",
+      "weight": 0.399
+    },
+    {
+      "source": "M96957",
+      "target": "M4516",
+      "weight": 0.553
+    },
+    {
+      "source": "M96957",
+      "target": "M2097",
+      "weight": 0.981
+    },
+    {
+      "source": "M96957",
+      "target": "M33569",
+      "weight": 0.983
+    },
+    {
+      "source": "M96957",
+      "target": "M4556",
+      "weight": 0.948
+    },
+    {
+      "source": "M96957",
+      "target": "M96912",
+      "weight": 0.904
+    },
+    {
+      "source": "M96957",
+      "target": "M96951",
+      "weight": 0.789
+    },
+    {
+      "source": "M96957",
+      "target": "M28481",
+      "weight": 0.981
+    },
+    {
+      "source": "M96957",
+      "target": "M4537",
+      "weight": 0.976
+    },
+    {
+      "source": "M96957",
+      "target": "M28493",
+      "weight": 0.363
+    },
+    {
+      "source": "M96957",
+      "target": "M112620",
+      "weight": 0.148
+    },
+    {
+      "source": "M96957",
+      "target": "M4540",
+      "weight": 0.988
+    },
+    {
+      "source": "M96957",
+      "target": "M111011",
+      "weight": 0.99
+    },
+    {
+      "source": "M96957",
+      "target": "M112014",
+      "weight": 0.188
+    },
+    {
+      "source": "M96957",
+      "target": "M4542",
+      "weight": 0.972
+    },
+    {
+      "source": "M96957",
+      "target": "M1419",
+      "weight": 0.964
+    },
+    {
+      "source": "M96957",
+      "target": "M28506",
+      "weight": 0.413
+    },
+    {
+      "source": "M96957",
+      "target": "M2037",
+      "weight": 0.97
+    },
+    {
+      "source": "M96957",
+      "target": "M96958",
+      "weight": 0.363
+    },
+    {
+      "source": "M96957",
+      "target": "M28497",
+      "weight": 0.38
+    },
+    {
+      "source": "M5846",
+      "target": "M1403",
+      "weight": 0.931
+    },
+    {
+      "source": "M5846",
+      "target": "M1407",
+      "weight": 0.941
+    },
+    {
+      "source": "M5846",
+      "target": "M4550",
+      "weight": 0.457
+    },
+    {
+      "source": "M5846",
+      "target": "M33570",
+      "weight": 0.487
+    },
+    {
+      "source": "M5846",
+      "target": "M1309",
+      "weight": 0.953
+    },
+    {
+      "source": "M5846",
+      "target": "M4545",
+      "weight": 0.95
+    },
+    {
+      "source": "M5846",
+      "target": "M102931",
+      "weight": 0.48
+    },
+    {
+      "source": "M5846",
+      "target": "M4554",
+      "weight": 0.485
+    },
+    {
+      "source": "M5846",
+      "target": "M2081",
+      "weight": 0.931
+    },
+    {
+      "source": "M5846",
+      "target": "M2155",
+      "weight": 0.498
+    },
+    {
+      "source": "M5846",
+      "target": "M2327",
+      "weight": 0.951
+    },
+    {
+      "source": "M5846",
+      "target": "M96955",
+      "weight": 0.496
+    },
+    {
+      "source": "M5846",
+      "target": "M4519",
+      "weight": 0.952
+    },
+    {
+      "source": "M5846",
+      "target": "M2073",
+      "weight": 0.947
+    },
+    {
+      "source": "M5846",
+      "target": "M28508",
+      "weight": 0.488
+    },
+    {
+      "source": "M5846",
+      "target": "M96959",
+      "weight": 0.457
+    },
+    {
+      "source": "M5846",
+      "target": "M1405",
+      "weight": 0.48
+    },
+    {
+      "source": "M5846",
+      "target": "M2173",
+      "weight": 0.923
+    },
+    {
+      "source": "M5846",
+      "target": "M28481",
+      "weight": 0.002
+    },
+    {
+      "source": "M5846",
+      "target": "M4532",
+      "weight": 0.957
+    },
+    {
+      "source": "M5846",
+      "target": "M2338",
+      "weight": 0.462
+    },
+    {
+      "source": "M5846",
+      "target": "M112620",
+      "weight": 0.51
+    },
+    {
+      "source": "M5846",
+      "target": "M111011",
+      "weight": 0.002
+    },
+    {
+      "source": "M5846",
+      "target": "M112014",
+      "weight": 0.489
+    },
+    {
+      "source": "M5846",
+      "target": "M1419",
+      "weight": 0.041
+    },
+    {
+      "source": "M5846",
+      "target": "M2037",
+      "weight": 0.008
+    },
+    {
+      "source": "M5846",
+      "target": "M113959",
+      "weight": 0.24
+    },
+    {
+      "source": "M4538",
+      "target": "M33570",
+      "weight": 0.155
+    },
+    {
+      "source": "M4538",
+      "target": "M96919",
+      "weight": 0.963
+    },
+    {
+      "source": "M4538",
+      "target": "M96956",
+      "weight": 0.965
+    },
+    {
+      "source": "M4538",
+      "target": "M28132",
+      "weight": 0.974
+    },
+    {
+      "source": "M4538",
+      "target": "M96954",
+      "weight": 0.801
+    },
+    {
+      "source": "M4538",
+      "target": "M4554",
+      "weight": 0.154
+    },
+    {
+      "source": "M4538",
+      "target": "M2155",
+      "weight": 0.124
+    },
+    {
+      "source": "M4538",
+      "target": "M96944",
+      "weight": 0.962
+    },
+    {
+      "source": "M4538",
+      "target": "M96949",
+      "weight": 0.955
+    },
+    {
+      "source": "M4538",
+      "target": "M96749",
+      "weight": 0.205
+    },
+    {
+      "source": "M4538",
+      "target": "M96955",
+      "weight": 0.184
+    },
+    {
+      "source": "M4538",
+      "target": "M1318",
+      "weight": 0.944
+    },
+    {
+      "source": "M4538",
+      "target": "M4553",
+      "weight": 0.96
+    },
+    {
+      "source": "M4538",
+      "target": "M4536",
+      "weight": 0.968
+    },
+    {
+      "source": "M4538",
+      "target": "M96920",
+      "weight": 0.965
+    },
+    {
+      "source": "M4538",
+      "target": "M4513",
+      "weight": 0.975
+    },
+    {
+      "source": "M4538",
+      "target": "M96959",
+      "weight": 0.171
+    },
+    {
+      "source": "M4538",
+      "target": "M96751",
+      "weight": 0.201
+    },
+    {
+      "source": "M4538",
+      "target": "M1405",
+      "weight": 0.172
+    },
+    {
+      "source": "M4538",
+      "target": "M4555",
+      "weight": 0.923
+    },
+    {
+      "source": "M4538",
+      "target": "M96897",
+      "weight": 0.38
+    },
+    {
+      "source": "M4538",
+      "target": "M4516",
+      "weight": 0.533
+    },
+    {
+      "source": "M4538",
+      "target": "M2097",
+      "weight": 0.971
+    },
+    {
+      "source": "M4538",
+      "target": "M33569",
+      "weight": 0.966
+    },
+    {
+      "source": "M4538",
+      "target": "M4556",
+      "weight": 0.932
+    },
+    {
+      "source": "M4538",
+      "target": "M96912",
+      "weight": 0.89
+    },
+    {
+      "source": "M4538",
+      "target": "M96951",
+      "weight": 0.779
+    },
+    {
+      "source": "M4538",
+      "target": "M28481",
+      "weight": 0.966
+    },
+    {
+      "source": "M4538",
+      "target": "M4537",
+      "weight": 0.963
+    },
+    {
+      "source": "M4538",
+      "target": "M28493",
+      "weight": 0.343
+    },
+    {
+      "source": "M4538",
+      "target": "M112620",
+      "weight": 0.147
+    },
+    {
+      "source": "M4538",
+      "target": "M4540",
+      "weight": 0.979
+    },
+    {
+      "source": "M4538",
+      "target": "M111011",
+      "weight": 0.964
+    },
+    {
+      "source": "M4538",
+      "target": "M112014",
+      "weight": 0.189
+    },
+    {
+      "source": "M4538",
+      "target": "M4542",
+      "weight": 0.957
+    },
+    {
+      "source": "M4538",
+      "target": "M1419",
+      "weight": 0.949
+    },
+    {
+      "source": "M4538",
+      "target": "M28506",
+      "weight": 0.392
+    },
+    {
+      "source": "M4538",
+      "target": "M2037",
+      "weight": 0.968
+    },
+    {
+      "source": "M4538",
+      "target": "M96958",
+      "weight": 0.341
+    },
+    {
+      "source": "M4538",
+      "target": "M28497",
+      "weight": 0.351
+    },
+    {
+      "source": "M1403",
+      "target": "M1407",
+      "weight": 0.93
+    },
+    {
+      "source": "M1403",
+      "target": "M4550",
+      "weight": 0.471
+    },
+    {
+      "source": "M1403",
+      "target": "M33570",
+      "weight": 0.494
+    },
+    {
+      "source": "M1403",
+      "target": "M1309",
+      "weight": 0.948
+    },
+    {
+      "source": "M1403",
+      "target": "M4545",
+      "weight": 0.957
+    },
+    {
+      "source": "M1403",
+      "target": "M102931",
+      "weight": 0.493
+    },
+    {
+      "source": "M1403",
+      "target": "M4554",
+      "weight": 0.504
+    },
+    {
+      "source": "M1403",
+      "target": "M2081",
+      "weight": 0.923
+    },
+    {
+      "source": "M1403",
+      "target": "M2155",
+      "weight": 0.515
+    },
+    {
+      "source": "M1403",
+      "target": "M2327",
+      "weight": 0.946
+    },
+    {
+      "source": "M1403",
+      "target": "M96955",
+      "weight": 0.509
+    },
+    {
+      "source": "M1403",
+      "target": "M4519",
+      "weight": 0.945
+    },
+    {
+      "source": "M1403",
+      "target": "M2073",
+      "weight": 0.944
+    },
+    {
+      "source": "M1403",
+      "target": "M28508",
+      "weight": 0.49
+    },
+    {
+      "source": "M1403",
+      "target": "M96959",
+      "weight": 0.476
+    },
+    {
+      "source": "M1403",
+      "target": "M1405",
+      "weight": 0.49
+    },
+    {
+      "source": "M1403",
+      "target": "M2173",
+      "weight": 0.948
+    },
+    {
+      "source": "M1403",
+      "target": "M28481",
+      "weight": 0.002
+    },
+    {
+      "source": "M1403",
+      "target": "M4532",
+      "weight": 0.953
+    },
+    {
+      "source": "M1403",
+      "target": "M2338",
+      "weight": 0.474
+    },
+    {
+      "source": "M1403",
+      "target": "M112620",
+      "weight": 0.53
+    },
+    {
+      "source": "M1403",
+      "target": "M112014",
+      "weight": 0.503
+    },
+    {
+      "source": "M1403",
+      "target": "M1419",
+      "weight": 0.023
+    },
+    {
+      "source": "M1403",
+      "target": "M113959",
+      "weight": 0.247
+    },
+    {
+      "source": "M1407",
+      "target": "M4550",
+      "weight": 0.474
+    },
+    {
+      "source": "M1407",
+      "target": "M33570",
+      "weight": 0.478
+    },
+    {
+      "source": "M1407",
+      "target": "M1309",
+      "weight": 0.937
+    },
+    {
+      "source": "M1407",
+      "target": "M4545",
+      "weight": 0.949
+    },
+    {
+      "source": "M1407",
+      "target": "M102931",
+      "weight": 0.488
+    },
+    {
+      "source": "M1407",
+      "target": "M4554",
+      "weight": 0.488
+    },
+    {
+      "source": "M1407",
+      "target": "M2081",
+      "weight": 0.92
+    },
+    {
+      "source": "M1407",
+      "target": "M2155",
+      "weight": 0.507
+    },
+    {
+      "source": "M1407",
+      "target": "M2327",
+      "weight": 0.943
+    },
+    {
+      "source": "M1407",
+      "target": "M96955",
+      "weight": 0.505
+    },
+    {
+      "source": "M1407",
+      "target": "M4519",
+      "weight": 0.939
+    },
+    {
+      "source": "M1407",
+      "target": "M2073",
+      "weight": 0.934
+    },
+    {
+      "source": "M1407",
+      "target": "M28508",
+      "weight": 0.474
+    },
+    {
+      "source": "M1407",
+      "target": "M96959",
+      "weight": 0.459
+    },
+    {
+      "source": "M1407",
+      "target": "M1405",
+      "weight": 0.48
+    },
+    {
+      "source": "M1407",
+      "target": "M2173",
+      "weight": 0.915
+    },
+    {
+      "source": "M1407",
+      "target": "M4532",
+      "weight": 0.953
+    },
+    {
+      "source": "M1407",
+      "target": "M2338",
+      "weight": 0.424
+    },
+    {
+      "source": "M1407",
+      "target": "M112620",
+      "weight": 0.522
+    },
+    {
+      "source": "M1407",
+      "target": "M112014",
+      "weight": 0.504
+    },
+    {
+      "source": "M1407",
+      "target": "M1419",
+      "weight": 0.03
+    },
+    {
+      "source": "M1407",
+      "target": "M113959",
+      "weight": 0.225
+    },
+    {
+      "source": "M4550",
+      "target": "M33570",
+      "weight": 0.285
+    },
+    {
+      "source": "M4550",
+      "target": "M1309",
+      "weight": 0.45
+    },
+    {
+      "source": "M4550",
+      "target": "M4545",
+      "weight": 0.482
+    },
+    {
+      "source": "M4550",
+      "target": "M102931",
+      "weight": 0.916
+    },
+    {
+      "source": "M4550",
+      "target": "M4554",
+      "weight": 0.317
+    },
+    {
+      "source": "M4550",
+      "target": "M2081",
+      "weight": 0.455
+    },
+    {
+      "source": "M4550",
+      "target": "M2155",
+      "weight": 0.337
+    },
+    {
+      "source": "M4550",
+      "target": "M2327",
+      "weight": 0.465
+    },
+    {
+      "source": "M4550",
+      "target": "M96955",
+      "weight": 0.296
+    },
+    {
+      "source": "M4550",
+      "target": "M4519",
+      "weight": 0.471
+    },
+    {
+      "source": "M4550",
+      "target": "M2073",
+      "weight": 0.465
+    },
+    {
+      "source": "M4550",
+      "target": "M28508",
+      "weight": 0.848
+    },
+    {
+      "source": "M4550",
+      "target": "M96959",
+      "weight": 0.279
+    },
+    {
+      "source": "M4550",
+      "target": "M1405",
+      "weight": 0.276
+    },
+    {
+      "source": "M4550",
+      "target": "M2173",
+      "weight": 0.439
+    },
+    {
+      "source": "M4550",
+      "target": "M4532",
+      "weight": 0.474
+    },
+    {
+      "source": "M4550",
+      "target": "M2338",
+      "weight": 0.836
+    },
+    {
+      "source": "M4550",
+      "target": "M112620",
+      "weight": 0.294
+    },
+    {
+      "source": "M4550",
+      "target": "M112014",
+      "weight": 0.25
+    },
+    {
+      "source": "M4550",
+      "target": "M113959",
+      "weight": 0.516
+    },
+    {
+      "source": "M33570",
+      "target": "M96919",
+      "weight": 0.156
+    },
+    {
+      "source": "M33570",
+      "target": "M96956",
+      "weight": 0.165
+    },
+    {
+      "source": "M33570",
+      "target": "M1309",
+      "weight": 0.507
+    },
+    {
+      "source": "M33570",
+      "target": "M4545",
+      "weight": 0.49
+    },
+    {
+      "source": "M33570",
+      "target": "M28132",
+      "weight": 0.177
+    },
+    {
+      "source": "M33570",
+      "target": "M102931",
+      "weight": 0.301
+    },
+    {
+      "source": "M33570",
+      "target": "M96954",
+      "weight": 0.021
+    },
+    {
+      "source": "M33570",
+      "target": "M4554",
+      "weight": 0.93
+    },
+    {
+      "source": "M33570",
+      "target": "M2081",
+      "weight": 0.506
+    },
+    {
+      "source": "M33570",
+      "target": "M2155",
+      "weight": 0.945
+    },
+    {
+      "source": "M33570",
+      "target": "M2327",
+      "weight": 0.506
+    },
+    {
+      "source": "M33570",
+      "target": "M96944",
+      "weight": 0.171
+    },
+    {
+      "source": "M33570",
+      "target": "M96949",
+      "weight": 0.172
+    },
+    {
+      "source": "M33570",
+      "target": "M96955",
+      "weight": 0.922
+    },
+    {
+      "source": "M33570",
+      "target": "M1318",
+      "weight": 0.153
+    },
+    {
+      "source": "M33570",
+      "target": "M4553",
+      "weight": 0.169
+    },
+    {
+      "source": "M33570",
+      "target": "M4536",
+      "weight": 0.16
+    },
+    {
+      "source": "M33570",
+      "target": "M4519",
+      "weight": 0.487
+    },
+    {
+      "source": "M33570",
+      "target": "M2073",
+      "weight": 0.472
+    },
+    {
+      "source": "M33570",
+      "target": "M96920",
+      "weight": 0.133
+    },
+    {
+      "source": "M33570",
+      "target": "M28508",
+      "weight": 0.333
+    },
+    {
+      "source": "M33570",
+      "target": "M4513",
+      "weight": 0.162
+    },
+    {
+      "source": "M33570",
+      "target": "M96959",
+      "weight": 0.929
+    },
+    {
+      "source": "M33570",
+      "target": "M1405",
+      "weight": 0.901
+    },
+    {
+      "source": "M33570",
+      "target": "M2173",
+      "weight": 0.506
+    },
+    {
+      "source": "M33570",
+      "target": "M4555",
+      "weight": 0.151
+    },
+    {
+      "source": "M33570",
+      "target": "M2097",
+      "weight": 0.178
+    },
+    {
+      "source": "M33570",
+      "target": "M33569",
+      "weight": 0.161
+    },
+    {
+      "source": "M33570",
+      "target": "M4556",
+      "weight": 0.134
+    },
+    {
+      "source": "M33570",
+      "target": "M96912",
+      "weight": 0.066
+    },
+    {
+      "source": "M33570",
+      "target": "M96951",
+      "weight": 0.005
+    },
+    {
+      "source": "M33570",
+      "target": "M28481",
+      "weight": 0.173
+    },
+    {
+      "source": "M33570",
+      "target": "M4532",
+      "weight": 0.509
+    },
+    {
+      "source": "M33570",
+      "target": "M4537",
+      "weight": 0.143
+    },
+    {
+      "source": "M33570",
+      "target": "M2338",
+      "weight": 0.32
+    },
+    {
+      "source": "M33570",
+      "target": "M112620",
+      "weight": 0.948
+    },
+    {
+      "source": "M33570",
+      "target": "M4540",
+      "weight": 0.13
+    },
+    {
+      "source": "M33570",
+      "target": "M111011",
+      "weight": 0.198
+    },
+    {
+      "source": "M33570",
+      "target": "M112014",
+      "weight": 0.942
+    },
+    {
+      "source": "M33570",
+      "target": "M4542",
+      "weight": 0.214
+    },
+    {
+      "source": "M33570",
+      "target": "M1419",
+      "weight": 0.258
+    },
+    {
+      "source": "M33570",
+      "target": "M2037",
+      "weight": 0.12
+    },
+    {
+      "source": "M33570",
+      "target": "M113959",
+      "weight": 0.062
+    },
+    {
+      "source": "M96919",
+      "target": "M96956",
+      "weight": 0.974
+    },
+    {
+      "source": "M96919",
+      "target": "M28132",
+      "weight": 0.975
+    },
+    {
+      "source": "M96919",
+      "target": "M96954",
+      "weight": 0.81
+    },
+    {
+      "source": "M96919",
+      "target": "M4554",
+      "weight": 0.16
+    },
+    {
+      "source": "M96919",
+      "target": "M2155",
+      "weight": 0.133
+    },
+    {
+      "source": "M96919",
+      "target": "M96944",
+      "weight": 0.971
+    },
+    {
+      "source": "M96919",
+      "target": "M96949",
+      "weight": 0.97
+    },
+    {
+      "source": "M96919",
+      "target": "M96749",
+      "weight": 0.2
+    },
+    {
+      "source": "M96919",
+      "target": "M96955",
+      "weight": 0.179
+    },
+    {
+      "source": "M96919",
+      "target": "M1318",
+      "weight": 0.959
+    },
+    {
+      "source": "M96919",
+      "target": "M4553",
+      "weight": 0.975
+    },
+    {
+      "source": "M96919",
+      "target": "M4536",
+      "weight": 0.975
+    },
+    {
+      "source": "M96919",
+      "target": "M96920",
+      "weight": 0.972
+    },
+    {
+      "source": "M96919",
+      "target": "M4513",
+      "weight": 0.976
+    },
+    {
+      "source": "M96919",
+      "target": "M96959",
+      "weight": 0.181
+    },
+    {
+      "source": "M96919",
+      "target": "M96751",
+      "weight": 0.184
+    },
+    {
+      "source": "M96919",
+      "target": "M1405",
+      "weight": 0.179
+    },
+    {
+      "source": "M96919",
+      "target": "M2173",
+      "weight": 0.006
+    },
+    {
+      "source": "M96919",
+      "target": "M4555",
+      "weight": 0.933
+    },
+    {
+      "source": "M96919",
+      "target": "M96897",
+      "weight": 0.376
+    },
+    {
+      "source": "M96919",
+      "target": "M4516",
+      "weight": 0.52
+    },
+    {
+      "source": "M96919",
+      "target": "M2097",
+      "weight": 0.975
+    },
+    {
+      "source": "M96919",
+      "target": "M33569",
+      "weight": 0.978
+    },
+    {
+      "source": "M96919",
+      "target": "M4556",
+      "weight": 0.937
+    },
+    {
+      "source": "M96919",
+      "target": "M96912",
+      "weight": 0.899
+    },
+    {
+      "source": "M96919",
+      "target": "M96951",
+      "weight": 0.775
+    },
+    {
+      "source": "M96919",
+      "target": "M28481",
+      "weight": 0.976
+    },
+    {
+      "source": "M96919",
+      "target": "M4537",
+      "weight": 0.966
+    },
+    {
+      "source": "M96919",
+      "target": "M28493",
+      "weight": 0.344
+    },
+    {
+      "source": "M96919",
+      "target": "M112620",
+      "weight": 0.152
+    },
+    {
+      "source": "M96919",
+      "target": "M4540",
+      "weight": 0.976
+    },
+    {
+      "source": "M96919",
+      "target": "M111011",
+      "weight": 0.984
+    },
+    {
+      "source": "M96919",
+      "target": "M112014",
+      "weight": 0.178
+    },
+    {
+      "source": "M96919",
+      "target": "M4542",
+      "weight": 0.965
+    },
+    {
+      "source": "M96919",
+      "target": "M1419",
+      "weight": 0.952
+    },
+    {
+      "source": "M96919",
+      "target": "M28506",
+      "weight": 0.402
+    },
+    {
+      "source": "M96919",
+      "target": "M2037",
+      "weight": 0.96
+    },
+    {
+      "source": "M96919",
+      "target": "M96958",
+      "weight": 0.338
+    },
+    {
+      "source": "M96919",
+      "target": "M28497",
+      "weight": 0.347
+    },
+    {
+      "source": "M96956",
+      "target": "M28132",
+      "weight": 0.977
+    },
+    {
+      "source": "M96956",
+      "target": "M96954",
+      "weight": 0.804
+    },
+    {
+      "source": "M96956",
+      "target": "M4554",
+      "weight": 0.156
+    },
+    {
+      "source": "M96956",
+      "target": "M2155",
+      "weight": 0.126
+    },
+    {
+      "source": "M96956",
+      "target": "M2327",
+      "weight": 0.01
+    },
+    {
+      "source": "M96956",
+      "target": "M96944",
+      "weight": 0.979
+    },
+    {
+      "source": "M96956",
+      "target": "M96949",
+      "weight": 0.973
+    },
+    {
+      "source": "M96956",
+      "target": "M96749",
+      "weight": 0.198
+    },
+    {
+      "source": "M96956",
+      "target": "M96955",
+      "weight": 0.188
+    },
+    {
+      "source": "M96956",
+      "target": "M1318",
+      "weight": 0.953
+    },
+    {
+      "source": "M96956",
+      "target": "M4553",
+      "weight": 0.981
+    },
+    {
+      "source": "M96956",
+      "target": "M4536",
+      "weight": 0.971
+    },
+    {
+      "source": "M96956",
+      "target": "M4519",
+      "weight": 0.006
+    },
+    {
+      "source": "M96956",
+      "target": "M96920",
+      "weight": 0.973
+    },
+    {
+      "source": "M96956",
+      "target": "M4513",
+      "weight": 0.975
+    },
+    {
+      "source": "M96956",
+      "target": "M96959",
+      "weight": 0.179
+    },
+    {
+      "source": "M96956",
+      "target": "M96751",
+      "weight": 0.198
+    },
+    {
+      "source": "M96956",
+      "target": "M1405",
+      "weight": 0.191
+    },
+    {
+      "source": "M96956",
+      "target": "M2173",
+      "weight": 0.01
+    },
+    {
+      "source": "M96956",
+      "target": "M4555",
+      "weight": 0.929
+    },
+    {
+      "source": "M96956",
+      "target": "M96897",
+      "weight": 0.375
+    },
+    {
+      "source": "M96956",
+      "target": "M4516",
+      "weight": 0.537
+    },
+    {
+      "source": "M96956",
+      "target": "M2097",
+      "weight": 0.977
+    },
+    {
+      "source": "M96956",
+      "target": "M33569",
+      "weight": 0.982
+    },
+    {
+      "source": "M96956",
+      "target": "M4556",
+      "weight": 0.929
+    },
+    {
+      "source": "M96956",
+      "target": "M96912",
+      "weight": 0.892
+    },
+    {
+      "source": "M96956",
+      "target": "M96951",
+      "weight": 0.763
+    },
+    {
+      "source": "M96956",
+      "target": "M28481",
+      "weight": 0.981
+    },
+    {
+      "source": "M96956",
+      "target": "M4537",
+      "weight": 0.972
+    },
+    {
+      "source": "M96956",
+      "target": "M28493",
+      "weight": 0.343
+    },
+    {
+      "source": "M96956",
+      "target": "M112620",
+      "weight": 0.153
+    },
+    {
+      "source": "M96956",
+      "target": "M4540",
+      "weight": 0.982
+    },
+    {
+      "source": "M96956",
+      "target": "M111011",
+      "weight": 0.985
+    },
+    {
+      "source": "M96956",
+      "target": "M112014",
+      "weight": 0.198
+    },
+    {
+      "source": "M96956",
+      "target": "M4542",
+      "weight": 0.963
+    },
+    {
+      "source": "M96956",
+      "target": "M1419",
+      "weight": 0.959
+    },
+    {
+      "source": "M96956",
+      "target": "M28506",
+      "weight": 0.39
+    },
+    {
+      "source": "M96956",
+      "target": "M2037",
+      "weight": 0.964
+    },
+    {
+      "source": "M96956",
+      "target": "M96958",
+      "weight": 0.341
+    },
+    {
+      "source": "M96956",
+      "target": "M28497",
+      "weight": 0.345
+    },
+    {
+      "source": "M1309",
+      "target": "M4545",
+      "weight": 0.968
+    },
+    {
+      "source": "M1309",
+      "target": "M102931",
+      "weight": 0.473
+    },
+    {
+      "source": "M1309",
+      "target": "M4554",
+      "weight": 0.501
+    },
+    {
+      "source": "M1309",
+      "target": "M2081",
+      "weight": 0.947
+    },
+    {
+      "source": "M1309",
+      "target": "M2155",
+      "weight": 0.514
+    },
+    {
+      "source": "M1309",
+      "target": "M2327",
+      "weight": 0.967
+    },
+    {
+      "source": "M1309",
+      "target": "M96955",
+      "weight": 0.512
+    },
+    {
+      "source": "M1309",
+      "target": "M4519",
+      "weight": 0.966
+    },
+    {
+      "source": "M1309",
+      "target": "M2073",
+      "weight": 0.979
+    },
+    {
+      "source": "M1309",
+      "target": "M28508",
+      "weight": 0.482
+    },
+    {
+      "source": "M1309",
+      "target": "M96959",
+      "weight": 0.484
+    },
+    {
+      "source": "M1309",
+      "target": "M1405",
+      "weight": 0.497
+    },
+    {
+      "source": "M1309",
+      "target": "M2173",
+      "weight": 0.938
+    },
+    {
+      "source": "M1309",
+      "target": "M28481",
+      "weight": 0.015
+    },
+    {
+      "source": "M1309",
+      "target": "M4532",
+      "weight": 0.977
+    },
+    {
+      "source": "M1309",
+      "target": "M4537",
+      "weight": 0.011
+    },
+    {
+      "source": "M1309",
+      "target": "M2338",
+      "weight": 0.458
+    },
+    {
+      "source": "M1309",
+      "target": "M112620",
+      "weight": 0.538
+    },
+    {
+      "source": "M1309",
+      "target": "M111011",
+      "weight": 0.011
+    },
+    {
+      "source": "M1309",
+      "target": "M112014",
+      "weight": 0.516
+    },
+    {
+      "source": "M1309",
+      "target": "M1419",
+      "weight": 0.044
+    },
+    {
+      "source": "M1309",
+      "target": "M2037",
+      "weight": 0.01
+    },
+    {
+      "source": "M1309",
+      "target": "M113959",
+      "weight": 0.243
+    },
+    {
+      "source": "M4545",
+      "target": "M102931",
+      "weight": 0.515
+    },
+    {
+      "source": "M4545",
+      "target": "M4554",
+      "weight": 0.495
+    },
+    {
+      "source": "M4545",
+      "target": "M2081",
+      "weight": 0.942
+    },
+    {
+      "source": "M4545",
+      "target": "M2155",
+      "weight": 0.508
+    },
+    {
+      "source": "M4545",
+      "target": "M2327",
+      "weight": 0.966
+    },
+    {
+      "source": "M4545",
+      "target": "M96955",
+      "weight": 0.505
+    },
+    {
+      "source": "M4545",
+      "target": "M4519",
+      "weight": 0.96
+    },
+    {
+      "source": "M4545",
+      "target": "M2073",
+      "weight": 0.963
+    },
+    {
+      "source": "M4545",
+      "target": "M28508",
+      "weight": 0.502
+    },
+    {
+      "source": "M4545",
+      "target": "M96959",
+      "weight": 0.477
+    },
+    {
+      "source": "M4545",
+      "target": "M1405",
+      "weight": 0.489
+    },
+    {
+      "source": "M4545",
+      "target": "M2173",
+      "weight": 0.937
+    },
+    {
+      "source": "M4545",
+      "target": "M4532",
+      "weight": 0.969
+    },
+    {
+      "source": "M4545",
+      "target": "M2338",
+      "weight": 0.484
+    },
+    {
+      "source": "M4545",
+      "target": "M112620",
+      "weight": 0.522
+    },
+    {
+      "source": "M4545",
+      "target": "M112014",
+      "weight": 0.494
+    },
+    {
+      "source": "M4545",
+      "target": "M1419",
+      "weight": 0.022
+    },
+    {
+      "source": "M4545",
+      "target": "M113959",
+      "weight": 0.257
+    },
+    {
+      "source": "M28132",
+      "target": "M96954",
+      "weight": 0.809
+    },
+    {
+      "source": "M28132",
+      "target": "M4554",
+      "weight": 0.164
+    },
+    {
+      "source": "M28132",
+      "target": "M2155",
+      "weight": 0.139
+    },
+    {
+      "source": "M28132",
+      "target": "M2327",
+      "weight": 0.023
+    },
+    {
+      "source": "M28132",
+      "target": "M96944",
+      "weight": 0.974
+    },
+    {
+      "source": "M28132",
+      "target": "M96949",
+      "weight": 0.966
+    },
+    {
+      "source": "M28132",
+      "target": "M96749",
+      "weight": 0.209
+    },
+    {
+      "source": "M28132",
+      "target": "M96955",
+      "weight": 0.18
+    },
+    {
+      "source": "M28132",
+      "target": "M1318",
+      "weight": 0.955
+    },
+    {
+      "source": "M28132",
+      "target": "M4553",
+      "weight": 0.974
+    },
+    {
+      "source": "M28132",
+      "target": "M4536",
+      "weight": 0.979
+    },
+    {
+      "source": "M28132",
+      "target": "M4519",
+      "weight": 0.012
+    },
+    {
+      "source": "M28132",
+      "target": "M2073",
+      "weight": 0.003
+    },
+    {
+      "source": "M28132",
+      "target": "M96920",
+      "weight": 0.976
+    },
+    {
+      "source": "M28132",
+      "target": "M4513",
+      "weight": 0.979
+    },
+    {
+      "source": "M28132",
+      "target": "M96959",
+      "weight": 0.195
+    },
+    {
+      "source": "M28132",
+      "target": "M96751",
+      "weight": 0.19
+    },
+    {
+      "source": "M28132",
+      "target": "M1405",
+      "weight": 0.188
+    },
+    {
+      "source": "M28132",
+      "target": "M2173",
+      "weight": 0.004
+    },
+    {
+      "source": "M28132",
+      "target": "M4555",
+      "weight": 0.928
+    },
+    {
+      "source": "M28132",
+      "target": "M96897",
+      "weight": 0.364
+    },
+    {
+      "source": "M28132",
+      "target": "M4516",
+      "weight": 0.539
+    },
+    {
+      "source": "M28132",
+      "target": "M2097",
+      "weight": 0.983
+    },
+    {
+      "source": "M28132",
+      "target": "M33569",
+      "weight": 0.978
+    },
+    {
+      "source": "M28132",
+      "target": "M4556",
+      "weight": 0.939
+    },
+    {
+      "source": "M28132",
+      "target": "M96912",
+      "weight": 0.9
+    },
+    {
+      "source": "M28132",
+      "target": "M96951",
+      "weight": 0.768
+    },
+    {
+      "source": "M28132",
+      "target": "M28481",
+      "weight": 0.975
+    },
+    {
+      "source": "M28132",
+      "target": "M4532",
+      "weight": 0.01
+    },
+    {
+      "source": "M28132",
+      "target": "M4537",
+      "weight": 0.981
+    },
+    {
+      "source": "M28132",
+      "target": "M28493",
+      "weight": 0.334
+    },
+    {
+      "source": "M28132",
+      "target": "M112620",
+      "weight": 0.162
+    },
+    {
+      "source": "M28132",
+      "target": "M4540",
+      "weight": 0.989
+    },
+    {
+      "source": "M28132",
+      "target": "M111011",
+      "weight": 0.983
+    },
+    {
+      "source": "M28132",
+      "target": "M112014",
+      "weight": 0.208
+    },
+    {
+      "source": "M28132",
+      "target": "M4542",
+      "weight": 0.967
+    },
+    {
+      "source": "M28132",
+      "target": "M1419",
+      "weight": 0.958
+    },
+    {
+      "source": "M28132",
+      "target": "M28506",
+      "weight": 0.374
+    },
+    {
+      "source": "M28132",
+      "target": "M2037",
+      "weight": 0.965
+    },
+    {
+      "source": "M28132",
+      "target": "M96958",
+      "weight": 0.328
+    },
+    {
+      "source": "M28132",
+      "target": "M28497",
+      "weight": 0.329
+    },
+    {
+      "source": "M102931",
+      "target": "M4554",
+      "weight": 0.328
+    },
+    {
+      "source": "M102931",
+      "target": "M2081",
+      "weight": 0.478
+    },
+    {
+      "source": "M102931",
+      "target": "M2155",
+      "weight": 0.344
+    },
+    {
+      "source": "M102931",
+      "target": "M2327",
+      "weight": 0.476
+    },
+    {
+      "source": "M102931",
+      "target": "M96955",
+      "weight": 0.314
+    },
+    {
+      "source": "M102931",
+      "target": "M4519",
+      "weight": 0.495
+    },
+    {
+      "source": "M102931",
+      "target": "M2073",
+      "weight": 0.483
+    },
+    {
+      "source": "M102931",
+      "target": "M28508",
+      "weight": 0.784
+    },
+    {
+      "source": "M102931",
+      "target": "M96959",
+      "weight": 0.295
+    },
+    {
+      "source": "M102931",
+      "target": "M1405",
+      "weight": 0.315
+    },
+    {
+      "source": "M102931",
+      "target": "M2173",
+      "weight": 0.449
+    },
+    {
+      "source": "M102931",
+      "target": "M4532",
+      "weight": 0.494
+    },
+    {
+      "source": "M102931",
+      "target": "M2338",
+      "weight": 0.748
+    },
+    {
+      "source": "M102931",
+      "target": "M112620",
+      "weight": 0.315
+    },
+    {
+      "source": "M102931",
+      "target": "M112014",
+      "weight": 0.301
+    },
+    {
+      "source": "M102931",
+      "target": "M113959",
+      "weight": 0.472
+    },
+    {
+      "source": "M96954",
+      "target": "M4554",
+      "weight": 0.015
+    },
+    {
+      "source": "M96954",
+      "target": "M96944",
+      "weight": 0.812
+    },
+    {
+      "source": "M96954",
+      "target": "M96949",
+      "weight": 0.804
+    },
+    {
+      "source": "M96954",
+      "target": "M96749",
+      "weight": 0.323
+    },
+    {
+      "source": "M96954",
+      "target": "M96955",
+      "weight": 0.026
+    },
+    {
+      "source": "M96954",
+      "target": "M1318",
+      "weight": 0.769
+    },
+    {
+      "source": "M96954",
+      "target": "M4553",
+      "weight": 0.801
+    },
+    {
+      "source": "M96954",
+      "target": "M4536",
+      "weight": 0.794
+    },
+    {
+      "source": "M96954",
+      "target": "M96920",
+      "weight": 0.815
+    },
+    {
+      "source": "M96954",
+      "target": "M4513",
+      "weight": 0.815
+    },
+    {
+      "source": "M96954",
+      "target": "M96959",
+      "weight": 0.027
+    },
+    {
+      "source": "M96954",
+      "target": "M96751",
+      "weight": 0.312
+    },
+    {
+      "source": "M96954",
+      "target": "M1405",
+      "weight": 0.029
+    },
+    {
+      "source": "M96954",
+      "target": "M4555",
+      "weight": 0.808
+    },
+    {
+      "source": "M96954",
+      "target": "M96897",
+      "weight": 0.583
+    },
+    {
+      "source": "M96954",
+      "target": "M4516",
+      "weight": 0.485
+    },
+    {
+      "source": "M96954",
+      "target": "M2097",
+      "weight": 0.795
+    },
+    {
+      "source": "M96954",
+      "target": "M33569",
+      "weight": 0.833
+    },
+    {
+      "source": "M96954",
+      "target": "M4556",
+      "weight": 0.82
+    },
+    {
+      "source": "M96954",
+      "target": "M96912",
+      "weight": 0.876
+    },
+    {
+      "source": "M96954",
+      "target": "M96951",
+      "weight": 0.86
+    },
+    {
+      "source": "M96954",
+      "target": "M28481",
+      "weight": 0.798
+    },
+    {
+      "source": "M96954",
+      "target": "M4537",
+      "weight": 0.803
+    },
+    {
+      "source": "M96954",
+      "target": "M28493",
+      "weight": 0.564
+    },
+    {
+      "source": "M96954",
+      "target": "M112620",
+      "weight": 0.073
+    },
+    {
+      "source": "M96954",
+      "target": "M4540",
+      "weight": 0.805
+    },
+    {
+      "source": "M96954",
+      "target": "M111011",
+      "weight": 0.926
+    },
+    {
+      "source": "M96954",
+      "target": "M112014",
+      "weight": 0.12
+    },
+    {
+      "source": "M96954",
+      "target": "M4542",
+      "weight": 0.792
+    },
+    {
+      "source": "M96954",
+      "target": "M1419",
+      "weight": 0.75
+    },
+    {
+      "source": "M96954",
+      "target": "M28506",
+      "weight": 0.53
+    },
+    {
+      "source": "M96954",
+      "target": "M2037",
+      "weight": 0.765
+    },
+    {
+      "source": "M96954",
+      "target": "M96958",
+      "weight": 0.566
+    },
+    {
+      "source": "M96954",
+      "target": "M28497",
+      "weight": 0.575
+    },
+    {
+      "source": "M4554",
+      "target": "M2081",
+      "weight": 0.507
+    },
+    {
+      "source": "M4554",
+      "target": "M2155",
+      "weight": 0.908
+    },
+    {
+      "source": "M4554",
+      "target": "M2327",
+      "weight": 0.505
+    },
+    {
+      "source": "M4554",
+      "target": "M96944",
+      "weight": 0.16
+    },
+    {
+      "source": "M4554",
+      "target": "M96949",
+      "weight": 0.165
+    },
+    {
+      "source": "M4554",
+      "target": "M96955",
+      "weight": 0.906
+    },
+    {
+      "source": "M4554",
+      "target": "M1318",
+      "weight": 0.141
+    },
+    {
+      "source": "M4554",
+      "target": "M4553",
+      "weight": 0.161
+    },
+    {
+      "source": "M4554",
+      "target": "M4536",
+      "weight": 0.155
+    },
+    {
+      "source": "M4554",
+      "target": "M4519",
+      "weight": 0.487
+    },
+    {
+      "source": "M4554",
+      "target": "M2073",
+      "weight": 0.478
+    },
+    {
+      "source": "M4554",
+      "target": "M96920",
+      "weight": 0.126
+    },
+    {
+      "source": "M4554",
+      "target": "M28508",
+      "weight": 0.35
+    },
+    {
+      "source": "M4554",
+      "target": "M4513",
+      "weight": 0.163
+    },
+    {
+      "source": "M4554",
+      "target": "M96959",
+      "weight": 0.902
+    },
+    {
+      "source": "M4554",
+      "target": "M1405",
+      "weight": 0.866
+    },
+    {
+      "source": "M4554",
+      "target": "M2173",
+      "weight": 0.515
+    },
+    {
+      "source": "M4554",
+      "target": "M4555",
+      "weight": 0.146
+    },
+    {
+      "source": "M4554",
+      "target": "M2097",
+      "weight": 0.194
+    },
+    {
+      "source": "M4554",
+      "target": "M33569",
+      "weight": 0.163
+    },
+    {
+      "source": "M4554",
+      "target": "M4556",
+      "weight": 0.131
+    },
+    {
+      "source": "M4554",
+      "target": "M96912",
+      "weight": 0.046
+    },
+    {
+      "source": "M4554",
+      "target": "M28481",
+      "weight": 0.172
+    },
+    {
+      "source": "M4554",
+      "target": "M4532",
+      "weight": 0.51
+    },
+    {
+      "source": "M4554",
+      "target": "M4537",
+      "weight": 0.126
+    },
+    {
+      "source": "M4554",
+      "target": "M2338",
+      "weight": 0.351
+    },
+    {
+      "source": "M4554",
+      "target": "M112620",
+      "weight": 0.925
+    },
+    {
+      "source": "M4554",
+      "target": "M4540",
+      "weight": 0.117
+    },
+    {
+      "source": "M4554",
+      "target": "M111011",
+      "weight": 0.174
+    },
+    {
+      "source": "M4554",
+      "target": "M112014",
+      "weight": 0.926
+    },
+    {
+      "source": "M4554",
+      "target": "M4542",
+      "weight": 0.209
+    },
+    {
+      "source": "M4554",
+      "target": "M1419",
+      "weight": 0.254
+    },
+    {
+      "source": "M4554",
+      "target": "M2037",
+      "weight": 0.129
+    },
+    {
+      "source": "M4554",
+      "target": "M113959",
+      "weight": 0.061
+    },
+    {
+      "source": "M2081",
+      "target": "M2155",
+      "weight": 0.516
+    },
+    {
+      "source": "M2081",
+      "target": "M2327",
+      "weight": 0.937
+    },
+    {
+      "source": "M2081",
+      "target": "M96955",
+      "weight": 0.512
+    },
+    {
+      "source": "M2081",
+      "target": "M4519",
+      "weight": 0.932
+    },
+    {
+      "source": "M2081",
+      "target": "M2073",
+      "weight": 0.934
+    },
+    {
+      "source": "M2081",
+      "target": "M28508",
+      "weight": 0.481
+    },
+    {
+      "source": "M2081",
+      "target": "M96959",
+      "weight": 0.48
+    },
+    {
+      "source": "M2081",
+      "target": "M1405",
+      "weight": 0.499
+    },
+    {
+      "source": "M2081",
+      "target": "M2173",
+      "weight": 0.909
+    },
+    {
+      "source": "M2081",
+      "target": "M4532",
+      "weight": 0.942
+    },
+    {
+      "source": "M2081",
+      "target": "M2338",
+      "weight": 0.444
+    },
+    {
+      "source": "M2081",
+      "target": "M112620",
+      "weight": 0.531
+    },
+    {
+      "source": "M2081",
+      "target": "M112014",
+      "weight": 0.504
+    },
+    {
+      "source": "M2081",
+      "target": "M1419",
+      "weight": 0.037
+    },
+    {
+      "source": "M2081",
+      "target": "M113959",
+      "weight": 0.22
+    },
+    {
+      "source": "M2155",
+      "target": "M2327",
+      "weight": 0.513
+    },
+    {
+      "source": "M2155",
+      "target": "M96944",
+      "weight": 0.131
+    },
+    {
+      "source": "M2155",
+      "target": "M96949",
+      "weight": 0.143
+    },
+    {
+      "source": "M2155",
+      "target": "M96955",
+      "weight": 0.94
+    },
+    {
+      "source": "M2155",
+      "target": "M1318",
+      "weight": 0.117
+    },
+    {
+      "source": "M2155",
+      "target": "M4553",
+      "weight": 0.13
+    },
+    {
+      "source": "M2155",
+      "target": "M4536",
+      "weight": 0.125
+    },
+    {
+      "source": "M2155",
+      "target": "M4519",
+      "weight": 0.5
+    },
+    {
+      "source": "M2155",
+      "target": "M2073",
+      "weight": 0.48
+    },
+    {
+      "source": "M2155",
+      "target": "M96920",
+      "weight": 0.091
+    },
+    {
+      "source": "M2155",
+      "target": "M28508",
+      "weight": 0.34
+    },
+    {
+      "source": "M2155",
+      "target": "M4513",
+      "weight": 0.129
+    },
+    {
+      "source": "M2155",
+      "target": "M96959",
+      "weight": 0.917
+    },
+    {
+      "source": "M2155",
+      "target": "M1405",
+      "weight": 0.904
+    },
+    {
+      "source": "M2155",
+      "target": "M2173",
+      "weight": 0.535
+    },
+    {
+      "source": "M2155",
+      "target": "M4555",
+      "weight": 0.11
+    },
+    {
+      "source": "M2155",
+      "target": "M2097",
+      "weight": 0.149
+    },
+    {
+      "source": "M2155",
+      "target": "M33569",
+      "weight": 0.124
+    },
+    {
+      "source": "M2155",
+      "target": "M4556",
+      "weight": 0.109
+    },
+    {
+      "source": "M2155",
+      "target": "M96912",
+      "weight": 0.026
+    },
+    {
+      "source": "M2155",
+      "target": "M28481",
+      "weight": 0.156
+    },
+    {
+      "source": "M2155",
+      "target": "M4532",
+      "weight": 0.521
+    },
+    {
+      "source": "M2155",
+      "target": "M4537",
+      "weight": 0.107
+    },
+    {
+      "source": "M2155",
+      "target": "M2338",
+      "weight": 0.33
+    },
+    {
+      "source": "M2155",
+      "target": "M112620",
+      "weight": 0.964
+    },
+    {
+      "source": "M2155",
+      "target": "M4540",
+      "weight": 0.086
+    },
+    {
+      "source": "M2155",
+      "target": "M111011",
+      "weight": 0.165
+    },
+    {
+      "source": "M2155",
+      "target": "M112014",
+      "weight": 0.953
+    },
+    {
+      "source": "M2155",
+      "target": "M4542",
+      "weight": 0.163
+    },
+    {
+      "source": "M2155",
+      "target": "M1419",
+      "weight": 0.221
+    },
+    {
+      "source": "M2155",
+      "target": "M2037",
+      "weight": 0.08
+    },
+    {
+      "source": "M2155",
+      "target": "M113959",
+      "weight": 0.103
+    },
+    {
+      "source": "M2327",
+      "target": "M96949",
+      "weight": 0.002
+    },
+    {
+      "source": "M2327",
+      "target": "M96955",
+      "weight": 0.514
+    },
+    {
+      "source": "M2327",
+      "target": "M4519",
+      "weight": 0.964
+    },
+    {
+      "source": "M2327",
+      "target": "M2073",
+      "weight": 0.957
+    },
+    {
+      "source": "M2327",
+      "target": "M28508",
+      "weight": 0.483
+    },
+    {
+      "source": "M2327",
+      "target": "M96959",
+      "weight": 0.488
+    },
+    {
+      "source": "M2327",
+      "target": "M1405",
+      "weight": 0.498
+    },
+    {
+      "source": "M2327",
+      "target": "M2173",
+      "weight": 0.929
+    },
+    {
+      "source": "M2327",
+      "target": "M2097",
+      "weight": 0.028
+    },
+    {
+      "source": "M2327",
+      "target": "M28481",
+      "weight": 0.021
+    },
+    {
+      "source": "M2327",
+      "target": "M4532",
+      "weight": 0.962
+    },
+    {
+      "source": "M2327",
+      "target": "M4537",
+      "weight": 0.006
+    },
+    {
+      "source": "M2327",
+      "target": "M2338",
+      "weight": 0.458
+    },
+    {
+      "source": "M2327",
+      "target": "M112620",
+      "weight": 0.542
+    },
+    {
+      "source": "M2327",
+      "target": "M4540",
+      "weight": 0.007
+    },
+    {
+      "source": "M2327",
+      "target": "M111011",
+      "weight": 0.003
+    },
+    {
+      "source": "M2327",
+      "target": "M112014",
+      "weight": 0.509
+    },
+    {
+      "source": "M2327",
+      "target": "M1419",
+      "weight": 0.054
+    },
+    {
+      "source": "M2327",
+      "target": "M2037",
+      "weight": 0.022
+    },
+    {
+      "source": "M2327",
+      "target": "M113959",
+      "weight": 0.253
+    },
+    {
+      "source": "M96944",
+      "target": "M96949",
+      "weight": 0.966
+    },
+    {
+      "source": "M96944",
+      "target": "M96749",
+      "weight": 0.207
+    },
+    {
+      "source": "M96944",
+      "target": "M96955",
+      "weight": 0.197
+    },
+    {
+      "source": "M96944",
+      "target": "M1318",
+      "weight": 0.954
+    },
+    {
+      "source": "M96944",
+      "target": "M4553",
+      "weight": 0.973
+    },
+    {
+      "source": "M96944",
+      "target": "M4536",
+      "weight": 0.968
+    },
+    {
+      "source": "M96944",
+      "target": "M4519",
+      "weight": 0.003
+    },
+    {
+      "source": "M96944",
+      "target": "M96920",
+      "weight": 0.971
+    },
+    {
+      "source": "M96944",
+      "target": "M4513",
+      "weight": 0.97
+    },
+    {
+      "source": "M96944",
+      "target": "M96959",
+      "weight": 0.183
+    },
+    {
+      "source": "M96944",
+      "target": "M96751",
+      "weight": 0.195
+    },
+    {
+      "source": "M96944",
+      "target": "M1405",
+      "weight": 0.193
+    },
+    {
+      "source": "M96944",
+      "target": "M4555",
+      "weight": 0.926
+    },
+    {
+      "source": "M96944",
+      "target": "M96897",
+      "weight": 0.382
+    },
+    {
+      "source": "M96944",
+      "target": "M4516",
+      "weight": 0.529
+    },
+    {
+      "source": "M96944",
+      "target": "M2097",
+      "weight": 0.973
+    },
+    {
+      "source": "M96944",
+      "target": "M33569",
+      "weight": 0.977
+    },
+    {
+      "source": "M96944",
+      "target": "M4556",
+      "weight": 0.938
+    },
+    {
+      "source": "M96944",
+      "target": "M96912",
+      "weight": 0.892
+    },
+    {
+      "source": "M96944",
+      "target": "M96951",
+      "weight": 0.792
+    },
+    {
+      "source": "M96944",
+      "target": "M28481",
+      "weight": 0.973
+    },
+    {
+      "source": "M96944",
+      "target": "M4537",
+      "weight": 0.969
+    },
+    {
+      "source": "M96944",
+      "target": "M28493",
+      "weight": 0.348
+    },
+    {
+      "source": "M96944",
+      "target": "M112620",
+      "weight": 0.144
+    },
+    {
+      "source": "M96944",
+      "target": "M4540",
+      "weight": 0.981
+    },
+    {
+      "source": "M96944",
+      "target": "M111011",
+      "weight": 0.983
+    },
+    {
+      "source": "M96944",
+      "target": "M112014",
+      "weight": 0.2
+    },
+    {
+      "source": "M96944",
+      "target": "M4542",
+      "weight": 0.972
+    },
+    {
+      "source": "M96944",
+      "target": "M1419",
+      "weight": 0.95
+    },
+    {
+      "source": "M96944",
+      "target": "M28506",
+      "weight": 0.398
+    },
+    {
+      "source": "M96944",
+      "target": "M2037",
+      "weight": 0.961
+    },
+    {
+      "source": "M96944",
+      "target": "M96958",
+      "weight": 0.364
+    },
+    {
+      "source": "M96944",
+      "target": "M28497",
+      "weight": 0.361
+    },
+    {
+      "source": "M96949",
+      "target": "M96749",
+      "weight": 0.188
+    },
+    {
+      "source": "M96949",
+      "target": "M96955",
+      "weight": 0.199
+    },
+    {
+      "source": "M96949",
+      "target": "M1318",
+      "weight": 0.941
+    },
+    {
+      "source": "M96949",
+      "target": "M4553",
+      "weight": 0.974
+    },
+    {
+      "source": "M96949",
+      "target": "M4536",
+      "weight": 0.965
+    },
+    {
+      "source": "M96949",
+      "target": "M96920",
+      "weight": 0.962
+    },
+    {
+      "source": "M96949",
+      "target": "M4513",
+      "weight": 0.969
+    },
+    {
+      "source": "M96949",
+      "target": "M96959",
+      "weight": 0.19
+    },
+    {
+      "source": "M96949",
+      "target": "M96751",
+      "weight": 0.174
+    },
+    {
+      "source": "M96949",
+      "target": "M1405",
+      "weight": 0.193
+    },
+    {
+      "source": "M96949",
+      "target": "M2173",
+      "weight": 0.018
+    },
+    {
+      "source": "M96949",
+      "target": "M4555",
+      "weight": 0.924
+    },
+    {
+      "source": "M96949",
+      "target": "M96897",
+      "weight": 0.362
+    },
+    {
+      "source": "M96949",
+      "target": "M4516",
+      "weight": 0.509
+    },
+    {
+      "source": "M96949",
+      "target": "M2097",
+      "weight": 0.971
+    },
+    {
+      "source": "M96949",
+      "target": "M33569",
+      "weight": 0.972
+    },
+    {
+      "source": "M96949",
+      "target": "M4556",
+      "weight": 0.929
+    },
+    {
+      "source": "M96949",
+      "target": "M96912",
+      "weight": 0.883
+    },
+    {
+      "source": "M96949",
+      "target": "M96951",
+      "weight": 0.761
+    },
+    {
+      "source": "M96949",
+      "target": "M28481",
+      "weight": 0.972
+    },
+    {
+      "source": "M96949",
+      "target": "M4537",
+      "weight": 0.958
+    },
+    {
+      "source": "M96949",
+      "target": "M28493",
+      "weight": 0.326
+    },
+    {
+      "source": "M96949",
+      "target": "M112620",
+      "weight": 0.151
+    },
+    {
+      "source": "M96949",
+      "target": "M4540",
+      "weight": 0.969
+    },
+    {
+      "source": "M96949",
+      "target": "M111011",
+      "weight": 0.978
+    },
+    {
+      "source": "M96949",
+      "target": "M112014",
+      "weight": 0.199
+    },
+    {
+      "source": "M96949",
+      "target": "M4542",
+      "weight": 0.957
+    },
+    {
+      "source": "M96949",
+      "target": "M1419",
+      "weight": 0.955
+    },
+    {
+      "source": "M96949",
+      "target": "M28506",
+      "weight": 0.383
+    },
+    {
+      "source": "M96949",
+      "target": "M2037",
+      "weight": 0.964
+    },
+    {
+      "source": "M96949",
+      "target": "M96958",
+      "weight": 0.328
+    },
+    {
+      "source": "M96949",
+      "target": "M28497",
+      "weight": 0.341
+    },
+    {
+      "source": "M96749",
+      "target": "M1318",
+      "weight": 0.217
+    },
+    {
+      "source": "M96749",
+      "target": "M4553",
+      "weight": 0.202
+    },
+    {
+      "source": "M96749",
+      "target": "M4536",
+      "weight": 0.202
+    },
+    {
+      "source": "M96749",
+      "target": "M96920",
+      "weight": 0.227
+    },
+    {
+      "source": "M96749",
+      "target": "M4513",
+      "weight": 0.187
+    },
+    {
+      "source": "M96749",
+      "target": "M96751",
+      "weight": 0.92
+    },
+    {
+      "source": "M96749",
+      "target": "M4555",
+      "weight": 0.184
+    },
+    {
+      "source": "M96749",
+      "target": "M96897",
+      "weight": 0.574
+    },
+    {
+      "source": "M96749",
+      "target": "M4516",
+      "weight": 0.505
+    },
+    {
+      "source": "M96749",
+      "target": "M2097",
+      "weight": 0.217
+    },
+    {
+      "source": "M96749",
+      "target": "M33569",
+      "weight": 0.191
+    },
+    {
+      "source": "M96749",
+      "target": "M4556",
+      "weight": 0.237
+    },
+    {
+      "source": "M96749",
+      "target": "M96912",
+      "weight": 0.264
+    },
+    {
+      "source": "M96749",
+      "target": "M96951",
+      "weight": 0.375
+    },
+    {
+      "source": "M96749",
+      "target": "M28481",
+      "weight": 0.207
+    },
+    {
+      "source": "M96749",
+      "target": "M4537",
+      "weight": 0.205
+    },
+    {
+      "source": "M96749",
+      "target": "M28493",
+      "weight": 0.579
+    },
+    {
+      "source": "M96749",
+      "target": "M4540",
+      "weight": 0.237
+    },
+    {
+      "source": "M96749",
+      "target": "M111011",
+      "weight": 0.182
+    },
+    {
+      "source": "M96749",
+      "target": "M4542",
+      "weight": 0.16
+    },
+    {
+      "source": "M96749",
+      "target": "M1419",
+      "weight": 0.145
+    },
+    {
+      "source": "M96749",
+      "target": "M28506",
+      "weight": 0.546
+    },
+    {
+      "source": "M96749",
+      "target": "M2037",
+      "weight": 0.188
+    },
+    {
+      "source": "M96749",
+      "target": "M96958",
+      "weight": 0.554
+    },
+    {
+      "source": "M96749",
+      "target": "M28497",
+      "weight": 0.571
+    },
+    {
+      "source": "M96955",
+      "target": "M1318",
+      "weight": 0.174
+    },
+    {
+      "source": "M96955",
+      "target": "M4553",
+      "weight": 0.202
+    },
+    {
+      "source": "M96955",
+      "target": "M4536",
+      "weight": 0.185
+    },
+    {
+      "source": "M96955",
+      "target": "M4519",
+      "weight": 0.504
+    },
+    {
+      "source": "M96955",
+      "target": "M2073",
+      "weight": 0.482
+    },
+    {
+      "source": "M96955",
+      "target": "M96920",
+      "weight": 0.165
+    },
+    {
+      "source": "M96955",
+      "target": "M28508",
+      "weight": 0.326
+    },
+    {
+      "source": "M96955",
+      "target": "M4513",
+      "weight": 0.18
+    },
+    {
+      "source": "M96955",
+      "target": "M96959",
+      "weight": 0.911
+    },
+    {
+      "source": "M96955",
+      "target": "M1405",
+      "weight": 0.883
+    },
+    {
+      "source": "M96955",
+      "target": "M2173",
+      "weight": 0.517
+    },
+    {
+      "source": "M96955",
+      "target": "M4555",
+      "weight": 0.172
+    },
+    {
+      "source": "M96955",
+      "target": "M2097",
+      "weight": 0.202
+    },
+    {
+      "source": "M96955",
+      "target": "M33569",
+      "weight": 0.189
+    },
+    {
+      "source": "M96955",
+      "target": "M4556",
+      "weight": 0.171
+    },
+    {
+      "source": "M96955",
+      "target": "M96912",
+      "weight": 0.088
+    },
+    {
+      "source": "M96955",
+      "target": "M96951",
+      "weight": 0.033
+    },
+    {
+      "source": "M96955",
+      "target": "M28481",
+      "weight": 0.214
+    },
+    {
+      "source": "M96955",
+      "target": "M4532",
+      "weight": 0.517
+    },
+    {
+      "source": "M96955",
+      "target": "M4537",
+      "weight": 0.17
+    },
+    {
+      "source": "M96955",
+      "target": "M2338",
+      "weight": 0.33
+    },
+    {
+      "source": "M96955",
+      "target": "M112620",
+      "weight": 0.948
+    },
+    {
+      "source": "M96955",
+      "target": "M4540",
+      "weight": 0.138
+    },
+    {
+      "source": "M96955",
+      "target": "M111011",
+      "weight": 0.205
+    },
+    {
+      "source": "M96955",
+      "target": "M112014",
+      "weight": 0.932
+    },
+    {
+      "source": "M96955",
+      "target": "M4542",
+      "weight": 0.217
+    },
+    {
+      "source": "M96955",
+      "target": "M1419",
+      "weight": 0.262
+    },
+    {
+      "source": "M96955",
+      "target": "M2037",
+      "weight": 0.141
+    },
+    {
+      "source": "M96955",
+      "target": "M113959",
+      "weight": 0.036
+    },
+    {
+      "source": "M1318",
+      "target": "M4553",
+      "weight": 0.951
+    },
+    {
+      "source": "M1318",
+      "target": "M4536",
+      "weight": 0.957
+    },
+    {
+      "source": "M1318",
+      "target": "M4519",
+      "weight": 0.003
+    },
+    {
+      "source": "M1318",
+      "target": "M96920",
+      "weight": 0.963
+    },
+    {
+      "source": "M1318",
+      "target": "M4513",
+      "weight": 0.951
+    },
+    {
+      "source": "M1318",
+      "target": "M96959",
+      "weight": 0.158
+    },
+    {
+      "source": "M1318",
+      "target": "M96751",
+      "weight": 0.202
+    },
+    {
+      "source": "M1318",
+      "target": "M1405",
+      "weight": 0.187
+    },
+    {
+      "source": "M1318",
+      "target": "M2173",
+      "weight": 0.012
+    },
+    {
+      "source": "M1318",
+      "target": "M4555",
+      "weight": 0.905
+    },
+    {
+      "source": "M1318",
+      "target": "M96897",
+      "weight": 0.383
+    },
+    {
+      "source": "M1318",
+      "target": "M4516",
+      "weight": 0.548
+    },
+    {
+      "source": "M1318",
+      "target": "M2097",
+      "weight": 0.947
+    },
+    {
+      "source": "M1318",
+      "target": "M33569",
+      "weight": 0.948
+    },
+    {
+      "source": "M1318",
+      "target": "M4556",
+      "weight": 0.912
+    },
+    {
+      "source": "M1318",
+      "target": "M96912",
+      "weight": 0.859
+    },
+    {
+      "source": "M1318",
+      "target": "M96951",
+      "weight": 0.769
+    },
+    {
+      "source": "M1318",
+      "target": "M28481",
+      "weight": 0.952
+    },
+    {
+      "source": "M1318",
+      "target": "M4537",
+      "weight": 0.944
+    },
+    {
+      "source": "M1318",
+      "target": "M28493",
+      "weight": 0.352
+    },
+    {
+      "source": "M1318",
+      "target": "M112620",
+      "weight": 0.122
+    },
+    {
+      "source": "M1318",
+      "target": "M4540",
+      "weight": 0.956
+    },
+    {
+      "source": "M1318",
+      "target": "M111011",
+      "weight": 0.962
+    },
+    {
+      "source": "M1318",
+      "target": "M112014",
+      "weight": 0.169
+    },
+    {
+      "source": "M1318",
+      "target": "M4542",
+      "weight": 0.945
+    },
+    {
+      "source": "M1318",
+      "target": "M1419",
+      "weight": 0.931
+    },
+    {
+      "source": "M1318",
+      "target": "M28506",
+      "weight": 0.404
+    },
+    {
+      "source": "M1318",
+      "target": "M2037",
+      "weight": 0.942
+    },
+    {
+      "source": "M1318",
+      "target": "M96958",
+      "weight": 0.349
+    },
+    {
+      "source": "M1318",
+      "target": "M28497",
+      "weight": 0.358
+    },
+    {
+      "source": "M4553",
+      "target": "M4536",
+      "weight": 0.967
+    },
+    {
+      "source": "M4553",
+      "target": "M96920",
+      "weight": 0.969
+    },
+    {
+      "source": "M4553",
+      "target": "M4513",
+      "weight": 0.971
+    },
+    {
+      "source": "M4553",
+      "target": "M96959",
+      "weight": 0.18
+    },
+    {
+      "source": "M4553",
+      "target": "M96751",
+      "weight": 0.184
+    },
+    {
+      "source": "M4553",
+      "target": "M1405",
+      "weight": 0.182
+    },
+    {
+      "source": "M4553",
+      "target": "M4555",
+      "weight": 0.93
+    },
+    {
+      "source": "M4553",
+      "target": "M96897",
+      "weight": 0.368
+    },
+    {
+      "source": "M4553",
+      "target": "M4516",
+      "weight": 0.527
+    },
+    {
+      "source": "M4553",
+      "target": "M2097",
+      "weight": 0.98
+    },
+    {
+      "source": "M4553",
+      "target": "M33569",
+      "weight": 0.98
+    },
+    {
+      "source": "M4553",
+      "target": "M4556",
+      "weight": 0.928
+    },
+    {
+      "source": "M4553",
+      "target": "M96912",
+      "weight": 0.892
+    },
+    {
+      "source": "M4553",
+      "target": "M96951",
+      "weight": 0.779
+    },
+    {
+      "source": "M4553",
+      "target": "M28481",
+      "weight": 0.982
+    },
+    {
+      "source": "M4553",
+      "target": "M4537",
+      "weight": 0.968
+    },
+    {
+      "source": "M4553",
+      "target": "M28493",
+      "weight": 0.33
+    },
+    {
+      "source": "M4553",
+      "target": "M112620",
+      "weight": 0.156
+    },
+    {
+      "source": "M4553",
+      "target": "M4540",
+      "weight": 0.978
+    },
+    {
+      "source": "M4553",
+      "target": "M111011",
+      "weight": 0.982
+    },
+    {
+      "source": "M4553",
+      "target": "M112014",
+      "weight": 0.21
+    },
+    {
+      "source": "M4553",
+      "target": "M4542",
+      "weight": 0.963
+    },
+    {
+      "source": "M4553",
+      "target": "M1419",
+      "weight": 0.955
+    },
+    {
+      "source": "M4553",
+      "target": "M28506",
+      "weight": 0.379
+    },
+    {
+      "source": "M4553",
+      "target": "M2037",
+      "weight": 0.967
+    },
+    {
+      "source": "M4553",
+      "target": "M96958",
+      "weight": 0.346
+    },
+    {
+      "source": "M4553",
+      "target": "M28497",
+      "weight": 0.35
+    },
+    {
+      "source": "M4536",
+      "target": "M96920",
+      "weight": 0.974
+    },
+    {
+      "source": "M4536",
+      "target": "M4513",
+      "weight": 0.986
+    },
+    {
+      "source": "M4536",
+      "target": "M96959",
+      "weight": 0.183
+    },
+    {
+      "source": "M4536",
+      "target": "M96751",
+      "weight": 0.18
+    },
+    {
+      "source": "M4536",
+      "target": "M1405",
+      "weight": 0.184
+    },
+    {
+      "source": "M4536",
+      "target": "M4555",
+      "weight": 0.927
+    },
+    {
+      "source": "M4536",
+      "target": "M96897",
+      "weight": 0.382
+    },
+    {
+      "source": "M4536",
+      "target": "M4516",
+      "weight": 0.543
+    },
+    {
+      "source": "M4536",
+      "target": "M2097",
+      "weight": 0.974
+    },
+    {
+      "source": "M4536",
+      "target": "M33569",
+      "weight": 0.975
+    },
+    {
+      "source": "M4536",
+      "target": "M4556",
+      "weight": 0.941
+    },
+    {
+      "source": "M4536",
+      "target": "M96912",
+      "weight": 0.885
+    },
+    {
+      "source": "M4536",
+      "target": "M96951",
+      "weight": 0.787
+    },
+    {
+      "source": "M4536",
+      "target": "M28481",
+      "weight": 0.975
+    },
+    {
+      "source": "M4536",
+      "target": "M4537",
+      "weight": 0.969
+    },
+    {
+      "source": "M4536",
+      "target": "M28493",
+      "weight": 0.343
+    },
+    {
+      "source": "M4536",
+      "target": "M112620",
+      "weight": 0.131
+    },
+    {
+      "source": "M4536",
+      "target": "M4540",
+      "weight": 0.981
+    },
+    {
+      "source": "M4536",
+      "target": "M111011",
+      "weight": 0.979
+    },
+    {
+      "source": "M4536",
+      "target": "M112014",
+      "weight": 0.181
+    },
+    {
+      "source": "M4536",
+      "target": "M4542",
+      "weight": 0.97
+    },
+    {
+      "source": "M4536",
+      "target": "M1419",
+      "weight": 0.953
+    },
+    {
+      "source": "M4536",
+      "target": "M28506",
+      "weight": 0.404
+    },
+    {
+      "source": "M4536",
+      "target": "M2037",
+      "weight": 0.972
+    },
+    {
+      "source": "M4536",
+      "target": "M96958",
+      "weight": 0.342
+    },
+    {
+      "source": "M4536",
+      "target": "M28497",
+      "weight": 0.353
+    },
+    {
+      "source": "M4519",
+      "target": "M2073",
+      "weight": 0.962
+    },
+    {
+      "source": "M4519",
+      "target": "M28508",
+      "weight": 0.513
+    },
+    {
+      "source": "M4519",
+      "target": "M96959",
+      "weight": 0.469
+    },
+    {
+      "source": "M4519",
+      "target": "M1405",
+      "weight": 0.485
+    },
+    {
+      "source": "M4519",
+      "target": "M2173",
+      "weight": 0.934
+    },
+    {
+      "source": "M4519",
+      "target": "M2097",
+      "weight": 0.032
+    },
+    {
+      "source": "M4519",
+      "target": "M28481",
+      "weight": 0.031
+    },
+    {
+      "source": "M4519",
+      "target": "M4532",
+      "weight": 0.96
+    },
+    {
+      "source": "M4519",
+      "target": "M4537",
+      "weight": 0.016
+    },
+    {
+      "source": "M4519",
+      "target": "M2338",
+      "weight": 0.495
+    },
+    {
+      "source": "M4519",
+      "target": "M112620",
+      "weight": 0.521
+    },
+    {
+      "source": "M4519",
+      "target": "M4540",
+      "weight": 0.014
+    },
+    {
+      "source": "M4519",
+      "target": "M112014",
+      "weight": 0.496
+    },
+    {
+      "source": "M4519",
+      "target": "M4542",
+      "weight": 0.019
+    },
+    {
+      "source": "M4519",
+      "target": "M1419",
+      "weight": 0.046
+    },
+    {
+      "source": "M4519",
+      "target": "M2037",
+      "weight": 0.045
+    },
+    {
+      "source": "M4519",
+      "target": "M113959",
+      "weight": 0.244
+    },
+    {
+      "source": "M2073",
+      "target": "M28508",
+      "weight": 0.49
+    },
+    {
+      "source": "M2073",
+      "target": "M96959",
+      "weight": 0.447
+    },
+    {
+      "source": "M2073",
+      "target": "M1405",
+      "weight": 0.462
+    },
+    {
+      "source": "M2073",
+      "target": "M2173",
+      "weight": 0.932
+    },
+    {
+      "source": "M2073",
+      "target": "M2097",
+      "weight": 0.012
+    },
+    {
+      "source": "M2073",
+      "target": "M28481",
+      "weight": 0.032
+    },
+    {
+      "source": "M2073",
+      "target": "M4532",
+      "weight": 0.963
+    },
+    {
+      "source": "M2073",
+      "target": "M2338",
+      "weight": 0.47
+    },
+    {
+      "source": "M2073",
+      "target": "M112620",
+      "weight": 0.503
+    },
+    {
+      "source": "M2073",
+      "target": "M112014",
+      "weight": 0.472
+    },
+    {
+      "source": "M2073",
+      "target": "M1419",
+      "weight": 0.033
+    },
+    {
+      "source": "M2073",
+      "target": "M2037",
+      "weight": 0.03
+    },
+    {
+      "source": "M2073",
+      "target": "M113959",
+      "weight": 0.252
+    },
+    {
+      "source": "M96920",
+      "target": "M4513",
+      "weight": 0.972
+    },
+    {
+      "source": "M96920",
+      "target": "M96959",
+      "weight": 0.173
+    },
+    {
+      "source": "M96920",
+      "target": "M96751",
+      "weight": 0.216
+    },
+    {
+      "source": "M96920",
+      "target": "M1405",
+      "weight": 0.149
+    },
+    {
+      "source": "M96920",
+      "target": "M4555",
+      "weight": 0.927
+    },
+    {
+      "source": "M96920",
+      "target": "M96897",
+      "weight": 0.402
+    },
+    {
+      "source": "M96920",
+      "target": "M4516",
+      "weight": 0.551
+    },
+    {
+      "source": "M96920",
+      "target": "M2097",
+      "weight": 0.973
+    },
+    {
+      "source": "M96920",
+      "target": "M33569",
+      "weight": 0.97
+    },
+    {
+      "source": "M96920",
+      "target": "M4556",
+      "weight": 0.925
+    },
+    {
+      "source": "M96920",
+      "target": "M96912",
+      "weight": 0.879
+    },
+    {
+      "source": "M96920",
+      "target": "M96951",
+      "weight": 0.772
+    },
+    {
+      "source": "M96920",
+      "target": "M28481",
+      "weight": 0.972
+    },
+    {
+      "source": "M96920",
+      "target": "M4537",
+      "weight": 0.965
+    },
+    {
+      "source": "M96920",
+      "target": "M28493",
+      "weight": 0.359
+    },
+    {
+      "source": "M96920",
+      "target": "M112620",
+      "weight": 0.122
+    },
+    {
+      "source": "M96920",
+      "target": "M4540",
+      "weight": 0.975
+    },
+    {
+      "source": "M96920",
+      "target": "M111011",
+      "weight": 0.984
+    },
+    {
+      "source": "M96920",
+      "target": "M112014",
+      "weight": 0.141
+    },
+    {
+      "source": "M96920",
+      "target": "M4542",
+      "weight": 0.961
+    },
+    {
+      "source": "M96920",
+      "target": "M1419",
+      "weight": 0.954
+    },
+    {
+      "source": "M96920",
+      "target": "M28506",
+      "weight": 0.388
+    },
+    {
+      "source": "M96920",
+      "target": "M2037",
+      "weight": 0.965
+    },
+    {
+      "source": "M96920",
+      "target": "M96958",
+      "weight": 0.372
+    },
+    {
+      "source": "M96920",
+      "target": "M28497",
+      "weight": 0.382
+    },
+    {
+      "source": "M28508",
+      "target": "M96959",
+      "weight": 0.343
+    },
+    {
+      "source": "M28508",
+      "target": "M1405",
+      "weight": 0.33
+    },
+    {
+      "source": "M28508",
+      "target": "M2173",
+      "weight": 0.46
+    },
+    {
+      "source": "M28508",
+      "target": "M4532",
+      "weight": 0.469
+    },
+    {
+      "source": "M28508",
+      "target": "M2338",
+      "weight": 0.954
+    },
+    {
+      "source": "M28508",
+      "target": "M112620",
+      "weight": 0.325
+    },
+    {
+      "source": "M28508",
+      "target": "M112014",
+      "weight": 0.301
+    },
+    {
+      "source": "M28508",
+      "target": "M113959",
+      "weight": 0.421
+    },
+    {
+      "source": "M4513",
+      "target": "M96959",
+      "weight": 0.184
+    },
+    {
+      "source": "M4513",
+      "target": "M96751",
+      "weight": 0.175
+    },
+    {
+      "source": "M4513",
+      "target": "M1405",
+      "weight": 0.173
+    },
+    {
+      "source": "M4513",
+      "target": "M2173",
+      "weight": 0.004
+    },
+    {
+      "source": "M4513",
+      "target": "M4555",
+      "weight": 0.933
+    },
+    {
+      "source": "M4513",
+      "target": "M96897",
+      "weight": 0.369
+    },
+    {
+      "source": "M4513",
+      "target": "M4516",
+      "weight": 0.501
+    },
+    {
+      "source": "M4513",
+      "target": "M2097",
+      "weight": 0.978
+    },
+    {
+      "source": "M4513",
+      "target": "M33569",
+      "weight": 0.976
+    },
+    {
+      "source": "M4513",
+      "target": "M4556",
+      "weight": 0.942
+    },
+    {
+      "source": "M4513",
+      "target": "M96912",
+      "weight": 0.897
+    },
+    {
+      "source": "M4513",
+      "target": "M96951",
+      "weight": 0.787
+    },
+    {
+      "source": "M4513",
+      "target": "M28481",
+      "weight": 0.975
+    },
+    {
+      "source": "M4513",
+      "target": "M4537",
+      "weight": 0.969
+    },
+    {
+      "source": "M4513",
+      "target": "M28493",
+      "weight": 0.325
+    },
+    {
+      "source": "M4513",
+      "target": "M112620",
+      "weight": 0.158
+    },
+    {
+      "source": "M4513",
+      "target": "M4540",
+      "weight": 0.982
+    },
+    {
+      "source": "M4513",
+      "target": "M111011",
+      "weight": 0.983
+    },
+    {
+      "source": "M4513",
+      "target": "M112014",
+      "weight": 0.208
+    },
+    {
+      "source": "M4513",
+      "target": "M4542",
+      "weight": 0.965
+    },
+    {
+      "source": "M4513",
+      "target": "M1419",
+      "weight": 0.961
+    },
+    {
+      "source": "M4513",
+      "target": "M28506",
+      "weight": 0.391
+    },
+    {
+      "source": "M4513",
+      "target": "M2037",
+      "weight": 0.97
+    },
+    {
+      "source": "M4513",
+      "target": "M96958",
+      "weight": 0.319
+    },
+    {
+      "source": "M4513",
+      "target": "M28497",
+      "weight": 0.338
+    },
+    {
+      "source": "M96959",
+      "target": "M1405",
+      "weight": 0.868
+    },
+    {
+      "source": "M96959",
+      "target": "M2173",
+      "weight": 0.482
+    },
+    {
+      "source": "M96959",
+      "target": "M4555",
+      "weight": 0.167
+    },
+    {
+      "source": "M96959",
+      "target": "M2097",
+      "weight": 0.194
+    },
+    {
+      "source": "M96959",
+      "target": "M33569",
+      "weight": 0.187
+    },
+    {
+      "source": "M96959",
+      "target": "M4556",
+      "weight": 0.155
+    },
+    {
+      "source": "M96959",
+      "target": "M96912",
+      "weight": 0.07
+    },
+    {
+      "source": "M96959",
+      "target": "M96951",
+      "weight": 0.043
+    },
+    {
+      "source": "M96959",
+      "target": "M28481",
+      "weight": 0.2
+    },
+    {
+      "source": "M96959",
+      "target": "M4532",
+      "weight": 0.475
+    },
+    {
+      "source": "M96959",
+      "target": "M4537",
+      "weight": 0.183
+    },
+    {
+      "source": "M96959",
+      "target": "M2338",
+      "weight": 0.339
+    },
+    {
+      "source": "M96959",
+      "target": "M112620",
+      "weight": 0.954
+    },
+    {
+      "source": "M96959",
+      "target": "M4540",
+      "weight": 0.158
+    },
+    {
+      "source": "M96959",
+      "target": "M111011",
+      "weight": 0.213
+    },
+    {
+      "source": "M96959",
+      "target": "M112014",
+      "weight": 0.94
+    },
+    {
+      "source": "M96959",
+      "target": "M4542",
+      "weight": 0.198
+    },
+    {
+      "source": "M96959",
+      "target": "M1419",
+      "weight": 0.265
+    },
+    {
+      "source": "M96959",
+      "target": "M2037",
+      "weight": 0.167
+    },
+    {
+      "source": "M96959",
+      "target": "M113959",
+      "weight": 0.041
+    },
+    {
+      "source": "M96751",
+      "target": "M4555",
+      "weight": 0.162
+    },
+    {
+      "source": "M96751",
+      "target": "M96897",
+      "weight": 0.57
+    },
+    {
+      "source": "M96751",
+      "target": "M4516",
+      "weight": 0.494
+    },
+    {
+      "source": "M96751",
+      "target": "M2097",
+      "weight": 0.182
+    },
+    {
+      "source": "M96751",
+      "target": "M33569",
+      "weight": 0.163
+    },
+    {
+      "source": "M96751",
+      "target": "M4556",
+      "weight": 0.224
+    },
+    {
+      "source": "M96751",
+      "target": "M96912",
+      "weight": 0.248
+    },
+    {
+      "source": "M96751",
+      "target": "M96951",
+      "weight": 0.372
+    },
+    {
+      "source": "M96751",
+      "target": "M28481",
+      "weight": 0.2
+    },
+    {
+      "source": "M96751",
+      "target": "M4537",
+      "weight": 0.194
+    },
+    {
+      "source": "M96751",
+      "target": "M28493",
+      "weight": 0.569
+    },
+    {
+      "source": "M96751",
+      "target": "M4540",
+      "weight": 0.221
+    },
+    {
+      "source": "M96751",
+      "target": "M111011",
+      "weight": 0.151
+    },
+    {
+      "source": "M96751",
+      "target": "M4542",
+      "weight": 0.144
+    },
+    {
+      "source": "M96751",
+      "target": "M1419",
+      "weight": 0.14
+    },
+    {
+      "source": "M96751",
+      "target": "M28506",
+      "weight": 0.541
+    },
+    {
+      "source": "M96751",
+      "target": "M2037",
+      "weight": 0.175
+    },
+    {
+      "source": "M96751",
+      "target": "M96958",
+      "weight": 0.563
+    },
+    {
+      "source": "M96751",
+      "target": "M28497",
+      "weight": 0.574
+    },
+    {
+      "source": "M1405",
+      "target": "M2173",
+      "weight": 0.502
+    },
+    {
+      "source": "M1405",
+      "target": "M4555",
+      "weight": 0.171
+    },
+    {
+      "source": "M1405",
+      "target": "M2097",
+      "weight": 0.217
+    },
+    {
+      "source": "M1405",
+      "target": "M33569",
+      "weight": 0.197
+    },
+    {
+      "source": "M1405",
+      "target": "M4556",
+      "weight": 0.135
+    },
+    {
+      "source": "M1405",
+      "target": "M96912",
+      "weight": 0.086
+    },
+    {
+      "source": "M1405",
+      "target": "M96951",
+      "weight": 0.015
+    },
+    {
+      "source": "M1405",
+      "target": "M28481",
+      "weight": 0.195
+    },
+    {
+      "source": "M1405",
+      "target": "M4532",
+      "weight": 0.512
+    },
+    {
+      "source": "M1405",
+      "target": "M4537",
+      "weight": 0.163
+    },
+    {
+      "source": "M1405",
+      "target": "M2338",
+      "weight": 0.303
+    },
+    {
+      "source": "M1405",
+      "target": "M112620",
+      "weight": 0.923
+    },
+    {
+      "source": "M1405",
+      "target": "M4540",
+      "weight": 0.151
+    },
+    {
+      "source": "M1405",
+      "target": "M111011",
+      "weight": 0.173
+    },
+    {
+      "source": "M1405",
+      "target": "M112014",
+      "weight": 0.93
+    },
+    {
+      "source": "M1405",
+      "target": "M4542",
+      "weight": 0.246
+    },
+    {
+      "source": "M1405",
+      "target": "M1419",
+      "weight": 0.275
+    },
+    {
+      "source": "M1405",
+      "target": "M2037",
+      "weight": 0.167
+    },
+    {
+      "source": "M1405",
+      "target": "M113959",
+      "weight": 0.062
+    },
+    {
+      "source": "M2173",
+      "target": "M4556",
+      "weight": 0.004
+    },
+    {
+      "source": "M2173",
+      "target": "M28481",
+      "weight": 0.045
+    },
+    {
+      "source": "M2173",
+      "target": "M4532",
+      "weight": 0.945
+    },
+    {
+      "source": "M2173",
+      "target": "M2338",
+      "weight": 0.445
+    },
+    {
+      "source": "M2173",
+      "target": "M112620",
+      "weight": 0.543
+    },
+    {
+      "source": "M2173",
+      "target": "M111011",
+      "weight": 0.025
+    },
+    {
+      "source": "M2173",
+      "target": "M112014",
+      "weight": 0.535
+    },
+    {
+      "source": "M2173",
+      "target": "M1419",
+      "weight": 0.042
+    },
+    {
+      "source": "M2173",
+      "target": "M113959",
+      "weight": 0.244
+    },
+    {
+      "source": "M4555",
+      "target": "M96897",
+      "weight": 0.386
+    },
+    {
+      "source": "M4555",
+      "target": "M4516",
+      "weight": 0.525
+    },
+    {
+      "source": "M4555",
+      "target": "M2097",
+      "weight": 0.929
+    },
+    {
+      "source": "M4555",
+      "target": "M33569",
+      "weight": 0.944
+    },
+    {
+      "source": "M4555",
+      "target": "M4556",
+      "weight": 0.903
+    },
+    {
+      "source": "M4555",
+      "target": "M96912",
+      "weight": 0.866
+    },
+    {
+      "source": "M4555",
+      "target": "M96951",
+      "weight": 0.766
+    },
+    {
+      "source": "M4555",
+      "target": "M28481",
+      "weight": 0.929
+    },
+    {
+      "source": "M4555",
+      "target": "M4537",
+      "weight": 0.918
+    },
+    {
+      "source": "M4555",
+      "target": "M28493",
+      "weight": 0.352
+    },
+    {
+      "source": "M4555",
+      "target": "M112620",
+      "weight": 0.127
+    },
+    {
+      "source": "M4555",
+      "target": "M4540",
+      "weight": 0.931
+    },
+    {
+      "source": "M4555",
+      "target": "M111011",
+      "weight": 0.947
+    },
+    {
+      "source": "M4555",
+      "target": "M112014",
+      "weight": 0.185
+    },
+    {
+      "source": "M4555",
+      "target": "M4542",
+      "weight": 0.92
+    },
+    {
+      "source": "M4555",
+      "target": "M1419",
+      "weight": 0.907
+    },
+    {
+      "source": "M4555",
+      "target": "M28506",
+      "weight": 0.403
+    },
+    {
+      "source": "M4555",
+      "target": "M2037",
+      "weight": 0.909
+    },
+    {
+      "source": "M4555",
+      "target": "M96958",
+      "weight": 0.352
+    },
+    {
+      "source": "M4555",
+      "target": "M28497",
+      "weight": 0.385
+    },
+    {
+      "source": "M96897",
+      "target": "M4516",
+      "weight": 0.89
+    },
+    {
+      "source": "M96897",
+      "target": "M2097",
+      "weight": 0.373
+    },
+    {
+      "source": "M96897",
+      "target": "M33569",
+      "weight": 0.374
+    },
+    {
+      "source": "M96897",
+      "target": "M4556",
+      "weight": 0.395
+    },
+    {
+      "source": "M96897",
+      "target": "M96912",
+      "weight": 0.486
+    },
+    {
+      "source": "M96897",
+      "target": "M96951",
+      "weight": 0.532
+    },
+    {
+      "source": "M96897",
+      "target": "M28481",
+      "weight": 0.373
+    },
+    {
+      "source": "M96897",
+      "target": "M4537",
+      "weight": 0.367
+    },
+    {
+      "source": "M96897",
+      "target": "M28493",
+      "weight": 0.981
+    },
+    {
+      "source": "M96897",
+      "target": "M4540",
+      "weight": 0.39
+    },
+    {
+      "source": "M96897",
+      "target": "M111011",
+      "weight": 0.353
+    },
+    {
+      "source": "M96897",
+      "target": "M4542",
+      "weight": 0.346
+    },
+    {
+      "source": "M96897",
+      "target": "M1419",
+      "weight": 0.305
+    },
+    {
+      "source": "M96897",
+      "target": "M28506",
+      "weight": 0.927
+    },
+    {
+      "source": "M96897",
+      "target": "M2037",
+      "weight": 0.345
+    },
+    {
+      "source": "M96897",
+      "target": "M96958",
+      "weight": 0.962
+    },
+    {
+      "source": "M96897",
+      "target": "M28497",
+      "weight": 0.982
+    },
+    {
+      "source": "M4516",
+      "target": "M2097",
+      "weight": 0.572
+    },
+    {
+      "source": "M4516",
+      "target": "M33569",
+      "weight": 0.521
+    },
+    {
+      "source": "M4516",
+      "target": "M4556",
+      "weight": 0.513
+    },
+    {
+      "source": "M4516",
+      "target": "M96912",
+      "weight": 0.463
+    },
+    {
+      "source": "M4516",
+      "target": "M96951",
+      "weight": 0.488
+    },
+    {
+      "source": "M4516",
+      "target": "M28481",
+      "weight": 0.533
+    },
+    {
+      "source": "M4516",
+      "target": "M4537",
+      "weight": 0.522
+    },
+    {
+      "source": "M4516",
+      "target": "M28493",
+      "weight": 0.892
+    },
+    {
+      "source": "M4516",
+      "target": "M4540",
+      "weight": 0.559
+    },
+    {
+      "source": "M4516",
+      "target": "M111011",
+      "weight": 0.365
+    },
+    {
+      "source": "M4516",
+      "target": "M4542",
+      "weight": 0.545
+    },
+    {
+      "source": "M4516",
+      "target": "M1419",
+      "weight": 0.488
+    },
+    {
+      "source": "M4516",
+      "target": "M28506",
+      "weight": 0.882
+    },
+    {
+      "source": "M4516",
+      "target": "M2037",
+      "weight": 0.537
+    },
+    {
+      "source": "M4516",
+      "target": "M96958",
+      "weight": 0.873
+    },
+    {
+      "source": "M4516",
+      "target": "M28497",
+      "weight": 0.872
+    },
+    {
+      "source": "M2097",
+      "target": "M33569",
+      "weight": 0.98
+    },
+    {
+      "source": "M2097",
+      "target": "M4556",
+      "weight": 0.93
+    },
+    {
+      "source": "M2097",
+      "target": "M96912",
+      "weight": 0.885
+    },
+    {
+      "source": "M2097",
+      "target": "M96951",
+      "weight": 0.727
+    },
+    {
+      "source": "M2097",
+      "target": "M28481",
+      "weight": 0.979
+    },
+    {
+      "source": "M2097",
+      "target": "M4532",
+      "weight": 0.024
+    },
+    {
+      "source": "M2097",
+      "target": "M4537",
+      "weight": 0.973
+    },
+    {
+      "source": "M2097",
+      "target": "M28493",
+      "weight": 0.348
+    },
+    {
+      "source": "M2097",
+      "target": "M112620",
+      "weight": 0.197
+    },
+    {
+      "source": "M2097",
+      "target": "M4540",
+      "weight": 0.982
+    },
+    {
+      "source": "M2097",
+      "target": "M111011",
+      "weight": 0.987
+    },
+    {
+      "source": "M2097",
+      "target": "M112014",
+      "weight": 0.23
+    },
+    {
+      "source": "M2097",
+      "target": "M4542",
+      "weight": 0.964
+    },
+    {
+      "source": "M2097",
+      "target": "M1419",
+      "weight": 0.955
+    },
+    {
+      "source": "M2097",
+      "target": "M28506",
+      "weight": 0.387
+    },
+    {
+      "source": "M2097",
+      "target": "M2037",
+      "weight": 0.964
+    },
+    {
+      "source": "M2097",
+      "target": "M96958",
+      "weight": 0.34
+    },
+    {
+      "source": "M2097",
+      "target": "M28497",
+      "weight": 0.323
+    },
+    {
+      "source": "M33569",
+      "target": "M4556",
+      "weight": 0.944
+    },
+    {
+      "source": "M33569",
+      "target": "M96912",
+      "weight": 0.902
+    },
+    {
+      "source": "M33569",
+      "target": "M96951",
+      "weight": 0.777
+    },
+    {
+      "source": "M33569",
+      "target": "M28481",
+      "weight": 0.978
+    },
+    {
+      "source": "M33569",
+      "target": "M4537",
+      "weight": 0.97
+    },
+    {
+      "source": "M33569",
+      "target": "M28493",
+      "weight": 0.341
+    },
+    {
+      "source": "M33569",
+      "target": "M112620",
+      "weight": 0.14
+    },
+    {
+      "source": "M33569",
+      "target": "M4540",
+      "weight": 0.98
+    },
+    {
+      "source": "M33569",
+      "target": "M111011",
+      "weight": 0.993
+    },
+    {
+      "source": "M33569",
+      "target": "M112014",
+      "weight": 0.197
+    },
+    {
+      "source": "M33569",
+      "target": "M4542",
+      "weight": 0.965
+    },
+    {
+      "source": "M33569",
+      "target": "M1419",
+      "weight": 0.958
+    },
+    {
+      "source": "M33569",
+      "target": "M28506",
+      "weight": 0.4
+    },
+    {
+      "source": "M33569",
+      "target": "M2037",
+      "weight": 0.961
+    },
+    {
+      "source": "M33569",
+      "target": "M96958",
+      "weight": 0.359
+    },
+    {
+      "source": "M33569",
+      "target": "M28497",
+      "weight": 0.343
+    },
+    {
+      "source": "M4556",
+      "target": "M96912",
+      "weight": 0.898
+    },
+    {
+      "source": "M4556",
+      "target": "M96951",
+      "weight": 0.775
+    },
+    {
+      "source": "M4556",
+      "target": "M28481",
+      "weight": 0.948
+    },
+    {
+      "source": "M4556",
+      "target": "M4537",
+      "weight": 0.925
+    },
+    {
+      "source": "M4556",
+      "target": "M28493",
+      "weight": 0.353
+    },
+    {
+      "source": "M4556",
+      "target": "M112620",
+      "weight": 0.121
+    },
+    {
+      "source": "M4556",
+      "target": "M4540",
+      "weight": 0.944
+    },
+    {
+      "source": "M4556",
+      "target": "M111011",
+      "weight": 0.945
+    },
+    {
+      "source": "M4556",
+      "target": "M112014",
+      "weight": 0.151
+    },
+    {
+      "source": "M4556",
+      "target": "M4542",
+      "weight": 0.922
+    },
+    {
+      "source": "M4556",
+      "target": "M1419",
+      "weight": 0.911
+    },
+    {
+      "source": "M4556",
+      "target": "M28506",
+      "weight": 0.414
+    },
+    {
+      "source": "M4556",
+      "target": "M2037",
+      "weight": 0.914
+    },
+    {
+      "source": "M4556",
+      "target": "M96958",
+      "weight": 0.371
+    },
+    {
+      "source": "M4556",
+      "target": "M28497",
+      "weight": 0.379
+    },
+    {
+      "source": "M96912",
+      "target": "M96951",
+      "weight": 0.798
+    },
+    {
+      "source": "M96912",
+      "target": "M28481",
+      "weight": 0.878
+    },
+    {
+      "source": "M96912",
+      "target": "M4537",
+      "weight": 0.875
+    },
+    {
+      "source": "M96912",
+      "target": "M28493",
+      "weight": 0.449
+    },
+    {
+      "source": "M96912",
+      "target": "M112620",
+      "weight": 0.1
+    },
+    {
+      "source": "M96912",
+      "target": "M4540",
+      "weight": 0.895
+    },
+    {
+      "source": "M96912",
+      "target": "M111011",
+      "weight": 0.962
+    },
+    {
+      "source": "M96912",
+      "target": "M112014",
+      "weight": 0.14
+    },
+    {
+      "source": "M96912",
+      "target": "M4542",
+      "weight": 0.867
+    },
+    {
+      "source": "M96912",
+      "target": "M1419",
+      "weight": 0.856
+    },
+    {
+      "source": "M96912",
+      "target": "M28506",
+      "weight": 0.481
+    },
+    {
+      "source": "M96912",
+      "target": "M2037",
+      "weight": 0.862
+    },
+    {
+      "source": "M96912",
+      "target": "M96958",
+      "weight": 0.441
+    },
+    {
+      "source": "M96912",
+      "target": "M28497",
+      "weight": 0.476
+    },
+    {
+      "source": "M96951",
+      "target": "M28481",
+      "weight": 0.783
+    },
+    {
+      "source": "M96951",
+      "target": "M4537",
+      "weight": 0.782
+    },
+    {
+      "source": "M96951",
+      "target": "M28493",
+      "weight": 0.505
+    },
+    {
+      "source": "M96951",
+      "target": "M112620",
+      "weight": 0.052
+    },
+    {
+      "source": "M96951",
+      "target": "M4540",
+      "weight": 0.796
+    },
+    {
+      "source": "M96951",
+      "target": "M111011",
+      "weight": 0.837
+    },
+    {
+      "source": "M96951",
+      "target": "M112014",
+      "weight": 0.067
+    },
+    {
+      "source": "M96951",
+      "target": "M4542",
+      "weight": 0.762
+    },
+    {
+      "source": "M96951",
+      "target": "M1419",
+      "weight": 0.739
+    },
+    {
+      "source": "M96951",
+      "target": "M28506",
+      "weight": 0.506
+    },
+    {
+      "source": "M96951",
+      "target": "M2037",
+      "weight": 0.761
+    },
+    {
+      "source": "M96951",
+      "target": "M96958",
+      "weight": 0.505
+    },
+    {
+      "source": "M96951",
+      "target": "M28497",
+      "weight": 0.499
+    },
+    {
+      "source": "M28481",
+      "target": "M4532",
+      "weight": 0.017
+    },
+    {
+      "source": "M28481",
+      "target": "M4537",
+      "weight": 0.966
+    },
+    {
+      "source": "M28481",
+      "target": "M28493",
+      "weight": 0.343
+    },
+    {
+      "source": "M28481",
+      "target": "M112620",
+      "weight": 0.157
+    },
+    {
+      "source": "M28481",
+      "target": "M4540",
+      "weight": 0.983
+    },
+    {
+      "source": "M28481",
+      "target": "M111011",
+      "weight": 0.986
+    },
+    {
+      "source": "M28481",
+      "target": "M112014",
+      "weight": 0.196
+    },
+    {
+      "source": "M28481",
+      "target": "M4542",
+      "weight": 0.975
+    },
+    {
+      "source": "M28481",
+      "target": "M1419",
+      "weight": 0.957
+    },
+    {
+      "source": "M28481",
+      "target": "M28506",
+      "weight": 0.393
+    },
+    {
+      "source": "M28481",
+      "target": "M2037",
+      "weight": 0.963
+    },
+    {
+      "source": "M28481",
+      "target": "M96958",
+      "weight": 0.352
+    },
+    {
+      "source": "M28481",
+      "target": "M28497",
+      "weight": 0.356
+    },
+    {
+      "source": "M4532",
+      "target": "M4537",
+      "weight": 0.01
+    },
+    {
+      "source": "M4532",
+      "target": "M2338",
+      "weight": 0.435
+    },
+    {
+      "source": "M4532",
+      "target": "M112620",
+      "weight": 0.539
+    },
+    {
+      "source": "M4532",
+      "target": "M4540",
+      "weight": 0.006
+    },
+    {
+      "source": "M4532",
+      "target": "M112014",
+      "weight": 0.512
+    },
+    {
+      "source": "M4532",
+      "target": "M4542",
+      "weight": 0.002
+    },
+    {
+      "source": "M4532",
+      "target": "M1419",
+      "weight": 0.062
+    },
+    {
+      "source": "M4532",
+      "target": "M2037",
+      "weight": 0.047
+    },
+    {
+      "source": "M4532",
+      "target": "M113959",
+      "weight": 0.296
+    },
+    {
+      "source": "M4537",
+      "target": "M28493",
+      "weight": 0.323
+    },
+    {
+      "source": "M4537",
+      "target": "M112620",
+      "weight": 0.126
+    },
+    {
+      "source": "M4537",
+      "target": "M4540",
+      "weight": 0.98
+    },
+    {
+      "source": "M4537",
+      "target": "M111011",
+      "weight": 0.974
+    },
+    {
+      "source": "M4537",
+      "target": "M112014",
+      "weight": 0.171
+    },
+    {
+      "source": "M4537",
+      "target": "M4542",
+      "weight": 0.96
+    },
+    {
+      "source": "M4537",
+      "target": "M1419",
+      "weight": 0.956
+    },
+    {
+      "source": "M4537",
+      "target": "M28506",
+      "weight": 0.37
+    },
+    {
+      "source": "M4537",
+      "target": "M2037",
+      "weight": 0.966
+    },
+    {
+      "source": "M4537",
+      "target": "M96958",
+      "weight": 0.363
+    },
+    {
+      "source": "M4537",
+      "target": "M28497",
+      "weight": 0.343
+    },
+    {
+      "source": "M2338",
+      "target": "M112620",
+      "weight": 0.331
+    },
+    {
+      "source": "M2338",
+      "target": "M112014",
+      "weight": 0.293
+    },
+    {
+      "source": "M2338",
+      "target": "M113959",
+      "weight": 0.436
+    },
+    {
+      "source": "M28493",
+      "target": "M4540",
+      "weight": 0.363
+    },
+    {
+      "source": "M28493",
+      "target": "M111011",
+      "weight": 0.305
+    },
+    {
+      "source": "M28493",
+      "target": "M4542",
+      "weight": 0.312
+    },
+    {
+      "source": "M28493",
+      "target": "M1419",
+      "weight": 0.254
+    },
+    {
+      "source": "M28493",
+      "target": "M28506",
+      "weight": 0.929
+    },
+    {
+      "source": "M28493",
+      "target": "M2037",
+      "weight": 0.314
+    },
+    {
+      "source": "M28493",
+      "target": "M96958",
+      "weight": 0.968
+    },
+    {
+      "source": "M28493",
+      "target": "M28497",
+      "weight": 0.985
+    },
+    {
+      "source": "M112620",
+      "target": "M4540",
+      "weight": 0.132
+    },
+    {
+      "source": "M112620",
+      "target": "M111011",
+      "weight": 0.156
+    },
+    {
+      "source": "M112620",
+      "target": "M112014",
+      "weight": 0.958
+    },
+    {
+      "source": "M112620",
+      "target": "M4542",
+      "weight": 0.19
+    },
+    {
+      "source": "M112620",
+      "target": "M1419",
+      "weight": 0.25
+    },
+    {
+      "source": "M112620",
+      "target": "M2037",
+      "weight": 0.141
+    },
+    {
+      "source": "M112620",
+      "target": "M113959",
+      "weight": 0.097
+    },
+    {
+      "source": "M4540",
+      "target": "M111011",
+      "weight": 0.988
+    },
+    {
+      "source": "M4540",
+      "target": "M112014",
+      "weight": 0.176
+    },
+    {
+      "source": "M4540",
+      "target": "M4542",
+      "weight": 0.966
+    },
+    {
+      "source": "M4540",
+      "target": "M1419",
+      "weight": 0.958
+    },
+    {
+      "source": "M4540",
+      "target": "M28506",
+      "weight": 0.4
+    },
+    {
+      "source": "M4540",
+      "target": "M2037",
+      "weight": 0.971
+    },
+    {
+      "source": "M4540",
+      "target": "M96958",
+      "weight": 0.37
+    },
+    {
+      "source": "M4540",
+      "target": "M28497",
+      "weight": 0.348
+    },
+    {
+      "source": "M111011",
+      "target": "M112014",
+      "weight": 0.211
+    },
+    {
+      "source": "M111011",
+      "target": "M4542",
+      "weight": 0.981
+    },
+    {
+      "source": "M111011",
+      "target": "M1419",
+      "weight": 0.966
+    },
+    {
+      "source": "M111011",
+      "target": "M28506",
+      "weight": 0.381
+    },
+    {
+      "source": "M111011",
+      "target": "M2037",
+      "weight": 0.97
+    },
+    {
+      "source": "M111011",
+      "target": "M96958",
+      "weight": 0.301
+    },
+    {
+      "source": "M111011",
+      "target": "M28497",
+      "weight": 0.32
+    },
+    {
+      "source": "M112014",
+      "target": "M4542",
+      "weight": 0.27
+    },
+    {
+      "source": "M112014",
+      "target": "M1419",
+      "weight": 0.321
+    },
+    {
+      "source": "M112014",
+      "target": "M2037",
+      "weight": 0.16
+    },
+    {
+      "source": "M112014",
+      "target": "M113959",
+      "weight": 0.038
+    },
+    {
+      "source": "M4542",
+      "target": "M1419",
+      "weight": 0.94
+    },
+    {
+      "source": "M4542",
+      "target": "M28506",
+      "weight": 0.354
+    },
+    {
+      "source": "M4542",
+      "target": "M2037",
+      "weight": 0.955
+    },
+    {
+      "source": "M4542",
+      "target": "M96958",
+      "weight": 0.301
+    },
+    {
+      "source": "M4542",
+      "target": "M28497",
+      "weight": 0.322
+    },
+    {
+      "source": "M1419",
+      "target": "M28506",
+      "weight": 0.308
+    },
+    {
+      "source": "M1419",
+      "target": "M2037",
+      "weight": 0.954
+    },
+    {
+      "source": "M1419",
+      "target": "M96958",
+      "weight": 0.286
+    },
+    {
+      "source": "M1419",
+      "target": "M28497",
+      "weight": 0.259
+    },
+    {
+      "source": "M28506",
+      "target": "M2037",
+      "weight": 0.364
+    },
+    {
+      "source": "M28506",
+      "target": "M96958",
+      "weight": 0.89
+    },
+    {
+      "source": "M28506",
+      "target": "M28497",
+      "weight": 0.94
+    },
+    {
+      "source": "M2037",
+      "target": "M96958",
+      "weight": 0.34
+    },
+    {
+      "source": "M2037",
+      "target": "M28497",
+      "weight": 0.306
+    },
+    {
+      "source": "M96958",
+      "target": "M28497",
+      "weight": 0.967
+    }
+  ],
+  "agreementScores": {
+    "M4537": {
+      "ECR": {
+        "score": 0.9533846153846154,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.13999999999999999,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.38775000000000004,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.009000000000000001,
+        "count": 5
+      },
+      "EFD": {
+        "score": 0.3836,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M112014": {
+      "ECR": {
+        "score": 0.19140740740740744,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9382727272727274,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.067,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.5038461538461539,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.28459999999999996,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.038,
+        "count": 1
+      }
+    },
+    "M33570": {
+      "ECR": {
+        "score": 0.15566666666666665,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.932,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.005,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.495923076923077,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.30720000000000003,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.062,
+        "count": 1
+      }
+    },
+    "M96749": {
+      "ECR": {
+        "score": 0.207,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.6136666666666667,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.5565999999999999,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4532": {
+      "ECR": {
+        "score": 0.02225,
+        "count": 8
+      },
+      "ALDE": {
+        "score": 0.5156666666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9601666666666667,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4728,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.296,
+        "count": 1
+      }
+    },
+    "M2097": {
+      "ECR": {
+        "score": 0.9591153846153844,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.18008333333333335,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.37825,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.017833333333333336,
+        "count": 6
+      },
+      "EFD": {
+        "score": 0.3912,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28493": {
+      "ECR": {
+        "score": 0.34862962962962957,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.6455,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.9565,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4554": {
+      "ECR": {
+        "score": 0.14996296296296294,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9142727272727273,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.4987692307692307,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.3346,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.061,
+        "count": 1
+      }
+    },
+    "M4514": {
+      "ECR": {
+        "score": 0.09528,
+        "count": 25
+      },
+      "ALDE": {
+        "score": 0.9166363636363638,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.5286153846153846,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.3494,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.078,
+        "count": 1
+      }
+    },
+    "M96751": {
+      "ECR": {
+        "score": 0.19207407407407406,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.6110000000000001,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.5539999999999999,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28477": {
+      "ECR": {
+        "score": 0.12365384615384613,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.9391818181818181,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.528,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.3454,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.073,
+        "count": 1
+      }
+    },
+    "M1407": {
+      "ECR": {
+        "score": 0.03,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.49541666666666656,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9369999999999997,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.471,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.225,
+        "count": 1
+      }
+    },
+    "M96954": {
+      "ECR": {
+        "score": 0.8087307692307693,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.042374999999999996,
+        "count": 8
+      },
+      "NonAttached": {
+        "score": 0.5062500000000001,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.5546,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4529": {
+      "ECR": {
+        "score": 0.17103703703703704,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9231818181818181,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.033,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.4761538461538461,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.3024,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.068,
+        "count": 1
+      }
+    },
+    "M96959": {
+      "ECR": {
+        "score": 0.17362962962962958,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9163636363636364,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.043,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.4735384615384615,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.30879999999999996,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.041,
+        "count": 1
+      }
+    },
+    "M2173": {
+      "ECR": {
+        "score": 0.016090909090909093,
+        "count": 11
+      },
+      "ALDE": {
+        "score": 0.51875,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9310833333333334,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.45039999999999997,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.244,
+        "count": 1
+      }
+    },
+    "M1405": {
+      "ECR": {
+        "score": 0.17555555555555558,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.8918181818181817,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.015,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.49115384615384616,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.30619999999999997,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.062,
+        "count": 1
+      }
+    },
+    "M28506": {
+      "ECR": {
+        "score": 0.39592592592592596,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.531,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.9136000000000001,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M1394": {
+      "ECR": {
+        "score": 0.13246153846153844,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.9134545454545454,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.501,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.31300000000000006,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.027,
+        "count": 1
+      }
+    },
+    "M1309": {
+      "ECR": {
+        "score": 0.018199999999999997,
+        "count": 5
+      },
+      "ALDE": {
+        "score": 0.5102500000000001,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9599166666666666,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4688,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.243,
+        "count": 1
+      }
+    },
+    "M2081": {
+      "ECR": {
+        "score": 0.037,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.5094166666666666,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9331666666666667,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.46819999999999995,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.22,
+        "count": 1
+      }
+    },
+    "M4546": {
+      "ECR": {
+        "score": 0.9448461538461539,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15975,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.377,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.005666666666666667,
+        "count": 3
+      },
+      "EFD": {
+        "score": 0.3742,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M2037": {
+      "ECR": {
+        "score": 0.9474230769230769,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.13149999999999998,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.372,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.025875000000000002,
+        "count": 8
+      },
+      "EFD": {
+        "score": 0.3684,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M2155": {
+      "ECR": {
+        "score": 0.12526923076923077,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.932,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.510076923076923,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.34040000000000004,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.103,
+        "count": 1
+      }
+    },
+    "M96944": {
+      "ECR": {
+        "score": 0.9575769230769231,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.16091666666666668,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.398,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.003,
+        "count": 1
+      },
+      "EFD": {
+        "score": 0.39679999999999993,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M112620": {
+      "ECR": {
+        "score": 0.14607407407407408,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9457272727272727,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.052,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.5279230769230769,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.3136,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.097,
+        "count": 1
+      }
+    },
+    "M4540": {
+      "ECR": {
+        "score": 0.9638846153846152,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.12399999999999999,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.4135,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.009000000000000001,
+        "count": 3
+      },
+      "EFD": {
+        "score": 0.40599999999999997,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4536": {
+      "ECR": {
+        "score": 0.958192307692308,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.14991666666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.39325,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.3926,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M1419": {
+      "ECR": {
+        "score": 0.9379615384615386,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.25383333333333336,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.333,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.04184615384615384,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0.3184,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4538": {
+      "ECR": {
+        "score": 0.9518846153846154,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15041666666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.39425,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.3896,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4513": {
+      "ECR": {
+        "score": 0.9611923076923077,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15758333333333333,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.385,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.004,
+        "count": 1
+      },
+      "EFD": {
+        "score": 0.3704,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28481": {
+      "ECR": {
+        "score": 0.959423076923077,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.1745,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.39575,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.0199,
+        "count": 10
+      },
+      "EFD": {
+        "score": 0.39139999999999997,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28132": {
+      "ECR": {
+        "score": 0.961923076923077,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.165,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.38525,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.010142857142857143,
+        "count": 7
+      },
+      "EFD": {
+        "score": 0.3788,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4516": {
+      "ECR": {
+        "score": 0.5212962962962963,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.59225,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.88175,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4556": {
+      "ECR": {
+        "score": 0.9252307692307695,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.12775,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.4125,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.004,
+        "count": 1
+      },
+      "EFD": {
+        "score": 0.4022,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M111011": {
+      "ECR": {
+        "score": 0.974,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.1749166666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.38775,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.0098,
+        "count": 5
+      },
+      "EFD": {
+        "score": 0.3288,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96920": {
+      "ECR": {
+        "score": 0.9571538461538461,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.125,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.40075000000000005,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.41320000000000007,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96919": {
+      "ECR": {
+        "score": 0.959076923076923,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15466666666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.39025,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.006,
+        "count": 1
+      },
+      "EFD": {
+        "score": 0.385,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96918": {
+      "ECR": {
+        "score": 0.015625,
+        "count": 8
+      },
+      "ALDE": {
+        "score": 0.5125000000000001,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9487499999999999,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.47240000000000004,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.238,
+        "count": 1
+      }
+    },
+    "M96912": {
+      "ECR": {
+        "score": 0.8872307692307692,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.06681818181818182,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.44775,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.4630000000000001,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4542": {
+      "ECR": {
+        "score": 0.9490000000000003,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.19891666666666666,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.355,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.007666666666666666,
+        "count": 3
+      },
+      "EFD": {
+        "score": 0.3652,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M5846": {
+      "ECR": {
+        "score": 0.01325,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.49025,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9459166666666667,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4748,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.24,
+        "count": 1
+      }
+    },
+    "M2327": {
+      "ECR": {
+        "score": 0.01672727272727273,
+        "count": 11
+      },
+      "ALDE": {
+        "score": 0.5110833333333333,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9541666666666667,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4736000000000001,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.253,
+        "count": 1
+      }
+    },
+    "M4531": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.314,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.4898461538461539,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.86075,
+        "count": 4
+      },
+      "GUE/NGL": {
+        "score": 0.484,
+        "count": 1
+      }
+    },
+    "M4550": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.29924999999999996,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.4630769230769231,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.8817499999999999,
+        "count": 4
+      },
+      "GUE/NGL": {
+        "score": 0.516,
+        "count": 1
+      }
+    },
+    "M1318": {
+      "ECR": {
+        "score": 0.9375769230769229,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.14125,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.398,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.0075,
+        "count": 2
+      },
+      "EFD": {
+        "score": 0.39799999999999996,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96958": {
+      "ECR": {
+        "score": 0.3538148148148148,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.628,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.9425,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M2338": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.32641666666666663,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.45938461538461534,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.82375,
+        "count": 4
+      },
+      "GUE/NGL": {
+        "score": 0.436,
+        "count": 1
+      }
+    },
+    "M28497": {
+      "ECR": {
+        "score": 0.3579259259259259,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.646,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.9515,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M35743": {
+      "ECR": {
+        "score": 0.021200000000000004,
+        "count": 5
+      },
+      "ALDE": {
+        "score": 0.5040833333333333,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.964,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.47879999999999995,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.248,
+        "count": 1
+      }
+    },
+    "M102931": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.31766666666666665,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.48369230769230764,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.8552500000000001,
+        "count": 4
+      },
+      "GUE/NGL": {
+        "score": 0.472,
+        "count": 1
+      }
+    },
+    "M96949": {
+      "ECR": {
+        "score": 0.9522692307692306,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.16691666666666669,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.3765,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.009999999999999998,
+        "count": 2
+      },
+      "EFD": {
+        "score": 0.37320000000000003,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4545": {
+      "ECR": {
+        "score": 0.022,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.49875,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9584999999999998,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.49960000000000004,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.257,
+        "count": 1
+      }
+    },
+    "M4553": {
+      "ECR": {
+        "score": 0.9578076923076922,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.16291666666666663,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.386,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.38420000000000004,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96956": {
+      "ECR": {
+        "score": 0.9595769230769231,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15783333333333335,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.38725,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.008666666666666668,
+        "count": 3
+      },
+      "EFD": {
+        "score": 0.3882,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M1403": {
+      "ECR": {
+        "score": 0.0125,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.5056666666666668,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9423333333333334,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4854,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.247,
+        "count": 1
+      }
+    },
+    "M28508": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.33499999999999996,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.48523076923076924,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.843,
+        "count": 4
+      },
+      "GUE/NGL": {
+        "score": 0.421,
+        "count": 1
+      }
+    },
+    "M96955": {
+      "ECR": {
+        "score": 0.1771111111111111,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.9194545454545454,
+        "count": 11
+      },
+      "NonAttached": {
+        "score": 0.033,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.5076923076923078,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.316,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.036,
+        "count": 1
+      }
+    },
+    "M4519": {
+      "ECR": {
+        "score": 0.01908333333333333,
+        "count": 12
+      },
+      "ALDE": {
+        "score": 0.49625,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9525,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4948,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.244,
+        "count": 1
+      }
+    },
+    "M96951": {
+      "ECR": {
+        "score": 0.7790370370370371,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0.03542857142857143,
+        "count": 7
+      },
+      "NonAttached": {
+        "score": 0.4176666666666667,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.5058,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4555": {
+      "ECR": {
+        "score": 0.9180384615384614,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.14091666666666666,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.37875000000000003,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.39999999999999997,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M2073": {
+      "ECR": {
+        "score": 0.022,
+        "count": 5
+      },
+      "ALDE": {
+        "score": 0.47816666666666663,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.9538333333333333,
+        "count": 12
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.4806,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0.252,
+        "count": 1
+      }
+    },
+    "M33569": {
+      "ECR": {
+        "score": 0.9624999999999998,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15825000000000003,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.38275000000000003,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.3876,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M113959": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.06216666666666667,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.24669230769230766,
+        "count": 13
+      },
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.46580000000000005,
+        "count": 5
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96957": {
+      "ECR": {
+        "score": 0.9661153846153845,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.15324999999999997,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.40125000000000005,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.41159999999999997,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4521": {
+      "ECR": {
+        "score": 0.9558076923076926,
+        "count": 26
+      },
+      "ALDE": {
+        "score": 0.14125000000000001,
+        "count": 12
+      },
+      "NonAttached": {
+        "score": 0.401,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.39899999999999997,
+        "count": 5
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96897": {
+      "ECR": {
+        "score": 0.38411111111111107,
+        "count": 27
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0.6507499999999999,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "EFD": {
+        "score": 0.9537500000000001,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:35.626Z"
+}

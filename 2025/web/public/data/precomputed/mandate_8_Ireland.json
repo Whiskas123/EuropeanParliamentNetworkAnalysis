@@ -1,0 +1,426 @@
+{
+  "mandate": 8,
+  "country": "Ireland",
+  "nodes": [
+    {
+      "id": "M96668",
+      "label": "Seán KELLY",
+      "country": "Ireland",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 541.9761099306903,
+      "y": 412.6318443615209
+    },
+    {
+      "id": "M96603",
+      "label": "Nessa CHILDERS",
+      "country": "Ireland",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 495.48566265986346,
+      "y": 417.332963678333
+    },
+    {
+      "id": "M124987",
+      "label": "Liadh NÍ RIADA",
+      "country": "Ireland",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 458.3056042597401,
+      "y": 420.35285928407035
+    },
+    {
+      "id": "M28115",
+      "label": "Mairead McGUINNESS",
+      "country": "Ireland",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 530.9464944574768,
+      "y": 407.6502429473997
+    },
+    {
+      "id": "M118658",
+      "label": "Brian HAYES",
+      "country": "Ireland",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 530.1333742680044,
+      "y": 421.89389928103
+    },
+    {
+      "id": "M124988",
+      "label": "Deirdre CLUNE",
+      "country": "Ireland",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 539.0348142090145,
+      "y": 424.63587631721396
+    },
+    {
+      "id": "M124985",
+      "label": "Luke Ming FLANAGAN",
+      "country": "Ireland",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 472.3252637802361,
+      "y": 411.52082981028474
+    },
+    {
+      "id": "M124984",
+      "label": "Lynn BOYLAN",
+      "country": "Ireland",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 460.5102963030789,
+      "y": 409.31256913483594
+    },
+    {
+      "id": "M124986",
+      "label": "Matt CARTHY",
+      "country": "Ireland",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 467.745445626519,
+      "y": 424.7321621809651
+    },
+    {
+      "id": "M28116",
+      "label": "Marian HARKIN",
+      "country": "Ireland",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 514.9076620444386,
+      "y": 414.73280402973677
+    }
+  ],
+  "edges": [
+    {
+      "source": "M96668",
+      "target": "M118658",
+      "weight": 0.953
+    },
+    {
+      "source": "M96668",
+      "target": "M28116",
+      "weight": 0.63
+    },
+    {
+      "source": "M96668",
+      "target": "M124988",
+      "weight": 0.966
+    },
+    {
+      "source": "M96668",
+      "target": "M28115",
+      "weight": 0.967
+    },
+    {
+      "source": "M96668",
+      "target": "M96603",
+      "weight": 0.329
+    },
+    {
+      "source": "M118658",
+      "target": "M28116",
+      "weight": 0.634
+    },
+    {
+      "source": "M118658",
+      "target": "M124988",
+      "weight": 0.942
+    },
+    {
+      "source": "M118658",
+      "target": "M28115",
+      "weight": 0.952
+    },
+    {
+      "source": "M118658",
+      "target": "M96603",
+      "weight": 0.354
+    },
+    {
+      "source": "M28116",
+      "target": "M124988",
+      "weight": 0.61
+    },
+    {
+      "source": "M28116",
+      "target": "M124985",
+      "weight": 0.18
+    },
+    {
+      "source": "M28116",
+      "target": "M124986",
+      "weight": 0.174
+    },
+    {
+      "source": "M28116",
+      "target": "M28115",
+      "weight": 0.653
+    },
+    {
+      "source": "M28116",
+      "target": "M96603",
+      "weight": 0.538
+    },
+    {
+      "source": "M28116",
+      "target": "M124984",
+      "weight": 0.187
+    },
+    {
+      "source": "M28116",
+      "target": "M124987",
+      "weight": 0.167
+    },
+    {
+      "source": "M124988",
+      "target": "M28115",
+      "weight": 0.961
+    },
+    {
+      "source": "M124988",
+      "target": "M96603",
+      "weight": 0.339
+    },
+    {
+      "source": "M124985",
+      "target": "M124986",
+      "weight": 0.828
+    },
+    {
+      "source": "M124985",
+      "target": "M96603",
+      "weight": 0.438
+    },
+    {
+      "source": "M124985",
+      "target": "M124984",
+      "weight": 0.822
+    },
+    {
+      "source": "M124985",
+      "target": "M124987",
+      "weight": 0.835
+    },
+    {
+      "source": "M124986",
+      "target": "M96603",
+      "weight": 0.417
+    },
+    {
+      "source": "M124986",
+      "target": "M124984",
+      "weight": 0.992
+    },
+    {
+      "source": "M124986",
+      "target": "M124987",
+      "weight": 0.993
+    },
+    {
+      "source": "M28115",
+      "target": "M96603",
+      "weight": 0.35
+    },
+    {
+      "source": "M96603",
+      "target": "M124984",
+      "weight": 0.392
+    },
+    {
+      "source": "M96603",
+      "target": "M124987",
+      "weight": 0.413
+    },
+    {
+      "source": "M124984",
+      "target": "M124987",
+      "weight": 0.994
+    }
+  ],
+  "agreementScores": {
+    "M96668": {
+      "PPE": {
+        "score": 0.9620000000000001,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.329,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.63,
+        "count": 1
+      }
+    },
+    "M96603": {
+      "PPE": {
+        "score": 0.34299999999999997,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0.415,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.538,
+        "count": 1
+      }
+    },
+    "M124987": {
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.413,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.9406666666666667,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.167,
+        "count": 1
+      }
+    },
+    "M28115": {
+      "PPE": {
+        "score": 0.96,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.35,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.653,
+        "count": 1
+      }
+    },
+    "M118658": {
+      "PPE": {
+        "score": 0.949,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.354,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.634,
+        "count": 1
+      }
+    },
+    "M124988": {
+      "PPE": {
+        "score": 0.9563333333333333,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.339,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.61,
+        "count": 1
+      }
+    },
+    "M124985": {
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.438,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.8283333333333333,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.18,
+        "count": 1
+      }
+    },
+    "M124984": {
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.392,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.9359999999999999,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.187,
+        "count": 1
+      }
+    },
+    "M124986": {
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.417,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.9376666666666665,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.174,
+        "count": 1
+      }
+    },
+    "M28116": {
+      "PPE": {
+        "score": 0.63175,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.538,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.177,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:38.821Z"
+}

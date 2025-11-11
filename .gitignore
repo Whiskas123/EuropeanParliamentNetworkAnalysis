@@ -134,6 +134,5 @@ forceatlas2-master/
 # Large data files (use Git LFS if you need to track these)
 2025/data/ep_votes*.json
 2025/data/ep_meps.json
-2025/web/public/data/precomputed/*.json
 oldstuff/webpage/fullhemicicle.svg
 *.gephi

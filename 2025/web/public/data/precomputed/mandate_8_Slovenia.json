@@ -1,0 +1,367 @@
+{
+  "mandate": 8,
+  "country": "Slovenia",
+  "nodes": [
+    {
+      "id": "M125104",
+      "label": "Romana TOMC",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 528.5574951171875,
+      "y": 347.73114013671875
+    },
+    {
+      "id": "M96911",
+      "label": "Tanja FAJON",
+      "country": "Slovenia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 548.9911499023438,
+      "y": 344.82244873046875
+    },
+    {
+      "id": "M23693",
+      "label": "Alojz PETERLE",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 524.4668579101562,
+      "y": 366.8729553222656
+    },
+    {
+      "id": "M96933",
+      "label": "Milan ZVER",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 536.5676879882812,
+      "y": 367.415771484375
+    },
+    {
+      "id": "M125103",
+      "label": "Patricija ŠULIN",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 514.6959838867188,
+      "y": 353.98193359375
+    },
+    {
+      "id": "M125003",
+      "label": "Igor ŠOLTES",
+      "country": "Slovenia",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 551.0404052734375,
+      "y": 330.7742004394531
+    },
+    {
+      "id": "M125004",
+      "label": "Franc BOGOVIČ",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 543.4698486328125,
+      "y": 357.7907409667969
+    },
+    {
+      "id": "M97019",
+      "label": "Ivo VAJGL",
+      "country": "Slovenia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 536.988525390625,
+      "y": 338.5970153808594
+    }
+  ],
+  "edges": [
+    {
+      "source": "M125103",
+      "target": "M125104",
+      "weight": 0.96
+    },
+    {
+      "source": "M125103",
+      "target": "M125004",
+      "weight": 0.944
+    },
+    {
+      "source": "M125103",
+      "target": "M96933",
+      "weight": 0.96
+    },
+    {
+      "source": "M125103",
+      "target": "M97019",
+      "weight": 0.564
+    },
+    {
+      "source": "M125103",
+      "target": "M23693",
+      "weight": 0.945
+    },
+    {
+      "source": "M125103",
+      "target": "M125003",
+      "weight": 0.107
+    },
+    {
+      "source": "M125103",
+      "target": "M96911",
+      "weight": 0.453
+    },
+    {
+      "source": "M125104",
+      "target": "M125004",
+      "weight": 0.939
+    },
+    {
+      "source": "M125104",
+      "target": "M96933",
+      "weight": 0.953
+    },
+    {
+      "source": "M125104",
+      "target": "M97019",
+      "weight": 0.571
+    },
+    {
+      "source": "M125104",
+      "target": "M23693",
+      "weight": 0.932
+    },
+    {
+      "source": "M125104",
+      "target": "M125003",
+      "weight": 0.121
+    },
+    {
+      "source": "M125104",
+      "target": "M96911",
+      "weight": 0.469
+    },
+    {
+      "source": "M125004",
+      "target": "M96933",
+      "weight": 0.932
+    },
+    {
+      "source": "M125004",
+      "target": "M97019",
+      "weight": 0.59
+    },
+    {
+      "source": "M125004",
+      "target": "M23693",
+      "weight": 0.929
+    },
+    {
+      "source": "M125004",
+      "target": "M125003",
+      "weight": 0.145
+    },
+    {
+      "source": "M125004",
+      "target": "M96911",
+      "weight": 0.483
+    },
+    {
+      "source": "M96933",
+      "target": "M97019",
+      "weight": 0.558
+    },
+    {
+      "source": "M96933",
+      "target": "M23693",
+      "weight": 0.932
+    },
+    {
+      "source": "M96933",
+      "target": "M125003",
+      "weight": 0.098
+    },
+    {
+      "source": "M96933",
+      "target": "M96911",
+      "weight": 0.443
+    },
+    {
+      "source": "M97019",
+      "target": "M23693",
+      "weight": 0.566
+    },
+    {
+      "source": "M97019",
+      "target": "M125003",
+      "weight": 0.418
+    },
+    {
+      "source": "M97019",
+      "target": "M96911",
+      "weight": 0.611
+    },
+    {
+      "source": "M23693",
+      "target": "M125003",
+      "weight": 0.121
+    },
+    {
+      "source": "M23693",
+      "target": "M96911",
+      "weight": 0.463
+    },
+    {
+      "source": "M125003",
+      "target": "M96911",
+      "weight": 0.569
+    }
+  ],
+  "agreementScores": {
+    "M125104": {
+      "PPE": {
+        "score": 0.946,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.469,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.121,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.571,
+        "count": 1
+      }
+    },
+    "M96911": {
+      "PPE": {
+        "score": 0.4622,
+        "count": 5
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.569,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.611,
+        "count": 1
+      }
+    },
+    "M23693": {
+      "PPE": {
+        "score": 0.9345,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.463,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.121,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.566,
+        "count": 1
+      }
+    },
+    "M96933": {
+      "PPE": {
+        "score": 0.9442499999999999,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.443,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.098,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.558,
+        "count": 1
+      }
+    },
+    "M125103": {
+      "PPE": {
+        "score": 0.9522499999999999,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.453,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.107,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.564,
+        "count": 1
+      }
+    },
+    "M125003": {
+      "PPE": {
+        "score": 0.11839999999999999,
+        "count": 5
+      },
+      "S&D": {
+        "score": 0.569,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.418,
+        "count": 1
+      }
+    },
+    "M125004": {
+      "PPE": {
+        "score": 0.9359999999999999,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.483,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.145,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.59,
+        "count": 1
+      }
+    },
+    "M97019": {
+      "PPE": {
+        "score": 0.5697999999999999,
+        "count": 5
+      },
+      "S&D": {
+        "score": 0.611,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.418,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:40.492Z"
+}

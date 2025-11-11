@@ -1,0 +1,248 @@
+{
+  "mandate": 7,
+  "country": "Estonia",
+  "nodes": [
+    {
+      "id": "M97230",
+      "label": "Kristiina OJULAND",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 296.43511962890625,
+      "y": 286.0733642578125
+    },
+    {
+      "id": "M26829",
+      "label": "Siiri OVIIR",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 299.5277099609375,
+      "y": 299.4151306152344
+    },
+    {
+      "id": "M97308",
+      "label": "Vilja SAVISAAR-TOOMAST",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 291.6864318847656,
+      "y": 295.97467041015625
+    },
+    {
+      "id": "M97136",
+      "label": "Indrek TARAND",
+      "country": "Estonia",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 311.64727783203125,
+      "y": 302.9883728027344
+    },
+    {
+      "id": "M28424",
+      "label": "Tunne KELAM",
+      "country": "Estonia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 307.2867431640625,
+      "y": 281.9470520019531
+    },
+    {
+      "id": "M97025",
+      "label": "Ivari PADAR",
+      "country": "Estonia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 311.3410339355469,
+      "y": 290.9166259765625
+    }
+  ],
+  "edges": [
+    {
+      "source": "M28424",
+      "target": "M97308",
+      "weight": 0.543
+    },
+    {
+      "source": "M28424",
+      "target": "M97230",
+      "weight": 0.539
+    },
+    {
+      "source": "M28424",
+      "target": "M97025",
+      "weight": 0.496
+    },
+    {
+      "source": "M28424",
+      "target": "M26829",
+      "weight": 0.536
+    },
+    {
+      "source": "M28424",
+      "target": "M97136",
+      "weight": 0.234
+    },
+    {
+      "source": "M97308",
+      "target": "M97230",
+      "weight": 0.88
+    },
+    {
+      "source": "M97308",
+      "target": "M97025",
+      "weight": 0.589
+    },
+    {
+      "source": "M97308",
+      "target": "M26829",
+      "weight": 0.948
+    },
+    {
+      "source": "M97308",
+      "target": "M97136",
+      "weight": 0.382
+    },
+    {
+      "source": "M97230",
+      "target": "M97025",
+      "weight": 0.534
+    },
+    {
+      "source": "M97230",
+      "target": "M26829",
+      "weight": 0.878
+    },
+    {
+      "source": "M97230",
+      "target": "M97136",
+      "weight": 0.328
+    },
+    {
+      "source": "M97025",
+      "target": "M26829",
+      "weight": 0.612
+    },
+    {
+      "source": "M97025",
+      "target": "M97136",
+      "weight": 0.554
+    },
+    {
+      "source": "M26829",
+      "target": "M97136",
+      "weight": 0.404
+    }
+  ],
+  "agreementScores": {
+    "M97230": {
+      "ALDE": {
+        "score": 0.879,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.328,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.539,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.534,
+        "count": 1
+      }
+    },
+    "M26829": {
+      "ALDE": {
+        "score": 0.913,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.404,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.536,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.612,
+        "count": 1
+      }
+    },
+    "M97308": {
+      "ALDE": {
+        "score": 0.9139999999999999,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.382,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.543,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.589,
+        "count": 1
+      }
+    },
+    "M97136": {
+      "ALDE": {
+        "score": 0.3713333333333333,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.234,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.554,
+        "count": 1
+      }
+    },
+    "M28424": {
+      "ALDE": {
+        "score": 0.5393333333333333,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.234,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.496,
+        "count": 1
+      }
+    },
+    "M97025": {
+      "ALDE": {
+        "score": 0.5783333333333333,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.554,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.496,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:32.079Z"
+}

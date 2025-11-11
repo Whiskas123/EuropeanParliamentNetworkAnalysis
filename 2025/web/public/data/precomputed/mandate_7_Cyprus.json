@@ -1,0 +1,123 @@
+{
+  "mandate": 7,
+  "country": "Cyprus",
+  "nodes": [
+    {
+      "id": "M97050",
+      "label": "Antigoni PAPADOPOULOU",
+      "country": "Cyprus",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 466.64652033562515,
+      "y": 522.1762106860501
+    },
+    {
+      "id": "M28514",
+      "label": "Kyriacos TRIANTAPHYLLIDES",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 448.7911432811794,
+      "y": 518.7088024624284
+    },
+    {
+      "id": "M96907",
+      "label": "Takis HADJIGEORGIOU",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 447.87837787065854,
+      "y": 525.614760159642
+    },
+    {
+      "id": "M25704",
+      "label": "Eleni THEOCHAROUS",
+      "country": "Cyprus",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 476.8124680340212,
+      "y": 522.1473519360202
+    }
+  ],
+  "edges": [
+    {
+      "source": "M97050",
+      "target": "M28514",
+      "weight": 0.192
+    },
+    {
+      "source": "M97050",
+      "target": "M25704",
+      "weight": 0.548
+    },
+    {
+      "source": "M97050",
+      "target": "M96907",
+      "weight": 0.175
+    },
+    {
+      "source": "M28514",
+      "target": "M96907",
+      "weight": 0.96
+    }
+  ],
+  "agreementScores": {
+    "M97050": {
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0.1835,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.548,
+        "count": 1
+      }
+    },
+    "M28514": {
+      "S&D": {
+        "score": 0.192,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.96,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96907": {
+      "S&D": {
+        "score": 0.175,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.96,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M25704": {
+      "S&D": {
+        "score": 0.548,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:31.526Z"
+}

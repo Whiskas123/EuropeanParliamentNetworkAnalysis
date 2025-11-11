@@ -1,0 +1,200 @@
+{
+  "mandate": 9,
+  "country": "Malta",
+  "nodes": [
+    {
+      "id": "M118859",
+      "label": "Roberta METSOLA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 463.1429748535156,
+      "y": 511.6706848144531
+    },
+    {
+      "id": "M124781",
+      "label": "Alfred SANT",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 469.48175048828125,
+      "y": 490.4544372558594
+    },
+    {
+      "id": "M28122",
+      "label": "David CASA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 470.9516906738281,
+      "y": 504.2558898925781
+    },
+    {
+      "id": "M197403",
+      "label": "Alex AGIUS SALIBA",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 460.751708984375,
+      "y": 485.3286437988281
+    },
+    {
+      "id": "M197394",
+      "label": "Josianne CUTAJAR",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 456.7359313964844,
+      "y": 500.4364318847656
+    },
+    {
+      "id": "M209091",
+      "label": "Cyrus ENGERER",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 449.8533630371094,
+      "y": 491.4022216796875
+    }
+  ],
+  "edges": [
+    {
+      "source": "M28122",
+      "target": "M197403",
+      "weight": 0.465
+    },
+    {
+      "source": "M28122",
+      "target": "M197394",
+      "weight": 0.483
+    },
+    {
+      "source": "M28122",
+      "target": "M124781",
+      "weight": 0.447
+    },
+    {
+      "source": "M28122",
+      "target": "M209091",
+      "weight": 0.436
+    },
+    {
+      "source": "M28122",
+      "target": "M118859",
+      "weight": 0.99
+    },
+    {
+      "source": "M197403",
+      "target": "M197394",
+      "weight": 0.96
+    },
+    {
+      "source": "M197403",
+      "target": "M124781",
+      "weight": 0.905
+    },
+    {
+      "source": "M197403",
+      "target": "M209091",
+      "weight": 0.917
+    },
+    {
+      "source": "M197403",
+      "target": "M118859",
+      "weight": 0.487
+    },
+    {
+      "source": "M197394",
+      "target": "M124781",
+      "weight": 0.935
+    },
+    {
+      "source": "M197394",
+      "target": "M209091",
+      "weight": 0.945
+    },
+    {
+      "source": "M197394",
+      "target": "M118859",
+      "weight": 0.488
+    },
+    {
+      "source": "M124781",
+      "target": "M209091",
+      "weight": 0.89
+    },
+    {
+      "source": "M124781",
+      "target": "M118859",
+      "weight": 0.437
+    },
+    {
+      "source": "M209091",
+      "target": "M118859",
+      "weight": 0.462
+    }
+  ],
+  "agreementScores": {
+    "M118859": {
+      "PPE": {
+        "score": 0.99,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.46849999999999997,
+        "count": 4
+      }
+    },
+    "M124781": {
+      "PPE": {
+        "score": 0.442,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.91,
+        "count": 3
+      }
+    },
+    "M28122": {
+      "PPE": {
+        "score": 0.99,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.45775,
+        "count": 4
+      }
+    },
+    "M197403": {
+      "PPE": {
+        "score": 0.476,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.9273333333333333,
+        "count": 3
+      }
+    },
+    "M197394": {
+      "PPE": {
+        "score": 0.4855,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.9466666666666667,
+        "count": 3
+      }
+    },
+    "M209091": {
+      "PPE": {
+        "score": 0.449,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.9173333333333334,
+        "count": 3
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:45.051Z"
+}

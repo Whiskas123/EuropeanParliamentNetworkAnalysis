@@ -1,0 +1,71 @@
+{
+  "mandate": 7,
+  "country": "Croatia",
+  "nodes": [
+    {
+      "id": "M119438",
+      "label": "Zdravka BUŠIĆ",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 468.58880615234375,
+      "y": 400.1005859375
+    },
+    {
+      "id": "M119436",
+      "label": "Ivana MALETIĆ",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 474.08514404296875,
+      "y": 405.89605712890625
+    },
+    {
+      "id": "M119434",
+      "label": "Dubravka ŠUICA",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 476.8404235839844,
+      "y": 397.58056640625
+    }
+  ],
+  "edges": [
+    {
+      "source": "M119438",
+      "target": "M119436",
+      "weight": 0.952
+    },
+    {
+      "source": "M119438",
+      "target": "M119434",
+      "weight": 0.945
+    },
+    {
+      "source": "M119436",
+      "target": "M119434",
+      "weight": 0.948
+    }
+  ],
+  "agreementScores": {
+    "M119438": {
+      "PPE": {
+        "score": 0.9484999999999999,
+        "count": 2
+      }
+    },
+    "M119436": {
+      "PPE": {
+        "score": 0.95,
+        "count": 2
+      }
+    },
+    "M119434": {
+      "PPE": {
+        "score": 0.9464999999999999,
+        "count": 2
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:31.321Z"
+}

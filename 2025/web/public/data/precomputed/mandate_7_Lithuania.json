@@ -1,0 +1,536 @@
+{
+  "mandate": 7,
+  "country": "Lithuania",
+  "nodes": [
+    {
+      "id": "M96693",
+      "label": "Juozas IMBRASAS",
+      "country": "Lithuania",
+      "groupId": "EFD",
+      "color": "#CCCCCC",
+      "x": 443.09344482421875,
+      "y": 381.1256103515625
+    },
+    {
+      "id": "M23746",
+      "label": "Vytautas LANDSBERGIS",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 465.351806640625,
+      "y": 362.62835693359375
+    },
+    {
+      "id": "M96695",
+      "label": "Radvilė MORKŪNAITĖ-MIKULĖNIENĖ",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 451.280029296875,
+      "y": 367.5015869140625
+    },
+    {
+      "id": "M28279",
+      "label": "Justas Vincas PALECKIS",
+      "country": "Lithuania",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 458.2556457519531,
+      "y": 404.2947082519531
+    },
+    {
+      "id": "M96692",
+      "label": "Leonidas DONSKIS",
+      "country": "Lithuania",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 477.4548645019531,
+      "y": 387.4234619140625
+    },
+    {
+      "id": "M96697",
+      "label": "Waldemar TOMASZEWSKI",
+      "country": "Lithuania",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 460.66217041015625,
+      "y": 346.79974365234375
+    },
+    {
+      "id": "M96696",
+      "label": "Algirdas SAUDARGAS",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 477.7342834472656,
+      "y": 371.6714782714844
+    },
+    {
+      "id": "M28276",
+      "label": "Laima Liucija ANDRIKIENĖ",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 462.0489501953125,
+      "y": 377.9080810546875
+    },
+    {
+      "id": "M96680",
+      "label": "Zigmantas BALČYTIS",
+      "country": "Lithuania",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 469.5534362792969,
+      "y": 399.4102783203125
+    },
+    {
+      "id": "M96681",
+      "label": "Vilija BLINKEVIČIŪTĖ",
+      "country": "Lithuania",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 452.53045654296875,
+      "y": 394.4286193847656
+    }
+  ],
+  "edges": [
+    {
+      "source": "M96692",
+      "target": "M96696",
+      "weight": 0.563
+    },
+    {
+      "source": "M96692",
+      "target": "M96695",
+      "weight": 0.592
+    },
+    {
+      "source": "M96692",
+      "target": "M28276",
+      "weight": 0.553
+    },
+    {
+      "source": "M96692",
+      "target": "M96681",
+      "weight": 0.569
+    },
+    {
+      "source": "M96692",
+      "target": "M96697",
+      "weight": 0.119
+    },
+    {
+      "source": "M96692",
+      "target": "M28279",
+      "weight": 0.562
+    },
+    {
+      "source": "M96692",
+      "target": "M23746",
+      "weight": 0.564
+    },
+    {
+      "source": "M96692",
+      "target": "M96693",
+      "weight": 0.428
+    },
+    {
+      "source": "M96692",
+      "target": "M96680",
+      "weight": 0.601
+    },
+    {
+      "source": "M96696",
+      "target": "M96695",
+      "weight": 0.959
+    },
+    {
+      "source": "M96696",
+      "target": "M28276",
+      "weight": 0.925
+    },
+    {
+      "source": "M96696",
+      "target": "M96681",
+      "weight": 0.519
+    },
+    {
+      "source": "M96696",
+      "target": "M96697",
+      "weight": 0.29
+    },
+    {
+      "source": "M96696",
+      "target": "M28279",
+      "weight": 0.482
+    },
+    {
+      "source": "M96696",
+      "target": "M23746",
+      "weight": 0.92
+    },
+    {
+      "source": "M96696",
+      "target": "M96693",
+      "weight": 0.49
+    },
+    {
+      "source": "M96696",
+      "target": "M96680",
+      "weight": 0.487
+    },
+    {
+      "source": "M96695",
+      "target": "M28276",
+      "weight": 0.935
+    },
+    {
+      "source": "M96695",
+      "target": "M96681",
+      "weight": 0.51
+    },
+    {
+      "source": "M96695",
+      "target": "M96697",
+      "weight": 0.288
+    },
+    {
+      "source": "M96695",
+      "target": "M28279",
+      "weight": 0.476
+    },
+    {
+      "source": "M96695",
+      "target": "M23746",
+      "weight": 0.925
+    },
+    {
+      "source": "M96695",
+      "target": "M96693",
+      "weight": 0.486
+    },
+    {
+      "source": "M96695",
+      "target": "M96680",
+      "weight": 0.477
+    },
+    {
+      "source": "M28276",
+      "target": "M96681",
+      "weight": 0.523
+    },
+    {
+      "source": "M28276",
+      "target": "M96697",
+      "weight": 0.327
+    },
+    {
+      "source": "M28276",
+      "target": "M28279",
+      "weight": 0.466
+    },
+    {
+      "source": "M28276",
+      "target": "M23746",
+      "weight": 0.896
+    },
+    {
+      "source": "M28276",
+      "target": "M96693",
+      "weight": 0.422
+    },
+    {
+      "source": "M28276",
+      "target": "M96680",
+      "weight": 0.461
+    },
+    {
+      "source": "M96681",
+      "target": "M96697",
+      "weight": 0.014
+    },
+    {
+      "source": "M96681",
+      "target": "M28279",
+      "weight": 0.949
+    },
+    {
+      "source": "M96681",
+      "target": "M23746",
+      "weight": 0.52
+    },
+    {
+      "source": "M96681",
+      "target": "M96693",
+      "weight": 0.496
+    },
+    {
+      "source": "M96681",
+      "target": "M96680",
+      "weight": 0.949
+    },
+    {
+      "source": "M96697",
+      "target": "M23746",
+      "weight": 0.243
+    },
+    {
+      "source": "M96697",
+      "target": "M96693",
+      "weight": 0.184
+    },
+    {
+      "source": "M28279",
+      "target": "M23746",
+      "weight": 0.472
+    },
+    {
+      "source": "M28279",
+      "target": "M96693",
+      "weight": 0.513
+    },
+    {
+      "source": "M28279",
+      "target": "M96680",
+      "weight": 0.933
+    },
+    {
+      "source": "M23746",
+      "target": "M96693",
+      "weight": 0.514
+    },
+    {
+      "source": "M23746",
+      "target": "M96680",
+      "weight": 0.484
+    },
+    {
+      "source": "M96693",
+      "target": "M96680",
+      "weight": 0.512
+    }
+  ],
+  "agreementScores": {
+    "M96693": {
+      "EFD": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.478,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.507,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.428,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.184,
+        "count": 1
+      }
+    },
+    "M23746": {
+      "EFD": {
+        "score": 0.514,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.9136666666666667,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.492,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.564,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.243,
+        "count": 1
+      }
+    },
+    "M96695": {
+      "EFD": {
+        "score": 0.486,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.9396666666666667,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.4876666666666667,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.592,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.288,
+        "count": 1
+      }
+    },
+    "M28279": {
+      "EFD": {
+        "score": 0.513,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.474,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.9410000000000001,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.562,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96692": {
+      "EFD": {
+        "score": 0.428,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.568,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.5773333333333334,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "ECR": {
+        "score": 0.119,
+        "count": 1
+      }
+    },
+    "M96697": {
+      "EFD": {
+        "score": 0.184,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.28700000000000003,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.014,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.119,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96696": {
+      "EFD": {
+        "score": 0.49,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.9346666666666666,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.496,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.563,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.29,
+        "count": 1
+      }
+    },
+    "M28276": {
+      "EFD": {
+        "score": 0.422,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.9186666666666667,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.4833333333333334,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.553,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.327,
+        "count": 1
+      }
+    },
+    "M96680": {
+      "EFD": {
+        "score": 0.512,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.47725,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.9410000000000001,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.601,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M96681": {
+      "EFD": {
+        "score": 0.496,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.518,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.949,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.569,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.014,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:33.719Z"
+}

@@ -1,0 +1,247 @@
+{
+  "mandate": 10,
+  "country": "Luxembourg",
+  "nodes": [
+    {
+      "id": "M840",
+      "label": "Charles GOERENS",
+      "country": "Luxembourg",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 489.767333984375,
+      "y": 441.73687744140625
+    },
+    {
+      "id": "M193292",
+      "label": "Tilly METZ",
+      "country": "Luxembourg",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 487.8686828613281,
+      "y": 452.96563720703125
+    },
+    {
+      "id": "M197421",
+      "label": "Isabel WISELER-LIMA",
+      "country": "Luxembourg",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 506.1009216308594,
+      "y": 444.5577087402344
+    },
+    {
+      "id": "M202073",
+      "label": "Marc ANGEL",
+      "country": "Luxembourg",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 499.2922058105469,
+      "y": 454.2911376953125
+    },
+    {
+      "id": "M249603",
+      "label": "Martine KEMP",
+      "country": "Luxembourg",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 498.5858154296875,
+      "y": 435.23956298828125
+    },
+    {
+      "id": "M256900",
+      "label": "Fernand KARTHEISER",
+      "country": "Luxembourg",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 639.2559204101562,
+      "y": 48.47315979003906
+    }
+  ],
+  "edges": [
+    {
+      "source": "M202073",
+      "target": "M193292",
+      "weight": 0.789
+    },
+    {
+      "source": "M202073",
+      "target": "M197421",
+      "weight": 0.651
+    },
+    {
+      "source": "M202073",
+      "target": "M840",
+      "weight": 0.78
+    },
+    {
+      "source": "M202073",
+      "target": "M249603",
+      "weight": 0.619
+    },
+    {
+      "source": "M193292",
+      "target": "M197421",
+      "weight": 0.466
+    },
+    {
+      "source": "M193292",
+      "target": "M840",
+      "weight": 0.624
+    },
+    {
+      "source": "M193292",
+      "target": "M249603",
+      "weight": 0.396
+    },
+    {
+      "source": "M197421",
+      "target": "M840",
+      "weight": 0.807
+    },
+    {
+      "source": "M197421",
+      "target": "M249603",
+      "weight": 0.993
+    },
+    {
+      "source": "M840",
+      "target": "M249603",
+      "weight": 0.813
+    }
+  ],
+  "agreementScores": {
+    "M840": {
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.624,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.81,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.78,
+        "count": 1
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M193292": {
+      "RE": {
+        "score": 0.624,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.43100000000000005,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.789,
+        "count": 1
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M197421": {
+      "RE": {
+        "score": 0.807,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.466,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.993,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.651,
+        "count": 1
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M202073": {
+      "RE": {
+        "score": 0.78,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.789,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.635,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M249603": {
+      "RE": {
+        "score": 0.813,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.396,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.993,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.619,
+        "count": 1
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256900": {
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:49.428Z"
+}

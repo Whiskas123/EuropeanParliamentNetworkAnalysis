@@ -1,0 +1,434 @@
+{
+  "mandate": 6,
+  "country": "Latvia",
+  "nodes": [
+    {
+      "id": "M23853",
+      "label": "Aldis KUŠĶIS",
+      "country": "Latvia",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 416.4999084472656,
+      "y": 492.9004211425781
+    },
+    {
+      "id": "M28618",
+      "label": "Valdis DOMBROVSKIS",
+      "country": "Latvia",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 408.5622863769531,
+      "y": 477.4228820800781
+    },
+    {
+      "id": "M28620",
+      "label": "Georgs ANDREJEVS",
+      "country": "Latvia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 434.81219482421875,
+      "y": 482.7323913574219
+    },
+    {
+      "id": "M23848",
+      "label": "Rihards PĪKS",
+      "country": "Latvia",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 429.5529479980469,
+      "y": 496.6910705566406
+    },
+    {
+      "id": "M26828",
+      "label": "Guntars KRASTS",
+      "country": "Latvia",
+      "groupId": "UEN",
+      "color": "#FFA500",
+      "x": 417.8717041015625,
+      "y": 506.8926696777344
+    },
+    {
+      "id": "M28616",
+      "label": "Ģirts Valdis KRISTOVSKIS",
+      "country": "Latvia",
+      "groupId": "UEN",
+      "color": "#FFA500",
+      "x": 400.1976013183594,
+      "y": 489.4931335449219
+    },
+    {
+      "id": "M28615",
+      "label": "Roberts ZĪLE",
+      "country": "Latvia",
+      "groupId": "UEN",
+      "color": "#FFA500",
+      "x": 405.2925720214844,
+      "y": 503.2619323730469
+    },
+    {
+      "id": "M28617",
+      "label": "Inese VAIDERE",
+      "country": "Latvia",
+      "groupId": "UEN",
+      "color": "#FFA500",
+      "x": 417.4339599609375,
+      "y": 478.8933410644531
+    },
+    {
+      "id": "M28619",
+      "label": "Tatjana ŽDANOKA",
+      "country": "Latvia",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 462.8385009765625,
+      "y": 477.767578125
+    }
+  ],
+  "edges": [
+    {
+      "source": "M28619",
+      "target": "M28620",
+      "weight": 0.245
+    },
+    {
+      "source": "M28619",
+      "target": "M26828",
+      "weight": 0.046
+    },
+    {
+      "source": "M28619",
+      "target": "M23848",
+      "weight": 0.008
+    },
+    {
+      "source": "M28619",
+      "target": "M23853",
+      "weight": 0.012
+    },
+    {
+      "source": "M28619",
+      "target": "M28616",
+      "weight": 0.007
+    },
+    {
+      "source": "M28619",
+      "target": "M28617",
+      "weight": 0.027
+    },
+    {
+      "source": "M28619",
+      "target": "M28615",
+      "weight": 0.012
+    },
+    {
+      "source": "M28619",
+      "target": "M28618",
+      "weight": 0.027
+    },
+    {
+      "source": "M28620",
+      "target": "M26828",
+      "weight": 0.47
+    },
+    {
+      "source": "M28620",
+      "target": "M23848",
+      "weight": 0.552
+    },
+    {
+      "source": "M28620",
+      "target": "M23853",
+      "weight": 0.542
+    },
+    {
+      "source": "M28620",
+      "target": "M28616",
+      "weight": 0.509
+    },
+    {
+      "source": "M28620",
+      "target": "M28617",
+      "weight": 0.506
+    },
+    {
+      "source": "M28620",
+      "target": "M28615",
+      "weight": 0.528
+    },
+    {
+      "source": "M28620",
+      "target": "M28618",
+      "weight": 0.568
+    },
+    {
+      "source": "M26828",
+      "target": "M23848",
+      "weight": 0.604
+    },
+    {
+      "source": "M26828",
+      "target": "M23853",
+      "weight": 0.634
+    },
+    {
+      "source": "M26828",
+      "target": "M28616",
+      "weight": 0.833
+    },
+    {
+      "source": "M26828",
+      "target": "M28617",
+      "weight": 0.833
+    },
+    {
+      "source": "M26828",
+      "target": "M28615",
+      "weight": 0.826
+    },
+    {
+      "source": "M26828",
+      "target": "M28618",
+      "weight": 0.661
+    },
+    {
+      "source": "M23848",
+      "target": "M23853",
+      "weight": 0.94
+    },
+    {
+      "source": "M23848",
+      "target": "M28616",
+      "weight": 0.663
+    },
+    {
+      "source": "M23848",
+      "target": "M28617",
+      "weight": 0.651
+    },
+    {
+      "source": "M23848",
+      "target": "M28615",
+      "weight": 0.686
+    },
+    {
+      "source": "M23848",
+      "target": "M28618",
+      "weight": 0.933
+    },
+    {
+      "source": "M23853",
+      "target": "M28616",
+      "weight": 0.693
+    },
+    {
+      "source": "M23853",
+      "target": "M28617",
+      "weight": 0.684
+    },
+    {
+      "source": "M23853",
+      "target": "M28615",
+      "weight": 0.699
+    },
+    {
+      "source": "M23853",
+      "target": "M28618",
+      "weight": 0.955
+    },
+    {
+      "source": "M28616",
+      "target": "M28617",
+      "weight": 0.889
+    },
+    {
+      "source": "M28616",
+      "target": "M28615",
+      "weight": 0.881
+    },
+    {
+      "source": "M28616",
+      "target": "M28618",
+      "weight": 0.695
+    },
+    {
+      "source": "M28617",
+      "target": "M28615",
+      "weight": 0.898
+    },
+    {
+      "source": "M28617",
+      "target": "M28618",
+      "weight": 0.699
+    },
+    {
+      "source": "M28615",
+      "target": "M28618",
+      "weight": 0.7
+    }
+  ],
+  "agreementScores": {
+    "M23853": {
+      "PPE-DE": {
+        "score": 0.9475,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.542,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.6775,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0.012,
+        "count": 1
+      }
+    },
+    "M28618": {
+      "PPE-DE": {
+        "score": 0.944,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.568,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.68875,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0.027,
+        "count": 1
+      }
+    },
+    "M28620": {
+      "PPE-DE": {
+        "score": 0.5539999999999999,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0.50325,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0.245,
+        "count": 1
+      }
+    },
+    "M23848": {
+      "PPE-DE": {
+        "score": 0.9365,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.552,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.651,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0.008,
+        "count": 1
+      }
+    },
+    "M26828": {
+      "PPE-DE": {
+        "score": 0.633,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.47,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.8306666666666667,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.046,
+        "count": 1
+      }
+    },
+    "M28616": {
+      "PPE-DE": {
+        "score": 0.6836666666666665,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.509,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.8676666666666666,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.007,
+        "count": 1
+      }
+    },
+    "M28615": {
+      "PPE-DE": {
+        "score": 0.695,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.528,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.8683333333333333,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.012,
+        "count": 1
+      }
+    },
+    "M28617": {
+      "PPE-DE": {
+        "score": 0.6779999999999999,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.506,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.8733333333333334,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.027,
+        "count": 1
+      }
+    },
+    "M28619": {
+      "PPE-DE": {
+        "score": 0.015666666666666666,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.245,
+        "count": 1
+      },
+      "UEN": {
+        "score": 0.023,
+        "count": 4
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:27.317Z"
+}

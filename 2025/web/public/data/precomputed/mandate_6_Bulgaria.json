@@ -1,0 +1,71 @@
+{
+  "mandate": 6,
+  "country": "Bulgaria",
+  "nodes": [
+    {
+      "id": "M34231",
+      "label": "Evgeni KIRILOV",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 126.04735565185547,
+      "y": 395.72601318359375
+    },
+    {
+      "id": "M37524",
+      "label": "Marusya LYUBCHEVA",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 132.52232360839844,
+      "y": 389.9102783203125
+    },
+    {
+      "id": "M34229",
+      "label": "Atanas PAPARIZOV",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 134.28416442871094,
+      "y": 397.3233642578125
+    }
+  ],
+  "edges": [
+    {
+      "source": "M34231",
+      "target": "M34229",
+      "weight": 0.922
+    },
+    {
+      "source": "M34231",
+      "target": "M37524",
+      "weight": 0.923
+    },
+    {
+      "source": "M34229",
+      "target": "M37524",
+      "weight": 0.94
+    }
+  ],
+  "agreementScores": {
+    "M34231": {
+      "PSE": {
+        "score": 0.9225000000000001,
+        "count": 2
+      }
+    },
+    "M37524": {
+      "PSE": {
+        "score": 0.9315,
+        "count": 2
+      }
+    },
+    "M34229": {
+      "PSE": {
+        "score": 0.931,
+        "count": 2
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:25.429Z"
+}

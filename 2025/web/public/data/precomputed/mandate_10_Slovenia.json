@@ -1,0 +1,429 @@
+{
+  "mandate": 10,
+  "country": "Slovenia",
+  "nodes": [
+    {
+      "id": "M125104",
+      "label": "Romana TOMC",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 470.1952819824219,
+      "y": 497.3512268066406
+    },
+    {
+      "id": "M96933",
+      "label": "Milan ZVER",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 479.8914794921875,
+      "y": 507.3915100097656
+    },
+    {
+      "id": "M197447",
+      "label": "Irena JOVEVA",
+      "country": "Slovenia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 477.36566162109375,
+      "y": 475.6040344238281
+    },
+    {
+      "id": "M233862",
+      "label": "Matjaž NEMEC",
+      "country": "Slovenia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 460.8856201171875,
+      "y": 466.4247131347656
+    },
+    {
+      "id": "M220908",
+      "label": "Branko GRIMS",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 466.8106689453125,
+      "y": 513.3292846679688
+    },
+    {
+      "id": "M256813",
+      "label": "Vladimir PREBILIČ",
+      "country": "Slovenia",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 476.0067138671875,
+      "y": 456.64447021484375
+    },
+    {
+      "id": "M256815",
+      "label": "Marjan ŠAREC",
+      "country": "Slovenia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 463.34423828125,
+      "y": 481.2134704589844
+    },
+    {
+      "id": "M256814",
+      "label": "Zala TOMAŠIČ",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 456.8957824707031,
+      "y": 501.9884033203125
+    },
+    {
+      "id": "M219652",
+      "label": "Matej TONIN",
+      "country": "Slovenia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 481.68780517578125,
+      "y": 491.2235107421875
+    }
+  ],
+  "edges": [
+    {
+      "source": "M219652",
+      "target": "M256814",
+      "weight": 0.812
+    },
+    {
+      "source": "M219652",
+      "target": "M125104",
+      "weight": 0.797
+    },
+    {
+      "source": "M219652",
+      "target": "M197447",
+      "weight": 0.505
+    },
+    {
+      "source": "M219652",
+      "target": "M233862",
+      "weight": 0.407
+    },
+    {
+      "source": "M219652",
+      "target": "M256813",
+      "weight": 0.335
+    },
+    {
+      "source": "M219652",
+      "target": "M256815",
+      "weight": 0.645
+    },
+    {
+      "source": "M219652",
+      "target": "M96933",
+      "weight": 0.737
+    },
+    {
+      "source": "M219652",
+      "target": "M220908",
+      "weight": 0.645
+    },
+    {
+      "source": "M256814",
+      "target": "M125104",
+      "weight": 0.931
+    },
+    {
+      "source": "M256814",
+      "target": "M197447",
+      "weight": 0.367
+    },
+    {
+      "source": "M256814",
+      "target": "M233862",
+      "weight": 0.259
+    },
+    {
+      "source": "M256814",
+      "target": "M256813",
+      "weight": 0.203
+    },
+    {
+      "source": "M256814",
+      "target": "M256815",
+      "weight": 0.492
+    },
+    {
+      "source": "M256814",
+      "target": "M96933",
+      "weight": 0.877
+    },
+    {
+      "source": "M256814",
+      "target": "M220908",
+      "weight": 0.847
+    },
+    {
+      "source": "M125104",
+      "target": "M197447",
+      "weight": 0.388
+    },
+    {
+      "source": "M125104",
+      "target": "M233862",
+      "weight": 0.283
+    },
+    {
+      "source": "M125104",
+      "target": "M256813",
+      "weight": 0.223
+    },
+    {
+      "source": "M125104",
+      "target": "M256815",
+      "weight": 0.52
+    },
+    {
+      "source": "M125104",
+      "target": "M96933",
+      "weight": 0.84
+    },
+    {
+      "source": "M125104",
+      "target": "M220908",
+      "weight": 0.787
+    },
+    {
+      "source": "M197447",
+      "target": "M233862",
+      "weight": 0.765
+    },
+    {
+      "source": "M197447",
+      "target": "M256813",
+      "weight": 0.722
+    },
+    {
+      "source": "M197447",
+      "target": "M256815",
+      "weight": 0.828
+    },
+    {
+      "source": "M197447",
+      "target": "M96933",
+      "weight": 0.268
+    },
+    {
+      "source": "M197447",
+      "target": "M220908",
+      "weight": 0.159
+    },
+    {
+      "source": "M233862",
+      "target": "M256813",
+      "weight": 0.798
+    },
+    {
+      "source": "M233862",
+      "target": "M256815",
+      "weight": 0.674
+    },
+    {
+      "source": "M233862",
+      "target": "M96933",
+      "weight": 0.165
+    },
+    {
+      "source": "M233862",
+      "target": "M220908",
+      "weight": 0.062
+    },
+    {
+      "source": "M256813",
+      "target": "M256815",
+      "weight": 0.608
+    },
+    {
+      "source": "M256813",
+      "target": "M96933",
+      "weight": 0.12
+    },
+    {
+      "source": "M256815",
+      "target": "M96933",
+      "weight": 0.446
+    },
+    {
+      "source": "M256815",
+      "target": "M220908",
+      "weight": 0.324
+    },
+    {
+      "source": "M96933",
+      "target": "M220908",
+      "weight": 0.849
+    }
+  ],
+  "agreementScores": {
+    "M125104": {
+      "PPE": {
+        "score": 0.83875,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.454,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.283,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.223,
+        "count": 1
+      }
+    },
+    "M96933": {
+      "PPE": {
+        "score": 0.82575,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.357,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.165,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.12,
+        "count": 1
+      }
+    },
+    "M197447": {
+      "PPE": {
+        "score": 0.33740000000000003,
+        "count": 5
+      },
+      "RE": {
+        "score": 0.828,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.765,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.722,
+        "count": 1
+      }
+    },
+    "M233862": {
+      "PPE": {
+        "score": 0.2352,
+        "count": 5
+      },
+      "RE": {
+        "score": 0.7195,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.798,
+        "count": 1
+      }
+    },
+    "M220908": {
+      "PPE": {
+        "score": 0.782,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.2415,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.062,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256813": {
+      "PPE": {
+        "score": 0.22025,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.665,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.798,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256815": {
+      "PPE": {
+        "score": 0.4854,
+        "count": 5
+      },
+      "RE": {
+        "score": 0.828,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.674,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.608,
+        "count": 1
+      }
+    },
+    "M256814": {
+      "PPE": {
+        "score": 0.86675,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.4295,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.259,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.203,
+        "count": 1
+      }
+    },
+    "M219652": {
+      "PPE": {
+        "score": 0.74775,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.575,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.407,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.335,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:50.303Z"
+}

@@ -1,0 +1,156 @@
+{
+  "mandate": 8,
+  "country": "Malta",
+  "nodes": [
+    {
+      "id": "M124970",
+      "label": "Miriam DALLI",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 365.5767517089844,
+      "y": 455.761962890625
+    },
+    {
+      "id": "M118859",
+      "label": "Roberta METSOLA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 350.9595642089844,
+      "y": 465.37664794921875
+    },
+    {
+      "id": "M124781",
+      "label": "Alfred SANT",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 359.9947509765625,
+      "y": 447.3973083496094
+    },
+    {
+      "id": "M118858",
+      "label": "Marlene MIZZI",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 352.1252746582031,
+      "y": 453.4610595703125
+    },
+    {
+      "id": "M28122",
+      "label": "David CASA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 359.7872314453125,
+      "y": 466.92974853515625
+    }
+  ],
+  "edges": [
+    {
+      "source": "M118859",
+      "target": "M28122",
+      "weight": 0.964
+    },
+    {
+      "source": "M118859",
+      "target": "M124970",
+      "weight": 0.493
+    },
+    {
+      "source": "M118859",
+      "target": "M118858",
+      "weight": 0.507
+    },
+    {
+      "source": "M118859",
+      "target": "M124781",
+      "weight": 0.48
+    },
+    {
+      "source": "M28122",
+      "target": "M124970",
+      "weight": 0.495
+    },
+    {
+      "source": "M28122",
+      "target": "M118858",
+      "weight": 0.506
+    },
+    {
+      "source": "M28122",
+      "target": "M124781",
+      "weight": 0.475
+    },
+    {
+      "source": "M124970",
+      "target": "M118858",
+      "weight": 0.912
+    },
+    {
+      "source": "M124970",
+      "target": "M124781",
+      "weight": 0.899
+    },
+    {
+      "source": "M118858",
+      "target": "M124781",
+      "weight": 0.89
+    }
+  ],
+  "agreementScores": {
+    "M124970": {
+      "S&D": {
+        "score": 0.9055,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.494,
+        "count": 2
+      }
+    },
+    "M118859": {
+      "S&D": {
+        "score": 0.49333333333333335,
+        "count": 3
+      },
+      "PPE": {
+        "score": 0.964,
+        "count": 1
+      }
+    },
+    "M124781": {
+      "S&D": {
+        "score": 0.8945000000000001,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.4775,
+        "count": 2
+      }
+    },
+    "M118858": {
+      "S&D": {
+        "score": 0.901,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.5065,
+        "count": 2
+      }
+    },
+    "M28122": {
+      "S&D": {
+        "score": 0.492,
+        "count": 3
+      },
+      "PPE": {
+        "score": 0.964,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:39.581Z"
+}

@@ -1,0 +1,398 @@
+{
+  "mandate": 9,
+  "country": "Croatia",
+  "nodes": [
+    {
+      "id": "M185341",
+      "label": "Željana ZOVKO",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 254.2723388671875,
+      "y": 478.9181213378906
+    },
+    {
+      "id": "M112744",
+      "label": "Tonino PICULA",
+      "country": "Croatia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 276.1910400390625,
+      "y": 471.3758544921875
+    },
+    {
+      "id": "M112748",
+      "label": "Biljana BORZAN",
+      "country": "Croatia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 281.1214904785156,
+      "y": 486.5403137207031
+    },
+    {
+      "id": "M197419",
+      "label": "Valter FLEGO",
+      "country": "Croatia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 280.35968017578125,
+      "y": 502.366943359375
+    },
+    {
+      "id": "M197441",
+      "label": "Predrag Fred MATIĆ",
+      "country": "Croatia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 292.02471923828125,
+      "y": 476.83453369140625
+    },
+    {
+      "id": "M197413",
+      "label": "Karlo RESSLER",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 264.23260498046875,
+      "y": 506.0020446777344
+    },
+    {
+      "id": "M197417",
+      "label": "Tomislav SOKOL",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 252.78929138183594,
+      "y": 496.23797607421875
+    },
+    {
+      "id": "M202036",
+      "label": "Sunčana GLAVAK",
+      "country": "Croatia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 264.6981201171875,
+      "y": 490.9212341308594
+    },
+    {
+      "id": "M112747",
+      "label": "Romana JERKOVIĆ",
+      "country": "Croatia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 291.60491943359375,
+      "y": 490.6273498535156
+    }
+  ],
+  "edges": [
+    {
+      "source": "M197419",
+      "target": "M112744",
+      "weight": 0.783
+    },
+    {
+      "source": "M197419",
+      "target": "M112748",
+      "weight": 0.779
+    },
+    {
+      "source": "M197419",
+      "target": "M197441",
+      "weight": 0.783
+    },
+    {
+      "source": "M197419",
+      "target": "M197417",
+      "weight": 0.565
+    },
+    {
+      "source": "M197419",
+      "target": "M185341",
+      "weight": 0.577
+    },
+    {
+      "source": "M197419",
+      "target": "M197413",
+      "weight": 0.58
+    },
+    {
+      "source": "M197419",
+      "target": "M202036",
+      "weight": 0.6
+    },
+    {
+      "source": "M197419",
+      "target": "M112747",
+      "weight": 0.771
+    },
+    {
+      "source": "M112744",
+      "target": "M112748",
+      "weight": 0.979
+    },
+    {
+      "source": "M112744",
+      "target": "M197441",
+      "weight": 0.979
+    },
+    {
+      "source": "M112744",
+      "target": "M197417",
+      "weight": 0.451
+    },
+    {
+      "source": "M112744",
+      "target": "M185341",
+      "weight": 0.461
+    },
+    {
+      "source": "M112744",
+      "target": "M197413",
+      "weight": 0.467
+    },
+    {
+      "source": "M112744",
+      "target": "M202036",
+      "weight": 0.482
+    },
+    {
+      "source": "M112744",
+      "target": "M112747",
+      "weight": 0.97
+    },
+    {
+      "source": "M112748",
+      "target": "M197441",
+      "weight": 0.984
+    },
+    {
+      "source": "M112748",
+      "target": "M197417",
+      "weight": 0.452
+    },
+    {
+      "source": "M112748",
+      "target": "M185341",
+      "weight": 0.459
+    },
+    {
+      "source": "M112748",
+      "target": "M197413",
+      "weight": 0.467
+    },
+    {
+      "source": "M112748",
+      "target": "M202036",
+      "weight": 0.477
+    },
+    {
+      "source": "M112748",
+      "target": "M112747",
+      "weight": 0.975
+    },
+    {
+      "source": "M197441",
+      "target": "M197417",
+      "weight": 0.439
+    },
+    {
+      "source": "M197441",
+      "target": "M185341",
+      "weight": 0.45
+    },
+    {
+      "source": "M197441",
+      "target": "M197413",
+      "weight": 0.455
+    },
+    {
+      "source": "M197441",
+      "target": "M202036",
+      "weight": 0.468
+    },
+    {
+      "source": "M197441",
+      "target": "M112747",
+      "weight": 0.978
+    },
+    {
+      "source": "M197417",
+      "target": "M185341",
+      "weight": 0.955
+    },
+    {
+      "source": "M197417",
+      "target": "M197413",
+      "weight": 0.973
+    },
+    {
+      "source": "M197417",
+      "target": "M202036",
+      "weight": 0.973
+    },
+    {
+      "source": "M197417",
+      "target": "M112747",
+      "weight": 0.453
+    },
+    {
+      "source": "M185341",
+      "target": "M197413",
+      "weight": 0.961
+    },
+    {
+      "source": "M185341",
+      "target": "M202036",
+      "weight": 0.967
+    },
+    {
+      "source": "M185341",
+      "target": "M112747",
+      "weight": 0.461
+    },
+    {
+      "source": "M197413",
+      "target": "M202036",
+      "weight": 0.98
+    },
+    {
+      "source": "M197413",
+      "target": "M112747",
+      "weight": 0.464
+    },
+    {
+      "source": "M202036",
+      "target": "M112747",
+      "weight": 0.477
+    }
+  ],
+  "agreementScores": {
+    "M185341": {
+      "PPE": {
+        "score": 0.961,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.45775000000000005,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.577,
+        "count": 1
+      }
+    },
+    "M112744": {
+      "PPE": {
+        "score": 0.46525,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.976,
+        "count": 3
+      },
+      "RE": {
+        "score": 0.783,
+        "count": 1
+      }
+    },
+    "M112748": {
+      "PPE": {
+        "score": 0.46375,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.9793333333333334,
+        "count": 3
+      },
+      "RE": {
+        "score": 0.779,
+        "count": 1
+      }
+    },
+    "M197419": {
+      "PPE": {
+        "score": 0.5805,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.779,
+        "count": 4
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M197441": {
+      "PPE": {
+        "score": 0.453,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.9803333333333333,
+        "count": 3
+      },
+      "RE": {
+        "score": 0.783,
+        "count": 1
+      }
+    },
+    "M197413": {
+      "PPE": {
+        "score": 0.9713333333333333,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.46325,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.58,
+        "count": 1
+      }
+    },
+    "M197417": {
+      "PPE": {
+        "score": 0.967,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.44875000000000004,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.565,
+        "count": 1
+      }
+    },
+    "M202036": {
+      "PPE": {
+        "score": 0.9733333333333333,
+        "count": 3
+      },
+      "S&D": {
+        "score": 0.476,
+        "count": 4
+      },
+      "RE": {
+        "score": 0.6,
+        "count": 1
+      }
+    },
+    "M112747": {
+      "PPE": {
+        "score": 0.46375,
+        "count": 4
+      },
+      "S&D": {
+        "score": 0.9743333333333334,
+        "count": 3
+      },
+      "RE": {
+        "score": 0.771,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:42.757Z"
+}

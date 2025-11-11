@@ -1,0 +1,133 @@
+{
+  "mandate": 6,
+  "country": "Romania",
+  "nodes": [
+    {
+      "id": "M33990",
+      "label": "Adrian SEVERIN",
+      "country": "Romania",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 389.90228271484375,
+      "y": 131.36830139160156
+    },
+    {
+      "id": "M34002",
+      "label": "Maria PETRE",
+      "country": "Romania",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 384.4062194824219,
+      "y": 145.06338500976562
+    },
+    {
+      "id": "M37324",
+      "label": "Adina VĂLEAN",
+      "country": "Romania",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 393.5253601074219,
+      "y": 140.2982635498047
+    },
+    {
+      "id": "M33982",
+      "label": "Marian-Jean MARINESCU",
+      "country": "Romania",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 380.535888671875,
+      "y": 137.02732849121094
+    }
+  ],
+  "edges": [
+    {
+      "source": "M33990",
+      "target": "M33982",
+      "weight": 0.488
+    },
+    {
+      "source": "M33990",
+      "target": "M37324",
+      "weight": 0.541
+    },
+    {
+      "source": "M33990",
+      "target": "M34002",
+      "weight": 0.482
+    },
+    {
+      "source": "M33982",
+      "target": "M37324",
+      "weight": 0.573
+    },
+    {
+      "source": "M33982",
+      "target": "M34002",
+      "weight": 0.965
+    },
+    {
+      "source": "M37324",
+      "target": "M34002",
+      "weight": 0.536
+    }
+  ],
+  "agreementScores": {
+    "M33990": {
+      "PSE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE-DE": {
+        "score": 0.485,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.541,
+        "count": 1
+      }
+    },
+    "M34002": {
+      "PSE": {
+        "score": 0.482,
+        "count": 1
+      },
+      "PPE-DE": {
+        "score": 0.965,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.536,
+        "count": 1
+      }
+    },
+    "M37324": {
+      "PSE": {
+        "score": 0.541,
+        "count": 1
+      },
+      "PPE-DE": {
+        "score": 0.5545,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M33982": {
+      "PSE": {
+        "score": 0.488,
+        "count": 1
+      },
+      "PPE-DE": {
+        "score": 0.965,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0.573,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:28.425Z"
+}

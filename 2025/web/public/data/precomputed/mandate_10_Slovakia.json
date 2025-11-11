@@ -1,0 +1,661 @@
+{
+  "mandate": 10,
+  "country": "Slovakia",
+  "nodes": [
+    {
+      "id": "M96653",
+      "label": "Katarína ROTH NEVEĎALOVÁ",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 608.8786010742188,
+      "y": 613.31201171875
+    },
+    {
+      "id": "M23868",
+      "label": "Monika BEŇOVÁ",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 611.1495971679688,
+      "y": 594.9596557617188
+    },
+    {
+      "id": "M197770",
+      "label": "Martin HOJSÍK",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 190.25881958007812,
+      "y": 389.25372314453125
+    },
+    {
+      "id": "M197763",
+      "label": "Milan UHRÍK",
+      "country": "Slovakia",
+      "groupId": "ESN",
+      "color": "#8B4513",
+      "x": 639.6755981445312,
+      "y": 614.53271484375
+    },
+    {
+      "id": "M197769",
+      "label": "Michal WIEZIK",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 211.04205322265625,
+      "y": 373.135498046875
+    },
+    {
+      "id": "M204336",
+      "label": "Miriam LEXMANN",
+      "country": "Slovakia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 184.5664825439453,
+      "y": 360.99005126953125
+    },
+    {
+      "id": "M257005",
+      "label": "Ľuboš BLAHA",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 621.0318603515625,
+      "y": 619.5742797851562
+    },
+    {
+      "id": "M257014",
+      "label": "Veronika CIFROVÁ OSTRIHOŇOVÁ",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 180.3806610107422,
+      "y": 375.541259765625
+    },
+    {
+      "id": "M257007",
+      "label": "Erik KALIŇÁK",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 624.23095703125,
+      "y": 605.9495849609375
+    },
+    {
+      "id": "M257013",
+      "label": "Ľubica KARVAŠOVÁ",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 199.35638427734375,
+      "y": 360.26409912109375
+    },
+    {
+      "id": "M198373",
+      "label": "Judita LAŠŠÁKOVÁ",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 625.16845703125,
+      "y": 592.5681762695312
+    },
+    {
+      "id": "M249982",
+      "label": "Milan MAZUREK",
+      "country": "Slovakia",
+      "groupId": "ESN",
+      "color": "#8B4513",
+      "x": 641.6627807617188,
+      "y": 602.2604370117188
+    },
+    {
+      "id": "M257010",
+      "label": "Ľudovít ÓDOR",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 204.72232055664062,
+      "y": 387.35943603515625
+    },
+    {
+      "id": "M257018",
+      "label": "Branislav ONDRUŠ",
+      "country": "Slovakia",
+      "groupId": "NonAttached",
+      "color": "#CCCCCC",
+      "x": 600.00390625,
+      "y": 604.1141357421875
+    },
+    {
+      "id": "M257011",
+      "label": "Lucia YAR",
+      "country": "Slovakia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 195.2074432373047,
+      "y": 374.5359802246094
+    }
+  ],
+  "edges": [
+    {
+      "source": "M257014",
+      "target": "M257011",
+      "weight": 0.984
+    },
+    {
+      "source": "M257014",
+      "target": "M197769",
+      "weight": 0.983
+    },
+    {
+      "source": "M257014",
+      "target": "M197770",
+      "weight": 0.981
+    },
+    {
+      "source": "M257014",
+      "target": "M257013",
+      "weight": 0.977
+    },
+    {
+      "source": "M257014",
+      "target": "M257010",
+      "weight": 0.984
+    },
+    {
+      "source": "M257014",
+      "target": "M204336",
+      "weight": 0.519
+    },
+    {
+      "source": "M257011",
+      "target": "M197769",
+      "weight": 0.996
+    },
+    {
+      "source": "M257011",
+      "target": "M197770",
+      "weight": 0.993
+    },
+    {
+      "source": "M257011",
+      "target": "M257013",
+      "weight": 0.987
+    },
+    {
+      "source": "M257011",
+      "target": "M257010",
+      "weight": 0.994
+    },
+    {
+      "source": "M257011",
+      "target": "M204336",
+      "weight": 0.515
+    },
+    {
+      "source": "M197769",
+      "target": "M197770",
+      "weight": 0.992
+    },
+    {
+      "source": "M197769",
+      "target": "M257013",
+      "weight": 0.987
+    },
+    {
+      "source": "M197769",
+      "target": "M257010",
+      "weight": 0.992
+    },
+    {
+      "source": "M197769",
+      "target": "M204336",
+      "weight": 0.513
+    },
+    {
+      "source": "M197770",
+      "target": "M257013",
+      "weight": 0.985
+    },
+    {
+      "source": "M197770",
+      "target": "M257010",
+      "weight": 0.99
+    },
+    {
+      "source": "M197770",
+      "target": "M204336",
+      "weight": 0.521
+    },
+    {
+      "source": "M257013",
+      "target": "M257010",
+      "weight": 0.986
+    },
+    {
+      "source": "M257013",
+      "target": "M204336",
+      "weight": 0.511
+    },
+    {
+      "source": "M257010",
+      "target": "M204336",
+      "weight": 0.53
+    },
+    {
+      "source": "M96653",
+      "target": "M198373",
+      "weight": 0.842
+    },
+    {
+      "source": "M96653",
+      "target": "M257007",
+      "weight": 0.857
+    },
+    {
+      "source": "M96653",
+      "target": "M249982",
+      "weight": 0.352
+    },
+    {
+      "source": "M96653",
+      "target": "M197763",
+      "weight": 0.36
+    },
+    {
+      "source": "M96653",
+      "target": "M257005",
+      "weight": 0.85
+    },
+    {
+      "source": "M96653",
+      "target": "M23868",
+      "weight": 0.879
+    },
+    {
+      "source": "M96653",
+      "target": "M257018",
+      "weight": 0.73
+    },
+    {
+      "source": "M198373",
+      "target": "M257007",
+      "weight": 0.951
+    },
+    {
+      "source": "M198373",
+      "target": "M249982",
+      "weight": 0.531
+    },
+    {
+      "source": "M198373",
+      "target": "M197763",
+      "weight": 0.525
+    },
+    {
+      "source": "M198373",
+      "target": "M257005",
+      "weight": 0.881
+    },
+    {
+      "source": "M198373",
+      "target": "M23868",
+      "weight": 0.899
+    },
+    {
+      "source": "M198373",
+      "target": "M257018",
+      "weight": 0.615
+    },
+    {
+      "source": "M257007",
+      "target": "M249982",
+      "weight": 0.54
+    },
+    {
+      "source": "M257007",
+      "target": "M197763",
+      "weight": 0.548
+    },
+    {
+      "source": "M257007",
+      "target": "M257005",
+      "weight": 0.911
+    },
+    {
+      "source": "M257007",
+      "target": "M23868",
+      "weight": 0.876
+    },
+    {
+      "source": "M257007",
+      "target": "M257018",
+      "weight": 0.629
+    },
+    {
+      "source": "M249982",
+      "target": "M197763",
+      "weight": 0.973
+    },
+    {
+      "source": "M249982",
+      "target": "M257005",
+      "weight": 0.512
+    },
+    {
+      "source": "M249982",
+      "target": "M23868",
+      "weight": 0.359
+    },
+    {
+      "source": "M249982",
+      "target": "M257018",
+      "weight": 0.108
+    },
+    {
+      "source": "M197763",
+      "target": "M257005",
+      "weight": 0.526
+    },
+    {
+      "source": "M197763",
+      "target": "M23868",
+      "weight": 0.368
+    },
+    {
+      "source": "M197763",
+      "target": "M257018",
+      "weight": 0.126
+    },
+    {
+      "source": "M257005",
+      "target": "M23868",
+      "weight": 0.837
+    },
+    {
+      "source": "M257005",
+      "target": "M257018",
+      "weight": 0.759
+    },
+    {
+      "source": "M23868",
+      "target": "M257018",
+      "weight": 0.692
+    }
+  ],
+  "agreementScores": {
+    "M96653": {
+      "NonAttached": {
+        "score": 0.8315999999999999,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.356,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M23868": {
+      "NonAttached": {
+        "score": 0.8366,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.3635,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M197770": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.9882,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.521,
+        "count": 1
+      }
+    },
+    "M197763": {
+      "NonAttached": {
+        "score": 0.4088333333333333,
+        "count": 6
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.973,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M197769": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.99,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.513,
+        "count": 1
+      }
+    },
+    "M204336": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.5181666666666667,
+        "count": 6
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M257005": {
+      "NonAttached": {
+        "score": 0.8476000000000001,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.519,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M257014": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.9818,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.519,
+        "count": 1
+      }
+    },
+    "M257007": {
+      "NonAttached": {
+        "score": 0.8448,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.544,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M257013": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.9843999999999999,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.511,
+        "count": 1
+      }
+    },
+    "M198373": {
+      "NonAttached": {
+        "score": 0.8375999999999999,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.528,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M249982": {
+      "NonAttached": {
+        "score": 0.4003333333333334,
+        "count": 6
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.973,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M257010": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.9892,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.53,
+        "count": 1
+      }
+    },
+    "M257018": {
+      "NonAttached": {
+        "score": 0.6849999999999999,
+        "count": 5
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0.11699999999999999,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M257011": {
+      "NonAttached": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.9907999999999999,
+        "count": 5
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.515,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:50.148Z"
+}

@@ -1,0 +1,224 @@
+{
+  "mandate": 9,
+  "country": "Cyprus",
+  "nodes": [
+    {
+      "id": "M124692",
+      "label": "Demetris PAPADAKIS",
+      "country": "Cyprus",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 584.5630263070068,
+      "y": 349.4772748325157
+    },
+    {
+      "id": "M124691",
+      "label": "Costas MAVRIDES",
+      "country": "Cyprus",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 585.1170974196156,
+      "y": 362.43006267728833
+    },
+    {
+      "id": "M26837",
+      "label": "Lefteris CHRISTOFOROU",
+      "country": "Cyprus",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 598.8181275773143,
+      "y": 350.49957764252434
+    },
+    {
+      "id": "M197414",
+      "label": "Loucas FOURLAS",
+      "country": "Cyprus",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 599.6319929168901,
+      "y": 361.0532288906401
+    },
+    {
+      "id": "M197416",
+      "label": "Giorgos GEORGIOU",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 569.9430396654792,
+      "y": 360.7922272263841
+    },
+    {
+      "id": "M197415",
+      "label": "Niyazi KIZILYÜREK",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 570.1113474613504,
+      "y": 350.93784479510026
+    }
+  ],
+  "edges": [
+    {
+      "source": "M124692",
+      "target": "M197414",
+      "weight": 0.514
+    },
+    {
+      "source": "M124692",
+      "target": "M124691",
+      "weight": 0.938
+    },
+    {
+      "source": "M124692",
+      "target": "M197416",
+      "weight": 0.463
+    },
+    {
+      "source": "M124692",
+      "target": "M197415",
+      "weight": 0.49
+    },
+    {
+      "source": "M124692",
+      "target": "M26837",
+      "weight": 0.524
+    },
+    {
+      "source": "M197414",
+      "target": "M124691",
+      "weight": 0.525
+    },
+    {
+      "source": "M197414",
+      "target": "M197416",
+      "weight": 0.085
+    },
+    {
+      "source": "M197414",
+      "target": "M197415",
+      "weight": 0.094
+    },
+    {
+      "source": "M197414",
+      "target": "M26837",
+      "weight": 0.951
+    },
+    {
+      "source": "M124691",
+      "target": "M197416",
+      "weight": 0.45
+    },
+    {
+      "source": "M124691",
+      "target": "M197415",
+      "weight": 0.476
+    },
+    {
+      "source": "M124691",
+      "target": "M26837",
+      "weight": 0.538
+    },
+    {
+      "source": "M197416",
+      "target": "M197415",
+      "weight": 0.968
+    },
+    {
+      "source": "M197416",
+      "target": "M26837",
+      "weight": 0.094
+    },
+    {
+      "source": "M197415",
+      "target": "M26837",
+      "weight": 0.101
+    }
+  ],
+  "agreementScores": {
+    "M124692": {
+      "S&D": {
+        "score": 0.938,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.519,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.47650000000000003,
+        "count": 2
+      }
+    },
+    "M124691": {
+      "S&D": {
+        "score": 0.938,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.5315000000000001,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.46299999999999997,
+        "count": 2
+      }
+    },
+    "M26837": {
+      "S&D": {
+        "score": 0.531,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.951,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.0975,
+        "count": 2
+      }
+    },
+    "M197414": {
+      "S&D": {
+        "score": 0.5195000000000001,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.951,
+        "count": 1
+      },
+      "GUE/NGL": {
+        "score": 0.0895,
+        "count": 2
+      }
+    },
+    "M197416": {
+      "S&D": {
+        "score": 0.4565,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.0895,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.968,
+        "count": 1
+      }
+    },
+    "M197415": {
+      "S&D": {
+        "score": 0.483,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.0975,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.968,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:42.897Z"
+}

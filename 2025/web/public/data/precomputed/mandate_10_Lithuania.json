@@ -1,0 +1,591 @@
+{
+  "mandate": 10,
+  "country": "Lithuania",
+  "nodes": [
+    {
+      "id": "M96697",
+      "label": "Waldemar TOMASZEWSKI",
+      "country": "Lithuania",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 400.38397216796875,
+      "y": 379.493408203125
+    },
+    {
+      "id": "M124766",
+      "label": "Petras AUŠTREVIČIUS",
+      "country": "Lithuania",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 319.41583251953125,
+      "y": 392.6131896972656
+    },
+    {
+      "id": "M96681",
+      "label": "Vilija BLINKEVIČIŪTĖ",
+      "country": "Lithuania",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 303.14178466796875,
+      "y": 412.7947692871094
+    },
+    {
+      "id": "M197840",
+      "label": "Rasa JUKNEVIČIENĖ",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 339.60150146484375,
+      "y": 401.98553466796875
+    },
+    {
+      "id": "M197841",
+      "label": "Liudas MAŽYLIS",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 333.85223388671875,
+      "y": 414.7249450683594
+    },
+    {
+      "id": "M119652",
+      "label": "Vytenis Povilas ANDRIUKAITIS",
+      "country": "Lithuania",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 316.28485107421875,
+      "y": 424.2866516113281
+    },
+    {
+      "id": "M256808",
+      "label": "Petras GRAŽULIS",
+      "country": "Lithuania",
+      "groupId": "ESN",
+      "color": "#8B4513",
+      "x": 409.6020812988281,
+      "y": 376.8344421386719
+    },
+    {
+      "id": "M256809",
+      "label": "Paulius SAUDARGAS",
+      "country": "Lithuania",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 333.546630859375,
+      "y": 392.3559265136719
+    },
+    {
+      "id": "M201945",
+      "label": "Virginijus SINKEVIČIUS",
+      "country": "Lithuania",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 317.9691162109375,
+      "y": 409.42926025390625
+    },
+    {
+      "id": "M256811",
+      "label": "Aurelijus VERYGA",
+      "country": "Lithuania",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 384.65869140625,
+      "y": 385.0140075683594
+    },
+    {
+      "id": "M256807",
+      "label": "Dainius ŽALIMAS",
+      "country": "Lithuania",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 306.48773193359375,
+      "y": 398.14013671875
+    }
+  ],
+  "edges": [
+    {
+      "source": "M124766",
+      "target": "M256809",
+      "weight": 0.752
+    },
+    {
+      "source": "M124766",
+      "target": "M119652",
+      "weight": 0.761
+    },
+    {
+      "source": "M124766",
+      "target": "M96681",
+      "weight": 0.77
+    },
+    {
+      "source": "M124766",
+      "target": "M256811",
+      "weight": 0.075
+    },
+    {
+      "source": "M124766",
+      "target": "M256807",
+      "weight": 0.957
+    },
+    {
+      "source": "M124766",
+      "target": "M201945",
+      "weight": 0.671
+    },
+    {
+      "source": "M124766",
+      "target": "M197841",
+      "weight": 0.779
+    },
+    {
+      "source": "M124766",
+      "target": "M197840",
+      "weight": 0.768
+    },
+    {
+      "source": "M256809",
+      "target": "M119652",
+      "weight": 0.621
+    },
+    {
+      "source": "M256809",
+      "target": "M96681",
+      "weight": 0.629
+    },
+    {
+      "source": "M256809",
+      "target": "M256811",
+      "weight": 0.251
+    },
+    {
+      "source": "M256809",
+      "target": "M256807",
+      "weight": 0.74
+    },
+    {
+      "source": "M256809",
+      "target": "M201945",
+      "weight": 0.522
+    },
+    {
+      "source": "M256809",
+      "target": "M197841",
+      "weight": 0.951
+    },
+    {
+      "source": "M256809",
+      "target": "M197840",
+      "weight": 0.933
+    },
+    {
+      "source": "M256809",
+      "target": "M96697",
+      "weight": 0.028
+    },
+    {
+      "source": "M119652",
+      "target": "M96681",
+      "weight": 0.963
+    },
+    {
+      "source": "M119652",
+      "target": "M256807",
+      "weight": 0.797
+    },
+    {
+      "source": "M119652",
+      "target": "M201945",
+      "weight": 0.819
+    },
+    {
+      "source": "M119652",
+      "target": "M197841",
+      "weight": 0.642
+    },
+    {
+      "source": "M119652",
+      "target": "M197840",
+      "weight": 0.628
+    },
+    {
+      "source": "M96681",
+      "target": "M256807",
+      "weight": 0.806
+    },
+    {
+      "source": "M96681",
+      "target": "M201945",
+      "weight": 0.814
+    },
+    {
+      "source": "M96681",
+      "target": "M197841",
+      "weight": 0.669
+    },
+    {
+      "source": "M96681",
+      "target": "M197840",
+      "weight": 0.642
+    },
+    {
+      "source": "M256811",
+      "target": "M256807",
+      "weight": 0.047
+    },
+    {
+      "source": "M256811",
+      "target": "M197841",
+      "weight": 0.196
+    },
+    {
+      "source": "M256811",
+      "target": "M197840",
+      "weight": 0.258
+    },
+    {
+      "source": "M256811",
+      "target": "M96697",
+      "weight": 0.867
+    },
+    {
+      "source": "M256811",
+      "target": "M256808",
+      "weight": 0.501
+    },
+    {
+      "source": "M256807",
+      "target": "M201945",
+      "weight": 0.711
+    },
+    {
+      "source": "M256807",
+      "target": "M197841",
+      "weight": 0.769
+    },
+    {
+      "source": "M256807",
+      "target": "M197840",
+      "weight": 0.763
+    },
+    {
+      "source": "M201945",
+      "target": "M197841",
+      "weight": 0.552
+    },
+    {
+      "source": "M201945",
+      "target": "M197840",
+      "weight": 0.527
+    },
+    {
+      "source": "M197841",
+      "target": "M197840",
+      "weight": 0.982
+    },
+    {
+      "source": "M197841",
+      "target": "M96697",
+      "weight": 0.02
+    },
+    {
+      "source": "M197840",
+      "target": "M96697",
+      "weight": 0.043
+    },
+    {
+      "source": "M96697",
+      "target": "M256808",
+      "weight": 0.607
+    }
+  ],
+  "agreementScores": {
+    "M96697": {
+      "ECR": {
+        "score": 0.867,
+        "count": 1
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.030333333333333334,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0.607,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M124766": {
+      "ECR": {
+        "score": 0.075,
+        "count": 1
+      },
+      "RE": {
+        "score": 0.957,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.7655000000000001,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.7663333333333334,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.671,
+        "count": 1
+      }
+    },
+    "M96681": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.788,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.963,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.6466666666666666,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.814,
+        "count": 1
+      }
+    },
+    "M197840": {
+      "ECR": {
+        "score": 0.1505,
+        "count": 2
+      },
+      "RE": {
+        "score": 0.7655000000000001,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.635,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.9575,
+        "count": 2
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.527,
+        "count": 1
+      }
+    },
+    "M197841": {
+      "ECR": {
+        "score": 0.108,
+        "count": 2
+      },
+      "RE": {
+        "score": 0.774,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.6555,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.9664999999999999,
+        "count": 2
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.552,
+        "count": 1
+      }
+    },
+    "M119652": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.779,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.963,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.6303333333333333,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.819,
+        "count": 1
+      }
+    },
+    "M256808": {
+      "ECR": {
+        "score": 0.554,
+        "count": 2
+      },
+      "RE": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256809": {
+      "ECR": {
+        "score": 0.1395,
+        "count": 2
+      },
+      "RE": {
+        "score": 0.746,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.625,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.942,
+        "count": 2
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.522,
+        "count": 1
+      }
+    },
+    "M201945": {
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "RE": {
+        "score": 0.6910000000000001,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.8165,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.5336666666666666,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256811": {
+      "ECR": {
+        "score": 0.867,
+        "count": 1
+      },
+      "RE": {
+        "score": 0.061,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.23500000000000001,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0.501,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M256807": {
+      "ECR": {
+        "score": 0.047,
+        "count": 1
+      },
+      "RE": {
+        "score": 0.957,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.8015000000000001,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.7573333333333333,
+        "count": 3
+      },
+      "ESN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.711,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:49.323Z"
+}

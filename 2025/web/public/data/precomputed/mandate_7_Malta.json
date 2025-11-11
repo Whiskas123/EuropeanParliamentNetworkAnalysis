@@ -1,0 +1,117 @@
+{
+  "mandate": 7,
+  "country": "Malta",
+  "nodes": [
+    {
+      "id": "M110984",
+      "label": "Joseph CUSCHIERI",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 392.851806640625,
+      "y": 479.5088806152344
+    },
+    {
+      "id": "M23938",
+      "label": "John ATTARD-MONTALTO",
+      "country": "Malta",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 383.5220031738281,
+      "y": 480.9414978027344
+    },
+    {
+      "id": "M118859",
+      "label": "Roberta METSOLA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 383.1603698730469,
+      "y": 468.4458312988281
+    },
+    {
+      "id": "M28122",
+      "label": "David CASA",
+      "country": "Malta",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 391.8346862792969,
+      "y": 467.5534973144531
+    }
+  ],
+  "edges": [
+    {
+      "source": "M110984",
+      "target": "M28122",
+      "weight": 0.535
+    },
+    {
+      "source": "M110984",
+      "target": "M118859",
+      "weight": 0.515
+    },
+    {
+      "source": "M110984",
+      "target": "M23938",
+      "weight": 0.868
+    },
+    {
+      "source": "M28122",
+      "target": "M118859",
+      "weight": 0.967
+    },
+    {
+      "source": "M28122",
+      "target": "M23938",
+      "weight": 0.43
+    },
+    {
+      "source": "M118859",
+      "target": "M23938",
+      "weight": 0.459
+    }
+  ],
+  "agreementScores": {
+    "M110984": {
+      "S&D": {
+        "score": 0.868,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.525,
+        "count": 2
+      }
+    },
+    "M23938": {
+      "S&D": {
+        "score": 0.868,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.4445,
+        "count": 2
+      }
+    },
+    "M118859": {
+      "S&D": {
+        "score": 0.487,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.967,
+        "count": 1
+      }
+    },
+    "M28122": {
+      "S&D": {
+        "score": 0.48250000000000004,
+        "count": 2
+      },
+      "PPE": {
+        "score": 0.967,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:34.039Z"
+}

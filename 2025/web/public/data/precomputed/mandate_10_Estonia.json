@@ -1,0 +1,290 @@
+{
+  "mandate": 10,
+  "country": "Estonia",
+  "nodes": [
+    {
+      "id": "M124700",
+      "label": "Jana TOOM",
+      "country": "Estonia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 309.2816162109375,
+      "y": 517.7554931640625
+    },
+    {
+      "id": "M129073",
+      "label": "Urmas PAET",
+      "country": "Estonia",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 297.76239013671875,
+      "y": 522.8740844726562
+    },
+    {
+      "id": "M197491",
+      "label": "Marina KALJURAND",
+      "country": "Estonia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 306.9272766113281,
+      "y": 532.3585205078125
+    },
+    {
+      "id": "M197493",
+      "label": "Jaak MADISON",
+      "country": "Estonia",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 266.4360656738281,
+      "y": 494.1783752441406
+    },
+    {
+      "id": "M197497",
+      "label": "Sven MIKSER",
+      "country": "Estonia",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 293.1530456542969,
+      "y": 534.6890258789062
+    },
+    {
+      "id": "M204449",
+      "label": "Riho TERRAS",
+      "country": "Estonia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 284.0118103027344,
+      "y": 518.7259521484375
+    },
+    {
+      "id": "M188096",
+      "label": "Jüri RATAS",
+      "country": "Estonia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 293.5986633300781,
+      "y": 507.7629089355469
+    }
+  ],
+  "edges": [
+    {
+      "source": "M188096",
+      "target": "M129073",
+      "weight": 0.833
+    },
+    {
+      "source": "M188096",
+      "target": "M197497",
+      "weight": 0.679
+    },
+    {
+      "source": "M188096",
+      "target": "M124700",
+      "weight": 0.74
+    },
+    {
+      "source": "M188096",
+      "target": "M204449",
+      "weight": 0.981
+    },
+    {
+      "source": "M188096",
+      "target": "M197491",
+      "weight": 0.668
+    },
+    {
+      "source": "M188096",
+      "target": "M197493",
+      "weight": 0.129
+    },
+    {
+      "source": "M129073",
+      "target": "M197497",
+      "weight": 0.782
+    },
+    {
+      "source": "M129073",
+      "target": "M124700",
+      "weight": 0.879
+    },
+    {
+      "source": "M129073",
+      "target": "M204449",
+      "weight": 0.807
+    },
+    {
+      "source": "M129073",
+      "target": "M197491",
+      "weight": 0.762
+    },
+    {
+      "source": "M129073",
+      "target": "M197493",
+      "weight": 0.025
+    },
+    {
+      "source": "M197497",
+      "target": "M124700",
+      "weight": 0.827
+    },
+    {
+      "source": "M197497",
+      "target": "M204449",
+      "weight": 0.655
+    },
+    {
+      "source": "M197497",
+      "target": "M197491",
+      "weight": 0.984
+    },
+    {
+      "source": "M124700",
+      "target": "M204449",
+      "weight": 0.719
+    },
+    {
+      "source": "M124700",
+      "target": "M197491",
+      "weight": 0.805
+    },
+    {
+      "source": "M204449",
+      "target": "M197491",
+      "weight": 0.652
+    },
+    {
+      "source": "M204449",
+      "target": "M197493",
+      "weight": 0.121
+    }
+  ],
+  "agreementScores": {
+    "M124700": {
+      "RE": {
+        "score": 0.879,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.8160000000000001,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.7295,
+        "count": 2
+      }
+    },
+    "M129073": {
+      "RE": {
+        "score": 0.879,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.772,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0.025,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.8200000000000001,
+        "count": 2
+      }
+    },
+    "M197491": {
+      "RE": {
+        "score": 0.7835000000000001,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.984,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.66,
+        "count": 2
+      }
+    },
+    "M197493": {
+      "RE": {
+        "score": 0.025,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.125,
+        "count": 2
+      }
+    },
+    "M197497": {
+      "RE": {
+        "score": 0.8045,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.984,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.667,
+        "count": 2
+      }
+    },
+    "M204449": {
+      "RE": {
+        "score": 0.763,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.6535,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0.121,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.981,
+        "count": 1
+      }
+    },
+    "M188096": {
+      "RE": {
+        "score": 0.7865,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.6735,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0.129,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.981,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:48.175Z"
+}

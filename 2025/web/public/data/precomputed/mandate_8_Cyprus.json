@@ -1,0 +1,228 @@
+{
+  "mandate": 8,
+  "country": "Cyprus",
+  "nodes": [
+    {
+      "id": "M96907",
+      "label": "Takis HADJIGEORGIOU",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 350.51224477734803,
+      "y": 460.01363684351054
+    },
+    {
+      "id": "M124689",
+      "label": "Neoklis SYLIKIOTIS",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 349.88300943207224,
+      "y": 452.6043034234166
+    },
+    {
+      "id": "M124692",
+      "label": "Demetris PAPADAKIS",
+      "country": "Cyprus",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 370.163904897968,
+      "y": 451.92394278571345
+    },
+    {
+      "id": "M25704",
+      "label": "Eleni THEOCHAROUS",
+      "country": "Cyprus",
+      "groupId": "ECR",
+      "color": "#000080",
+      "x": 386.4000902041178,
+      "y": 452.0823672688828
+    },
+    {
+      "id": "M124691",
+      "label": "Costas MAVRIDES",
+      "country": "Cyprus",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 370.5236418608874,
+      "y": 460.75075714009057
+    },
+    {
+      "id": "M26837",
+      "label": "Lefteris CHRISTOFOROU",
+      "country": "Cyprus",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 384.6137885151067,
+      "y": 460.47881333916723
+    }
+  ],
+  "edges": [
+    {
+      "source": "M96907",
+      "target": "M124691",
+      "weight": 0.29
+    },
+    {
+      "source": "M96907",
+      "target": "M124689",
+      "weight": 0.971
+    },
+    {
+      "source": "M96907",
+      "target": "M124692",
+      "weight": 0.303
+    },
+    {
+      "source": "M26837",
+      "target": "M124691",
+      "weight": 0.535
+    },
+    {
+      "source": "M26837",
+      "target": "M124692",
+      "weight": 0.548
+    },
+    {
+      "source": "M26837",
+      "target": "M25704",
+      "weight": 0.678
+    },
+    {
+      "source": "M124691",
+      "target": "M124689",
+      "weight": 0.282
+    },
+    {
+      "source": "M124691",
+      "target": "M124692",
+      "weight": 0.96
+    },
+    {
+      "source": "M124691",
+      "target": "M25704",
+      "weight": 0.391
+    },
+    {
+      "source": "M124689",
+      "target": "M124692",
+      "weight": 0.291
+    },
+    {
+      "source": "M124692",
+      "target": "M25704",
+      "weight": 0.387
+    }
+  ],
+  "agreementScores": {
+    "M96907": {
+      "GUE/NGL": {
+        "score": 0.971,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.2965,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M124689": {
+      "GUE/NGL": {
+        "score": 0.971,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.2865,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M124692": {
+      "GUE/NGL": {
+        "score": 0.297,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.96,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.387,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.548,
+        "count": 1
+      }
+    },
+    "M25704": {
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.389,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.678,
+        "count": 1
+      }
+    },
+    "M124691": {
+      "GUE/NGL": {
+        "score": 0.286,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.96,
+        "count": 1
+      },
+      "ECR": {
+        "score": 0.391,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.535,
+        "count": 1
+      }
+    },
+    "M26837": {
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "S&D": {
+        "score": 0.5415000000000001,
+        "count": 2
+      },
+      "ECR": {
+        "score": 0.678,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:37.446Z"
+}

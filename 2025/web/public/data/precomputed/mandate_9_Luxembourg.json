@@ -1,0 +1,248 @@
+{
+  "mandate": 9,
+  "country": "Luxembourg",
+  "nodes": [
+    {
+      "id": "M840",
+      "label": "Charles GOERENS",
+      "country": "Luxembourg",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 383.9898986816406,
+      "y": 447.5106506347656
+    },
+    {
+      "id": "M193292",
+      "label": "Tilly METZ",
+      "country": "Luxembourg",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 398.27081298828125,
+      "y": 448.0859069824219
+    },
+    {
+      "id": "M193419",
+      "label": "Christophe HANSEN",
+      "country": "Luxembourg",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 375.7201843261719,
+      "y": 461.3042297363281
+    },
+    {
+      "id": "M197418",
+      "label": "Monica SEMEDO",
+      "country": "Luxembourg",
+      "groupId": "RE",
+      "color": "#FFD700",
+      "x": 388.0296325683594,
+      "y": 458.1294250488281
+    },
+    {
+      "id": "M197421",
+      "label": "Isabel WISELER-LIMA",
+      "country": "Luxembourg",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 383.4130859375,
+      "y": 468.8738098144531
+    },
+    {
+      "id": "M202073",
+      "label": "Marc ANGEL",
+      "country": "Luxembourg",
+      "groupId": "S&D",
+      "color": "#FF0000",
+      "x": 397.7319641113281,
+      "y": 459.663818359375
+    }
+  ],
+  "edges": [
+    {
+      "source": "M840",
+      "target": "M193292",
+      "weight": 0.558
+    },
+    {
+      "source": "M840",
+      "target": "M197418",
+      "weight": 0.946
+    },
+    {
+      "source": "M840",
+      "target": "M202073",
+      "weight": 0.746
+    },
+    {
+      "source": "M840",
+      "target": "M197421",
+      "weight": 0.664
+    },
+    {
+      "source": "M840",
+      "target": "M193419",
+      "weight": 0.665
+    },
+    {
+      "source": "M193292",
+      "target": "M197418",
+      "weight": 0.547
+    },
+    {
+      "source": "M193292",
+      "target": "M202073",
+      "weight": 0.736
+    },
+    {
+      "source": "M193292",
+      "target": "M197421",
+      "weight": 0.315
+    },
+    {
+      "source": "M193292",
+      "target": "M193419",
+      "weight": 0.34
+    },
+    {
+      "source": "M197418",
+      "target": "M202073",
+      "weight": 0.732
+    },
+    {
+      "source": "M197418",
+      "target": "M197421",
+      "weight": 0.666
+    },
+    {
+      "source": "M197418",
+      "target": "M193419",
+      "weight": 0.673
+    },
+    {
+      "source": "M202073",
+      "target": "M197421",
+      "weight": 0.516
+    },
+    {
+      "source": "M202073",
+      "target": "M193419",
+      "weight": 0.534
+    },
+    {
+      "source": "M197421",
+      "target": "M193419",
+      "weight": 0.99
+    }
+  ],
+  "agreementScores": {
+    "M840": {
+      "RE": {
+        "score": 0.946,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.558,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.6645000000000001,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.746,
+        "count": 1
+      }
+    },
+    "M193292": {
+      "RE": {
+        "score": 0.5525,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.3275,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.736,
+        "count": 1
+      }
+    },
+    "M193419": {
+      "RE": {
+        "score": 0.669,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.34,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.99,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.534,
+        "count": 1
+      }
+    },
+    "M197418": {
+      "RE": {
+        "score": 0.946,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.547,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.6695,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0.732,
+        "count": 1
+      }
+    },
+    "M197421": {
+      "RE": {
+        "score": 0.665,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.315,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.99,
+        "count": 1
+      },
+      "S&D": {
+        "score": 0.516,
+        "count": 1
+      }
+    },
+    "M202073": {
+      "RE": {
+        "score": 0.739,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.736,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.525,
+        "count": 2
+      },
+      "S&D": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:44.864Z"
+}

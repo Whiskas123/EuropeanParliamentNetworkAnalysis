@@ -1,0 +1,176 @@
+{
+  "mandate": 8,
+  "country": "Estonia",
+  "nodes": [
+    {
+      "id": "M124697",
+      "label": "Kaja KALLAS",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 386.9683532714844,
+      "y": 459.0531921386719
+    },
+    {
+      "id": "M97136",
+      "label": "Indrek TARAND",
+      "country": "Estonia",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 398.4883728027344,
+      "y": 464.1585693359375
+    },
+    {
+      "id": "M124700",
+      "label": "Jana TOOM",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 398.06402587890625,
+      "y": 452.9691467285156
+    },
+    {
+      "id": "M28424",
+      "label": "Tunne KELAM",
+      "country": "Estonia",
+      "groupId": "PPE",
+      "color": "#3399CC",
+      "x": 381.2839050292969,
+      "y": 450.4259948730469
+    },
+    {
+      "id": "M129073",
+      "label": "Urmas PAET",
+      "country": "Estonia",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 391.37176513671875,
+      "y": 446.54998779296875
+    }
+  ],
+  "edges": [
+    {
+      "source": "M28424",
+      "target": "M124700",
+      "weight": 0.614
+    },
+    {
+      "source": "M28424",
+      "target": "M129073",
+      "weight": 0.673
+    },
+    {
+      "source": "M28424",
+      "target": "M97136",
+      "weight": 0.138
+    },
+    {
+      "source": "M28424",
+      "target": "M124697",
+      "weight": 0.664
+    },
+    {
+      "source": "M124700",
+      "target": "M129073",
+      "weight": 0.887
+    },
+    {
+      "source": "M124700",
+      "target": "M97136",
+      "weight": 0.388
+    },
+    {
+      "source": "M124700",
+      "target": "M124697",
+      "weight": 0.918
+    },
+    {
+      "source": "M129073",
+      "target": "M97136",
+      "weight": 0.334
+    },
+    {
+      "source": "M129073",
+      "target": "M124697",
+      "weight": 0.961
+    },
+    {
+      "source": "M97136",
+      "target": "M124697",
+      "weight": 0.376
+    }
+  ],
+  "agreementScores": {
+    "M124697": {
+      "ALDE": {
+        "score": 0.9395,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.376,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.664,
+        "count": 1
+      }
+    },
+    "M97136": {
+      "ALDE": {
+        "score": 0.36599999999999994,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE": {
+        "score": 0.138,
+        "count": 1
+      }
+    },
+    "M124700": {
+      "ALDE": {
+        "score": 0.9025000000000001,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.388,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.614,
+        "count": 1
+      }
+    },
+    "M28424": {
+      "ALDE": {
+        "score": 0.6503333333333333,
+        "count": 3
+      },
+      "Verts/ALE": {
+        "score": 0.138,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M129073": {
+      "ALDE": {
+        "score": 0.9239999999999999,
+        "count": 2
+      },
+      "Verts/ALE": {
+        "score": 0.334,
+        "count": 1
+      },
+      "PPE": {
+        "score": 0.673,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-10T23:43:37.887Z"
+}
