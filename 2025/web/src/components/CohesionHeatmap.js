@@ -1,15 +1,17 @@
 "use client";
 
-import { getGroupAcronym, getGroupDisplayName, getRedGreenColor } from "../lib/utils";
+import {
+  getGroupAcronym,
+  getGroupDisplayName,
+  getRedGreenColor,
+} from "../lib/utils.js";
 
 export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
   if (!intergroupCohesion) return null;
 
   return (
     <div className="cohesion-heatmap">
-      <h3 className="cohesion-heatmap-title">
-        Intergroup Cohesion Score
-      </h3>
+      <h3 className="cohesion-heatmap-title">Intergroup Cohesion Score</h3>
       <div className="cohesion-heatmap-container">
         <div className="cohesion-heatmap-inner">
           <table className="cohesion-heatmap-table">
@@ -56,10 +58,7 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                     // Show only lower triangle (i >= j) - diagonal and below
                     if (i < j) {
                       return (
-                        <td
-                          key={j}
-                          className="cohesion-heatmap-td-empty"
-                        />
+                        <td key={j} className="cohesion-heatmap-td-empty" />
                       );
                     }
 
@@ -128,4 +127,3 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
     </div>
   );
 }
-

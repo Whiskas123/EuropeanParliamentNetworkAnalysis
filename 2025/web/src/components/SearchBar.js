@@ -1,6 +1,6 @@
 "use client";
 
-import { getCountryFlag, getGroupAcronym } from "../lib/utils";
+import { getCountryFlag, getGroupAcronym } from "../lib/utils.js";
 
 export default function SearchBar({
   searchQuery,
@@ -69,9 +69,7 @@ export default function SearchBar({
                     setSearchOpen(false);
                   }}
                 >
-                  <div className="search-bar-result-name">
-                    {result.label}
-                  </div>
+                  <div className="search-bar-result-name">{result.label}</div>
                   <div className="search-bar-result-meta">
                     {result.groupId && (
                       <>
@@ -94,4 +92,3 @@ export default function SearchBar({
     </>
   );
 }
-

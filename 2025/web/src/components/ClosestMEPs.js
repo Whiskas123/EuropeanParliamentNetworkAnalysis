@@ -1,15 +1,13 @@
 "use client";
 
-import { getCountryFlag } from "../lib/utils";
+import { getCountryFlag } from "../lib/utils.js";
 
 export default function ClosestMEPs({ meps, onSelectMEP }) {
   if (!meps || meps.length === 0) return null;
 
   return (
     <div className="closest-meps">
-      <h4 className="closest-meps-title">
-        5 Closest MEPs
-      </h4>
+      <h4 className="closest-meps-title">5 Closest MEPs</h4>
       <div className="closest-meps-list">
         {meps.map((mep, index) => (
           <div
@@ -26,12 +24,8 @@ export default function ClosestMEPs({ meps, onSelectMEP }) {
           >
             <div className="closest-meps-item-header">
               <div className="closest-meps-item-left">
-                <span className="closest-meps-item-rank">
-                  #{index + 1}
-                </span>
-                <span className="closest-meps-item-name">
-                  {mep.label}
-                </span>
+                <span className="closest-meps-item-rank">#{index + 1}</span>
+                <span className="closest-meps-item-name">{mep.label}</span>
               </div>
               {mep.country && (
                 <span className="closest-meps-item-flag">
@@ -61,4 +55,3 @@ export default function ClosestMEPs({ meps, onSelectMEP }) {
     </div>
   );
 }
-

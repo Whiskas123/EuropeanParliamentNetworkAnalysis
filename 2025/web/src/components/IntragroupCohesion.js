@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupDisplayName } from "../lib/utils";
+import { getGroupDisplayName } from "../lib/utils.js";
 
 export default function IntragroupCohesion({
   intragroupCohesion,
@@ -14,7 +14,7 @@ export default function IntragroupCohesion({
     (item) => item.group !== "NonAttached"
   );
   if (filteredCohesion.length === 0) return null;
-  
+
   const maxScore = Math.max(...filteredCohesion.map((i) => i.score));
 
   // Create a color map from graphData nodes for fast lookup
@@ -27,9 +27,7 @@ export default function IntragroupCohesion({
 
   return (
     <div>
-      <h3 className="intragroup-cohesion-title">
-        Intra-group Cohesion Score
-      </h3>
+      <h3 className="intragroup-cohesion-title">Intra-group Cohesion Score</h3>
       <div className="intragroup-cohesion-list">
         {filteredCohesion.map((item) => {
           const widthPercent = maxScore > 0 ? (item.score / maxScore) * 100 : 0;
@@ -62,4 +60,3 @@ export default function IntragroupCohesion({
     </div>
   );
 }
-

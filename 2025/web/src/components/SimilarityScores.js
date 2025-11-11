@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupAcronym } from "../lib/utils";
+import { getGroupAcronym } from "../lib/utils.js";
 
 export default function SimilarityScores({
   groupSimilarityScore,
@@ -19,9 +19,7 @@ export default function SimilarityScores({
 
   return (
     <div className="similarity-scores">
-      <h4 className="similarity-scores-title">
-        Similarity Scores
-      </h4>
+      <h4 className="similarity-scores-title">Similarity Scores</h4>
       <div className="similarity-scores-list">
         {groupSimilarityScore !== null && (
           <div className="similarity-score-item">
@@ -72,7 +70,7 @@ export default function SimilarityScores({
                 const maxScore = Math.max(
                   ...filteredScores.map((i) => i.score)
                 );
-                
+
                 return filteredScores.map((item) => {
                   // Get group color
                   const groupNode = graphData?.nodes.find(
@@ -83,10 +81,13 @@ export default function SimilarityScores({
                     maxScore > 0 ? (item.score / maxScore) * 100 : 0;
 
                   return (
-                    <div key={item.groupId} className="similarity-scores-agreement-item">
+                    <div
+                      key={item.groupId}
+                      className="similarity-scores-agreement-item"
+                    >
                       <div className="similarity-scores-agreement-header">
                         <div className="similarity-scores-agreement-group">
-                        <div
+                          <div
                             className="similarity-scores-agreement-color"
                             style={{ backgroundColor: groupColor }}
                           />
@@ -118,4 +119,3 @@ export default function SimilarityScores({
     </div>
   );
 }
-

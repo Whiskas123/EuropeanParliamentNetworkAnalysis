@@ -7,7 +7,7 @@ import {
   getGroupDisplayName,
   getCountryFlag,
   getGroupColor,
-} from "../lib/utils";
+} from "../lib/utils.js";
 
 export default function MEPInfoPanel({ node, graphData, mandate }) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);
@@ -177,12 +177,25 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                         typeof party === "string"
                           ? party
                           : party.name || party.partyName || "";
-                      const startYear = party.start
-                        ? new Date(party.start).getFullYear()
+                      const startDate = party.start
+                        ? new Date(party.start)
                         : null;
-                      const endYear = party.end
-                        ? new Date(party.end).getFullYear()
+                      const endDate = party.end ? new Date(party.end) : null;
+
+                      const formatDate = (date) => {
+                        if (!date || isNaN(date.getTime())) return null;
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(
+                          2,
+                          "0"
+                        );
+                        return `${year}-${month}`;
+                      };
+
+                      const startFormatted = startDate
+                        ? formatDate(startDate)
                         : null;
+                      const endFormatted = endDate ? formatDate(endDate) : null;
 
                       return (
                         <div key={idx} className="mep-info-group-tooltip-item">
@@ -190,9 +203,10 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                             <div className="mep-info-group-tooltip-name">
                               {partyName}
                             </div>
-                            {(startYear || endYear) && (
+                            {(startFormatted || endFormatted) && (
                               <div className="mep-info-group-tooltip-years">
-                                {startYear || "?"} - {endYear || "Now"}
+                                {startFormatted || "?"} -{" "}
+                                {endFormatted || "Now"}
                               </div>
                             )}
                           </div>
@@ -239,12 +253,20 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                     }`}
                   >
                     {mergedGroups.map((group, idx) => {
-                      const startYear = group.start
-                        ? new Date(group.start).getFullYear()
-                        : "?";
-                      const endYear = group.end
-                        ? new Date(group.end).getFullYear()
-                        : "Now";
+                      const formatDate = (dateStr) => {
+                        if (!dateStr) return null;
+                        const date = new Date(dateStr);
+                        if (isNaN(date.getTime())) return null;
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(
+                          2,
+                          "0"
+                        );
+                        return `${year}-${month}`;
+                      };
+
+                      const startFormatted = formatDate(group.start) || "?";
+                      const endFormatted = formatDate(group.end) || "Now";
                       const groupId = group.groupid || group.groupId;
                       const groupColor = getGroupColor(groupId);
 
@@ -259,7 +281,7 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                               {getGroupAcronym(groupId, mandate)}
                             </div>
                             <div className="mep-info-group-tooltip-years">
-                              {startYear} - {endYear}
+                              {startFormatted} - {endFormatted}
                             </div>
                           </div>
                         </div>
