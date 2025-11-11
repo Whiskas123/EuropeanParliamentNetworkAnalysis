@@ -127,7 +127,7 @@ export default function CountrySelector({
             <span className="selector-flag">🇪🇺</span>
             All Countries
           </button>
-        {countries.map((country) => (
+          {countries.map((country) => (
             <button
               key={country}
               className={`selector-dropdown-item ${
@@ -139,9 +139,9 @@ export default function CountrySelector({
               }}
             >
               <span className="selector-flag">{getCountryFlag(country)}</span>
-            {country}
+              {country}
             </button>
-        ))}
+          ))}
         </div>
       )}
     </div>
