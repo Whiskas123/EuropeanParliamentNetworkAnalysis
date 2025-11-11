@@ -58,23 +58,16 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <h3 style={{ margin: "0 0 10px 0", fontSize: "20px" }}>
+      <div className="mep-info-section">
+        <h3 className="mep-info-title">
           {node.label}
         </h3>
         {node.country && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              marginBottom: "10px",
-            }}
-          >
-            <span style={{ fontSize: "20px" }}>
+          <div className="mep-info-country">
+            <span className="mep-info-country-flag">
               {getCountryFlag(node.country)}
             </span>
-            <span style={{ fontSize: "14px", color: "#666" }}>
+            <span className="mep-info-country-name">
               {node.country}
             </span>
           </div>
@@ -82,78 +75,32 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
       </div>
 
       {node.groupId && (
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              fontSize: "12px",
-              color: "#666",
-              marginBottom: "5px",
-            }}
-          >
+        <div className="mep-info-section">
+          <div className="mep-info-group-label">
             Political Group
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+          <div className="mep-info-group-content">
             <div
+              className="mep-info-group-color"
               style={{
-                width: "20px",
-                height: "20px",
                 backgroundColor:
                   graphData?.nodeMap.get(node.id)?.color || "#CCCCCC",
-                borderRadius: "4px",
-                border: "1px solid #ddd",
               }}
             />
-            <span style={{ fontSize: "16px", fontWeight: "500" }}>
+            <span className="mep-info-group-name">
               {getGroupAcronym(node.groupId, mandate)}
             </span>
             {changedGroups && (
               <div
-                style={{
-                  position: "relative",
-                  display: "inline-block",
-                }}
+                className="mep-info-group-tooltip-trigger"
                 onMouseEnter={() => setShowGroupTooltip(true)}
                 onMouseLeave={() => setShowGroupTooltip(false)}
               >
-                <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#666",
-                    cursor: "help",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "18px",
-                    height: "18px",
-                    borderRadius: "50%",
-                    backgroundColor: "#f0f0f0",
-                    border: "1px solid #ddd",
-                  }}
-                >
+                <span className="mep-info-group-tooltip-icon">
                   ⓘ
                 </span>
                 {showGroupTooltip && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: "25px",
-                      top: "0",
-                      backgroundColor: "#fff",
-                      border: "1px solid #ddd",
-                      borderRadius: "6px",
-                      padding: "8px",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                      zIndex: 1000,
-                      minWidth: "200px",
-                      fontSize: "12px",
-                    }}
-                  >
+                  <div className="mep-info-group-tooltip">
                     {mergedGroups.map((group, idx) => {
                       const startYear = group.start
                         ? new Date(group.start).getFullYear()
@@ -170,45 +117,17 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                       return (
                         <div
                           key={idx}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            marginBottom: "6px",
-                            paddingBottom: "6px",
-                            borderBottom:
-                              idx < mergedGroups.length - 1
-                                ? "1px solid #f0f0f0"
-                                : "none",
-                          }}
+                          className="mep-info-group-tooltip-item"
                         >
                           <div
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              backgroundColor: groupColor,
-                              borderRadius: "3px",
-                              border: "1px solid #ddd",
-                              flexShrink: 0,
-                            }}
+                            className="mep-info-group-tooltip-color"
+                            style={{ backgroundColor: groupColor }}
                           />
-                          <div style={{ flex: 1 }}>
-                            <div
-                              style={{
-                                fontWeight: "500",
-                                color: "#333",
-                                marginBottom: "2px",
-                                fontSize: "12px",
-                              }}
-                            >
+                          <div className="mep-info-group-tooltip-content">
+                            <div className="mep-info-group-tooltip-name">
                               {getGroupAcronym(groupId, mandate)}
                             </div>
-                            <div
-                              style={{
-                                fontSize: "11px",
-                                color: "#666",
-                              }}
-                            >
+                            <div className="mep-info-group-tooltip-years">
                               {startYear} - {endYear}
                             </div>
                           </div>

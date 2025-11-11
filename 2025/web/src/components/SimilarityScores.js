@@ -18,65 +18,22 @@ export default function SimilarityScores({
   }
 
   return (
-    <div
-      style={{
-        marginTop: "30px",
-        paddingTop: "20px",
-        borderTop: "1px solid #e0e0e0",
-      }}
-    >
-      <h4
-        style={{
-          margin: "0 0 15px 0",
-          fontSize: "16px",
-          fontWeight: "600",
-          color: "#333",
-        }}
-      >
+    <div className="similarity-scores">
+      <h4 className="similarity-scores-title">
         Similarity Scores
       </h4>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-        }}
-      >
+      <div className="similarity-scores-list">
         {groupSimilarityScore !== null && (
-          <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "8px",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "13px",
-                  fontWeight: "500",
-                  color: "#333",
-                }}
-              >
+          <div className="similarity-score-item">
+            <div className="similarity-score-header">
+              <span className="similarity-score-label">
                 Group Similarity Average
               </span>
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  color: "#003399",
-                }}
-              >
+              <span className="similarity-score-value">
                 {(groupSimilarityScore.score * 100).toFixed(1)}%
               </span>
             </div>
-            <div
-              style={{
-                fontSize: "11px",
-                color: "#666",
-              }}
-            >
+            <div className="similarity-score-description">
               Average similarity with {groupSimilarityScore.count} MEP
               {groupSimilarityScore.count !== 1 ? "s" : ""} from the same group
             </div>
@@ -84,40 +41,16 @@ export default function SimilarityScores({
         )}
 
         {countrySimilarityScore !== null && (
-          <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "8px",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "13px",
-                  fontWeight: "500",
-                  color: "#333",
-                }}
-              >
+          <div className="similarity-score-item">
+            <div className="similarity-score-header">
+              <span className="similarity-score-label">
                 Country Similarity Average
               </span>
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  color: "#003399",
-                }}
-              >
+              <span className="similarity-score-value">
                 {(countrySimilarityScore.score * 100).toFixed(1)}%
               </span>
             </div>
-            <div
-              style={{
-                fontSize: "11px",
-                color: "#666",
-              }}
-            >
+            <div className="similarity-score-description">
               Average similarity with {countrySimilarityScore.count} MEP
               {countrySimilarityScore.count !== 1 ? "s" : ""} from the same
               country
@@ -126,30 +59,11 @@ export default function SimilarityScores({
         )}
 
         {agreementScores && agreementScores.length > 0 && (
-          <div
-            style={{
-              marginTop: "30px",
-              paddingTop: "20px",
-              borderTop: "1px solid #e0e0e0",
-            }}
-          >
-            <h4
-              style={{
-                margin: "0 0 15px 0",
-                fontSize: "16px",
-                fontWeight: "600",
-                color: "#333",
-              }}
-            >
+          <div className="similarity-scores-agreement">
+            <h4 className="similarity-scores-agreement-title">
               Agreement Score with Groups
             </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px",
-              }}
-            >
+            <div className="similarity-scores-agreement-list">
               {(() => {
                 // Filter out NonAttached
                 const filteredScores = agreementScores.filter(
@@ -169,63 +83,27 @@ export default function SimilarityScores({
                     maxScore > 0 ? (item.score / maxScore) * 100 : 0;
 
                   return (
-                    <div key={item.groupId}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginBottom: "4px",
-                          fontSize: "11px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                          }}
-                        >
+                    <div key={item.groupId} className="similarity-scores-agreement-item">
+                      <div className="similarity-scores-agreement-header">
+                        <div className="similarity-scores-agreement-group">
                           <div
-                            style={{
-                              width: "10px",
-                              height: "10px",
-                              backgroundColor: groupColor,
-                              borderRadius: "2px",
-                              border: "1px solid #ddd",
-                            }}
+                            className="similarity-scores-agreement-color"
+                            style={{ backgroundColor: groupColor }}
                           />
-                          <span style={{ fontWeight: "500" }}>
+                          <span className="similarity-scores-agreement-name">
                             {getGroupAcronym(item.groupId, mandate)}
                           </span>
                         </div>
-                        <span
-                          style={{
-                            color: "#003399",
-                            fontWeight: "600",
-                            minWidth: "50px",
-                            textAlign: "right",
-                          }}
-                        >
+                        <span className="similarity-scores-agreement-value">
                           {(item.score * 100).toFixed(1)}%
                         </span>
                       </div>
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "18px",
-                          backgroundColor: "#f0f0f0",
-                          borderRadius: "4px",
-                          overflow: "hidden",
-                          position: "relative",
-                        }}
-                      >
+                      <div className="similarity-scores-agreement-bar-container">
                         <div
+                          className="similarity-scores-agreement-bar"
                           style={{
                             width: `${widthPercent}%`,
-                            height: "100%",
                             backgroundColor: groupColor,
-                            transition: "width 0.3s ease",
                           }}
                         />
                       </div>

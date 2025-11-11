@@ -6,89 +6,30 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
   if (!intergroupCohesion) return null;
 
   return (
-    <div style={{ marginBottom: "30px" }}>
-      <h3
-        style={{
-          margin: "0 0 15px 0",
-          fontSize: "16px",
-          fontWeight: "600",
-          color: "#333",
-        }}
-      >
+    <div className="cohesion-heatmap">
+      <h3 className="cohesion-heatmap-title">
         Intergroup Cohesion Score
       </h3>
-      <div
-        style={{
-          borderRadius: "8px",
-          border: "1px solid #e0e0e0",
-          backgroundColor: "#fff",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div style={{ padding: "8px" }}>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "separate",
-              borderSpacing: "1px",
-              fontSize: "10px",
-            }}
-          >
+      <div className="cohesion-heatmap-container">
+        <div className="cohesion-heatmap-inner">
+          <table className="cohesion-heatmap-table">
             <thead>
               <tr>
-                <th
-                  style={{
-                    position: "sticky",
-                    left: 0,
-                    backgroundColor: "#f8f9fa",
-                    padding: "8px 6px",
-                    border: "none",
-                    textAlign: "right",
-                    fontWeight: "600",
-                    fontSize: "10px",
-                    color: "#333",
-                    zIndex: 10,
-                    minWidth: "80px",
-                  }}
-                ></th>
+                <th className="cohesion-heatmap-th-empty"></th>
                 {intergroupCohesion.groups.map((group) => {
                   const groupColor =
                     intergroupCohesion.groupColors?.get(group) || "#CCCCCC";
                   return (
                     <th
                       key={group}
-                      style={{
-                        padding: "4px 2px",
-                        border: "none",
-                        textAlign: "center",
-                        fontWeight: "600",
-                        fontSize: "9px",
-                        color: "#333",
-                        minWidth: "40px",
-                        maxWidth: "50px",
-                      }}
+                      className="cohesion-heatmap-th-group"
                       title={getGroupDisplayName(group, mandate)}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "4px",
-                          height: "100%",
-                        }}
-                      >
+                      <div className="cohesion-heatmap-th-group-content">
                         <span>{getGroupAcronym(group, mandate)}</span>
                         <span
-                          style={{
-                            display: "inline-block",
-                            width: "8px",
-                            height: "8px",
-                            backgroundColor: groupColor,
-                            borderRadius: "2px",
-                            flexShrink: 0,
-                          }}
+                          className="cohesion-heatmap-th-group-color"
+                          style={{ backgroundColor: groupColor }}
                         />
                       </div>
                     </th>
@@ -99,35 +40,14 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
             <tbody>
               {intergroupCohesion.groups.map((group1, i) => (
                 <tr key={group1}>
-                  <td
-                    style={{
-                      position: "sticky",
-                      left: 0,
-                      backgroundColor: "#f8f9fa",
-                      padding: "6px 4px",
-                      border: "none",
-                      fontWeight: "600",
-                      fontSize: "9px",
-                      textAlign: "right",
-                      color: "#333",
-                      zIndex: 10,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      gap: "4px",
-                    }}
-                  >
+                  <td className="cohesion-heatmap-td-label">
                     <span>{getGroupAcronym(group1, mandate)}</span>
                     {intergroupCohesion.groupColors?.get(group1) && (
                       <span
+                        className="cohesion-heatmap-td-label-color"
                         style={{
-                          display: "inline-block",
-                          width: "8px",
-                          height: "8px",
                           backgroundColor:
                             intergroupCohesion.groupColors.get(group1),
-                          borderRadius: "2px",
-                          flexShrink: 0,
                         }}
                       />
                     )}
@@ -138,11 +58,7 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                       return (
                         <td
                           key={j}
-                          style={{
-                            padding: 0,
-                            border: "none",
-                            backgroundColor: "transparent",
-                          }}
+                          className="cohesion-heatmap-td-empty"
                         />
                       );
                     }
@@ -152,17 +68,7 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                       return (
                         <td
                           key={j}
-                          style={{
-                            padding: "6px 4px",
-                            border: "none",
-                            backgroundColor: "#f0f0f0",
-                            textAlign: "center",
-                            fontSize: "9px",
-                            fontWeight: "500",
-                            color: "#999",
-                            borderRadius: "3px",
-                            cursor: "pointer",
-                          }}
+                          className="cohesion-heatmap-td-no-data"
                           title={`${getGroupDisplayName(
                             group1,
                             mandate
@@ -196,23 +102,10 @@ export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
                     return (
                       <td
                         key={j}
+                        className="cohesion-heatmap-td-score"
                         style={{
-                          padding: "6px 4px",
-                          border: "none",
                           backgroundColor: bgColor,
-                          textAlign: "center",
-                          fontSize: "9px",
-                          fontWeight: "500",
                           color: textColor,
-                          borderRadius: "3px",
-                          cursor: "pointer",
-                          transition: "opacity 0.2s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.opacity = "0.8";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.opacity = "1";
                         }}
                         title={`${getGroupDisplayName(
                           group1,

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Papa from "papaparse";
+import { getCountryFlag } from "@/lib/utils";
 
 export default function CountrySelector({
   currentMandate,
@@ -10,6 +11,8 @@ export default function CountrySelector({
 }) {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     async function loadCountries() {
@@ -50,33 +53,97 @@ export default function CountrySelector({
     loadCountries();
   }, [currentMandate]);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   if (loading) {
     return (
-      <div className="mandate-selector">
-        <label htmlFor="country-select">Country: </label>
-        <select id="country-select" className="mandate-select" disabled>
-          <option>Loading...</option>
-        </select>
+      <div className="selector-dropdown">
+        <div className="selector-header">
+          <span className="selector-title">Country</span>
+          <button className="selector-button" disabled>
+            <span className="selector-value">Loading...</span>
+          </button>
+        </div>
       </div>
     );
   }
 
+  const displayFlag = currentCountry ? getCountryFlag(currentCountry) : "🇪🇺";
+  const displayText = currentCountry || "All Countries";
+
   return (
-    <div className="mandate-selector">
-      <label htmlFor="country-select">Country: </label>
-      <select
-        id="country-select"
-        value={currentCountry || ""}
-        onChange={(e) => onCountryChange(e.target.value || null)}
-        className="mandate-select"
-      >
-        <option value="">All Countries</option>
-        {countries.map((country) => (
-          <option key={country} value={country}>
-            {country}
-          </option>
-        ))}
-      </select>
+    <div className="selector-dropdown" ref={dropdownRef}>
+      <div className="selector-header">
+        <span className="selector-title">Country</span>
+        <button
+          className="selector-button"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+        >
+          <span className="selector-value">
+            <span className="selector-flag">{displayFlag}</span>
+            {displayText}
+          </span>
+          <svg
+            className={`selector-arrow ${isOpen ? "open" : ""}`}
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 4.5L6 7.5L9 4.5" />
+          </svg>
+        </button>
+      </div>
+      {isOpen && (
+        <div className="selector-dropdown-menu">
+          <button
+            className={`selector-dropdown-item ${
+              !currentCountry ? "active" : ""
+            }`}
+            onClick={() => {
+              onCountryChange(null);
+              setIsOpen(false);
+            }}
+          >
+            <span className="selector-flag">🇪🇺</span>
+            All Countries
+          </button>
+          {countries.map((country) => (
+            <button
+              key={country}
+              className={`selector-dropdown-item ${
+                currentCountry === country ? "active" : ""
+              }`}
+              onClick={() => {
+                onCountryChange(country);
+                setIsOpen(false);
+              }}
+            >
+              <span className="selector-flag">{getCountryFlag(country)}</span>
+              {country}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

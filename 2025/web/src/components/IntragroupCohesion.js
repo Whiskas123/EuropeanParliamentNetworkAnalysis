@@ -27,62 +27,31 @@ export default function IntragroupCohesion({
 
   return (
     <div>
-      <h3
-        style={{
-          margin: "0 0 15px 0",
-          fontSize: "16px",
-          fontWeight: "600",
-          color: "#333",
-        }}
-      >
+      <h3 className="intragroup-cohesion-title">
         Intra-group Cohesion Score
       </h3>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
+      <div className="intragroup-cohesion-list">
         {filteredCohesion.map((item) => {
           const widthPercent = maxScore > 0 ? (item.score / maxScore) * 100 : 0;
           // Use the color map for fast lookup
           const nodeColor = groupColorMap.get(item.group) || "#CCCCCC";
 
           return (
-            <div key={item.group}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "4px",
-                  fontSize: "11px",
-                }}
-              >
-                <span style={{ fontWeight: "500" }}>
+            <div key={item.group} className="intragroup-cohesion-item">
+              <div className="intragroup-cohesion-header">
+                <span className="intragroup-cohesion-name">
                   {getGroupDisplayName(item.group, mandate)}
                 </span>
-                <span style={{ color: "#666" }}>
+                <span className="intragroup-cohesion-value">
                   {(item.score * 100).toFixed(1)}%
                 </span>
               </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "20px",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: "4px",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
+              <div className="intragroup-cohesion-bar-container">
                 <div
+                  className="intragroup-cohesion-bar"
                   style={{
                     width: `${widthPercent}%`,
-                    height: "100%",
                     backgroundColor: nodeColor,
-                    transition: "width 0.3s ease",
                   }}
                 />
               </div>

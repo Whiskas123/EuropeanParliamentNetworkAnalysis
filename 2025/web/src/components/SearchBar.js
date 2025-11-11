@@ -16,12 +16,13 @@ export default function SearchBar({
   return (
     <>
       {searchOpen && (
-        <div style={{ position: "relative" }}>
+        <div className="search-bar-container">
           <input
             type="text"
             placeholder="Search MEP by name..."
             value={searchQuery}
             autoFocus
+            className="search-bar-input"
             onChange={(e) => {
               const query = e.target.value;
               setSearchQuery(query);
@@ -42,16 +43,6 @@ export default function SearchBar({
                 setSearchResults([]);
               }
             }}
-            style={{
-              width: "100%",
-              padding: "8px 12px",
-              borderRadius: "4px",
-              border: "none",
-              fontSize: "14px",
-              backgroundColor: "rgba(255, 255, 255, 0.95)",
-              color: "#333",
-              boxSizing: "border-box",
-            }}
             onKeyDown={(e) => {
               if (e.key === "Escape") {
                 setSearchOpen(false);
@@ -61,25 +52,11 @@ export default function SearchBar({
             }}
           />
           {searchResults.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                right: 0,
-                marginTop: "4px",
-                backgroundColor: "white",
-                borderRadius: "4px",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                maxHeight: "200px",
-                overflowY: "auto",
-                zIndex: 1000,
-                border: "1px solid #ddd",
-              }}
-            >
+            <div className="search-bar-results">
               {searchResults.map((result) => (
                 <div
                   key={result.id}
+                  className="search-bar-result-item"
                   onClick={() => {
                     onSelectNode({
                       id: result.id,
@@ -91,38 +68,11 @@ export default function SearchBar({
                     setSearchResults([]);
                     setSearchOpen(false);
                   }}
-                  style={{
-                    padding: "10px 12px",
-                    cursor: "pointer",
-                    borderBottom: "1px solid #f0f0f0",
-                    transition: "background-color 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "#f5f5f5";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "white";
-                  }}
                 >
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      color: "#333",
-                      marginBottom: "4px",
-                    }}
-                  >
+                  <div className="search-bar-result-name">
                     {result.label}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#666",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                    }}
-                  >
+                  <div className="search-bar-result-meta">
                     {result.groupId && (
                       <>
                         <span>{getGroupAcronym(result.groupId, mandate)}</span>

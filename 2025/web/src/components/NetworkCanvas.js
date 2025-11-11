@@ -362,12 +362,7 @@ export default function NetworkCanvas({
   return (
     <div
       ref={containerRef}
-      style={{
-        flex: 1,
-        width: "100%",
-        height: "100%",
-        position: "relative",
-      }}
+      className="network-canvas-container"
     />
   );
 }

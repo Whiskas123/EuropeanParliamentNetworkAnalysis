@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
 
 export default function Home() {
   const router = useRouter();
@@ -11,14 +10,14 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.landingPage}>
-      <div className={styles.landingContent}>
-        <div className={styles.networkLogo}>
+    <div className="landingPage">
+      <div className="landingContent">
+        <div className="networkLogo">
           <svg
             width="200"
             height="200"
             viewBox="0 0 200 200"
-            className={styles.networkSvg}
+            className="networkSvg"
           >
             {/* EU stars arranged in a circle (12 stars) */}
             {[...Array(12)].map((_, i) => {
@@ -69,17 +68,17 @@ export default function Home() {
             })}
           </svg>
         </div>
-        <h1 className={styles.landingTitle}>
+        <h1 className="landingTitle">
           European Parliament
           <br />
           Network Analysis
         </h1>
-        <p className={styles.landingDescription}>
+        <p className="landingDescription">
           Explore voting patterns and political alliances in the European
           Parliament across mandates 6-10. Interactive network visualization
           powered by D3.js.
         </p>
-        <button className={styles.enterButton} onClick={handleEnter}>
+        <button className="enterButton" onClick={handleEnter}>
           Enter Visualization
         </button>
       </div>

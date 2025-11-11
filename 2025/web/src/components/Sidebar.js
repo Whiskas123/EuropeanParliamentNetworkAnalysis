@@ -26,6 +26,9 @@ export default function Sidebar({
   const [searchResults, setSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Get voting sessions from metadata
+  const votingSessions = graphData?.metadata?.votingSessions ?? null;
+
   const handleSearchSelect = (node) => {
     onSelectNode(node);
     setSearchQuery("");
@@ -34,35 +37,12 @@ export default function Sidebar({
   };
 
   return (
-    <div
-      style={{
-        width: "30%",
-        backgroundColor: "#ffffff",
-        borderLeft: "1px solid #e0e0e0",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        flexShrink: 0,
-      }}
-    >
-      <div
-        style={{
-          padding: "20px",
-          backgroundColor: "#003399",
-          color: "white",
-          minHeight: "76px",
-          boxSizing: "border-box",
-        }}
-      >
+    <div className="sidebar">
+      <div className="sidebar-header">
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: searchOpen ? "15px" : "0",
-          }}
+          className={`sidebar-header-top ${searchOpen ? "search-open" : ""}`}
         >
-          <h2 style={{ margin: 0, fontSize: "18px" }}>MEP Information</h2>
+          <h2>{selectedNode ? "MEP Information" : "Network"}</h2>
           <button
             onClick={() => {
               setSearchOpen(!searchOpen);
@@ -71,26 +51,11 @@ export default function Sidebar({
                 setSearchResults([]);
               }
             }}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "4px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontSize: "20px",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = "0.8";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = "1";
-            }}
+            className="sidebar-search-button"
             title="Search MEP by name"
           >
+            <span>Search MEP</span>
+
             <svg
               width="20"
               height="20"
@@ -119,14 +84,34 @@ export default function Sidebar({
         />
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "20px",
-          position: "relative",
-        }}
-      >
+      <div className="sidebar-content">
+        {/* Network Statistics */}
+        {graphData && !selectedNode && (
+          <div className="network-stats">
+            <div className="network-stat-item">
+              <div className="network-stat-header">
+                <span className="network-stat-label">Visible MEPs</span>
+                <span className="network-stat-value">
+                  {graphData.nodes.length.toLocaleString()}
+                </span>
+              </div>
+              <div className="network-stat-description">
+                MEPs that participated in more than 50% of the voting sessions
+              </div>
+            </div>
+            {votingSessions !== null && (
+              <div className="network-stat-item">
+                <div className="network-stat-header">
+                  <span className="network-stat-label">Voting Sessions</span>
+                  <span className="network-stat-value">
+                    {votingSessions.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {selectedNode ? (
           <>
             <MEPInfoPanel
@@ -159,7 +144,7 @@ export default function Sidebar({
               />
             )}
             {!intergroupCohesion && !intragroupCohesion && graphData && (
-              <div style={{ color: "#999", fontStyle: "italic" }}>
+              <div className="sidebar-loading-text">
                 Loading cohesion data...
               </div>
             )}
@@ -170,4 +155,3 @@ export default function Sidebar({
     </div>
   );
 }
-

@@ -10,7 +10,7 @@ import HoverTooltip from "@/components/HoverTooltip";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function VisualizationPage() {
-  const [mandate, setMandate] = useState(6);
+  const [mandate, setMandate] = useState(10);
   const [selectedNode, setSelectedNode] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
@@ -60,10 +60,8 @@ export default function VisualizationPage() {
         const { d3, Graph, forceAtlas2 } = modulesRef.current;
 
         // Load data (may be precomputed with positions already)
-        const { nodes, edges, agreementScores } = await loadMandateData(
-          mandateNum,
-          country
-        );
+        const { nodes, edges, agreementScores, metadata } =
+          await loadMandateData(mandateNum, country);
 
         // Check if nodes already have positions (precomputed)
         const hasPrecomputedPositions =
@@ -160,10 +158,19 @@ export default function VisualizationPage() {
             d3Nodes[i] = nodeData;
           }
 
-          // Use all edges for layout calculation, but only visualize top 50% by weight for performance
-          edgesWithWeights.sort((a, b) => b.weight - a.weight);
-          const edgeThreshold = Math.ceil(edgesWithWeights.length * 0.5);
-          const filteredEdges = edgesWithWeights.slice(0, edgeThreshold);
+          // Filter edges for visualization
+          // For country networks: show all edges with weight > 0.5
+          // For full network: show top 50% by weight for performance
+          let filteredEdges;
+          if (country) {
+            filteredEdges = edgesWithWeights.filter(
+              (edge) => edge.weight > 0.5
+            );
+          } else {
+            edgesWithWeights.sort((a, b) => b.weight - a.weight);
+            const edgeThreshold = Math.ceil(edgesWithWeights.length * 0.5);
+            filteredEdges = edgesWithWeights.slice(0, edgeThreshold);
+          }
 
           finalEdges = filteredEdges.map((edge) => ({
             source: edge.source,
@@ -196,16 +203,25 @@ export default function VisualizationPage() {
             d3Nodes[i] = nodeData;
           }
 
-          // Filter edges for visualization (top 50% by weight)
+          // Filter edges for visualization
+          // For country networks: show all edges with weight > 0.5
+          // For full network: show top 50% by weight for performance
           const edgesWithWeights = edges.map((edge) => ({
             source: edge.source,
             target: edge.target,
             weight: edge.weight || 0,
           }));
 
-          edgesWithWeights.sort((a, b) => b.weight - a.weight);
-          const edgeThreshold = Math.ceil(edgesWithWeights.length * 0.5);
-          const filteredEdges = edgesWithWeights.slice(0, edgeThreshold);
+          let filteredEdges;
+          if (country) {
+            filteredEdges = edgesWithWeights.filter(
+              (edge) => edge.weight > 0.5
+            );
+          } else {
+            edgesWithWeights.sort((a, b) => b.weight - a.weight);
+            const edgeThreshold = Math.ceil(edgesWithWeights.length * 0.5);
+            filteredEdges = edgesWithWeights.slice(0, edgeThreshold);
+          }
 
           finalEdges = filteredEdges.map((edge) => ({
             source: edge.source,
@@ -222,6 +238,7 @@ export default function VisualizationPage() {
           allLinks: edges, // Store all edges for closest MEPs calculation
           nodeMap,
           agreementScores: agreementScores || null,
+          metadata: metadata || null,
         };
 
         // Store previous data before updating
@@ -579,49 +596,12 @@ export default function VisualizationPage() {
   }, []);
 
   return (
-    <div
-      className="visualization-page"
-      style={{
-        display: "flex",
-        height: "100vh",
-        width: "100%",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
+    <div className="visualization-page">
       {/* Left side - Network visualization (70%) */}
-      <div
-        style={{
-          width: "70%",
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#f5f5f5",
-          overflow: "hidden",
-          flexShrink: 0,
-        }}
-      >
-        <div
-          style={{
-            padding: "20px",
-            backgroundColor: "#003399",
-            color: "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            minHeight: "76px",
-            boxSizing: "border-box",
-          }}
-        >
-          <h1 style={{ margin: 0, fontSize: "24px" }}>
-            European Parliament Network
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "20px",
-            }}
-          >
+      <div className="visualization-left">
+        <div className="visualization-header">
+          <h1>European Parliament Network</h1>
+          <div className="visualization-header-controls">
             <MandateSelector
               currentMandate={mandate}
               onMandateChange={setMandate}
@@ -634,29 +614,10 @@ export default function VisualizationPage() {
           </div>
         </div>
 
-        {error && (
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "red",
-            }}
-          >
-            Error: {error}
-          </div>
-        )}
+        {error && <div className="visualization-error">Error: {error}</div>}
 
         {graphData && (
-          <div
-            style={{
-              position: "relative",
-              flex: 1,
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          <div className="visualization-content">
             <NetworkCanvas
               graphData={graphData}
               selectedNode={selectedNode}
@@ -669,14 +630,7 @@ export default function VisualizationPage() {
         )}
 
         {!graphData && loading && (
-          <div
-            style={{
-              position: "relative",
-              flex: 1,
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          <div className="visualization-content">
             <LoadingSpinner />
           </div>
         )}
