@@ -44,9 +44,10 @@ a {
 /* Visualization Page Styles */
 .visualization-page {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  overflow: hidden;
 }
 
 .page-header {
@@ -195,6 +196,24 @@ a {
   color: #c62828;
 }
 
+/* Loading Spinner Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner-outer {
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner-inner {
+  animation: spin 0.8s linear infinite reverse;
+}
+
 /* Home Page Styles */
 .visualizationGrid {
   display: grid;
@@ -292,5 +311,10 @@ a {
   .info {
     margin: 1rem;
     padding: 1rem;
+  }
+
+  /* Keep sidebar on right even on mobile */
+  .visualization-page {
+    flex-direction: row !important;
   }
 }

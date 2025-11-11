@@ -1,95 +1,88 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleEnter = () => {
+    router.push("/visualization");
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <div className={styles.intro}>
-          <h1>European Parliament Network Analysis</h1>
-          <p>
-            Interactive network visualizations of European Parliament voting patterns
-            across mandates 6-10. Compare different visualization libraries to find
-            the best representation for your analysis.
-          </p>
+    <div className={styles.landingPage}>
+      <div className={styles.landingContent}>
+        <div className={styles.networkLogo}>
+          <svg
+            width="200"
+            height="200"
+            viewBox="0 0 200 200"
+            className={styles.networkSvg}
+          >
+            {/* EU stars arranged in a circle (12 stars) */}
+            {[...Array(12)].map((_, i) => {
+              const angle = (i * 30 - 90) * (Math.PI / 180);
+              const radius = 70;
+              // Round to 2 decimal places to avoid hydration mismatches
+              const cx =
+                Math.round((100 + radius * Math.cos(angle)) * 100) / 100;
+              const cy =
+                Math.round((100 + radius * Math.sin(angle)) * 100) / 100;
+              const nextAngle = ((i + 1) * 30 - 90) * (Math.PI / 180);
+              const nextCx =
+                Math.round((100 + radius * Math.cos(nextAngle)) * 100) / 100;
+              const nextCy =
+                Math.round((100 + radius * Math.sin(nextAngle)) * 100) / 100;
+              return (
+                <g key={i}>
+                  {/* Network edges connecting stars - only circle edges */}
+                  {i < 12 && (
+                    <line
+                      x1={cx}
+                      y1={cy}
+                      x2={nextCx}
+                      y2={nextCy}
+                      stroke="#FFD700"
+                      strokeWidth="1.5"
+                      opacity="0.4"
+                    />
+                  )}
+                  {/* Star node */}
+                  <circle cx={cx} cy={cy} r="6" fill="#FFD700" />
+                  {/* Star shape */}
+                  <path
+                    d={`M ${cx} ${cy - 4} L ${cx + 1.2} ${cy - 1.2} L ${
+                      cx + 4
+                    } ${cy - 1.2} L ${cx + 1.8} ${cy + 1.2} L ${cx + 2.4} ${
+                      cy + 4
+                    } L ${cx} ${cy + 2.4} L ${cx - 2.4} ${cy + 4} L ${
+                      cx - 1.8
+                    } ${cy + 1.2} L ${cx - 4} ${cy - 1.2} L ${cx - 1.2} ${
+                      cy - 1.2
+                    } Z`}
+                    fill="#FFD700"
+                    opacity="0.9"
+                  />
+                </g>
+              );
+            })}
+          </svg>
         </div>
-
-        <div className={styles.visualizationGrid}>
-          <Link href="/sigma" className={styles.card}>
-            <h2>Sigma.js</h2>
-            <p>
-              High-performance graph visualization library with Force Atlas 2 layout.
-              Optimized for large networks with smooth interactions.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/cytoscape" className={styles.card}>
-            <h2>Cytoscape.js</h2>
-            <p>
-              Graph theory library with force-directed layouts. Great for interactive
-              network analysis with extensive styling options.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/gephi" className={styles.card}>
-            <h2>Gephi/Graphology</h2>
-            <p>
-              Graphology-based visualization with Force Atlas 2 algorithm matching
-              Gephi's behavior. Ideal for comparing with desktop Gephi results.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/cosmograph" className={styles.card}>
-            <h2>Cosmograph</h2>
-            <p>
-              GPU-accelerated React library for large-scale graph visualization.
-              High-performance rendering with built-in analytics capabilities.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/vis" className={styles.card}>
-            <h2>vis.js</h2>
-            <p>
-              Popular network visualization library with physics-based layouts.
-              Excellent for interactive network exploration and analysis.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/force-graph" className={styles.card}>
-            <h2>react-force-graph</h2>
-            <p>
-              React wrapper for force-directed graph visualization with WebGL support.
-              Optimized for performance with large datasets.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-
-          <Link href="/d3" className={styles.card}>
-            <h2>D3.js</h2>
-            <p>
-              Powerful low-level library for custom graph visualizations using SVG.
-              Maximum flexibility for custom visualizations and interactions.
-            </p>
-            <div className={styles.cardFooter}>View Visualization →</div>
-          </Link>
-        </div>
-
-        <div className={styles.info}>
-          <h3>Features</h3>
-          <ul>
-            <li>View networks for mandates 6, 7, 8, 9, and 10</li>
-            <li>Click on nodes to see detailed information (Name, Country, Group)</li>
-            <li>Interactive zoom and pan controls</li>
-            <li>Color-coded nodes by political group</li>
-            <li>Edge weights represent voting similarity</li>
-          </ul>
-        </div>
-      </main>
+        <h1 className={styles.landingTitle}>
+          European Parliament
+          <br />
+          Network Analysis
+        </h1>
+        <p className={styles.landingDescription}>
+          Explore voting patterns and political alliances in the European
+          Parliament across mandates 6-10. Interactive network visualization
+          powered by D3.js.
+        </p>
+        <button className={styles.enterButton} onClick={handleEnter}>
+          Enter Visualization
+        </button>
+      </div>
     </div>
   );
 }
