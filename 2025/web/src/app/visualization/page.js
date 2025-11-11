@@ -256,11 +256,14 @@ export default function VisualizationPage() {
 
         setGraphData(newGraphData);
 
-        // Use requestAnimationFrame to ensure canvas has time to render
+        // Clear previous data immediately
+        previousGraphDataRef.current = null;
+
+        // Use double requestAnimationFrame to ensure canvas has time to render
         requestAnimationFrame(() => {
-          setLoading(false);
-          // Clear previous data after new data is set
-          previousGraphDataRef.current = null;
+          requestAnimationFrame(() => {
+            setLoading(false);
+          });
         });
       } catch (err) {
         console.error("Error loading graph:", err);
@@ -678,6 +681,7 @@ export default function VisualizationPage() {
         {graphData && (
           <div className="visualization-content">
             <NetworkCanvas
+              key={`${mandate}-${selectedCountry || "all"}`}
               graphData={graphData}
               selectedNode={selectedNode}
               onNodeClick={handleNodeClick}
