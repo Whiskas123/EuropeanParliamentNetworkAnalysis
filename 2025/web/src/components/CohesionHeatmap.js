@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupAcronym, getGroupDisplayName, getRedGreenColor } from "@/lib/utils";
+import { getGroupAcronym, getGroupDisplayName, getRedGreenColor } from "../lib/utils";
 
 export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
   if (!intergroupCohesion) return null;

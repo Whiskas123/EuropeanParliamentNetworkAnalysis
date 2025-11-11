@@ -1,6 +1,6 @@
 "use client";
 
-import { getCountryFlag } from "@/lib/utils";
+import { getCountryFlag } from "../lib/utils";
 
 export default function ClosestMEPs({ meps, onSelectMEP }) {
   if (!meps || meps.length === 0) return null;

@@ -1,6 +1,6 @@
 "use client";
 
-import { getCountryFlag, getGroupAcronym } from "@/lib/utils";
+import { getCountryFlag, getGroupAcronym } from "../lib/utils";
 
 export default function SearchBar({
   searchQuery,

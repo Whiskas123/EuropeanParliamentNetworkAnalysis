@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { loadMandateData } from "@/lib/dataLoader";
-import MandateSelector from "@/components/MandateSelector";
-import CountrySelector from "@/components/CountrySelector";
-import NetworkCanvas from "@/components/NetworkCanvas";
-import Sidebar from "@/components/Sidebar";
-import HoverTooltip from "@/components/HoverTooltip";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { loadMandateData } from "../../lib/dataLoader";
+import MandateSelector from "../../components/MandateSelector";
+import CountrySelector from "../../components/CountrySelector";
+import NetworkCanvas from "../../components/NetworkCanvas";
+import Sidebar from "../../components/Sidebar";
+import HoverTooltip from "../../components/HoverTooltip";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function VisualizationPage() {
   const [mandate, setMandate] = useState(10);

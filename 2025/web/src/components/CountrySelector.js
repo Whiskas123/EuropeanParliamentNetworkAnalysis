@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Papa from "papaparse";
-import { getCountryFlag } from "@/lib/utils";
+import { getCountryFlag } from "../lib/utils";
 
 export default function CountrySelector({
   currentMandate,
