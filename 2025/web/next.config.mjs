@@ -7,6 +7,12 @@ const __dirname = path.dirname(__filename);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config, { isServer }) => {
+    // Set path alias for both server and client
+    if (!config.resolve.alias) {
+      config.resolve.alias = {};
+    }
+    config.resolve.alias["@"] = path.resolve(__dirname, "./src");
+    
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -15,12 +21,6 @@ const nextConfig = {
         tls: false,
       };
     }
-    
-    // Explicitly resolve path aliases
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve(__dirname, "./src"),
-    };
     
     return config;
   },
