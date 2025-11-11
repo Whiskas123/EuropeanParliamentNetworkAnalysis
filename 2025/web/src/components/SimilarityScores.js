@@ -70,7 +70,7 @@ export default function SimilarityScores({
                 const maxScore = Math.max(
                   ...filteredScores.map((i) => i.score)
                 );
-
+                
                 return filteredScores.map((item) => {
                   // Get group color
                   const groupNode = graphData?.nodes.find(
@@ -87,7 +87,7 @@ export default function SimilarityScores({
                     >
                       <div className="similarity-scores-agreement-header">
                         <div className="similarity-scores-agreement-group">
-                          <div
+                        <div
                             className="similarity-scores-agreement-color"
                             style={{ backgroundColor: groupColor }}
                           />

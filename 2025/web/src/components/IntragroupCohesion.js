@@ -14,7 +14,7 @@ export default function IntragroupCohesion({
     (item) => item.group !== "NonAttached"
   );
   if (filteredCohesion.length === 0) return null;
-
+  
   const maxScore = Math.max(...filteredCohesion.map((i) => i.score));
 
   // Create a color map from graphData nodes for fast lookup
