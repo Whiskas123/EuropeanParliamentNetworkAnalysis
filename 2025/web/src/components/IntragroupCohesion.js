@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupDisplayName } from "../lib/utils";
+import { getGroupDisplayName } from "../lib/utils.js";
 
 export default function IntragroupCohesion({
   intragroupCohesion,

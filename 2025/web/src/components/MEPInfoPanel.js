@@ -7,7 +7,7 @@ import {
   getGroupDisplayName,
   getCountryFlag,
   getGroupColor,
-} from "../lib/utils";
+} from "../lib/utils.js";
 
 export default function MEPInfoPanel({ node, graphData, mandate }) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);

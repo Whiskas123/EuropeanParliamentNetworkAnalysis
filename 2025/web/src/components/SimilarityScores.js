@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupAcronym } from "../lib/utils";
+import { getGroupAcronym } from "../lib/utils.js";
 
 export default function SimilarityScores({
   groupSimilarityScore,
