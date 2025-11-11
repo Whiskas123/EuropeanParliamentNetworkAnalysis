@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { loadMandateData } from "../../lib/dataLoader";
+import { loadMandateData } from "../../lib/dataLoader.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import NetworkCanvas from "../../components/NetworkCanvas";

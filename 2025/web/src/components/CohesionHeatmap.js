@@ -4,7 +4,7 @@ import {
   getGroupAcronym,
   getGroupDisplayName,
   getRedGreenColor,
-} from "../lib/utils.js";
+} from "../lib/utils";
 
 export default function CohesionHeatmap({ intergroupCohesion, mandate }) {
   if (!intergroupCohesion) return null;

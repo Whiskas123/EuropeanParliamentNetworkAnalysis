@@ -7,7 +7,7 @@ import {
   getGroupDisplayName,
   getCountryFlag,
   getGroupColor,
-} from "../lib/utils.js";
+} from "../lib/utils";
 
 export default function MEPInfoPanel({ node, graphData, mandate }) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);
@@ -189,7 +189,7 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                           2,
                           "0"
                         );
-                        return `${year}-${month}`;
+                        return `${month}/${year}`;
                       };
 
                       const startFormatted = startDate
@@ -262,7 +262,7 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
                           2,
                           "0"
                         );
-                        return `${year}-${month}`;
+                        return `${month}/${year}`;
                       };
 
                       const startFormatted = formatDate(group.start) || "?";

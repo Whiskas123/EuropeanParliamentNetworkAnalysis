@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupAcronym, getCountryFlag } from "../lib/utils.js";
+import { getGroupAcronym, getCountryFlag } from "../lib/utils";
 
 export default function HoverTooltip({ node, position, mandate }) {
   if (!node) return null;
