@@ -7,6 +7,7 @@ import SimilarityScores from "./SimilarityScores";
 import ClosestMEPs from "./ClosestMEPs";
 import CohesionHeatmap from "./CohesionHeatmap";
 import IntragroupCohesion from "./IntragroupCohesion";
+import CountrySimilarity from "./CountrySimilarity";
 import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -21,10 +22,12 @@ export default function Sidebar({
   closestMEPs,
   intergroupCohesion,
   intragroupCohesion,
+  countrySimilarity,
   onSelectNode,
   onSelectNodeFromGroup,
   onClearNodeKeepGroup,
   onSelectGroup,
+  onCountryClick,
   loading = false,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,7 +71,7 @@ export default function Sidebar({
               ? "MEP Information"
               : selectedGroup
               ? "Group Information"
-              : "Network"}
+              : "Network Information"}
           </h2>
           <button
             onClick={() => {
@@ -204,11 +207,21 @@ export default function Sidebar({
                 onGroupClick={handleGroupClick}
               />
             )}
-            {!intergroupCohesion && !intragroupCohesion && graphData && (
-              <div className="sidebar-loading-text">
-                Loading cohesion data...
-              </div>
+            {countrySimilarity && graphData && (
+              <CountrySimilarity
+                countrySimilarity={countrySimilarity}
+                graphData={graphData}
+                onCountryClick={onCountryClick}
+              />
             )}
+            {!intergroupCohesion &&
+              !intragroupCohesion &&
+              !countrySimilarity &&
+              graphData && (
+                <div className="sidebar-loading-text">
+                  Loading cohesion data...
+                </div>
+              )}
           </>
         )}
         {loading && <LoadingSpinner />}

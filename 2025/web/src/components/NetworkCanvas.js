@@ -38,7 +38,8 @@ export default function NetworkCanvas({
         canvas.width = width;
         canvas.height = height;
       }
-      setCanvasReady(true);
+      // Defer state update to avoid cascading renders
+      setTimeout(() => setCanvasReady(true), 0);
     }
 
     if (!canvasReady) return;
@@ -170,7 +171,8 @@ export default function NetworkCanvas({
       canvasRef.current.parentNode === containerRef.current
     ) {
       if (!canvasReady) {
-        setCanvasReady(true);
+        // Defer state update to avoid cascading renders
+        setTimeout(() => setCanvasReady(true), 0);
       }
       return;
     }
@@ -199,7 +201,8 @@ export default function NetworkCanvas({
     // Append canvas (zoom controls should already be in the container from JSX)
     containerRef.current.appendChild(canvas);
     canvasRef.current = canvas;
-    setCanvasReady(true);
+    // Defer state update to avoid cascading renders
+    setTimeout(() => setCanvasReady(true), 0);
   }, [canvasReady]); // Re-check if canvasReady changes
 
   // Update graphData ref when it changes

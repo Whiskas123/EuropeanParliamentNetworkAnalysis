@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import {
   getGroupDisplayName,
   getGroupAcronym,
@@ -184,20 +184,17 @@ export default function GroupInfoPanel({
       };
     });
 
-    // Sort by average score (highest first for most aligned, lowest first for least aligned)
+    // Sort by average score (highest first by default)
     const sortedByScore = [...mepScores].sort(
       (a, b) => b.avgScore - a.avgScore
     );
-    const top5Aligned = sortedByScore.slice(0, 5);
-    const bottom5Aligned = sortedByScore.slice(-5).reverse();
 
     return {
       currentCount: currentMEPs.length,
       avgSimilarity,
       entrances,
       exits,
-      top5Aligned,
-      bottom5Aligned,
+      allMEPsSorted: sortedByScore,
     };
   }, [graphData, groupId, intragroupCohesion, mandate]);
 
@@ -274,6 +271,8 @@ export default function GroupInfoPanel({
     };
   }, [groupInfo, groupInfo?.entrances.length, groupInfo?.exits.length]);
 
+  const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
+
   if (!groupInfo) return null;
 
   const formatDate = (dateStr) => {
@@ -286,6 +285,20 @@ export default function GroupInfoPanel({
   };
 
   const groupColor = getGroupColor(groupId);
+
+  // Sort MEPs based on current sort direction
+  const sortedMEPs = useMemo(() => {
+    if (!groupInfo.allMEPsSorted) return [];
+    if (sortDirection === "desc") {
+      return [...groupInfo.allMEPsSorted]; // Already sorted highest to lowest
+    } else {
+      return [...groupInfo.allMEPsSorted].reverse(); // Reverse for lowest to highest
+    }
+  }, [groupInfo.allMEPsSorted, sortDirection]);
+
+  const toggleSortDirection = () => {
+    setSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
+  };
 
   return (
     <div className="group-info-panel">
@@ -436,51 +449,52 @@ export default function GroupInfoPanel({
         </>
       )}
 
-      {groupInfo.top5Aligned.length > 0 && (
+      {sortedMEPs.length > 0 && (
         <div className="group-info-section">
-          <h4 className="group-info-section-title">
-            Most Aligned MEPs with the Group
-          </h4>
-          <div className="group-info-meps-list">
-            {groupInfo.top5Aligned.map((item, idx) => (
-              <div
-                key={item.mep.id}
-                className="group-info-mep-item clickable"
-                onClick={() => onSelectMEP && onSelectMEP(item.mep)}
+          <div className="group-info-section-header">
+            <h4 className="group-info-section-title">MEPs by Alignment</h4>
+            <button
+              className="group-info-sort-button"
+              onClick={toggleSortDirection}
+              title={
+                sortDirection === "desc"
+                  ? "Sort: Highest to Lowest (click to reverse)"
+                  : "Sort: Lowest to Highest (click to reverse)"
+              }
+            >
+              <span>
+                {sortDirection === "desc" ? "Highest to Lowest" : "Lowest to Highest"}
+              </span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  transform: sortDirection === "asc" ? "rotate(180deg)" : "none",
+                }}
               >
-                <div className="group-info-mep-rank">{idx + 1}</div>
-                <div className="group-info-mep-content">
-                  <div className="group-info-mep-name">{item.mep.label}</div>
-                  <div className="group-info-mep-meta">
-                    {item.mep.country && (
-                      <span className="group-info-mep-country">
-                        {getCountryFlag(item.mep.country)} {item.mep.country}
-                      </span>
-                    )}
-                    <span className="group-info-mep-score">
-                      {(item.avgScore * 100).toFixed(1)}%
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
+              </svg>
+            </button>
           </div>
-        </div>
-      )}
-
-      {groupInfo.bottom5Aligned.length > 0 && (
-        <div className="group-info-section">
-          <h4 className="group-info-section-title">
-            Least Aligned MEPs with the Group
-          </h4>
           <div className="group-info-meps-list">
-            {groupInfo.bottom5Aligned.map((item, idx) => (
-              <div
-                key={item.mep.id}
-                className="group-info-mep-item clickable"
-                onClick={() => onSelectMEP && onSelectMEP(item.mep)}
-              >
-                <div className="group-info-mep-rank">{idx + 1}</div>
+            {sortedMEPs.map((item, idx) => {
+              const rank =
+                sortDirection === "desc"
+                  ? idx + 1
+                  : sortedMEPs.length - idx;
+              return (
+                <div
+                  key={item.mep.id}
+                  className="group-info-mep-item clickable"
+                  onClick={() => onSelectMEP && onSelectMEP(item.mep)}
+                >
+                  <div className="group-info-mep-rank">{rank}</div>
                 <div className="group-info-mep-content">
                   <div className="group-info-mep-name">{item.mep.label}</div>
                   <div className="group-info-mep-meta">
@@ -495,7 +509,8 @@ export default function GroupInfoPanel({
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

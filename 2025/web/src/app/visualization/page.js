@@ -21,6 +21,7 @@ export default function VisualizationPage() {
   const [closestMEPs, setClosestMEPs] = useState([]);
   const [intergroupCohesion, setIntergroupCohesion] = useState(null);
   const [intragroupCohesion, setIntragroupCohesion] = useState(null);
+  const [countrySimilarity, setCountrySimilarity] = useState(null);
   const [groupSimilarityScore, setGroupSimilarityScore] = useState(null);
   const [countrySimilarityScore, setCountrySimilarityScore] = useState(null);
   const [agreementScores, setAgreementScores] = useState(null);
@@ -438,6 +439,8 @@ export default function VisualizationPage() {
       const intergroupMap = new Map(); // group1-group2 -> { count, sum }
       // Calculate intragroup cohesion (within same group)
       const intragroupMap = new Map(); // group -> { count, sum }
+      // Calculate country similarity (within same country)
+      const countryMap = new Map(); // country -> { count, sum }
 
       edgesToUse.forEach((edge) => {
         const sourceNode = graphData.nodeMap.get(edge.source);
@@ -447,6 +450,8 @@ export default function VisualizationPage() {
 
         const sourceGroup = sourceNode.groupId || "Unknown";
         const targetGroup = targetNode.groupId || "Unknown";
+        const sourceCountry = sourceNode.country;
+        const targetCountry = targetNode.country;
         const weight = edge.weight || 0;
 
         if (sourceGroup === targetGroup) {
@@ -475,12 +480,31 @@ export default function VisualizationPage() {
           stats.count++;
           stats.sum += weight;
         }
+
+        // Country similarity (within same country)
+        if (sourceCountry && targetCountry && sourceCountry === targetCountry) {
+          if (!countryMap.has(sourceCountry)) {
+            countryMap.set(sourceCountry, { count: 0, sum: 0 });
+          }
+          const countryStats = countryMap.get(sourceCountry);
+          countryStats.count++;
+          countryStats.sum += weight;
+        }
       });
 
       // Calculate averages for intra-group cohesion
       const intragroupScores = Array.from(intragroupMap.entries())
         .map(([group, stats]) => ({
           group,
+          score: stats.count > 0 ? stats.sum / stats.count : 0,
+          count: stats.count,
+        }))
+        .sort((a, b) => b.score - a.score);
+
+      // Calculate averages for country similarity
+      const countryScores = Array.from(countryMap.entries())
+        .map(([country, stats]) => ({
+          country,
           score: stats.count > 0 ? stats.sum / stats.count : 0,
           count: stats.count,
         }))
@@ -560,6 +584,7 @@ export default function VisualizationPage() {
       // Only update if this is still the current graphData
       if (currentGraphDataRef.current === graphData) {
         setIntragroupCohesion(intragroupScores);
+        setCountrySimilarity(countryScores);
         setIntergroupCohesion({
           groups: groupsArray,
           matrix: heatmapData,
@@ -611,6 +636,12 @@ export default function VisualizationPage() {
   const handleGroupClick = useCallback((groupId) => {
     setSelectedGroup(groupId);
     setSelectedNode(null); // Clear node selection when selecting a group
+  }, []);
+
+  const handleCountryClick = useCallback((country) => {
+    setSelectedCountry(country);
+    setSelectedNode(null); // Clear node selection when selecting a country
+    setSelectedGroup(null); // Clear group selection when selecting a country
   }, []);
 
   const handleNodeHover = useCallback((node) => {
@@ -745,10 +776,16 @@ export default function VisualizationPage() {
               ? intragroupCohesion
               : null
           }
+          countrySimilarity={
+            graphData && cohesionGraphDataRef.current === graphData
+              ? countrySimilarity
+              : null
+          }
           onSelectNode={handleNodeClick}
           onSelectNodeFromGroup={handleNodeClickFromGroup}
           onClearNodeKeepGroup={handleClearNodeKeepGroup}
           onSelectGroup={handleGroupClick}
+          onCountryClick={handleCountryClick}
           loading={loading}
         />
       )}

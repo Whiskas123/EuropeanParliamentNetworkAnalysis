@@ -47,6 +47,41 @@ function getGroupColor(groupId) {
   return colorMap[groupId] || "#CCCCCC";
 }
 
+// Find the group to use for rotation (priority order)
+function findRotationGroup(initialPositions) {
+  // Priority 1: GUE/NGL
+  const gueNglNodes = initialPositions.filter(
+    (node) => node.groupId === "GUE/NGL"
+  );
+  if (gueNglNodes.length > 0) {
+    return { nodes: gueNglNodes, groupName: "GUE/NGL" };
+  }
+
+  // Priority 2: Greens/EFA or Verts/ALE (combine if both exist)
+  const greensEfaNodes = initialPositions.filter(
+    (node) => node.groupId === "Greens/EFA"
+  );
+  const vertsAleNodes = initialPositions.filter(
+    (node) => node.groupId === "Verts/ALE"
+  );
+  const greensNodes = [...greensEfaNodes, ...vertsAleNodes];
+  if (greensNodes.length > 0) {
+    const groupName = greensEfaNodes.length > 0 ? "Greens/EFA" : "Verts/ALE";
+    return { nodes: greensNodes, groupName: groupName };
+  }
+
+  // Priority 3: S&D or PSE (combine if both exist)
+  const sdNodes = initialPositions.filter((node) => node.groupId === "S&D");
+  const pseNodes = initialPositions.filter((node) => node.groupId === "PSE");
+  const sdPseNodes = [...sdNodes, ...pseNodes];
+  if (sdPseNodes.length > 0) {
+    const groupName = sdNodes.length > 0 ? "S&D" : "PSE";
+    return { nodes: sdPseNodes, groupName: groupName };
+  }
+
+  return null;
+}
+
 async function precomputeLayoutForCountry(mandate, country) {
   console.log(`\n  Processing ${country}...`);
 
@@ -178,18 +213,17 @@ async function precomputeLayoutForCountry(mandate, country) {
       };
     });
 
-    // Rotate layout so GUE/NGL is on the left (if present)
-    const gueNglNodes = initialPositions.filter(
-      (node) => node.groupId === "GUE/NGL"
-    );
+    // Rotate layout based on priority: GUE/NGL > Greens/EFA/Verts/ALE > S&D/PSE
+    const rotationGroup = findRotationGroup(initialPositions);
 
     let nodesWithPositions;
 
-    if (gueNglNodes.length > 0) {
-      const gueNglCentroidX =
-        gueNglNodes.reduce((sum, node) => sum + node.x, 0) / gueNglNodes.length;
-      const gueNglCentroidY =
-        gueNglNodes.reduce((sum, node) => sum + node.y, 0) / gueNglNodes.length;
+    if (rotationGroup) {
+      const groupNodes = rotationGroup.nodes;
+      const groupCentroidX =
+        groupNodes.reduce((sum, node) => sum + node.x, 0) / groupNodes.length;
+      const groupCentroidY =
+        groupNodes.reduce((sum, node) => sum + node.y, 0) / groupNodes.length;
 
       const allCentroidX =
         initialPositions.reduce((sum, node) => sum + node.x, 0) /
@@ -198,8 +232,8 @@ async function precomputeLayoutForCountry(mandate, country) {
         initialPositions.reduce((sum, node) => sum + node.y, 0) /
         initialPositions.length;
 
-      const dx = gueNglCentroidX - allCentroidX;
-      const dy = gueNglCentroidY - allCentroidY;
+      const dx = groupCentroidX - allCentroidX;
+      const dy = groupCentroidY - allCentroidY;
 
       const currentAngle = Math.atan2(dy, dx);
       const targetAngle = Math.PI;
@@ -421,20 +455,18 @@ async function precomputeLayout(mandate) {
       };
     });
 
-    // Rotate layout so GUE/NGL is on the left
-    // Find GUE/NGL nodes
-    const gueNglNodes = initialPositions.filter(
-      (node) => node.groupId === "GUE/NGL"
-    );
+    // Rotate layout based on priority: GUE/NGL > Greens/EFA/Verts/ALE > S&D/PSE
+    const rotationGroup = findRotationGroup(initialPositions);
 
     let nodesWithPositions;
 
-    if (gueNglNodes.length > 0) {
-      // Calculate centroid of GUE/NGL nodes
-      const gueNglCentroidX =
-        gueNglNodes.reduce((sum, node) => sum + node.x, 0) / gueNglNodes.length;
-      const gueNglCentroidY =
-        gueNglNodes.reduce((sum, node) => sum + node.y, 0) / gueNglNodes.length;
+    if (rotationGroup) {
+      const groupNodes = rotationGroup.nodes;
+      // Calculate centroid of group nodes
+      const groupCentroidX =
+        groupNodes.reduce((sum, node) => sum + node.x, 0) / groupNodes.length;
+      const groupCentroidY =
+        groupNodes.reduce((sum, node) => sum + node.y, 0) / groupNodes.length;
 
       // Calculate centroid of all nodes
       const allCentroidX =
@@ -444,12 +476,12 @@ async function precomputeLayout(mandate) {
         initialPositions.reduce((sum, node) => sum + node.y, 0) /
         initialPositions.length;
 
-      // Calculate vector from all centroid to GUE/NGL centroid
-      const dx = gueNglCentroidX - allCentroidX;
-      const dy = gueNglCentroidY - allCentroidY;
+      // Calculate vector from all centroid to group centroid
+      const dx = groupCentroidX - allCentroidX;
+      const dy = groupCentroidY - allCentroidY;
 
-      // Calculate angle to rotate so GUE/NGL is on the left
-      // We want GUE/NGL to be at angle ~180 degrees (left side)
+      // Calculate angle to rotate so group is on the left
+      // We want group to be at angle ~180 degrees (left side)
       const currentAngle = Math.atan2(dy, dx);
       const targetAngle = Math.PI; // 180 degrees (left side)
       const rotationAngle = targetAngle - currentAngle;
@@ -480,12 +512,12 @@ async function precomputeLayout(mandate) {
       });
 
       console.log(
-        `  ✓ Rotated layout: GUE/NGL positioned on the left (${gueNglNodes.length} nodes)`
+        `  ✓ Rotated layout: ${rotationGroup.groupName} positioned on the left (${groupNodes.length} nodes)`
       );
     } else {
-      // No GUE/NGL nodes found, use original positions
+      // No rotation group found, use original positions
       nodesWithPositions = initialPositions;
-      console.log(`  ⚠️  No GUE/NGL nodes found, using original layout`);
+      console.log(`  ⚠️  No rotation group found, using original layout`);
     }
 
     // Prepare edges for output (all edges, not filtered)

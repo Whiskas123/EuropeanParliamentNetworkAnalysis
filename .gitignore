@@ -136,3 +136,10 @@ forceatlas2-master/
 2025/data/ep_meps.json
 oldstuff/webpage/fullhemicicle.svg
 *.gephi
+
+2025/data/ep_votes*.json
+2025/data/ep_meps.json
+2025/data/final_enriched/
+oldstuff/webpage/fullhemicicle.svg
+*.gephi
+.DS_Store

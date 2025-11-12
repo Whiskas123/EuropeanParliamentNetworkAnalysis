@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { getGroupDisplayName } from "../lib/utils.js";
 
 export default function IntragroupCohesion({
@@ -8,6 +9,7 @@ export default function IntragroupCohesion({
   mandate,
   onGroupClick,
 }) {
+  const [showTooltip, setShowTooltip] = useState(null);
   if (!intragroupCohesion || intragroupCohesion.length === 0) return null;
   if (!graphData) return null; // Don't render if no graphData
 
@@ -18,9 +20,17 @@ export default function IntragroupCohesion({
 
   // Create a color map from graphData nodes for fast lookup
   const groupColorMap = new Map();
+  // Count MEPs per group
+  const groupMEPCounts = new Map();
   graphData.nodes.forEach((node) => {
     if (node.groupId && !groupColorMap.has(node.groupId)) {
       groupColorMap.set(node.groupId, node.color);
+    }
+    if (node.groupId) {
+      groupMEPCounts.set(
+        node.groupId,
+        (groupMEPCounts.get(node.groupId) || 0) + 1
+      );
     }
   });
 
@@ -31,13 +41,14 @@ export default function IntragroupCohesion({
   };
 
   return (
-    <div>
+    <div className="cohesion-heatmap">
       <h3 className="intragroup-cohesion-title">Group Average Similarity</h3>
       <div className="intragroup-cohesion-list">
         {filteredCohesion.map((item) => {
           const widthPercent = item.score * 100;
           // Use the color map for fast lookup
           const nodeColor = groupColorMap.get(item.group) || "#CCCCCC";
+          const mepCount = groupMEPCounts.get(item.group) || 0;
 
           return (
             <div
@@ -50,6 +61,20 @@ export default function IntragroupCohesion({
                   {getGroupDisplayName(item.group, mandate)}
                 </span>
                 <span className="intragroup-cohesion-value">
+                  <span
+                    className="intragroup-cohesion-mep-count"
+                    onMouseEnter={() => setShowTooltip(item.group)}
+                    onMouseLeave={() => setShowTooltip(null)}
+                  >
+                    {mepCount} MEP{mepCount !== 1 ? "s" : ""}
+                    {showTooltip === item.group && (
+                      <span className="intragroup-cohesion-tooltip">
+                        Considering only MEPs that participated in &gt;50% of
+                        the votes
+                      </span>
+                    )}
+                  </span>
+                  {" · "}
                   {(item.score * 100).toFixed(1)}%
                 </span>
               </div>

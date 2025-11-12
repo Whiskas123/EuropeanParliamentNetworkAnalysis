@@ -1077,13 +1077,6 @@ a {
 }
 
 // Intragroup Cohesion
-.intragroup-cohesion-title {
-  margin: 0 0 15px 0;
-  font-size: 16px;
-  font-weight: normal;
-  color: #333;
-}
-
 .intragroup-cohesion-list {
   display: flex;
   flex-direction: column;
@@ -1106,6 +1099,43 @@ a {
   color: #666;
 }
 
+.intragroup-cohesion-mep-count {
+  position: relative;
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+
+.intragroup-cohesion-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 6px 10px;
+  background-color: #333;
+  color: #fff;
+  font-size: 11px;
+  white-space: normal;
+  max-width: 200px;
+  text-align: center;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+  line-height: 1.4;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+  }
+}
+
 .intragroup-cohesion-bar-container {
   width: 100%;
   height: 20px;
@@ -1116,6 +1146,102 @@ a {
 }
 
 .intragroup-cohesion-bar {
+  height: 100%;
+  background-color: #cccccc;
+  transition: width 0.3s ease;
+}
+
+// Country Similarity
+// Ensure country title matches intragroup title exactly
+.country-similarity-title,
+.intragroup-cohesion-title {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: normal;
+  color: #333;
+}
+
+.country-similarity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.country-similarity-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.country-similarity-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.country-similarity-name {
+  font-weight: 500;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.country-similarity-flag {
+  font-size: 14px;
+}
+
+.country-similarity-value {
+  color: #666;
+}
+
+.country-similarity-mep-count {
+  position: relative;
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+
+.country-similarity-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 6px 10px;
+  background-color: #333;
+  color: #fff;
+  font-size: 11px;
+  white-space: normal;
+  max-width: 200px;
+  text-align: center;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+  line-height: 1.4;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+  }
+}
+
+.country-similarity-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.country-similarity-bar {
   height: 100%;
   background-color: #cccccc;
   transition: width 0.3s ease;
@@ -1471,11 +1597,55 @@ a {
   }
 }
 
+.group-info-section-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+
+  .group-info-section-title {
+    margin: 0;
+  }
+}
+
 .group-info-section-title {
   margin: 0 0 12px 0;
   font-size: 14px;
   font-weight: 600;
   color: #333;
+}
+
+.group-info-sort-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  &:hover {
+    color: #003399;
+  }
+
+  &:focus {
+    outline: none;
+    color: #003399;
+  }
 }
 
 .group-info-stat {
@@ -1734,6 +1904,14 @@ a {
 }
 
 .intragroup-cohesion-item.clickable {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.country-similarity-item.clickable {
   cursor: pointer;
 
   &:hover {
