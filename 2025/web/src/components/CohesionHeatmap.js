@@ -6,6 +6,16 @@ import {
   getRedGreenColor,
 } from "../lib/utils.js";
 
+// Special function for X-axis labels in heatmap - shows "Greens" instead of "Greens/EFA"
+function getHeatmapXAxisLabel(groupId, mandate) {
+  const acronym = getGroupAcronym(groupId, mandate);
+  // Replace "Greens/EFA" with "Greens" for X-axis only
+  if (acronym === "Greens/EFA") {
+    return "Greens";
+  }
+  return acronym;
+}
+
 export default function CohesionHeatmap({
   intergroupCohesion,
   mandate,
@@ -39,7 +49,7 @@ export default function CohesionHeatmap({
                       onClick={() => handleGroupClick(group)}
                     >
                       <div className="cohesion-heatmap-th-group-content">
-                        <span>{getGroupAcronym(group, mandate)}</span>
+                        <span>{getHeatmapXAxisLabel(group, mandate)}</span>
                         <span
                           className="cohesion-heatmap-th-group-color"
                           style={{ backgroundColor: groupColor }}

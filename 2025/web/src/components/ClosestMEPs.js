@@ -1,13 +1,17 @@
 "use client";
 
-import { getCountryFlag } from "../lib/utils.js";
+import { getCountryFlag, getSubjectEmoji } from "../lib/utils.js";
 
-export default function ClosestMEPs({ meps, onSelectMEP }) {
+export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
   if (!meps || meps.length === 0) return null;
+
+  const title = selectedSubject
+    ? `5 Closest MEPs (${getSubjectEmoji(selectedSubject)} ${selectedSubject})`
+    : "5 Closest MEPs";
 
   return (
     <div className="closest-meps">
-      <h4 className="closest-meps-title">5 Closest MEPs</h4>
+      <h4 className="closest-meps-title">{title}</h4>
       <div className="closest-meps-list">
         {meps.map((mep, index) => (
           <div

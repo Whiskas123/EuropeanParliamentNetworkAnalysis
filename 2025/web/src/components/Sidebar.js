@@ -23,6 +23,7 @@ export default function Sidebar({
   intergroupCohesion,
   intragroupCohesion,
   countrySimilarity,
+  selectedSubject,
   onSelectNode,
   onSelectNodeFromGroup,
   onClearNodeKeepGroup,
@@ -36,6 +37,22 @@ export default function Sidebar({
 
   // Get voting sessions from metadata
   const votingSessions = graphData?.metadata?.votingSessions ?? null;
+
+  // Format mandate as ordinal (e.g., 10 -> "10th", 9 -> "9th")
+  const formatMandateOrdinal = (mandateNum) => {
+    const num = mandateNum % 100;
+    const suffix =
+      num >= 11 && num <= 13
+        ? "th"
+        : num % 10 === 1
+        ? "st"
+        : num % 10 === 2
+        ? "nd"
+        : num % 10 === 3
+        ? "rd"
+        : "th";
+    return `${mandateNum}${suffix}`;
+  };
 
   const handleSearchSelect = (node) => {
     onSelectNode(node);
@@ -66,13 +83,7 @@ export default function Sidebar({
         <div
           className={`sidebar-header-top ${searchOpen ? "search-open" : ""}`}
         >
-          <h2>
-            {selectedNode
-              ? "MEP Information"
-              : selectedGroup
-              ? "Group Information"
-              : "Network Information"}
-          </h2>
+          <h2>{selectedNode ? "MEP" : selectedGroup ? "Group" : "Network"}</h2>
           <button
             onClick={() => {
               setSearchOpen(!searchOpen);
@@ -122,20 +133,27 @@ export default function Sidebar({
               <div className="network-stat-header">
                 <span className="network-stat-label">Visible MEPs</span>
                 <span className="network-stat-value">
-                  {graphData.nodes.length.toLocaleString()}
+                  {graphData.nodes.length}
                 </span>
               </div>
               <div className="network-stat-description">
-                MEPs that participated in more than 50% of the voting sessions
+                MEPs that participated in at least 50% of the voting sessions
               </div>
             </div>
             {votingSessions !== null && (
               <div className="network-stat-item">
                 <div className="network-stat-header">
                   <span className="network-stat-label">Voting Sessions</span>
-                  <span className="network-stat-value">
-                    {votingSessions.toLocaleString()}
-                  </span>
+                  <span className="network-stat-value">{votingSessions}</span>
+                </div>
+                <div className="network-stat-description">
+                  {selectedSubject
+                    ? `Roll-call voting sessions for ${selectedSubject} in the ${formatMandateOrdinal(
+                        mandate
+                      )} term`
+                    : `Total roll-call voting sessions in the ${formatMandateOrdinal(
+                        mandate
+                      )} term`}
                 </div>
               </div>
             )}
@@ -171,8 +189,14 @@ export default function Sidebar({
               agreementScores={agreementScores}
               graphData={graphData}
               mandate={mandate}
+              selectedSubject={selectedSubject}
+              selectedNode={selectedNode}
             />
-            <ClosestMEPs meps={closestMEPs} onSelectMEP={onSelectNode} />
+            <ClosestMEPs
+              meps={closestMEPs}
+              onSelectMEP={onSelectNode}
+              selectedSubject={selectedSubject}
+            />
           </>
         ) : selectedGroup ? (
           <>

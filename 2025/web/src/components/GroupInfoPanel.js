@@ -7,7 +7,9 @@ import {
   getGroupColor,
   getCountryFlag,
   getGroupFamily,
+  getSubjectEmoji,
 } from "../lib/utils.js";
+import LoadingSpinner from "./LoadingSpinner.js";
 
 export default function GroupInfoPanel({
   groupId,
@@ -272,6 +274,134 @@ export default function GroupInfoPanel({
   }, [groupInfo, groupInfo?.entrances.length, groupInfo?.exits.length]);
 
   const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
+  const [groupSubjectScores, setGroupSubjectScores] = useState(null);
+  const [loadingSubjectScores, setLoadingSubjectScores] = useState(false);
+
+  // Calculate group similarity averages by subject
+  useEffect(() => {
+    if (!groupId || !graphData || !mandate) {
+      setGroupSubjectScores(null);
+      return;
+    }
+
+    async function calculateGroupSubjectScores() {
+      setLoadingSubjectScores(true);
+      try {
+        const response = await fetch(`/data/mandate_${mandate}/data.json`);
+        if (!response.ok) {
+          setGroupSubjectScores(null);
+          setLoadingSubjectScores(false);
+          return;
+        }
+        const data = await response.json();
+
+        if (!data.edgesBySubject) {
+          setGroupSubjectScores(null);
+          setLoadingSubjectScores(false);
+          return;
+        }
+
+        // Get all MEPs in this group
+        const groupMEPs = graphData.nodes.filter(
+          (node) => node.groupId === groupId
+        );
+        const groupMEPIds = new Set(groupMEPs.map((mep) => mep.id));
+
+        if (groupMEPIds.size === 0) {
+          setGroupSubjectScores(null);
+          setLoadingSubjectScores(false);
+          return;
+        }
+
+        const subjects = Object.keys(data.edgesBySubject);
+        const subjectScores = [];
+
+        // Calculate similarity for each subject
+        for (const subject of subjects) {
+          const subjectEdges = data.edgesBySubject[subject] || [];
+          const subjectEdgeMap = new Map();
+
+          // Create a map of edges for quick lookup
+          subjectEdges.forEach((edge) => {
+            const key1 = `${edge.Source}-${edge.Target}`;
+            const key2 = `${edge.Target}-${edge.Source}`;
+            subjectEdgeMap.set(key1, parseFloat(edge.Weight) || 0);
+            subjectEdgeMap.set(key2, parseFloat(edge.Weight) || 0);
+          });
+
+          // Get all edges from graphData
+          const allEdges = graphData.allLinks || graphData.links || [];
+
+          // Filter to only edges between group members for this subject
+          const groupEdges = allEdges.filter((edge) => {
+            const sourceId =
+              typeof edge.source === "string" ? edge.source : edge.source.id;
+            const targetId =
+              typeof edge.target === "string" ? edge.target : edge.target.id;
+
+            // Both nodes must be in the group
+            if (!groupMEPIds.has(sourceId) || !groupMEPIds.has(targetId)) {
+              return false;
+            }
+
+            // Edge must exist in this subject
+            const key1 = `${sourceId}-${targetId}`;
+            const key2 = `${targetId}-${sourceId}`;
+            return subjectEdgeMap.has(key1) || subjectEdgeMap.has(key2);
+          });
+
+          // Calculate average weight for this subject
+          if (groupEdges.length > 0) {
+            const weights = groupEdges.map((edge) => {
+              const sourceId =
+                typeof edge.source === "string" ? edge.source : edge.source.id;
+              const targetId =
+                typeof edge.target === "string" ? edge.target : edge.target.id;
+              const key1 = `${sourceId}-${targetId}`;
+              const key2 = `${targetId}-${sourceId}`;
+              return (
+                subjectEdgeMap.get(key1) ||
+                subjectEdgeMap.get(key2) ||
+                edge.weight ||
+                0
+              );
+            });
+
+            const avgScore =
+              weights.reduce((sum, w) => sum + w, 0) / weights.length;
+
+            subjectScores.push({
+              subject,
+              score: avgScore,
+              count: groupEdges.length,
+            });
+          }
+        }
+
+        // Sort by score (highest first)
+        subjectScores.sort((a, b) => b.score - a.score);
+
+        setGroupSubjectScores(subjectScores);
+      } catch (error) {
+        console.error("Error calculating group subject scores:", error);
+        setGroupSubjectScores(null);
+      } finally {
+        setLoadingSubjectScores(false);
+      }
+    }
+
+    calculateGroupSubjectScores();
+  }, [groupId, graphData, mandate]);
+
+  // Sort MEPs based on current sort direction
+  const sortedMEPs = useMemo(() => {
+    if (!groupInfo || !groupInfo.allMEPsSorted) return [];
+    if (sortDirection === "desc") {
+      return [...groupInfo.allMEPsSorted]; // Already sorted highest to lowest
+    } else {
+      return [...groupInfo.allMEPsSorted].reverse(); // Reverse for lowest to highest
+    }
+  }, [groupInfo, sortDirection]);
 
   if (!groupInfo) return null;
 
@@ -285,16 +415,6 @@ export default function GroupInfoPanel({
   };
 
   const groupColor = getGroupColor(groupId);
-
-  // Sort MEPs based on current sort direction
-  const sortedMEPs = useMemo(() => {
-    if (!groupInfo.allMEPsSorted) return [];
-    if (sortDirection === "desc") {
-      return [...groupInfo.allMEPsSorted]; // Already sorted highest to lowest
-    } else {
-      return [...groupInfo.allMEPsSorted].reverse(); // Reverse for lowest to highest
-    }
-  }, [groupInfo.allMEPsSorted, sortDirection]);
 
   const toggleSortDirection = () => {
     setSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
@@ -324,6 +444,59 @@ export default function GroupInfoPanel({
           <span className="group-info-stat-value">
             {(groupInfo.avgSimilarity * 100).toFixed(1)}%
           </span>
+        </div>
+      </div>
+
+      {/* Group Similarity by Subject */}
+      <div className="group-info-section">
+        <h4 className="group-info-section-title">
+          Similarity Average by Subject
+        </h4>
+        <div className="group-subject-scores-wrapper">
+          {loadingSubjectScores && (
+            <div className="group-subject-scores-loading">
+              <LoadingSpinner />
+            </div>
+          )}
+          {!loadingSubjectScores &&
+            groupSubjectScores &&
+            groupSubjectScores.length > 0 && (
+              <div className="group-subject-scores-list">
+                {groupSubjectScores.map((item) => {
+                  const widthPercent = item.score * 100;
+                  return (
+                    <div
+                      key={item.subject}
+                      className="group-subject-score-item"
+                    >
+                      <div className="group-subject-score-header">
+                        <span className="group-subject-score-name">
+                          {getSubjectEmoji(item.subject)} {item.subject}
+                        </span>
+                        <span className="group-subject-score-value">
+                          {(item.score * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className="group-subject-score-bar-container">
+                        <div
+                          className="group-subject-score-bar"
+                          style={{
+                            width: `${widthPercent}%`,
+                            backgroundColor: groupColor,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          {!loadingSubjectScores &&
+            (!groupSubjectScores || groupSubjectScores.length === 0) && (
+              <div className="group-subject-scores-empty">
+                No subject data available
+              </div>
+            )}
         </div>
       </div>
 
@@ -452,7 +625,9 @@ export default function GroupInfoPanel({
       {sortedMEPs.length > 0 && (
         <div className="group-info-section">
           <div className="group-info-section-header">
-            <h4 className="group-info-section-title">MEPs by Alignment</h4>
+            <h4 className="group-info-section-title">
+              MEPs by similarity to group
+            </h4>
             <button
               className="group-info-sort-button"
               onClick={toggleSortDirection}
@@ -463,7 +638,9 @@ export default function GroupInfoPanel({
               }
             >
               <span>
-                {sortDirection === "desc" ? "Highest to Lowest" : "Lowest to Highest"}
+                {sortDirection === "desc"
+                  ? "Highest to Lowest"
+                  : "Lowest to Highest"}
               </span>
               <svg
                 width="16"
@@ -475,7 +652,8 @@ export default function GroupInfoPanel({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                  transform: sortDirection === "asc" ? "rotate(180deg)" : "none",
+                  transform:
+                    sortDirection === "asc" ? "rotate(180deg)" : "none",
                 }}
               >
                 <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
@@ -485,9 +663,7 @@ export default function GroupInfoPanel({
           <div className="group-info-meps-list">
             {sortedMEPs.map((item, idx) => {
               const rank =
-                sortDirection === "desc"
-                  ? idx + 1
-                  : sortedMEPs.length - idx;
+                sortDirection === "desc" ? idx + 1 : sortedMEPs.length - idx;
               return (
                 <div
                   key={item.mep.id}
@@ -495,20 +671,20 @@ export default function GroupInfoPanel({
                   onClick={() => onSelectMEP && onSelectMEP(item.mep)}
                 >
                   <div className="group-info-mep-rank">{rank}</div>
-                <div className="group-info-mep-content">
-                  <div className="group-info-mep-name">{item.mep.label}</div>
-                  <div className="group-info-mep-meta">
-                    {item.mep.country && (
-                      <span className="group-info-mep-country">
-                        {getCountryFlag(item.mep.country)} {item.mep.country}
+                  <div className="group-info-mep-content">
+                    <div className="group-info-mep-name">{item.mep.label}</div>
+                    <div className="group-info-mep-meta">
+                      {item.mep.country && (
+                        <span className="group-info-mep-country">
+                          {getCountryFlag(item.mep.country)} {item.mep.country}
+                        </span>
+                      )}
+                      <span className="group-info-mep-score">
+                        {(item.avgScore * 100).toFixed(1)}%
                       </span>
-                    )}
-                    <span className="group-info-mep-score">
-                      {(item.avgScore * 100).toFixed(1)}%
-                    </span>
+                    </div>
                   </div>
                 </div>
-              </div>
               );
             })}
           </div>

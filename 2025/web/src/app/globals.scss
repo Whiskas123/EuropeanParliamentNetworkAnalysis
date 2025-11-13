@@ -109,9 +109,8 @@ a {
 
 .selector-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .selector-title {
@@ -134,7 +133,8 @@ a {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
-  white-space: nowrap;
+  max-width: 200px;
+  min-width: 0;
 
   &:hover {
     background: rgba(255, 255, 255, 0.15);
@@ -148,9 +148,12 @@ a {
 }
 
 .selector-value {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
 }
 
 .selector-flag {
@@ -277,6 +280,19 @@ a {
   font-family: "Helvetica Neue Extended", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.visualization-header h1 .title-line {
+  white-space: nowrap;
+}
+
+.visualization-header h1 .title-line-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .visualization-header-controls {
@@ -332,7 +348,11 @@ a {
 
 .sidebar-header h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
+  font-family: "Helvetica Neue Extended", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
 }
 
 .sidebar-search-button {
@@ -968,11 +988,48 @@ a {
   border-top: 1px solid #e0e0e0;
 }
 
+.similarity-scores-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16x;
+}
+
 .similarity-scores-title {
-  margin: 0 0 15px 0;
+  margin-bottom: 15px;
   font-size: 16px;
   font-weight: normal;
   color: #333;
+}
+
+.similarity-scores-mode-toggle {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.mode-toggle-button {
+  padding: 4px 12px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &.active {
+    background: white;
+    color: #333;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .similarity-scores-list {
@@ -989,7 +1046,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .similarity-score-label {
@@ -1009,17 +1066,131 @@ a {
   color: #666;
 }
 
+.group-subject-breakdown {
+  margin-top: 12px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 12px;
+}
+
+.group-subject-section {
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.group-subject-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.group-subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group-subject-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.group-subject-name {
+  font-weight: 500;
+  flex: 1;
+}
+
+.group-subject-name.agree-more {
+  color: #22c55e;
+}
+
+.group-subject-name.agree-less {
+  color: #ef4444;
+}
+
+.group-subject-score {
+  color: #666;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
 .similarity-scores-agreement {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
 }
 
+.similarity-scores-agreement-header-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .similarity-scores-agreement-title {
-  margin: 0 0 15px 0;
+  margin: 0;
   font-size: 16px;
   font-weight: normal;
   color: #333;
+  flex: 1;
+}
+
+.agreement-subject-selector {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  width: auto;
+  max-width: 200px;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #0066cc;
+    background: white;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #f5f5f5;
+  }
+}
+
+.similarity-scores-agreement-list-wrapper {
+  position: relative;
+  min-height: 100px;
+}
+
+.agreement-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  border-radius: 4px;
 }
 
 .similarity-scores-agreement-list {
@@ -1669,6 +1840,85 @@ a {
   font-size: 14px;
   font-weight: 600;
   color: #003399;
+}
+
+.group-subject-scores-wrapper {
+  position: relative;
+  min-height: 100px;
+}
+
+.group-subject-scores-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  border-radius: 4px;
+}
+
+.group-subject-scores-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group-subject-score-item {
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.group-subject-score-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.group-subject-score-name {
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.group-subject-score-value {
+  color: #003399;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: right;
+  margin-left: 8px;
+}
+
+.group-subject-score-bar-container {
+  width: 100%;
+  height: 18px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.group-subject-score-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.group-subject-scores-empty {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
 }
 
 .group-info-events-wrapper {

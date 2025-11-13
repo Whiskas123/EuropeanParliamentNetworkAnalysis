@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { loadMandateData } from "../../lib/dataLoader.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
+import SubjectSelector from "../../components/SubjectSelector";
 import NetworkCanvas from "../../components/NetworkCanvas";
 import Sidebar from "../../components/Sidebar";
 import HoverTooltip from "../../components/HoverTooltip";
@@ -26,6 +27,7 @@ export default function VisualizationPage() {
   const [countrySimilarityScore, setCountrySimilarityScore] = useState(null);
   const [agreementScores, setAgreementScores] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState(null);
   const previousGraphDataRef = useRef(null);
   const currentGraphDataRef = useRef(null);
   const cohesionDataRef = useRef({
@@ -39,7 +41,7 @@ export default function VisualizationPage() {
   const modulesRef = useRef(null);
 
   const loadAndPrepareGraph = useCallback(
-    async (mandateNum, country = null) => {
+    async (mandateNum, country = null, subject = null) => {
       setLoading(true);
       setError(null);
       setSelectedNode(null);
@@ -66,8 +68,15 @@ export default function VisualizationPage() {
         setSelectedGroup(null);
 
         // Load data (may be precomputed with positions already)
-        const { nodes, edges, agreementScores, metadata } =
-          await loadMandateData(mandateNum, country);
+        const {
+          nodes,
+          edges,
+          agreementScores,
+          similarityScores,
+          subjects: precomputedSubjects,
+          votingSessions: precomputedVotingSessions,
+          metadata,
+        } = await loadMandateData(mandateNum, country, subject);
 
         // Check if nodes already have positions (precomputed)
         const hasPrecomputedPositions =
@@ -238,12 +247,40 @@ export default function VisualizationPage() {
           finalNodes = d3Nodes;
         }
 
+        // Use precomputed subjects list (already filtered to >5 voting sessions)
+        // If not available, extract from similarity scores as fallback
+        let subjectsList = [];
+        if (precomputedSubjects && precomputedSubjects.length > 0) {
+          // Use precomputed subjects list (array of {name, votingSessions})
+          subjectsList = precomputedSubjects.map((s) =>
+            typeof s === "string" ? s : s.name
+          );
+        } else if (similarityScores) {
+          // Fallback: get subjects from similarity scores
+          const firstMepId = Object.keys(similarityScores)[0];
+          if (firstMepId && similarityScores[firstMepId]) {
+            const mepScores = similarityScores[firstMepId];
+            if (mepScores.subjectAgreementScores) {
+              subjectsList = Object.keys(
+                mepScores.subjectAgreementScores
+              ).sort();
+            } else if (mepScores.groupSubjectScores) {
+              subjectsList = mepScores.groupSubjectScores
+                .map((item) => item.subject)
+                .sort();
+            }
+          }
+        }
+
         const newGraphData = {
           nodes: finalNodes,
           links: finalEdges,
           allLinks: edges, // Store all edges for closest MEPs calculation
           nodeMap,
           agreementScores: agreementScores || null,
+          similarityScores: similarityScores || null,
+          subjects: subjectsList, // Store subjects for fast access (filtered to >5 voting sessions)
+          votingSessions: precomputedVotingSessions || null, // Voting sessions data (total and bySubject)
           metadata: metadata || null,
         };
 
@@ -281,8 +318,8 @@ export default function VisualizationPage() {
   );
 
   useEffect(() => {
-    loadAndPrepareGraph(mandate, selectedCountry);
-  }, [mandate, selectedCountry, loadAndPrepareGraph]);
+    loadAndPrepareGraph(mandate, selectedCountry, selectedSubject);
+  }, [mandate, selectedCountry, selectedSubject, loadAndPrepareGraph]);
 
   // Calculate closest MEPs and similarity scores when a node is selected
   useEffect(() => {
@@ -294,119 +331,181 @@ export default function VisualizationPage() {
       return;
     }
 
-    // Use all edges (not just filtered ones) for accurate calculations
-    const edgesToSearch = graphData.allLinks || graphData.links;
-
-    // Find all edges connected to the selected node
-    const connectedEdges = edgesToSearch.filter(
-      (link) =>
-        link.source === selectedNode.id || link.target === selectedNode.id
-    );
-
-    // Calculate agreement scores with each group from edge weights
-    // Group edges by the other node's group
-    const groupAgreementMap = new Map(); // groupId -> { sum, count }
-
-    connectedEdges.forEach((edge) => {
-      const otherNodeId =
-        edge.source === selectedNode.id ? edge.target : edge.source;
-      const otherNode = graphData.nodeMap.get(otherNodeId);
-
-      if (otherNode && otherNode.groupId) {
-        if (!groupAgreementMap.has(otherNode.groupId)) {
-          groupAgreementMap.set(otherNode.groupId, { sum: 0, count: 0 });
-        }
-        const stats = groupAgreementMap.get(otherNode.groupId);
-        stats.sum += edge.weight || 0;
-        stats.count += 1;
-      }
-    });
-
-    // Convert to array and calculate averages
-    const agreementArray = Array.from(groupAgreementMap.entries())
-      .map(([groupId, stats]) => ({
-        groupId,
-        score: stats.count > 0 ? stats.sum / stats.count : 0,
-        count: stats.count,
-      }))
-      .sort((a, b) => b.score - a.score);
-
-    setAgreementScores(agreementArray.length > 0 ? agreementArray : null);
-
-    // Get the selected node's full data
-    const selectedNodeData = graphData.nodeMap.get(selectedNode.id);
+    const mepId = selectedNode.id;
+    const selectedNodeData = graphData.nodeMap.get(mepId);
     if (!selectedNodeData) return;
 
-    const selectedGroup = selectedNodeData.groupId;
-    const selectedCountry = selectedNodeData.country;
+    // Use precomputed agreement scores if available (much faster!)
+    if (graphData.agreementScores && graphData.agreementScores[mepId]) {
+      const precomputedAgreement = graphData.agreementScores[mepId];
+      const agreementArray = Object.entries(precomputedAgreement)
+        .map(([groupId, data]) => ({
+          groupId,
+          score: data.score || 0,
+          count: data.count || 0,
+        }))
+        .filter((item) => item.count > 0)
+        .sort((a, b) => b.score - a.score);
+      setAgreementScores(agreementArray.length > 0 ? agreementArray : null);
+    } else {
+      // Fallback: calculate agreement scores from edges (slower)
+      const edgesToSearch = graphData.allLinks || graphData.links;
+      const connectedEdges = edgesToSearch.filter(
+        (link) => link.source === mepId || link.target === mepId
+      );
 
-    // Calculate group similarity score (average weight with MEPs from same group)
-    const groupEdges = connectedEdges
-      .map((edge) => {
-        const otherNodeId =
-          edge.source === selectedNode.id ? edge.target : edge.source;
+      const groupAgreementMap = new Map();
+      connectedEdges.forEach((edge) => {
+        const otherNodeId = edge.source === mepId ? edge.target : edge.source;
         const otherNode = graphData.nodeMap.get(otherNodeId);
-        return otherNode && otherNode.groupId === selectedGroup
-          ? { weight: edge.weight || 0 }
+
+        if (otherNode && otherNode.groupId) {
+          if (!groupAgreementMap.has(otherNode.groupId)) {
+            groupAgreementMap.set(otherNode.groupId, { sum: 0, count: 0 });
+          }
+          const stats = groupAgreementMap.get(otherNode.groupId);
+          stats.sum += edge.weight || 0;
+          stats.count += 1;
+        }
+      });
+
+      const agreementArray = Array.from(groupAgreementMap.entries())
+        .map(([groupId, stats]) => ({
+          groupId,
+          score: stats.count > 0 ? stats.sum / stats.count : 0,
+          count: stats.count,
+        }))
+        .sort((a, b) => b.score - a.score);
+
+      setAgreementScores(agreementArray.length > 0 ? agreementArray : null);
+    }
+
+    // Get connected edges once (used for closest MEPs and country similarity)
+    const edgesToSearch = graphData.allLinks || graphData.links;
+    const connectedEdges = edgesToSearch.filter(
+      (link) => link.source === mepId || link.target === mepId
+    );
+
+    // Use precomputed similarity scores if available (much faster!)
+    if (graphData.similarityScores && graphData.similarityScores[mepId]) {
+      const similarityData = graphData.similarityScores[mepId];
+      const selectedGroup = selectedNodeData.groupId;
+      const selectedCountry = selectedNodeData.country;
+
+      // Extract group similarity from groupSubjectScores (average across all subjects)
+      if (
+        similarityData.groupSubjectScores &&
+        similarityData.groupSubjectScores.length > 0
+      ) {
+        const groupScores = similarityData.groupSubjectScores;
+        const totalScore = groupScores.reduce(
+          (sum, item) => sum + item.score,
+          0
+        );
+        const avgScore = totalScore / groupScores.length;
+        const totalCount = groupScores.reduce(
+          (sum, item) => sum + item.count,
+          0
+        );
+        setGroupSimilarityScore({
+          score: avgScore,
+          count: totalCount,
+        });
+      } else {
+        setGroupSimilarityScore(null);
+      }
+
+      // For country similarity, calculate from edges (not in precomputed)
+      const countryEdges = connectedEdges
+        .map((edge) => {
+          const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+          const otherNode = graphData.nodeMap.get(otherNodeId);
+          return otherNode && otherNode.country === selectedCountry
+            ? { weight: edge.weight || 0 }
+            : null;
+        })
+        .filter((e) => e !== null);
+
+      const countryScore =
+        countryEdges.length > 0
+          ? countryEdges.reduce((sum, e) => sum + e.weight, 0) /
+            countryEdges.length
+          : 0;
+
+      setCountrySimilarityScore({
+        score: countryScore,
+        count: countryEdges.length,
+      });
+    } else {
+      // Fallback: calculate from edges (slower)
+      const selectedGroup = selectedNodeData.groupId;
+      const selectedCountry = selectedNodeData.country;
+
+      const groupEdges = connectedEdges
+        .map((edge) => {
+          const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+          const otherNode = graphData.nodeMap.get(otherNodeId);
+          return otherNode && otherNode.groupId === selectedGroup
+            ? { weight: edge.weight || 0 }
+            : null;
+        })
+        .filter((e) => e !== null);
+
+      const groupScore =
+        groupEdges.length > 0
+          ? groupEdges.reduce((sum, e) => sum + e.weight, 0) / groupEdges.length
+          : 0;
+
+      const countryEdges = connectedEdges
+        .map((edge) => {
+          const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+          const otherNode = graphData.nodeMap.get(otherNodeId);
+          return otherNode && otherNode.country === selectedCountry
+            ? { weight: edge.weight || 0 }
+            : null;
+        })
+        .filter((e) => e !== null);
+
+      const countryScore =
+        countryEdges.length > 0
+          ? countryEdges.reduce((sum, e) => sum + e.weight, 0) /
+            countryEdges.length
+          : 0;
+
+      setGroupSimilarityScore({
+        score: groupScore,
+        count: groupEdges.length,
+      });
+      setCountrySimilarityScore({
+        score: countryScore,
+        count: countryEdges.length,
+      });
+    }
+
+    // Calculate closest MEPs (using already computed connectedEdges)
+
+    // First, filter to only edges where the node exists in nodeMap, then sort and get top 5
+    const validEdges = connectedEdges
+      .map((edge) => {
+        const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+        const node = graphData.nodeMap.get(otherNodeId);
+        return node
+          ? {
+              weight: edge.weight || 0,
+              otherNodeId,
+              node,
+            }
           : null;
       })
-      .filter((e) => e !== null);
-
-    const groupScore =
-      groupEdges.length > 0
-        ? groupEdges.reduce((sum, e) => sum + e.weight, 0) / groupEdges.length
-        : 0;
-
-    // Calculate country similarity score (average weight with MEPs from same country)
-    const countryEdges = connectedEdges
-      .map((edge) => {
-        const otherNodeId =
-          edge.source === selectedNode.id ? edge.target : edge.source;
-        const otherNode = graphData.nodeMap.get(otherNodeId);
-        return otherNode && otherNode.country === selectedCountry
-          ? { weight: edge.weight || 0 }
-          : null;
-      })
-      .filter((e) => e !== null);
-
-    const countryScore =
-      countryEdges.length > 0
-        ? countryEdges.reduce((sum, e) => sum + e.weight, 0) /
-          countryEdges.length
-        : 0;
-
-    setGroupSimilarityScore({
-      score: groupScore,
-      count: groupEdges.length,
-    });
-    setCountrySimilarityScore({
-      score: countryScore,
-      count: countryEdges.length,
-    });
-
-    // Sort by weight (highest first) and get top 5 for closest MEPs
-    const sortedEdges = connectedEdges
-      .map((edge) => ({
-        edge,
-        weight: edge.weight || 0,
-        otherNodeId:
-          edge.source === selectedNode.id ? edge.target : edge.source,
-      }))
+      .filter((item) => item !== null)
       .sort((a, b) => b.weight - a.weight)
       .slice(0, 5);
 
     // Get the actual node data for the closest MEPs
-    const closestNodes = sortedEdges
-      .map((item) => {
-        const node = graphData.nodeMap.get(item.otherNodeId);
-        return node
-          ? {
-              ...node,
-              edgeWeight: item.weight,
-            }
-          : null;
-      })
-      .filter((node) => node !== null);
+    const closestNodes = validEdges.map((item) => ({
+      ...item.node,
+      edgeWeight: item.weight,
+    }));
 
     setClosestMEPs(closestNodes);
   }, [selectedNode, graphData]);
@@ -658,64 +757,71 @@ export default function VisualizationPage() {
       <div className="visualization-left">
         <div className="visualization-header">
           <div className="visualization-header-title">
-            <h1>European Parliament Network</h1>
-            <div className="visualization-logo">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 200 200"
-                className="network-logo-svg"
-              >
-                {/* EU stars arranged in a circle (12 stars) */}
-                {[...Array(12)].map((_, i) => {
-                  const angle = (i * 30 - 90) * (Math.PI / 180);
-                  const radius = 70;
-                  const cx =
-                    Math.round((100 + radius * Math.cos(angle)) * 100) / 100;
-                  const cy =
-                    Math.round((100 + radius * Math.sin(angle)) * 100) / 100;
-                  const nextAngle = ((i + 1) * 30 - 90) * (Math.PI / 180);
-                  const nextCx =
-                    Math.round((100 + radius * Math.cos(nextAngle)) * 100) /
-                    100;
-                  const nextCy =
-                    Math.round((100 + radius * Math.sin(nextAngle)) * 100) /
-                    100;
-                  return (
-                    <g key={i}>
-                      {/* Network edges connecting stars - only circle edges */}
-                      {i < 12 && (
-                        <line
-                          x1={cx}
-                          y1={cy}
-                          x2={nextCx}
-                          y2={nextCy}
-                          stroke="#FFD700"
-                          strokeWidth="1.5"
-                          opacity="0.4"
-                        />
-                      )}
-                      {/* Star node */}
-                      <circle cx={cx} cy={cy} r="6" fill="#FFD700" />
-                      {/* Star shape */}
-                      <path
-                        d={`M ${cx} ${cy - 4} L ${cx + 1.2} ${cy - 1.2} L ${
-                          cx + 4
-                        } ${cy - 1.2} L ${cx + 1.8} ${cy + 1.2} L ${cx + 2.4} ${
-                          cy + 4
-                        } L ${cx} ${cy + 2.4} L ${cx - 2.4} ${cy + 4} L ${
-                          cx - 1.8
-                        } ${cy + 1.2} L ${cx - 4} ${cy - 1.2} L ${cx - 1.2} ${
-                          cy - 1.2
-                        } Z`}
-                        fill="#FFD700"
-                        opacity="0.9"
-                      />
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
+            <h1>
+              <span className="title-line">European Parliament</span>
+              <span className="title-line title-line-with-logo">
+                Network
+                <div className="visualization-logo">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 200 200"
+                    className="network-logo-svg"
+                  >
+                    {/* EU stars arranged in a circle (12 stars) */}
+                    {[...Array(12)].map((_, i) => {
+                      const angle = (i * 30 - 90) * (Math.PI / 180);
+                      const radius = 70;
+                      const cx =
+                        Math.round((100 + radius * Math.cos(angle)) * 100) /
+                        100;
+                      const cy =
+                        Math.round((100 + radius * Math.sin(angle)) * 100) /
+                        100;
+                      const nextAngle = ((i + 1) * 30 - 90) * (Math.PI / 180);
+                      const nextCx =
+                        Math.round((100 + radius * Math.cos(nextAngle)) * 100) /
+                        100;
+                      const nextCy =
+                        Math.round((100 + radius * Math.sin(nextAngle)) * 100) /
+                        100;
+                      return (
+                        <g key={i}>
+                          {/* Network edges connecting stars - only circle edges */}
+                          {i < 12 && (
+                            <line
+                              x1={cx}
+                              y1={cy}
+                              x2={nextCx}
+                              y2={nextCy}
+                              stroke="#FFD700"
+                              strokeWidth="1.5"
+                              opacity="0.4"
+                            />
+                          )}
+                          {/* Star node */}
+                          <circle cx={cx} cy={cy} r="6" fill="#FFD700" />
+                          {/* Star shape */}
+                          <path
+                            d={`M ${cx} ${cy - 4} L ${cx + 1.2} ${cy - 1.2} L ${
+                              cx + 4
+                            } ${cy - 1.2} L ${cx + 1.8} ${cy + 1.2} L ${
+                              cx + 2.4
+                            } ${cy + 4} L ${cx} ${cy + 2.4} L ${cx - 2.4} ${
+                              cy + 4
+                            } L ${cx - 1.8} ${cy + 1.2} L ${cx - 4} ${
+                              cy - 1.2
+                            } L ${cx - 1.2} ${cy - 1.2} Z`}
+                            fill="#FFD700"
+                            opacity="0.9"
+                          />
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              </span>
+            </h1>
           </div>
           <div className="visualization-header-controls">
             <MandateSelector
@@ -725,7 +831,26 @@ export default function VisualizationPage() {
             <CountrySelector
               currentMandate={mandate}
               currentCountry={selectedCountry}
-              onCountryChange={setSelectedCountry}
+              onCountryChange={(country) => {
+                setSelectedCountry(country);
+                // If selecting a country, clear subject selection
+                if (country && selectedSubject) {
+                  setSelectedSubject(null);
+                }
+              }}
+              disabled={!!selectedSubject} // Disable when subject is selected
+            />
+            <SubjectSelector
+              currentMandate={mandate}
+              currentSubject={selectedSubject}
+              onSubjectChange={(subject) => {
+                setSelectedSubject(subject);
+                // If selecting a subject, clear country selection
+                if (subject && selectedCountry) {
+                  setSelectedCountry(null);
+                }
+              }}
+              disabled={!!selectedCountry} // Disable when country is selected
             />
           </div>
         </div>
@@ -735,7 +860,9 @@ export default function VisualizationPage() {
         {graphData && (
           <div className="visualization-content">
             <NetworkCanvas
-              key={`${mandate}-${selectedCountry || "all"}`}
+              key={`${mandate}-${selectedCountry || "all"}-${
+                selectedSubject || "all"
+              }`}
               graphData={graphData}
               selectedNode={selectedNode}
               onNodeClick={handleNodeClick}
@@ -764,6 +891,7 @@ export default function VisualizationPage() {
           countrySimilarityScore={countrySimilarityScore}
           agreementScores={agreementScores}
           closestMEPs={closestMEPs}
+          selectedSubject={selectedSubject}
           // Only show cohesion if it belongs to the current graphData
           // This prevents showing old cohesion data with new graphData
           intergroupCohesion={

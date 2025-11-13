@@ -378,23 +378,40 @@ export default function NetworkCanvas({
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
 
-    // Calculate initial transform
+    // Calculate initial transform to fit all nodes with margins
     const xExtent = d3.extent(graphData.nodes, (d) => d.x);
     const yExtent = d3.extent(graphData.nodes, (d) => d.y);
-    const fullWidth = xExtent[1] - xExtent[0];
-    const fullHeight = yExtent[1] - yExtent[0];
+    
+    // Handle edge case: if all nodes are at the same position
+    const fullWidth = Math.max(xExtent[1] - xExtent[0], 1);
+    const fullHeight = Math.max(yExtent[1] - yExtent[0], 1);
+    
     const centerX = (xExtent[0] + xExtent[1]) / 2;
     const centerY = (yExtent[0] + yExtent[1]) / 2;
 
-    const scale = Math.min(width / fullWidth, height / fullHeight) * 0.9;
+    // Add margins (10% on each side = 20% total, so use 0.8 multiplier)
+    const margin = 0.1; // 10% margin on each side
+    const availableWidth = width * (1 - 2 * margin);
+    const availableHeight = height * (1 - 2 * margin);
+    
+    // Calculate scale to fit nodes with margins
+    const scaleX = availableWidth / fullWidth;
+    const scaleY = availableHeight / fullHeight;
+    const scale = Math.min(scaleX, scaleY);
+    
+    // Ensure minimum scale to prevent extreme zoom
+    const minScale = 0.01;
+    const maxScale = 10;
+    const clampedScale = Math.max(minScale, Math.min(maxScale, scale));
+    
     const initialTransform = {
-      x: width / 2 - scale * centerX,
-      y: height / 2 - scale * centerY,
-      k: scale,
+      x: width / 2 - clampedScale * centerX,
+      y: height / 2 - clampedScale * centerY,
+      k: clampedScale,
     };
 
     // Store initial scale and transform to prevent zooming out more than this
-    initialScaleRef.current = scale;
+    initialScaleRef.current = clampedScale;
     initialTransformRef.current = { ...initialTransform };
 
     transformRef.current = initialTransform;
@@ -406,7 +423,7 @@ export default function NetworkCanvas({
 
     // Update scale extent with the new initial scale
     if (zoomRef.current) {
-      zoomRef.current.scaleExtent([scale, 10]);
+      zoomRef.current.scaleExtent([clampedScale, 10]);
     }
 
     zoomSelection.call(

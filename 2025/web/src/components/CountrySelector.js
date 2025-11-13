@@ -8,6 +8,7 @@ export default function CountrySelector({
   currentMandate,
   currentCountry,
   onCountryChange,
+  disabled = false, // Disable when subject is selected
 }) {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,9 +91,10 @@ export default function CountrySelector({
       <div className="selector-header">
         <span className="selector-title">Country</span>
         <button
-          className="selector-button"
-          onClick={() => setIsOpen(!isOpen)}
+          className={`selector-button ${disabled ? "disabled" : ""}`}
+          onClick={() => !disabled && setIsOpen(!isOpen)}
           aria-expanded={isOpen}
+          disabled={disabled}
         >
           <span className="selector-value">
             <span className="selector-flag">{displayFlag}</span>
@@ -132,11 +134,15 @@ export default function CountrySelector({
               key={country}
               className={`selector-dropdown-item ${
                 currentCountry === country ? "active" : ""
-              }`}
+              } ${disabled ? "disabled" : ""}`}
               onClick={() => {
-                onCountryChange(country);
-                setIsOpen(false);
+                if (!disabled) {
+                  onCountryChange(country);
+                  setIsOpen(false);
+                }
               }}
+              disabled={disabled}
+              title={disabled ? "Clear subject selection first" : ""}
             >
               <span className="selector-flag">{getCountryFlag(country)}</span>
               {country}

@@ -75,8 +75,8 @@ export function getGroupDisplayName(groupId, mandate = null) {
   }
 
   const displayNames = {
-    "Verts/ALE": "Greens/European Free Alliance",
-    "Greens/EFA": "Greens/European Free Alliance",
+    "Verts/ALE": "Greens/European Free Alliance (Greens/EFA)",
+    "Greens/EFA": "Greens/European Free Alliance (Greens/EFA)",
     "S&D": "Progressive Alliance of Socialists and Democrats (S&D)",
     PSE: "Party of European Socialists (PSE)",
     ALDE: "Alliance of Liberals and Democrats for Europe (ALDE)",
@@ -216,3 +216,36 @@ export function getCountryFlag(countryName) {
   return String.fromCodePoint(...codePoints);
 }
 
+// Helper function to get emoji for a subject
+export function getSubjectEmoji(subjectName) {
+  if (!subjectName) return "";
+
+  const subjectLower = subjectName.toLowerCase().trim();
+
+  // Simple dictionary mapping predefined subjects to emojis
+  const subjectEmojiMap = {
+    "culture and education": "🎭",
+    "transport and tourism": "🚗",
+    "legal affairs": "⚖️",
+    "civil liberties, justice and home affairs": "🏛️",
+    "international trade": "🤝",
+    "constitutional affairs": "📜",
+    "economic and monetary affairs": "💼",
+    others: "📋",
+    fisheries: "🐟",
+    "foreign affairs": "🌐",
+    "budgetary control": "💰",
+    "industry, research and energy": "⚙️",
+    budgets: "💵",
+    petitions: "📝",
+    "internal market and consumer protection": "🛒",
+    "environment, climate and food safety": "🌍",
+    "regional development": "🏘️",
+    "employment and social affairs": "👔",
+    "public health": "🏥",
+    "agriculture and rural development": "🌾",
+    "Women’s Rights and Gender Equality": "♀️",
+  };
+
+  return subjectEmojiMap[subjectLower] || "📋";
+}
