@@ -392,27 +392,40 @@ export default function VisualizationPage() {
       const selectedGroup = selectedNodeData.groupId;
       const selectedCountry = selectedNodeData.country;
 
-      // Extract group similarity from groupSubjectScores (average across all subjects)
-      if (
-        similarityData.groupSubjectScores &&
-        similarityData.groupSubjectScores.length > 0
-      ) {
-        const groupScores = similarityData.groupSubjectScores;
-        const totalScore = groupScores.reduce(
-          (sum, item) => sum + item.score,
-          0
-        );
-        const avgScore = totalScore / groupScores.length;
-        const totalCount = groupScores.reduce(
-          (sum, item) => sum + item.count,
-          0
-        );
-        setGroupSimilarityScore({
-          score: avgScore,
-          count: totalCount,
-        });
+      // Use agreementScores for group similarity to match the bar chart calculation
+      // This ensures consistency and correct count (unique MEPs, not sum across subjects)
+      if (graphData.agreementScores && graphData.agreementScores[mepId]) {
+        const precomputedAgreement = graphData.agreementScores[mepId];
+        if (precomputedAgreement[selectedGroup]) {
+          const groupData = precomputedAgreement[selectedGroup];
+          setGroupSimilarityScore({
+            score: groupData.score || 0,
+            count: groupData.count || 0,
+          });
+        } else {
+          setGroupSimilarityScore(null);
+        }
       } else {
-        setGroupSimilarityScore(null);
+        // Fallback: calculate from edges if agreementScores not available
+        const groupEdges = connectedEdges
+          .map((edge) => {
+            const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+            const otherNode = graphData.nodeMap.get(otherNodeId);
+            return otherNode && otherNode.groupId === selectedGroup
+              ? { weight: edge.weight || 0 }
+              : null;
+          })
+          .filter((e) => e !== null);
+
+        const groupScore =
+          groupEdges.length > 0
+            ? groupEdges.reduce((sum, e) => sum + e.weight, 0) / groupEdges.length
+            : 0;
+
+        setGroupSimilarityScore({
+          score: groupScore,
+          count: groupEdges.length,
+        });
       }
 
       // For country similarity, calculate from edges (not in precomputed)
