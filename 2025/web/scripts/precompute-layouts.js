@@ -321,6 +321,9 @@ async function precomputeLayoutForCountry(
       country: node.Country,
       groupId: node.GroupID,
       color: getGroupColor(node.GroupID),
+      photoURL: node.PhotoURL || null,
+      partyNames: node.PartyNames || [],
+      groups: node.Groups || [],
     }));
 
     const nodes = allNodes.filter((node) => node.country === country);
@@ -482,6 +485,17 @@ async function precomputeLayoutForCountry(
     const agreementScores = {};
     const allGroups = new Set(nodes.map((n) => n.groupId).filter(Boolean));
 
+    // Create a map of all edges (not just filtered ones) for agreement calculation
+    const allEdgesMap = new Map();
+    allEdges.forEach((edge) => {
+      if (nodeIdSet.has(edge.source) && nodeIdSet.has(edge.target)) {
+        const key1 = `${edge.source}-${edge.target}`;
+        const key2 = `${edge.target}-${edge.source}`;
+        allEdgesMap.set(key1, edge.weight);
+        allEdgesMap.set(key2, edge.weight);
+      }
+    });
+
     nodes.forEach((node) => {
       const mepId = node.id;
       const mepGroupScores = {};
@@ -491,13 +505,14 @@ async function precomputeLayoutForCountry(
         const groupNodes = nodes.filter((n) => n.groupId === groupId);
         const groupNodeIds = new Set(groupNodes.map((n) => n.id));
 
-        // Find all edges between this MEP and MEPs from this group
+        // Find all edges between this MEP and MEPs from this group (using allEdges, not filtered graph)
         const groupEdges = [];
-        graph.forEachNeighbor(mepId, (neighborId) => {
-          if (groupNodeIds.has(neighborId)) {
-            const edge = graph.getEdgeAttributes(mepId, neighborId);
-            if (edge && edge.weight !== undefined) {
-              groupEdges.push(edge.weight);
+        groupNodeIds.forEach((neighborId) => {
+          if (neighborId !== mepId) {
+            const edgeKey = `${mepId}-${neighborId}`;
+            const weight = allEdgesMap.get(edgeKey);
+            if (weight !== undefined && weight > 0) {
+              groupEdges.push(weight);
             }
           }
         });
@@ -752,6 +767,15 @@ async function precomputeLayoutForSubject(
     const agreementScores = {};
     const allGroups = new Set(nodes.map((n) => n.groupId).filter(Boolean));
 
+    // Create a map of all edges (not just filtered ones) for agreement calculation
+    const allEdgesMap = new Map();
+    allEdges.forEach((edge) => {
+      const key1 = `${edge.source}-${edge.target}`;
+      const key2 = `${edge.target}-${edge.source}`;
+      allEdgesMap.set(key1, edge.weight);
+      allEdgesMap.set(key2, edge.weight);
+    });
+
     nodes.forEach((node) => {
       const mepId = node.id;
       const mepGroupScores = {};
@@ -760,12 +784,14 @@ async function precomputeLayoutForSubject(
         const groupNodes = nodes.filter((n) => n.groupId === groupId);
         const groupNodeIds = new Set(groupNodes.map((n) => n.id));
 
+        // Find all edges between this MEP and MEPs from this group (using allEdges, not filtered graph)
         const groupEdges = [];
-        graph.forEachNeighbor(mepId, (neighborId) => {
-          if (groupNodeIds.has(neighborId)) {
-            const edge = graph.getEdgeAttributes(mepId, neighborId);
-            if (edge && edge.weight !== undefined) {
-              groupEdges.push(edge.weight);
+        groupNodeIds.forEach((neighborId) => {
+          if (neighborId !== mepId) {
+            const edgeKey = `${mepId}-${neighborId}`;
+            const weight = allEdgesMap.get(edgeKey);
+            if (weight !== undefined && weight > 0) {
+              groupEdges.push(weight);
             }
           }
         });
@@ -867,6 +893,9 @@ async function precomputeLayoutForCountryAndSubject(
       country: node.Country,
       groupId: node.GroupID,
       color: getGroupColor(node.GroupID),
+      photoURL: node.PhotoURL || null,
+      partyNames: node.PartyNames || [],
+      groups: node.Groups || [],
     }));
 
     const nodes = allNodes.filter((node) => node.country === country);
@@ -1030,6 +1059,17 @@ async function precomputeLayoutForCountryAndSubject(
     const agreementScores = {};
     const allGroups = new Set(nodes.map((n) => n.groupId).filter(Boolean));
 
+    // Create a map of all edges (not just filtered ones) for agreement calculation
+    const allEdgesMap = new Map();
+    allEdges.forEach((edge) => {
+      if (nodeIdSet.has(edge.source) && nodeIdSet.has(edge.target)) {
+        const key1 = `${edge.source}-${edge.target}`;
+        const key2 = `${edge.target}-${edge.source}`;
+        allEdgesMap.set(key1, edge.weight);
+        allEdgesMap.set(key2, edge.weight);
+      }
+    });
+
     nodes.forEach((node) => {
       const mepId = node.id;
       const mepGroupScores = {};
@@ -1038,12 +1078,14 @@ async function precomputeLayoutForCountryAndSubject(
         const groupNodes = nodes.filter((n) => n.groupId === groupId);
         const groupNodeIds = new Set(groupNodes.map((n) => n.id));
 
+        // Find all edges between this MEP and MEPs from this group (using allEdges, not filtered graph)
         const groupEdges = [];
-        graph.forEachNeighbor(mepId, (neighborId) => {
-          if (groupNodeIds.has(neighborId)) {
-            const edge = graph.getEdgeAttributes(mepId, neighborId);
-            if (edge && edge.weight !== undefined) {
-              groupEdges.push(edge.weight);
+        groupNodeIds.forEach((neighborId) => {
+          if (neighborId !== mepId) {
+            const edgeKey = `${mepId}-${neighborId}`;
+            const weight = allEdgesMap.get(edgeKey);
+            if (weight !== undefined && weight > 0) {
+              groupEdges.push(weight);
             }
           }
         });
@@ -1116,6 +1158,25 @@ async function precomputeLayoutForCountryAndSubject(
     );
     return null;
   }
+}
+
+/**
+ * Save MEP info to a separate file (one per mandate)
+ */
+async function saveMEPInfo(mandate, data) {
+  const mepInfoPath = path.join(OUTPUT_DIR, `mep_info_${mandate}.json`);
+
+  const mepInfo = {};
+  data.nodes.forEach((node) => {
+    mepInfo[node.Id] = {
+      photoURL: node.PhotoURL || null,
+      partyNames: node.PartyNames || [],
+      groups: node.Groups || [],
+    };
+  });
+
+  await fsPromises.writeFile(mepInfoPath, JSON.stringify(mepInfo));
+  console.log(`  ✓ Saved MEP info to ${mepInfoPath}`);
 }
 
 async function precomputeLayout(
@@ -1300,6 +1361,15 @@ async function precomputeLayout(
     const agreementScores = {};
     const allGroups = new Set(nodes.map((n) => n.groupId).filter(Boolean));
 
+    // Create a map of all edges (not just filtered ones) for agreement calculation
+    const allEdgesMap = new Map();
+    allEdges.forEach((edge) => {
+      const key1 = `${edge.source}-${edge.target}`;
+      const key2 = `${edge.target}-${edge.source}`;
+      allEdgesMap.set(key1, edge.weight);
+      allEdgesMap.set(key2, edge.weight);
+    });
+
     nodes.forEach((node) => {
       const mepId = node.id;
       const mepGroupScores = {};
@@ -1309,13 +1379,14 @@ async function precomputeLayout(
         const groupNodes = nodes.filter((n) => n.groupId === groupId);
         const groupNodeIds = new Set(groupNodes.map((n) => n.id));
 
-        // Find all edges between this MEP and MEPs from this group
+        // Find all edges between this MEP and MEPs from this group (using allEdges, not filtered graph)
         const groupEdges = [];
-        graph.forEachNeighbor(mepId, (neighborId) => {
-          if (groupNodeIds.has(neighborId)) {
-            const edge = graph.getEdgeAttributes(mepId, neighborId);
-            if (edge && edge.weight !== undefined) {
-              groupEdges.push(edge.weight);
+        groupNodeIds.forEach((neighborId) => {
+          if (neighborId !== mepId) {
+            const edgeKey = `${mepId}-${neighborId}`;
+            const weight = allEdgesMap.get(edgeKey);
+            if (weight !== undefined && weight > 0) {
+              groupEdges.push(weight);
             }
           }
         });
@@ -1427,6 +1498,9 @@ async function main() {
         console.log(`\nLoading data for mandate ${mandate}...`);
         const dataText = await fsPromises.readFile(dataPath, "utf-8");
         const data = JSON.parse(dataText);
+
+        // Save MEP info once per mandate (before any precomputation)
+        await saveMEPInfo(mandate, data);
 
         // Count voting sessions once per mandate (reused for all variations)
         console.log(`Counting voting sessions for mandate ${mandate}...`);

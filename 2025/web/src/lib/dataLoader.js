@@ -7,6 +7,25 @@ const dataCache = {};
 const votingSessionsCache = {};
 
 /**
+ * Load MEP info for a mandate
+ * @param {number} mandate - Mandate number
+ * @returns {Promise<Object|null>} MEP info object keyed by MEP ID or null if not found
+ */
+async function loadMEPInfo(mandate) {
+  try {
+    const url = `/data/precomputed/mep_info_${mandate}.json`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      return null;
+    }
+    return await response.json();
+  } catch (error) {
+    console.warn(`MEP info not found for mandate ${mandate}:`, error);
+    return null;
+  }
+}
+
+/**
  * Load precomputed layout data for a mandate
  * @param {number} mandate - Mandate number
  * @param {string|null} country - Country name (optional, for country-filtered network)
@@ -33,7 +52,26 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
     if (!response.ok) {
       return null;
     }
-    return await response.json();
+    const precomputed = await response.json();
+    
+    // Load and merge MEP info
+    const mepInfo = await loadMEPInfo(mandate);
+    if (mepInfo && precomputed.nodes) {
+      precomputed.nodes = precomputed.nodes.map((node) => {
+        const info = mepInfo[node.id];
+        if (info) {
+          return {
+            ...node,
+            photoURL: info.photoURL,
+            partyNames: info.partyNames,
+            groups: info.groups,
+          };
+        }
+        return node;
+      });
+    }
+    
+    return precomputed;
   } catch (error) {
     console.warn(
       `Precomputed layout not found for mandate ${mandate}${
