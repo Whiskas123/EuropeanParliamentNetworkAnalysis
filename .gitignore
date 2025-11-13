@@ -142,4 +142,10 @@ oldstuff/webpage/fullhemicicle.svg
 2025/data/final_enriched/
 oldstuff/webpage/fullhemicicle.svg
 *.gephi
-.DS_Store
+*.DS_Store
+
+# Enriched data files (too large for git)
+2025/web/public/data/enriched_data/
+
+# Mandate data directories (too large for git)
+2025/web/public/data/mandate_*/
