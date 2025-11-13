@@ -1,0 +1,533 @@
+{
+  "mandate": 6,
+  "country": "Denmark",
+  "subject": "Agriculture and Rural Development",
+  "nodes": [
+    {
+      "id": "M28156",
+      "label": "Dan JØRGENSEN",
+      "country": "Denmark",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 317.498467504586,
+      "y": 454.59473641595855
+    },
+    {
+      "id": "M28153",
+      "label": "Britta THOMSEN",
+      "country": "Denmark",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 296.6492448100715,
+      "y": 473.75062961701974
+    },
+    {
+      "id": "M4442",
+      "label": "Niels BUSK",
+      "country": "Denmark",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 295.59188477177696,
+      "y": 426.95984292919826
+    },
+    {
+      "id": "M28149",
+      "label": "Poul Nyrup RASMUSSEN",
+      "country": "Denmark",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 287.6290535430301,
+      "y": 460.5305314215241
+    },
+    {
+      "id": "M1926",
+      "label": "Karin RIIS-JØRGENSEN",
+      "country": "Denmark",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 307.6377310010257,
+      "y": 431.02117521418063
+    },
+    {
+      "id": "M1275",
+      "label": "Jens-Peter BONDE",
+      "country": "Denmark",
+      "groupId": "IND/DEM",
+      "color": "#000000",
+      "x": 870.8300364074216,
+      "y": 371.3216077462017
+    },
+    {
+      "id": "M4439",
+      "label": "Mogens CAMRE",
+      "country": "Denmark",
+      "groupId": "UEN",
+      "color": "#FFA500",
+      "x": 286.326252843332,
+      "y": 413.91974645584196
+    },
+    {
+      "id": "M4440",
+      "label": "Anne E. JENSEN",
+      "country": "Denmark",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 286.14251904660574,
+      "y": 437.74295223417255
+    },
+    {
+      "id": "M37312",
+      "label": "Christel SCHALDEMOSE",
+      "country": "Denmark",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 312.521861526532,
+      "y": 479.8223085011451
+    },
+    {
+      "id": "M28154",
+      "label": "Ole CHRISTENSEN",
+      "country": "Denmark",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 308.374709101368,
+      "y": 461.86406845268374
+    },
+    {
+      "id": "M28161",
+      "label": "Margrete AUKEN",
+      "country": "Denmark",
+      "groupId": "Verts/ALE",
+      "color": "#009900",
+      "x": 301.58534881925044,
+      "y": 441.1527598987926
+    }
+  ],
+  "edges": [
+    {
+      "source": "M4440",
+      "target": "M28154",
+      "weight": 0.6234999999999999
+    },
+    {
+      "source": "M4440",
+      "target": "M4442",
+      "weight": 0.9955
+    },
+    {
+      "source": "M4440",
+      "target": "M1926",
+      "weight": 0.992
+    },
+    {
+      "source": "M4440",
+      "target": "M28161",
+      "weight": 0.63
+    },
+    {
+      "source": "M4440",
+      "target": "M28149",
+      "weight": 0.6415
+    },
+    {
+      "source": "M4440",
+      "target": "M28153",
+      "weight": 0.627
+    },
+    {
+      "source": "M4440",
+      "target": "M4439",
+      "weight": 0.665
+    },
+    {
+      "source": "M4440",
+      "target": "M28156",
+      "weight": 0.638
+    },
+    {
+      "source": "M28154",
+      "target": "M4442",
+      "weight": 0.6315
+    },
+    {
+      "source": "M28154",
+      "target": "M1926",
+      "weight": 0.6015
+    },
+    {
+      "source": "M28154",
+      "target": "M28161",
+      "weight": 0.758
+    },
+    {
+      "source": "M28154",
+      "target": "M28149",
+      "weight": 0.8445
+    },
+    {
+      "source": "M28154",
+      "target": "M28153",
+      "weight": 0.9015
+    },
+    {
+      "source": "M28154",
+      "target": "M37312",
+      "weight": 0.98
+    },
+    {
+      "source": "M28154",
+      "target": "M28156",
+      "weight": 0.9455
+    },
+    {
+      "source": "M4442",
+      "target": "M1926",
+      "weight": 0.9864999999999999
+    },
+    {
+      "source": "M4442",
+      "target": "M28161",
+      "weight": 0.622
+    },
+    {
+      "source": "M4442",
+      "target": "M28149",
+      "weight": 0.603
+    },
+    {
+      "source": "M4442",
+      "target": "M4439",
+      "weight": 0.677
+    },
+    {
+      "source": "M4442",
+      "target": "M28156",
+      "weight": 0.627
+    },
+    {
+      "source": "M1926",
+      "target": "M28161",
+      "weight": 0.6225
+    },
+    {
+      "source": "M1926",
+      "target": "M28149",
+      "weight": 0.622
+    },
+    {
+      "source": "M1926",
+      "target": "M28153",
+      "weight": 0.604
+    },
+    {
+      "source": "M1926",
+      "target": "M4439",
+      "weight": 0.679
+    },
+    {
+      "source": "M1926",
+      "target": "M28156",
+      "weight": 0.619
+    },
+    {
+      "source": "M28161",
+      "target": "M28149",
+      "weight": 0.7035
+    },
+    {
+      "source": "M28161",
+      "target": "M28153",
+      "weight": 0.728
+    },
+    {
+      "source": "M28161",
+      "target": "M4439",
+      "weight": 0.6505
+    },
+    {
+      "source": "M28161",
+      "target": "M37312",
+      "weight": 0.769
+    },
+    {
+      "source": "M28161",
+      "target": "M28156",
+      "weight": 0.778
+    },
+    {
+      "source": "M28149",
+      "target": "M28153",
+      "weight": 0.8395
+    },
+    {
+      "source": "M28149",
+      "target": "M37312",
+      "weight": 0.857
+    },
+    {
+      "source": "M28149",
+      "target": "M28156",
+      "weight": 0.8485
+    },
+    {
+      "source": "M28153",
+      "target": "M37312",
+      "weight": 0.9279999999999999
+    },
+    {
+      "source": "M28153",
+      "target": "M28156",
+      "weight": 0.8935
+    },
+    {
+      "source": "M37312",
+      "target": "M28156",
+      "weight": 0.9510000000000001
+    }
+  ],
+  "agreementScores": {
+    "M28156": {
+      "PSE": {
+        "score": 0.909625,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.628,
+        "count": 3
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.778,
+        "count": 1
+      }
+    },
+    "M28153": {
+      "PSE": {
+        "score": 0.890625,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.6154999999999999,
+        "count": 2
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.728,
+        "count": 1
+      }
+    },
+    "M4442": {
+      "PSE": {
+        "score": 0.6204999999999999,
+        "count": 3
+      },
+      "ALDE": {
+        "score": 0.991,
+        "count": 2
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0.677,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.622,
+        "count": 1
+      }
+    },
+    "M28149": {
+      "PSE": {
+        "score": 0.8473750000000001,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.6221666666666666,
+        "count": 3
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.7035,
+        "count": 1
+      }
+    },
+    "M1926": {
+      "PSE": {
+        "score": 0.6116250000000001,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.98925,
+        "count": 2
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0.679,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.6225,
+        "count": 1
+      }
+    },
+    "M1275": {
+      "PSE": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M4439": {
+      "PSE": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.6736666666666666,
+        "count": 3
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.6505,
+        "count": 1
+      }
+    },
+    "M4440": {
+      "PSE": {
+        "score": 0.6325,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.99375,
+        "count": 2
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0.665,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0.63,
+        "count": 1
+      }
+    },
+    "M37312": {
+      "PSE": {
+        "score": 0.9289999999999999,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.769,
+        "count": 1
+      }
+    },
+    "M28154": {
+      "PSE": {
+        "score": 0.917875,
+        "count": 4
+      },
+      "ALDE": {
+        "score": 0.6188333333333333,
+        "count": 3
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0,
+        "count": 0
+      },
+      "Verts/ALE": {
+        "score": 0.758,
+        "count": 1
+      }
+    },
+    "M28161": {
+      "PSE": {
+        "score": 0.7473,
+        "count": 5
+      },
+      "ALDE": {
+        "score": 0.6248333333333334,
+        "count": 3
+      },
+      "IND/DEM": {
+        "score": 0,
+        "count": 0
+      },
+      "UEN": {
+        "score": 0.6505,
+        "count": 1
+      },
+      "Verts/ALE": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-13T00:48:05.694Z"
+}

@@ -1,0 +1,180 @@
+{
+  "mandate": 6,
+  "country": "Cyprus",
+  "subject": "Agriculture and Rural Development",
+  "nodes": [
+    {
+      "id": "M28514",
+      "label": "Kyriacos TRIANTAPHYLLIDES",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 276.8541289365903,
+      "y": 211.18992280561895
+    },
+    {
+      "id": "M23881",
+      "label": "Marios MATSAKIS",
+      "country": "Cyprus",
+      "groupId": "ALDE",
+      "color": "#FFD700",
+      "x": 307.28888620215514,
+      "y": 205.5940701247418
+    },
+    {
+      "id": "M28516",
+      "label": "Yiannakis MATSIS",
+      "country": "Cyprus",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 684.9788742686869,
+      "y": 227.27450418280625
+    },
+    {
+      "id": "M28469",
+      "label": "Adamos ADAMOU",
+      "country": "Cyprus",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 278.5251360050097,
+      "y": 218.99554268917277
+    },
+    {
+      "id": "M23730",
+      "label": "Panayiotis DEMETRIOU",
+      "country": "Cyprus",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 307.4272486254728,
+      "y": 214.64427813491352
+    },
+    {
+      "id": "M28474",
+      "label": "Ioannis KASOULIDES",
+      "country": "Cyprus",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 290.5407467140382,
+      "y": 212.85807854712175
+    }
+  ],
+  "edges": [
+    {
+      "source": "M23881",
+      "target": "M23730",
+      "weight": 0.6865
+    },
+    {
+      "source": "M23881",
+      "target": "M28474",
+      "weight": 0.671
+    },
+    {
+      "source": "M23730",
+      "target": "M28474",
+      "weight": 0.9099999999999999
+    },
+    {
+      "source": "M28514",
+      "target": "M28469",
+      "weight": 0.9935
+    },
+    {
+      "source": "M28514",
+      "target": "M28474",
+      "weight": 0.6095
+    },
+    {
+      "source": "M28469",
+      "target": "M28474",
+      "weight": 0.651
+    }
+  ],
+  "agreementScores": {
+    "M28514": {
+      "GUE/NGL": {
+        "score": 0.9935,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE-DE": {
+        "score": 0.6095,
+        "count": 1
+      }
+    },
+    "M23881": {
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE-DE": {
+        "score": 0.67875,
+        "count": 2
+      }
+    },
+    "M28516": {
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE-DE": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28469": {
+      "GUE/NGL": {
+        "score": 0.9935,
+        "count": 1
+      },
+      "ALDE": {
+        "score": 0,
+        "count": 0
+      },
+      "PPE-DE": {
+        "score": 0.651,
+        "count": 1
+      }
+    },
+    "M23730": {
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      },
+      "ALDE": {
+        "score": 0.6865,
+        "count": 1
+      },
+      "PPE-DE": {
+        "score": 0.9099999999999999,
+        "count": 1
+      }
+    },
+    "M28474": {
+      "GUE/NGL": {
+        "score": 0.63025,
+        "count": 2
+      },
+      "ALDE": {
+        "score": 0.671,
+        "count": 1
+      },
+      "PPE-DE": {
+        "score": 0.9099999999999999,
+        "count": 1
+      }
+    }
+  },
+  "computedAt": "2025-11-13T00:47:55.383Z"
+}

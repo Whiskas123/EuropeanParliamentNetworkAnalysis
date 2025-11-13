@@ -1,0 +1,72 @@
+{
+  "mandate": 6,
+  "country": "Bulgaria",
+  "subject": "Agriculture and Rural Development",
+  "nodes": [
+    {
+      "id": "M34231",
+      "label": "Evgeni KIRILOV",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 508.95610555013025,
+      "y": 540.2931111653645
+    },
+    {
+      "id": "M37524",
+      "label": "Marusya LYUBCHEVA",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 512.685292561849,
+      "y": 532.4124348958333
+    },
+    {
+      "id": "M34229",
+      "label": "Atanas PAPARIZOV",
+      "country": "Bulgaria",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 504.95625813802087,
+      "y": 534.303243001302
+    }
+  ],
+  "edges": [
+    {
+      "source": "M34231",
+      "target": "M37524",
+      "weight": 0.8665
+    },
+    {
+      "source": "M34231",
+      "target": "M34229",
+      "weight": 0.889
+    },
+    {
+      "source": "M37524",
+      "target": "M34229",
+      "weight": 0.9005000000000001
+    }
+  ],
+  "agreementScores": {
+    "M34231": {
+      "PSE": {
+        "score": 0.87775,
+        "count": 2
+      }
+    },
+    "M37524": {
+      "PSE": {
+        "score": 0.8835000000000001,
+        "count": 2
+      }
+    },
+    "M34229": {
+      "PSE": {
+        "score": 0.89475,
+        "count": 2
+      }
+    }
+  },
+  "computedAt": "2025-11-13T00:47:52.045Z"
+}

@@ -1,0 +1,722 @@
+{
+  "mandate": 6,
+  "country": "Greece",
+  "subject": "Agriculture and Rural Development",
+  "nodes": [
+    {
+      "id": "M4482",
+      "label": "Rodi KRATSA-TSAGAROPOULOU",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 485.1981808490383,
+      "y": 446.23334367837066
+    },
+    {
+      "id": "M28572",
+      "label": "Georgios PAPASTAMKOS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 471.93006619327133,
+      "y": 446.1371295698341
+    },
+    {
+      "id": "M28576",
+      "label": "Stavros LAMBRINIDIS",
+      "country": "Greece",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 432.0668689779904,
+      "y": 431.85092601053645
+    },
+    {
+      "id": "M28575",
+      "label": "Maria MATSOUKA",
+      "country": "Greece",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 787.9872228883778,
+      "y": 896.972657220693
+    },
+    {
+      "id": "M28574",
+      "label": "Manolis MAVROMMATIS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 468.07842199585275,
+      "y": 477.48905171432284
+    },
+    {
+      "id": "M28571",
+      "label": "Marie PANAYOTOPOULOS-CASSIOTOU",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 480.7091574940482,
+      "y": 464.61763169951263
+    },
+    {
+      "id": "M2182",
+      "label": "Antonios TRAKATELLIS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 453.7950457950812,
+      "y": 437.8973741295448
+    },
+    {
+      "id": "M28581",
+      "label": "Evangelia TZAMPAZI",
+      "country": "Greece",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": -100.93816585965067,
+      "y": -61.153483189724795
+    },
+    {
+      "id": "M28573",
+      "label": "Nikolaos VAKALIS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 431.72056672156407,
+      "y": 464.366586727953
+    },
+    {
+      "id": "M28547",
+      "label": "Ioannis VARVITSIOTIS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 446.81686100971666,
+      "y": 477.1870956735982
+    },
+    {
+      "id": "M28578",
+      "label": "Stavros ARNAOUTAKIS",
+      "country": "Greece",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 472.7831751851368,
+      "y": 426.77484538050487
+    },
+    {
+      "id": "M28579",
+      "label": "Katerina BATZELI",
+      "country": "Greece",
+      "groupId": "PSE",
+      "color": "#FF0000",
+      "x": 451.55383800559093,
+      "y": 422.30829139237153
+    },
+    {
+      "id": "M2185",
+      "label": "Giorgos DIMITRAKOPOULOS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 457.6718731799749,
+      "y": 464.12342925677245
+    },
+    {
+      "id": "M28570",
+      "label": "Ioannis GKLAVAKIS",
+      "country": "Greece",
+      "groupId": "PPE-DE",
+      "color": "#3399CC",
+      "x": 439.41448229535973,
+      "y": 453.6000457641927
+    },
+    {
+      "id": "M28586",
+      "label": "Dimitrios PAPADIMOULIS",
+      "country": "Greece",
+      "groupId": "GUE/NGL",
+      "color": "#800080",
+      "x": 411.15319735238774,
+      "y": 446.3146375020345
+    }
+  ],
+  "edges": [
+    {
+      "source": "M28574",
+      "target": "M28572",
+      "weight": 0.9410000000000001
+    },
+    {
+      "source": "M28574",
+      "target": "M2182",
+      "weight": 0.9704999999999999
+    },
+    {
+      "source": "M28574",
+      "target": "M28571",
+      "weight": 0.966
+    },
+    {
+      "source": "M28574",
+      "target": "M28576",
+      "weight": 0.773
+    },
+    {
+      "source": "M28574",
+      "target": "M28570",
+      "weight": 0.98
+    },
+    {
+      "source": "M28574",
+      "target": "M28573",
+      "weight": 0.9755
+    },
+    {
+      "source": "M28574",
+      "target": "M28578",
+      "weight": 0.7595000000000001
+    },
+    {
+      "source": "M28574",
+      "target": "M28547",
+      "weight": 0.9650000000000001
+    },
+    {
+      "source": "M28574",
+      "target": "M2185",
+      "weight": 0.942
+    },
+    {
+      "source": "M28574",
+      "target": "M28579",
+      "weight": 0.7869999999999999
+    },
+    {
+      "source": "M28574",
+      "target": "M4482",
+      "weight": 0.9764999999999999
+    },
+    {
+      "source": "M28572",
+      "target": "M2182",
+      "weight": 0.9219999999999999
+    },
+    {
+      "source": "M28572",
+      "target": "M28571",
+      "weight": 0.9724999999999999
+    },
+    {
+      "source": "M28572",
+      "target": "M28576",
+      "weight": 0.8025
+    },
+    {
+      "source": "M28572",
+      "target": "M28570",
+      "weight": 0.9530000000000001
+    },
+    {
+      "source": "M28572",
+      "target": "M28573",
+      "weight": 0.97
+    },
+    {
+      "source": "M28572",
+      "target": "M28578",
+      "weight": 0.7985
+    },
+    {
+      "source": "M28572",
+      "target": "M28547",
+      "weight": 0.9405
+    },
+    {
+      "source": "M28572",
+      "target": "M2185",
+      "weight": 0.9095
+    },
+    {
+      "source": "M28572",
+      "target": "M28579",
+      "weight": 0.8300000000000001
+    },
+    {
+      "source": "M28572",
+      "target": "M4482",
+      "weight": 0.9605
+    },
+    {
+      "source": "M2182",
+      "target": "M28571",
+      "weight": 0.9455
+    },
+    {
+      "source": "M2182",
+      "target": "M28576",
+      "weight": 0.7815
+    },
+    {
+      "source": "M2182",
+      "target": "M28570",
+      "weight": 0.9755
+    },
+    {
+      "source": "M2182",
+      "target": "M28573",
+      "weight": 0.958
+    },
+    {
+      "source": "M2182",
+      "target": "M28578",
+      "weight": 0.7435
+    },
+    {
+      "source": "M2182",
+      "target": "M28586",
+      "weight": 0.608
+    },
+    {
+      "source": "M2182",
+      "target": "M28547",
+      "weight": 0.9635
+    },
+    {
+      "source": "M2182",
+      "target": "M2185",
+      "weight": 0.931
+    },
+    {
+      "source": "M2182",
+      "target": "M28579",
+      "weight": 0.7875
+    },
+    {
+      "source": "M2182",
+      "target": "M4482",
+      "weight": 0.9615
+    },
+    {
+      "source": "M28571",
+      "target": "M28576",
+      "weight": 0.782
+    },
+    {
+      "source": "M28571",
+      "target": "M28570",
+      "weight": 0.97
+    },
+    {
+      "source": "M28571",
+      "target": "M28573",
+      "weight": 0.9695
+    },
+    {
+      "source": "M28571",
+      "target": "M28578",
+      "weight": 0.769
+    },
+    {
+      "source": "M28571",
+      "target": "M28547",
+      "weight": 0.9530000000000001
+    },
+    {
+      "source": "M28571",
+      "target": "M2185",
+      "weight": 0.9239999999999999
+    },
+    {
+      "source": "M28571",
+      "target": "M28579",
+      "weight": 0.798
+    },
+    {
+      "source": "M28571",
+      "target": "M4482",
+      "weight": 0.966
+    },
+    {
+      "source": "M28576",
+      "target": "M28570",
+      "weight": 0.819
+    },
+    {
+      "source": "M28576",
+      "target": "M28573",
+      "weight": 0.8165
+    },
+    {
+      "source": "M28576",
+      "target": "M28578",
+      "weight": 0.986
+    },
+    {
+      "source": "M28576",
+      "target": "M28586",
+      "weight": 0.645
+    },
+    {
+      "source": "M28576",
+      "target": "M28547",
+      "weight": 0.779
+    },
+    {
+      "source": "M28576",
+      "target": "M2185",
+      "weight": 0.8
+    },
+    {
+      "source": "M28576",
+      "target": "M28579",
+      "weight": 0.962
+    },
+    {
+      "source": "M28576",
+      "target": "M4482",
+      "weight": 0.8009999999999999
+    },
+    {
+      "source": "M28570",
+      "target": "M28573",
+      "weight": 0.978
+    },
+    {
+      "source": "M28570",
+      "target": "M28578",
+      "weight": 0.7909999999999999
+    },
+    {
+      "source": "M28570",
+      "target": "M28586",
+      "weight": 0.6115
+    },
+    {
+      "source": "M28570",
+      "target": "M28547",
+      "weight": 0.9755
+    },
+    {
+      "source": "M28570",
+      "target": "M2185",
+      "weight": 0.9475
+    },
+    {
+      "source": "M28570",
+      "target": "M28579",
+      "weight": 0.8085
+    },
+    {
+      "source": "M28570",
+      "target": "M4482",
+      "weight": 0.9944999999999999
+    },
+    {
+      "source": "M28573",
+      "target": "M28578",
+      "weight": 0.781
+    },
+    {
+      "source": "M28573",
+      "target": "M28586",
+      "weight": 0.6165
+    },
+    {
+      "source": "M28573",
+      "target": "M28547",
+      "weight": 0.98
+    },
+    {
+      "source": "M28573",
+      "target": "M2185",
+      "weight": 0.9365
+    },
+    {
+      "source": "M28573",
+      "target": "M28579",
+      "weight": 0.8245
+    },
+    {
+      "source": "M28573",
+      "target": "M4482",
+      "weight": 0.9944999999999999
+    },
+    {
+      "source": "M28578",
+      "target": "M28547",
+      "weight": 0.782
+    },
+    {
+      "source": "M28578",
+      "target": "M2185",
+      "weight": 0.804
+    },
+    {
+      "source": "M28578",
+      "target": "M28579",
+      "weight": 0.974
+    },
+    {
+      "source": "M28578",
+      "target": "M4482",
+      "weight": 0.774
+    },
+    {
+      "source": "M28586",
+      "target": "M28547",
+      "weight": 0.612
+    },
+    {
+      "source": "M28586",
+      "target": "M2185",
+      "weight": 0.619
+    },
+    {
+      "source": "M28586",
+      "target": "M28579",
+      "weight": 0.615
+    },
+    {
+      "source": "M28547",
+      "target": "M2185",
+      "weight": 0.9515
+    },
+    {
+      "source": "M28547",
+      "target": "M28579",
+      "weight": 0.7869999999999999
+    },
+    {
+      "source": "M28547",
+      "target": "M4482",
+      "weight": 0.9715
+    },
+    {
+      "source": "M2185",
+      "target": "M28579",
+      "weight": 0.8085
+    },
+    {
+      "source": "M2185",
+      "target": "M4482",
+      "weight": 0.931
+    },
+    {
+      "source": "M28579",
+      "target": "M4482",
+      "weight": 0.8280000000000001
+    }
+  ],
+  "agreementScores": {
+    "M4482": {
+      "PPE-DE": {
+        "score": 0.9695,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.801,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28572": {
+      "PPE-DE": {
+        "score": 0.9461249999999999,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.8103333333333333,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28576": {
+      "PPE-DE": {
+        "score": 0.7949444444444445,
+        "count": 9
+      },
+      "PSE": {
+        "score": 0.974,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.645,
+        "count": 1
+      }
+    },
+    "M28575": {
+      "PPE-DE": {
+        "score": 0,
+        "count": 0
+      },
+      "PSE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28574": {
+      "PPE-DE": {
+        "score": 0.9645625,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.7731666666666667,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28571": {
+      "PPE-DE": {
+        "score": 0.9583125,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.783,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M2182": {
+      "PPE-DE": {
+        "score": 0.9534375,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.7708333333333334,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0.608,
+        "count": 1
+      }
+    },
+    "M28581": {
+      "PPE-DE": {
+        "score": 0,
+        "count": 0
+      },
+      "PSE": {
+        "score": 0,
+        "count": 0
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28573": {
+      "PPE-DE": {
+        "score": 0.9702499999999998,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.8073333333333333,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0.6165,
+        "count": 1
+      }
+    },
+    "M28547": {
+      "PPE-DE": {
+        "score": 0.9625625,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.7826666666666666,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0.612,
+        "count": 1
+      }
+    },
+    "M28578": {
+      "PPE-DE": {
+        "score": 0.7780555555555556,
+        "count": 9
+      },
+      "PSE": {
+        "score": 0.98,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    },
+    "M28579": {
+      "PPE-DE": {
+        "score": 0.8065555555555555,
+        "count": 9
+      },
+      "PSE": {
+        "score": 0.968,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0.615,
+        "count": 1
+      }
+    },
+    "M2185": {
+      "PPE-DE": {
+        "score": 0.934125,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.8041666666666667,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0.619,
+        "count": 1
+      }
+    },
+    "M28570": {
+      "PPE-DE": {
+        "score": 0.9717499999999999,
+        "count": 8
+      },
+      "PSE": {
+        "score": 0.8061666666666666,
+        "count": 3
+      },
+      "GUE/NGL": {
+        "score": 0.6115,
+        "count": 1
+      }
+    },
+    "M28586": {
+      "PPE-DE": {
+        "score": 0.6134000000000001,
+        "count": 5
+      },
+      "PSE": {
+        "score": 0.63,
+        "count": 2
+      },
+      "GUE/NGL": {
+        "score": 0,
+        "count": 0
+      }
+    }
+  },
+  "computedAt": "2025-11-13T00:48:42.859Z"
+}
