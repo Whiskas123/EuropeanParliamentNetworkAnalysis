@@ -8,8 +8,8 @@
       "country": "Ireland",
       "groupId": "PPE",
       "color": "#3399CC",
-      "x": 459.4622968911791,
-      "y": 354.5214261363248
+      "x": 472.75347882463285,
+      "y": 487.0706455413654
     },
     {
       "id": "M124988",
@@ -17,8 +17,8 @@
       "country": "Ireland",
       "groupId": "PPE",
       "color": "#3399CC",
-      "x": 454.00372312235817,
-      "y": 366.7961979912464
+      "x": 461.6190891592168,
+      "y": 496.7755226117442
     },
     {
       "id": "M124985",
@@ -26,8 +26,8 @@
       "country": "Ireland",
       "groupId": "GUE/NGL",
       "color": "#800080",
-      "x": 410.5276615647021,
-      "y": 371.67741191043774
+      "x": 421.5106484588381,
+      "y": 501.7988574255488
     },
     {
       "id": "M197654",
@@ -35,8 +35,8 @@
       "country": "Ireland",
       "groupId": "Verts/ALE",
       "color": "#009900",
-      "x": 422.2579116250206,
-      "y": 384.09694240353895
+      "x": 440.30598032299815,
+      "y": 522.6773036163886
     },
     {
       "id": "M197731",
@@ -44,8 +44,8 @@
       "country": "Ireland",
       "groupId": "GUE/NGL",
       "color": "#800080",
-      "x": 395.85733956253245,
-      "y": 366.7033806438575
+      "x": 400.49684360380144,
+      "y": 515.8693974486099
     },
     {
       "id": "M197720",
@@ -53,8 +53,8 @@
       "country": "Ireland",
       "groupId": "PPE",
       "color": "#3399CC",
-      "x": 460.01327771382523,
-      "y": 382.09437289947317
+      "x": 459.9204349454284,
+      "y": 477.58645784732346
     },
     {
       "id": "M197818",
@@ -62,8 +62,8 @@
       "country": "Ireland",
       "groupId": "RE",
       "color": "#FFD700",
-      "x": 441.7940028225307,
-      "y": 386.2894010581075
+      "x": 440.5513162837848,
+      "y": 501.12853473444386
     },
     {
       "id": "M197889",
@@ -71,8 +71,8 @@
       "country": "Ireland",
       "groupId": "Verts/ALE",
       "color": "#009900",
-      "x": 423.90766595050775,
-      "y": 357.65547249654793
+      "x": 427.6632467454059,
+      "y": 518.8459386825859
     },
     {
       "id": "M197863",
@@ -80,8 +80,8 @@
       "country": "Ireland",
       "groupId": "PPE",
       "color": "#3399CC",
-      "x": 446.54325258127676,
-      "y": 350.18455854455664
+      "x": 474.0061548803741,
+      "y": 504.7480468161359
     },
     {
       "id": "M197817",
@@ -89,8 +89,8 @@
       "country": "Ireland",
       "groupId": "GUE/NGL",
       "color": "#800080",
-      "x": 400.87159020721253,
-      "y": 382.8277282924627
+      "x": 397.0993152927858,
+      "y": 500.000377939551
     },
     {
       "id": "M204332",
@@ -98,8 +98,8 @@
       "country": "Ireland",
       "groupId": "RE",
       "color": "#FFD700",
-      "x": 438.9323048406394,
-      "y": 369.9864632528604
+      "x": 438.02981934375316,
+      "y": 480.71837887953166
     },
     {
       "id": "M205452",
@@ -107,8 +107,8 @@
       "country": "Ireland",
       "groupId": "GUE/NGL",
       "color": "#800080",
-      "x": 409.46939060494714,
-      "y": 354.742406887617
+      "x": 421.1322378220088,
+      "y": 485.0548873185016
     },
     {
       "id": "M209896",
@@ -116,637 +116,587 @@
       "country": "Ireland",
       "groupId": "PPE",
       "color": "#3399CC",
-      "x": 468.22490844100236,
-      "y": 369.2647526196877
+      "x": 463.55755248103424,
+      "y": 516.5770915679562
     }
   ],
   "edges": [
     {
       "source": "M197818",
       "target": "M96668",
-      "weight": 0.661
+      "weight": 0.8305
     },
     {
       "source": "M197818",
       "target": "M197889",
-      "weight": 0.563
+      "weight": 0.7815
     },
     {
       "source": "M197818",
       "target": "M197720",
-      "weight": 0.662
+      "weight": 0.831
     },
     {
       "source": "M197818",
       "target": "M197863",
-      "weight": 0.678
+      "weight": 0.839
     },
     {
       "source": "M197818",
       "target": "M197654",
-      "weight": 0.56
+      "weight": 0.78
     },
     {
       "source": "M197818",
       "target": "M204332",
-      "weight": 0.974
+      "weight": 0.987
     },
     {
       "source": "M197818",
       "target": "M197731",
-      "weight": 0.328
+      "weight": 0.664
     },
     {
       "source": "M197818",
       "target": "M197817",
-      "weight": 0.328
+      "weight": 0.664
     },
     {
       "source": "M197818",
       "target": "M124988",
-      "weight": 0.665
+      "weight": 0.8325
     },
     {
       "source": "M197818",
       "target": "M124985",
-      "weight": 0.39
+      "weight": 0.6950000000000001
     },
     {
       "source": "M197818",
       "target": "M205452",
-      "weight": 0.432
+      "weight": 0.716
     },
     {
       "source": "M197818",
       "target": "M209896",
-      "weight": 0.657
+      "weight": 0.8285
     },
     {
       "source": "M96668",
       "target": "M197889",
-      "weight": 0.397
+      "weight": 0.6985
     },
     {
       "source": "M96668",
       "target": "M197720",
-      "weight": 0.975
+      "weight": 0.9875
     },
     {
       "source": "M96668",
       "target": "M197863",
-      "weight": 0.953
+      "weight": 0.9764999999999999
     },
     {
       "source": "M96668",
       "target": "M197654",
-      "weight": 0.391
+      "weight": 0.6955
     },
     {
       "source": "M96668",
       "target": "M204332",
-      "weight": 0.657
-    },
-    {
-      "source": "M96668",
-      "target": "M197731",
-      "weight": 0.143
-    },
-    {
-      "source": "M96668",
-      "target": "M197817",
-      "weight": 0.142
+      "weight": 0.8285
     },
     {
       "source": "M96668",
       "target": "M124988",
-      "weight": 0.972
+      "weight": 0.986
     },
     {
       "source": "M96668",
       "target": "M124985",
-      "weight": 0.209
+      "weight": 0.6045
     },
     {
       "source": "M96668",
       "target": "M205452",
-      "weight": 0.254
+      "weight": 0.627
     },
     {
       "source": "M96668",
       "target": "M209896",
-      "weight": 0.968
+      "weight": 0.984
     },
     {
       "source": "M197889",
       "target": "M197720",
-      "weight": 0.401
+      "weight": 0.7005
     },
     {
       "source": "M197889",
       "target": "M197863",
-      "weight": 0.424
+      "weight": 0.712
     },
     {
       "source": "M197889",
       "target": "M197654",
-      "weight": 0.981
+      "weight": 0.9904999999999999
     },
     {
       "source": "M197889",
       "target": "M204332",
-      "weight": 0.572
+      "weight": 0.786
     },
     {
       "source": "M197889",
       "target": "M197731",
-      "weight": 0.649
+      "weight": 0.8245
     },
     {
       "source": "M197889",
       "target": "M197817",
-      "weight": 0.649
+      "weight": 0.8245
     },
     {
       "source": "M197889",
       "target": "M124988",
-      "weight": 0.396
+      "weight": 0.698
     },
     {
       "source": "M197889",
       "target": "M124985",
-      "weight": 0.689
+      "weight": 0.8445
     },
     {
       "source": "M197889",
       "target": "M205452",
-      "weight": 0.677
+      "weight": 0.8385
     },
     {
       "source": "M197889",
       "target": "M209896",
-      "weight": 0.406
+      "weight": 0.7030000000000001
     },
     {
       "source": "M197720",
       "target": "M197863",
-      "weight": 0.958
+      "weight": 0.979
     },
     {
       "source": "M197720",
       "target": "M197654",
-      "weight": 0.395
+      "weight": 0.6975
     },
     {
       "source": "M197720",
       "target": "M204332",
-      "weight": 0.658
-    },
-    {
-      "source": "M197720",
-      "target": "M197731",
-      "weight": 0.146
-    },
-    {
-      "source": "M197720",
-      "target": "M197817",
-      "weight": 0.141
+      "weight": 0.829
     },
     {
       "source": "M197720",
       "target": "M124988",
-      "weight": 0.972
+      "weight": 0.986
     },
     {
       "source": "M197720",
       "target": "M124985",
-      "weight": 0.21
+      "weight": 0.605
     },
     {
       "source": "M197720",
       "target": "M205452",
-      "weight": 0.254
+      "weight": 0.627
     },
     {
       "source": "M197720",
       "target": "M209896",
-      "weight": 0.969
+      "weight": 0.9844999999999999
     },
     {
       "source": "M197863",
       "target": "M197654",
-      "weight": 0.419
+      "weight": 0.7095
     },
     {
       "source": "M197863",
       "target": "M204332",
-      "weight": 0.675
-    },
-    {
-      "source": "M197863",
-      "target": "M197731",
-      "weight": 0.177
-    },
-    {
-      "source": "M197863",
-      "target": "M197817",
-      "weight": 0.173
+      "weight": 0.8375
     },
     {
       "source": "M197863",
       "target": "M124988",
-      "weight": 0.956
+      "weight": 0.978
     },
     {
       "source": "M197863",
       "target": "M124985",
-      "weight": 0.241
+      "weight": 0.6205
     },
     {
       "source": "M197863",
       "target": "M205452",
-      "weight": 0.284
+      "weight": 0.642
     },
     {
       "source": "M197863",
       "target": "M209896",
-      "weight": 0.96
+      "weight": 0.98
     },
     {
       "source": "M197654",
       "target": "M204332",
-      "weight": 0.569
+      "weight": 0.7845
     },
     {
       "source": "M197654",
       "target": "M197731",
-      "weight": 0.648
+      "weight": 0.8240000000000001
     },
     {
       "source": "M197654",
       "target": "M197817",
-      "weight": 0.648
+      "weight": 0.8240000000000001
     },
     {
       "source": "M197654",
       "target": "M124988",
-      "weight": 0.391
+      "weight": 0.6955
     },
     {
       "source": "M197654",
       "target": "M124985",
-      "weight": 0.689
+      "weight": 0.8445
     },
     {
       "source": "M197654",
       "target": "M205452",
-      "weight": 0.676
+      "weight": 0.8380000000000001
     },
     {
       "source": "M197654",
       "target": "M209896",
-      "weight": 0.399
+      "weight": 0.6995
     },
     {
       "source": "M204332",
       "target": "M197731",
-      "weight": 0.333
+      "weight": 0.6665
     },
     {
       "source": "M204332",
       "target": "M197817",
-      "weight": 0.333
+      "weight": 0.6665
     },
     {
       "source": "M204332",
       "target": "M124988",
-      "weight": 0.66
+      "weight": 0.8300000000000001
     },
     {
       "source": "M204332",
       "target": "M124985",
-      "weight": 0.399
+      "weight": 0.6995
     },
     {
       "source": "M204332",
       "target": "M205452",
-      "weight": 0.431
+      "weight": 0.7155
     },
     {
       "source": "M204332",
       "target": "M209896",
-      "weight": 0.645
+      "weight": 0.8225
     },
     {
       "source": "M197731",
       "target": "M197817",
-      "weight": 0.988
-    },
-    {
-      "source": "M197731",
-      "target": "M124988",
-      "weight": 0.142
+      "weight": 0.994
     },
     {
       "source": "M197731",
       "target": "M124985",
-      "weight": 0.891
+      "weight": 0.9455
     },
     {
       "source": "M197731",
       "target": "M205452",
-      "weight": 0.836
-    },
-    {
-      "source": "M197731",
-      "target": "M209896",
-      "weight": 0.151
-    },
-    {
-      "source": "M197817",
-      "target": "M124988",
-      "weight": 0.139
+      "weight": 0.9179999999999999
     },
     {
       "source": "M197817",
       "target": "M124985",
-      "weight": 0.889
+      "weight": 0.9445
     },
     {
       "source": "M197817",
       "target": "M205452",
-      "weight": 0.833
-    },
-    {
-      "source": "M197817",
-      "target": "M209896",
-      "weight": 0.153
+      "weight": 0.9165
     },
     {
       "source": "M124988",
       "target": "M124985",
-      "weight": 0.211
+      "weight": 0.6055
     },
     {
       "source": "M124988",
       "target": "M205452",
-      "weight": 0.249
+      "weight": 0.6245
     },
     {
       "source": "M124988",
       "target": "M209896",
-      "weight": 0.969
+      "weight": 0.9844999999999999
     },
     {
       "source": "M124985",
       "target": "M205452",
-      "weight": 0.883
+      "weight": 0.9415
     },
     {
       "source": "M124985",
       "target": "M209896",
-      "weight": 0.228
+      "weight": 0.614
     },
     {
       "source": "M205452",
       "target": "M209896",
-      "weight": 0.278
+      "weight": 0.639
     }
   ],
   "agreementScores": {
     "M96668": {
       "PPE": {
-        "score": 0.967,
+        "score": 0.9835,
         "count": 4
       },
       "GUE/NGL": {
-        "score": 0.187,
-        "count": 4
+        "score": 0.61575,
+        "count": 2
       },
       "Verts/ALE": {
-        "score": 0.394,
+        "score": 0.6970000000000001,
         "count": 2
       },
       "RE": {
-        "score": 0.659,
+        "score": 0.8295,
         "count": 2
       }
     },
     "M124988": {
       "PPE": {
-        "score": 0.9672499999999999,
+        "score": 0.983625,
         "count": 4
       },
       "GUE/NGL": {
-        "score": 0.18525,
-        "count": 4
+        "score": 0.615,
+        "count": 2
       },
       "Verts/ALE": {
-        "score": 0.3935,
+        "score": 0.69675,
         "count": 2
       },
       "RE": {
-        "score": 0.6625000000000001,
+        "score": 0.83125,
         "count": 2
       }
     },
     "M124985": {
       "PPE": {
-        "score": 0.2198,
+        "score": 0.6099,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.8876666666666667,
+        "score": 0.9438333333333334,
         "count": 3
       },
       "Verts/ALE": {
-        "score": 0.689,
+        "score": 0.8445,
         "count": 2
       },
       "RE": {
-        "score": 0.3945,
+        "score": 0.69725,
         "count": 2
       }
     },
     "M197654": {
       "PPE": {
-        "score": 0.399,
+        "score": 0.6995,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.66525,
+        "score": 0.8326250000000001,
         "count": 4
       },
       "Verts/ALE": {
-        "score": 0.981,
+        "score": 0.9904999999999999,
         "count": 1
       },
       "RE": {
-        "score": 0.5645,
+        "score": 0.78225,
         "count": 2
       }
     },
     "M197731": {
       "PPE": {
-        "score": 0.1518,
-        "count": 5
+        "score": 0,
+        "count": 0
       },
       "GUE/NGL": {
-        "score": 0.9049999999999999,
+        "score": 0.9525,
         "count": 3
       },
       "Verts/ALE": {
-        "score": 0.6485000000000001,
+        "score": 0.82425,
         "count": 2
       },
       "RE": {
-        "score": 0.3305,
+        "score": 0.66525,
         "count": 2
       }
     },
     "M197720": {
       "PPE": {
-        "score": 0.9684999999999999,
+        "score": 0.9842499999999998,
         "count": 4
       },
       "GUE/NGL": {
-        "score": 0.18775,
-        "count": 4
+        "score": 0.616,
+        "count": 2
       },
       "Verts/ALE": {
-        "score": 0.398,
+        "score": 0.6990000000000001,
         "count": 2
       },
       "RE": {
-        "score": 0.66,
+        "score": 0.83,
         "count": 2
       }
     },
     "M197818": {
       "PPE": {
-        "score": 0.6646,
+        "score": 0.8323,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.3695,
+        "score": 0.68475,
         "count": 4
       },
       "Verts/ALE": {
-        "score": 0.5615,
+        "score": 0.78075,
         "count": 2
       },
       "RE": {
-        "score": 0.974,
+        "score": 0.987,
         "count": 1
       }
     },
     "M197889": {
       "PPE": {
-        "score": 0.4048,
+        "score": 0.7023999999999999,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.666,
+        "score": 0.833,
         "count": 4
       },
       "Verts/ALE": {
-        "score": 0.981,
+        "score": 0.9904999999999999,
         "count": 1
       },
       "RE": {
-        "score": 0.5674999999999999,
+        "score": 0.78375,
         "count": 2
       }
     },
     "M197863": {
       "PPE": {
-        "score": 0.95675,
+        "score": 0.9783749999999999,
         "count": 4
       },
       "GUE/NGL": {
-        "score": 0.21875,
-        "count": 4
+        "score": 0.6312500000000001,
+        "count": 2
       },
       "Verts/ALE": {
-        "score": 0.4215,
+        "score": 0.71075,
         "count": 2
       },
       "RE": {
-        "score": 0.6765000000000001,
+        "score": 0.8382499999999999,
         "count": 2
       }
     },
     "M197817": {
       "PPE": {
-        "score": 0.1496,
-        "count": 5
+        "score": 0,
+        "count": 0
       },
       "GUE/NGL": {
-        "score": 0.9033333333333333,
+        "score": 0.9516666666666667,
         "count": 3
       },
       "Verts/ALE": {
-        "score": 0.6485000000000001,
+        "score": 0.82425,
         "count": 2
       },
       "RE": {
-        "score": 0.3305,
+        "score": 0.66525,
         "count": 2
       }
     },
     "M204332": {
       "PPE": {
-        "score": 0.659,
+        "score": 0.8295,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.374,
+        "score": 0.6869999999999999,
         "count": 4
       },
       "Verts/ALE": {
-        "score": 0.5705,
+        "score": 0.78525,
         "count": 2
       },
       "RE": {
-        "score": 0.974,
+        "score": 0.987,
         "count": 1
       }
     },
     "M205452": {
       "PPE": {
-        "score": 0.2638,
+        "score": 0.6319000000000001,
         "count": 5
       },
       "GUE/NGL": {
-        "score": 0.8506666666666667,
+        "score": 0.9253333333333332,
         "count": 3
       },
       "Verts/ALE": {
-        "score": 0.6765000000000001,
+        "score": 0.83825,
         "count": 2
       },
       "RE": {
-        "score": 0.4315,
+        "score": 0.71575,
         "count": 2
       }
     },
     "M209896": {
       "PPE": {
-        "score": 0.9664999999999999,
+        "score": 0.98325,
         "count": 4
       },
       "GUE/NGL": {
-        "score": 0.2025,
-        "count": 4
+        "score": 0.6265000000000001,
+        "count": 2
       },
       "Verts/ALE": {
-        "score": 0.4025,
+        "score": 0.70125,
         "count": 2
       },
       "RE": {
-        "score": 0.651,
+        "score": 0.8255,
         "count": 2
       }
     }
   },
-  "computedAt": "2025-11-10T23:43:44.252Z"
+  "computedAt": "2025-11-13T01:09:26.708Z"
 }
