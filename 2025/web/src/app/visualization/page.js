@@ -78,6 +78,37 @@ export default function VisualizationPage() {
           metadata,
         } = await loadMandateData(mandateNum, country, subject);
 
+        // Load ALL edges and nodes separately (without filters) for heatmap calculations
+        // This ensures the heatmap uses all edges with all weights regardless of current filters
+        let allEdges = edges; // Default to filtered edges if loading all fails
+        let allNodesMap = null; // Map of all nodes for heatmap calculations
+        if (country || subject) {
+          try {
+            const allData = await loadMandateData(mandateNum, null, null);
+            if (allData && allData.edges) {
+              allEdges = allData.edges;
+            }
+            // Also store all nodes for heatmap calculations
+            if (allData && allData.nodes) {
+              allNodesMap = new Map();
+              allData.nodes.forEach((node) => {
+                allNodesMap.set(node.id, {
+                  id: node.id,
+                  label: node.label,
+                  color: node.color,
+                  country: node.country,
+                  groupId: node.groupId,
+                  groups: node.groups || [],
+                  partyNames: node.partyNames || [],
+                  photoURL: node.photoURL || null,
+                });
+              });
+            }
+          } catch (error) {
+            console.warn("Could not load all edges for heatmap, using filtered edges:", error);
+          }
+        }
+
         // Check if nodes already have positions (precomputed)
         const hasPrecomputedPositions =
           nodes.length > 0 &&
@@ -275,8 +306,9 @@ export default function VisualizationPage() {
         const newGraphData = {
           nodes: finalNodes,
           links: finalEdges,
-          allLinks: edges, // Store all edges for closest MEPs calculation
+          allLinks: allEdges, // Store ALL edges (without filters) for heatmap and closest MEPs calculations
           nodeMap,
+          allNodesMap: allNodesMap || nodeMap, // Store ALL nodes map (without filters) for heatmap calculations
           agreementScores: agreementScores || null,
           similarityScores: similarityScores || null,
           subjects: subjectsList, // Store subjects for fast access (filtered to >5 voting sessions)
@@ -546,6 +578,8 @@ export default function VisualizationPage() {
     const calculateCohesion = () => {
       // Use all edges for accurate calculations
       const edgesToUse = graphData.allLinks || graphData.links;
+      // Use all nodes map for heatmap (includes all nodes regardless of filters)
+      const nodesMapToUse = graphData.allNodesMap || graphData.nodeMap;
 
       // Calculate intergroup cohesion (between different groups)
       const intergroupMap = new Map(); // group1-group2 -> { count, sum }
@@ -555,8 +589,8 @@ export default function VisualizationPage() {
       const countryMap = new Map(); // country -> { count, sum }
 
       edgesToUse.forEach((edge) => {
-        const sourceNode = graphData.nodeMap.get(edge.source);
-        const targetNode = graphData.nodeMap.get(edge.target);
+        const sourceNode = nodesMapToUse.get(edge.source);
+        const targetNode = nodesMapToUse.get(edge.target);
 
         if (!sourceNode || !targetNode) return;
 
@@ -622,9 +656,13 @@ export default function VisualizationPage() {
         }))
         .sort((a, b) => b.score - a.score);
 
-      // Get all unique groups
+      // Get all unique groups from all nodes (not just filtered ones)
       const allGroups = new Set();
-      graphData.nodes.forEach((node) => {
+      // Use allNodesMap if available, otherwise fall back to filtered nodes
+      const nodesToCheck = graphData.allNodesMap 
+        ? Array.from(graphData.allNodesMap.values())
+        : graphData.nodes;
+      nodesToCheck.forEach((node) => {
         if (node.groupId) allGroups.add(node.groupId);
       });
 
@@ -685,9 +723,12 @@ export default function VisualizationPage() {
         })
       );
 
-      // Get group colors for heatmap
+      // Get group colors for heatmap (from all nodes, not just filtered ones)
       const groupColors = new Map();
-      graphData.nodes.forEach((node) => {
+      const nodesForColors = graphData.allNodesMap 
+        ? Array.from(graphData.allNodesMap.values())
+        : graphData.nodes;
+      nodesForColors.forEach((node) => {
         if (node.groupId && !groupColors.has(node.groupId)) {
           groupColors.set(node.groupId, node.color);
         }
