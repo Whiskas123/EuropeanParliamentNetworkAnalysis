@@ -144,10 +144,11 @@ async function loadJsonData(mandate, country = null, subject = null) {
     }
     const data = await response.json();
 
-    // Try to load positions, similarity scores, and cohesion data from precomputed layout
+    // Try to load positions, similarity scores, agreement scores, and cohesion data from precomputed layout
     const precomputed = await loadPrecomputedLayout(mandate, country, subject);
     const positionMap = new Map();
     let similarityScores = null;
+    let agreementScores = null;
     let cohesionData = null;
     if (precomputed && precomputed.nodes) {
       precomputed.nodes.forEach((node) => {
@@ -158,6 +159,25 @@ async function loadJsonData(mandate, country = null, subject = null) {
     }
     if (precomputed && precomputed.similarityScores) {
       similarityScores = precomputed.similarityScores;
+    }
+    // Load agreement scores from precomputed layout
+    // If subject is selected, also load all-subjects agreement scores (for "All Subjects" dropdown option)
+    // Always prefer all-subjects agreement scores to ensure they're calculated from all edges
+    if (subject && !country) {
+      const allSubjectsPrecomputed = await loadPrecomputedLayout(
+        mandate,
+        null,
+        null
+      );
+      if (allSubjectsPrecomputed && allSubjectsPrecomputed.agreementScores) {
+        // Use all-subjects agreement scores to ensure "All Subjects" shows correct values
+        agreementScores = allSubjectsPrecomputed.agreementScores;
+      } else if (precomputed && precomputed.agreementScores) {
+        // Fallback to subject-specific agreement scores if all-subjects not available
+        agreementScores = precomputed.agreementScores;
+      }
+    } else if (precomputed && precomputed.agreementScores) {
+      agreementScores = precomputed.agreementScores;
     }
     // Load cohesion data from precomputed layout
     if (precomputed && precomputed.cohesionData) {
@@ -255,16 +275,34 @@ async function loadJsonData(mandate, country = null, subject = null) {
           }
         });
       }
+      // Filter agreement scores to only include country nodes
+      let filteredAgreementScores = null;
+      if (agreementScores) {
+        filteredAgreementScores = {};
+        countryNodes.forEach((node) => {
+          if (agreementScores[node.id]) {
+            filteredAgreementScores[node.id] = agreementScores[node.id];
+          }
+        });
+      }
       return {
         nodes: countryNodes,
         edges: countryEdges,
         metadata,
         similarityScores: filteredSimilarityScores,
+        agreementScores: filteredAgreementScores,
         cohesionData: cohesionData,
       };
     }
 
-    return { nodes, edges, metadata, similarityScores, cohesionData };
+    return {
+      nodes,
+      edges,
+      metadata,
+      similarityScores,
+      agreementScores,
+      cohesionData,
+    };
   } catch (error) {
     console.warn(
       `JSON data not found for mandate ${mandate}${
@@ -352,10 +390,25 @@ export async function loadMandateData(mandate, country = null, subject = null) {
         };
       }
 
+      // If subject is selected, also load all-subjects agreement scores (for "All Subjects" dropdown option)
+      // Always prefer all-subjects agreement scores to ensure they're calculated from all edges
+      let agreementScores = precomputed.agreementScores || null;
+      if (subject && !country) {
+        const allSubjectsPrecomputed = await loadPrecomputedLayout(
+          mandate,
+          null,
+          null
+        );
+        if (allSubjectsPrecomputed && allSubjectsPrecomputed.agreementScores) {
+          // Use all-subjects agreement scores to ensure "All Subjects" shows correct values
+          agreementScores = allSubjectsPrecomputed.agreementScores;
+        }
+      }
+
       return {
         nodes: precomputed.nodes,
         edges: precomputed.edges,
-        agreementScores: precomputed.agreementScores || null,
+        agreementScores: agreementScores,
         similarityScores: precomputed.similarityScores || null,
         cohesionData: cohesionData, // Precomputed cohesion data
         subjects: precomputed.subjects || null, // Precomputed subjects list with >5 voting sessions
