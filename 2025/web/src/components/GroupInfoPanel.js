@@ -9,7 +9,6 @@ import {
   getGroupFamily,
   getSubjectEmoji,
 } from "../lib/utils.js";
-import LoadingSpinner from "./LoadingSpinner.js";
 
 export default function GroupInfoPanel({
   groupId,
@@ -202,6 +201,82 @@ export default function GroupInfoPanel({
 
   const entrancesListRef = useRef(null);
   const exitsListRef = useRef(null);
+  const subjectScoresListRef = useRef(null);
+  const mepsListRef = useRef(null);
+
+  const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
+  const [subjectSortDirection, setSubjectSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
+
+  // Calculate group similarity averages by subject using precomputed similarity scores
+  const groupSubjectScores = useMemo(() => {
+    if (!groupId || !graphData || !graphData.similarityScores) {
+      return null;
+    }
+
+    // Get all MEPs in this group
+    const groupMEPs = graphData.nodes.filter(
+      (node) => node.groupId === groupId
+    );
+
+    if (groupMEPs.length === 0) {
+      return null;
+    }
+
+    // Aggregate groupSubjectScores from all MEPs in the group
+    const subjectScoreMap = new Map(); // subject -> { totalScore, totalCount, mepCount }
+
+    groupMEPs.forEach((mep) => {
+      const mepScores = graphData.similarityScores[mep.id];
+      if (mepScores && mepScores.groupSubjectScores) {
+        mepScores.groupSubjectScores.forEach((item) => {
+          if (!subjectScoreMap.has(item.subject)) {
+            subjectScoreMap.set(item.subject, {
+              totalScore: 0,
+              totalCount: 0,
+              mepCount: 0,
+            });
+          }
+          const stats = subjectScoreMap.get(item.subject);
+          // Add weighted average: score * count (to account for different numbers of connections)
+          stats.totalScore += item.score * item.count;
+          stats.totalCount += item.count;
+          stats.mepCount += 1;
+        });
+      }
+    });
+
+    // Convert to array and calculate group averages
+    const subjectScores = Array.from(subjectScoreMap.entries())
+      .map(([subject, stats]) => ({
+        subject,
+        score: stats.totalCount > 0 ? stats.totalScore / stats.totalCount : 0,
+        count: stats.totalCount,
+      }))
+      .filter((item) => item.count > 0) // Only include subjects with data
+      .sort((a, b) => b.score - a.score); // Sort by score (highest first)
+
+    return subjectScores.length > 0 ? subjectScores : null;
+  }, [groupId, graphData]);
+
+  // Sort subject scores based on current sort direction
+  const sortedSubjectScores = useMemo(() => {
+    if (!groupSubjectScores) return null;
+    if (subjectSortDirection === "desc") {
+      return [...groupSubjectScores]; // Already sorted highest to lowest
+    } else {
+      return [...groupSubjectScores].reverse(); // Reverse for lowest to highest
+    }
+  }, [groupSubjectScores, subjectSortDirection]);
+
+  // Sort MEPs based on current sort direction
+  const sortedMEPs = useMemo(() => {
+    if (!groupInfo || !groupInfo.allMEPsSorted) return [];
+    if (sortDirection === "desc") {
+      return [...groupInfo.allMEPsSorted]; // Already sorted highest to lowest
+    } else {
+      return [...groupInfo.allMEPsSorted].reverse(); // Reverse for lowest to highest
+    }
+  }, [groupInfo, sortDirection]);
 
   // Check if lists are scrollable and add visual cue
   useEffect(() => {
@@ -255,11 +330,15 @@ export default function GroupInfoPanel({
 
     checkScrollable(entrancesListRef.current);
     checkScrollable(exitsListRef.current);
+    checkScrollable(subjectScoresListRef.current);
+    checkScrollable(mepsListRef.current);
 
     // Also check on resize
     const handleResize = () => {
       checkScrollable(entrancesListRef.current);
       checkScrollable(exitsListRef.current);
+      checkScrollable(subjectScoresListRef.current);
+      checkScrollable(mepsListRef.current);
     };
 
     window.addEventListener("resize", handleResize);
@@ -271,137 +350,13 @@ export default function GroupInfoPanel({
       });
       scrollHandlers.clear();
     };
-  }, [groupInfo, groupInfo?.entrances.length, groupInfo?.exits.length]);
-
-  const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
-  const [groupSubjectScores, setGroupSubjectScores] = useState(null);
-  const [loadingSubjectScores, setLoadingSubjectScores] = useState(false);
-
-  // Calculate group similarity averages by subject
-  useEffect(() => {
-    if (!groupId || !graphData || !mandate) {
-      setGroupSubjectScores(null);
-      return;
-    }
-
-    async function calculateGroupSubjectScores() {
-      setLoadingSubjectScores(true);
-      try {
-        const response = await fetch(`/data/mandate_${mandate}/data.json`);
-        if (!response.ok) {
-          setGroupSubjectScores(null);
-          setLoadingSubjectScores(false);
-          return;
-        }
-        const data = await response.json();
-
-        if (!data.edgesBySubject) {
-          setGroupSubjectScores(null);
-          setLoadingSubjectScores(false);
-          return;
-        }
-
-        // Get all MEPs in this group
-        const groupMEPs = graphData.nodes.filter(
-          (node) => node.groupId === groupId
-        );
-        const groupMEPIds = new Set(groupMEPs.map((mep) => mep.id));
-
-        if (groupMEPIds.size === 0) {
-          setGroupSubjectScores(null);
-          setLoadingSubjectScores(false);
-          return;
-        }
-
-        const subjects = Object.keys(data.edgesBySubject);
-        const subjectScores = [];
-
-        // Calculate similarity for each subject
-        for (const subject of subjects) {
-          const subjectEdges = data.edgesBySubject[subject] || [];
-          const subjectEdgeMap = new Map();
-
-          // Create a map of edges for quick lookup
-          subjectEdges.forEach((edge) => {
-            const key1 = `${edge.Source}-${edge.Target}`;
-            const key2 = `${edge.Target}-${edge.Source}`;
-            subjectEdgeMap.set(key1, parseFloat(edge.Weight) || 0);
-            subjectEdgeMap.set(key2, parseFloat(edge.Weight) || 0);
-          });
-
-          // Get all edges from graphData
-          const allEdges = graphData.allLinks || graphData.links || [];
-
-          // Filter to only edges between group members for this subject
-          const groupEdges = allEdges.filter((edge) => {
-            const sourceId =
-              typeof edge.source === "string" ? edge.source : edge.source.id;
-            const targetId =
-              typeof edge.target === "string" ? edge.target : edge.target.id;
-
-            // Both nodes must be in the group
-            if (!groupMEPIds.has(sourceId) || !groupMEPIds.has(targetId)) {
-              return false;
-            }
-
-            // Edge must exist in this subject
-            const key1 = `${sourceId}-${targetId}`;
-            const key2 = `${targetId}-${sourceId}`;
-            return subjectEdgeMap.has(key1) || subjectEdgeMap.has(key2);
-          });
-
-          // Calculate average weight for this subject
-          if (groupEdges.length > 0) {
-            const weights = groupEdges.map((edge) => {
-              const sourceId =
-                typeof edge.source === "string" ? edge.source : edge.source.id;
-              const targetId =
-                typeof edge.target === "string" ? edge.target : edge.target.id;
-              const key1 = `${sourceId}-${targetId}`;
-              const key2 = `${targetId}-${sourceId}`;
-              return (
-                subjectEdgeMap.get(key1) ||
-                subjectEdgeMap.get(key2) ||
-                edge.weight ||
-                0
-              );
-            });
-
-            const avgScore =
-              weights.reduce((sum, w) => sum + w, 0) / weights.length;
-
-            subjectScores.push({
-              subject,
-              score: avgScore,
-              count: groupEdges.length,
-            });
-          }
-        }
-
-        // Sort by score (highest first)
-        subjectScores.sort((a, b) => b.score - a.score);
-
-        setGroupSubjectScores(subjectScores);
-      } catch (error) {
-        console.error("Error calculating group subject scores:", error);
-        setGroupSubjectScores(null);
-      } finally {
-        setLoadingSubjectScores(false);
-      }
-    }
-
-    calculateGroupSubjectScores();
-  }, [groupId, graphData, mandate]);
-
-  // Sort MEPs based on current sort direction
-  const sortedMEPs = useMemo(() => {
-    if (!groupInfo || !groupInfo.allMEPsSorted) return [];
-    if (sortDirection === "desc") {
-      return [...groupInfo.allMEPsSorted]; // Already sorted highest to lowest
-    } else {
-      return [...groupInfo.allMEPsSorted].reverse(); // Reverse for lowest to highest
-    }
-  }, [groupInfo, sortDirection]);
+  }, [
+    groupInfo,
+    groupInfo?.entrances.length,
+    groupInfo?.exits.length,
+    sortedSubjectScores,
+    sortedMEPs,
+  ]);
 
   if (!groupInfo) return null;
 
@@ -418,6 +373,10 @@ export default function GroupInfoPanel({
 
   const toggleSortDirection = () => {
     setSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
+  };
+
+  const toggleSubjectSortDirection = () => {
+    setSubjectSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
   };
 
   return (
@@ -449,54 +408,80 @@ export default function GroupInfoPanel({
 
       {/* Group Similarity by Subject */}
       <div className="group-info-section">
-        <h4 className="group-info-section-title">
-          Similarity Average by Subject
-        </h4>
+        <div className="group-info-section-header">
+          <h4 className="group-info-section-title">
+            Subject by similarity to group
+          </h4>
+          {sortedSubjectScores && sortedSubjectScores.length > 0 && (
+            <button
+              className="group-info-sort-button"
+              onClick={toggleSubjectSortDirection}
+              title={
+                subjectSortDirection === "desc"
+                  ? "Sort: Highest to Lowest (click to reverse)"
+                  : "Sort: Lowest to Highest (click to reverse)"
+              }
+            >
+              <span>
+                {subjectSortDirection === "desc"
+                  ? "Highest to Lowest"
+                  : "Lowest to Highest"}
+              </span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  transform:
+                    subjectSortDirection === "asc" ? "rotate(180deg)" : "none",
+                }}
+              >
+                <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
+              </svg>
+            </button>
+          )}
+        </div>
         <div className="group-subject-scores-wrapper">
-          {loadingSubjectScores && (
-            <div className="group-subject-scores-loading">
-              <LoadingSpinner />
+          {sortedSubjectScores && sortedSubjectScores.length > 0 ? (
+            <div
+              className="group-subject-scores-list"
+              ref={subjectScoresListRef}
+            >
+              {sortedSubjectScores.map((item) => {
+                const widthPercent = item.score * 100;
+                return (
+                  <div key={item.subject} className="group-subject-score-item">
+                    <div className="group-subject-score-header">
+                      <span className="group-subject-score-name">
+                        {getSubjectEmoji(item.subject)} {item.subject}
+                      </span>
+                      <span className="group-subject-score-value">
+                        {(item.score * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <div className="group-subject-score-bar-container">
+                      <div
+                        className="group-subject-score-bar"
+                        style={{
+                          width: `${widthPercent}%`,
+                          backgroundColor: groupColor,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="group-subject-scores-empty">
+              No subject data available
             </div>
           )}
-          {!loadingSubjectScores &&
-            groupSubjectScores &&
-            groupSubjectScores.length > 0 && (
-              <div className="group-subject-scores-list">
-                {groupSubjectScores.map((item) => {
-                  const widthPercent = item.score * 100;
-                  return (
-                    <div
-                      key={item.subject}
-                      className="group-subject-score-item"
-                    >
-                      <div className="group-subject-score-header">
-                        <span className="group-subject-score-name">
-                          {getSubjectEmoji(item.subject)} {item.subject}
-                        </span>
-                        <span className="group-subject-score-value">
-                          {(item.score * 100).toFixed(1)}%
-                        </span>
-                      </div>
-                      <div className="group-subject-score-bar-container">
-                        <div
-                          className="group-subject-score-bar"
-                          style={{
-                            width: `${widthPercent}%`,
-                            backgroundColor: groupColor,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          {!loadingSubjectScores &&
-            (!groupSubjectScores || groupSubjectScores.length === 0) && (
-              <div className="group-subject-scores-empty">
-                No subject data available
-              </div>
-            )}
         </div>
       </div>
 
@@ -660,33 +645,38 @@ export default function GroupInfoPanel({
               </svg>
             </button>
           </div>
-          <div className="group-info-meps-list">
-            {sortedMEPs.map((item, idx) => {
-              const rank =
-                sortDirection === "desc" ? idx + 1 : sortedMEPs.length - idx;
-              return (
-                <div
-                  key={item.mep.id}
-                  className="group-info-mep-item clickable"
-                  onClick={() => onSelectMEP && onSelectMEP(item.mep)}
-                >
-                  <div className="group-info-mep-rank">{rank}</div>
-                  <div className="group-info-mep-content">
-                    <div className="group-info-mep-name">{item.mep.label}</div>
-                    <div className="group-info-mep-meta">
-                      {item.mep.country && (
-                        <span className="group-info-mep-country">
-                          {getCountryFlag(item.mep.country)} {item.mep.country}
+          <div className="group-info-meps-wrapper">
+            <div className="group-info-meps-list" ref={mepsListRef}>
+              {sortedMEPs.map((item, idx) => {
+                const rank =
+                  sortDirection === "desc" ? idx + 1 : sortedMEPs.length - idx;
+                return (
+                  <div
+                    key={item.mep.id}
+                    className="group-info-mep-item clickable"
+                    onClick={() => onSelectMEP && onSelectMEP(item.mep)}
+                  >
+                    <div className="group-info-mep-rank">{rank}</div>
+                    <div className="group-info-mep-content">
+                      <div className="group-info-mep-name">
+                        {item.mep.label}
+                      </div>
+                      <div className="group-info-mep-meta">
+                        {item.mep.country && (
+                          <span className="group-info-mep-country">
+                            {getCountryFlag(item.mep.country)}{" "}
+                            {item.mep.country}
+                          </span>
+                        )}
+                        <span className="group-info-mep-score">
+                          {(item.avgScore * 100).toFixed(1)}%
                         </span>
-                      )}
-                      <span className="group-info-mep-score">
-                        {(item.avgScore * 100).toFixed(1)}%
-                      </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
