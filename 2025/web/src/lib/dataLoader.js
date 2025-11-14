@@ -1,5 +1,3 @@
-import Papa from "papaparse";
-
 // Cache for loaded data
 const dataCache = {};
 
@@ -53,7 +51,7 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
       return null;
     }
     const precomputed = await response.json();
-    
+
     // Load and merge MEP info
     const mepInfo = await loadMEPInfo(mandate);
     if (mepInfo && precomputed.nodes) {
@@ -70,7 +68,7 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
         return node;
       });
     }
-    
+
     return precomputed;
   } catch (error) {
     console.warn(
@@ -128,82 +126,6 @@ async function countVotingSessions(mandate, subject = null) {
     return null;
   }
 }
-export async function loadNodes(mandate) {
-  const cacheKey = `nodes_${mandate}`;
-
-  if (dataCache[cacheKey]) {
-    return dataCache[cacheKey];
-  }
-
-  try {
-    const response = await fetch(`/data/mandate_${mandate}/nodes.csv`);
-    const text = await response.text();
-
-    return new Promise((resolve, reject) => {
-      Papa.parse(text, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (results) => {
-          const nodes = results.data.map((row, index) => ({
-            id: row.Id,
-            label: row.FullName,
-            country: row.Country,
-            groupId: row.GroupID,
-            x: Math.random() * 1000, // Initial random position
-            y: Math.random() * 1000,
-            size: 5,
-            color: getGroupColor(row.GroupID),
-          }));
-          dataCache[cacheKey] = nodes;
-          resolve(nodes);
-        },
-        error: (error) => reject(error),
-      });
-    });
-  } catch (error) {
-    console.error(`Error loading nodes for mandate ${mandate}:`, error);
-    throw error;
-  }
-}
-
-/**
- * Load edges CSV for a specific mandate
- * @param {number} mandate - Mandate number (6, 7, 8, 9, or 10)
- * @returns {Promise<Array>} Array of edge objects
- */
-export async function loadEdges(mandate) {
-  const cacheKey = `edges_${mandate}`;
-
-  if (dataCache[cacheKey]) {
-    return dataCache[cacheKey];
-  }
-
-  try {
-    const response = await fetch(`/data/mandate_${mandate}/edges.csv`);
-    const text = await response.text();
-
-    return new Promise((resolve, reject) => {
-      Papa.parse(text, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (results) => {
-          const edges = results.data.map((row) => ({
-            source: row.Source,
-            target: row.Target,
-            weight: parseFloat(row.Weight) || 0,
-            size: parseFloat(row.Weight) || 0,
-          }));
-          dataCache[cacheKey] = edges;
-          resolve(edges);
-        },
-        error: (error) => reject(error),
-      });
-    });
-  } catch (error) {
-    console.error(`Error loading edges for mandate ${mandate}:`, error);
-    throw error;
-  }
-}
 
 /**
  * Load data from JSON format (includes all edges, normalized to [0,1])
@@ -222,10 +144,11 @@ async function loadJsonData(mandate, country = null, subject = null) {
     }
     const data = await response.json();
 
-    // Try to load positions and similarity scores from precomputed layout
+    // Try to load positions, similarity scores, and cohesion data from precomputed layout
     const precomputed = await loadPrecomputedLayout(mandate, country, subject);
     const positionMap = new Map();
     let similarityScores = null;
+    let cohesionData = null;
     if (precomputed && precomputed.nodes) {
       precomputed.nodes.forEach((node) => {
         if (node.x !== undefined && node.y !== undefined) {
@@ -235,6 +158,22 @@ async function loadJsonData(mandate, country = null, subject = null) {
     }
     if (precomputed && precomputed.similarityScores) {
       similarityScores = precomputed.similarityScores;
+    }
+    // Load cohesion data from precomputed layout
+    if (precomputed && precomputed.cohesionData) {
+      cohesionData = {
+        ...precomputed.cohesionData,
+        intergroupCohesion: precomputed.cohesionData.intergroupCohesion
+          ? {
+              ...precomputed.cohesionData.intergroupCohesion,
+              groupColors: new Map(
+                Object.entries(
+                  precomputed.cohesionData.intergroupCohesion.groupColors || {}
+                )
+              ),
+            }
+          : null,
+      };
     }
 
     // Convert JSON format to expected format
@@ -321,10 +260,11 @@ async function loadJsonData(mandate, country = null, subject = null) {
         edges: countryEdges,
         metadata,
         similarityScores: filteredSimilarityScores,
+        cohesionData: cohesionData,
       };
     }
 
-    return { nodes, edges, metadata, similarityScores };
+    return { nodes, edges, metadata, similarityScores, cohesionData };
   } catch (error) {
     console.warn(
       `JSON data not found for mandate ${mandate}${
@@ -338,7 +278,7 @@ async function loadJsonData(mandate, country = null, subject = null) {
 
 /**
  * Load both nodes and edges for a mandate
- * Tries JSON format first (all edges), then precomputed layout, then CSV
+ * Tries JSON format first (all edges), then precomputed layout
  * @param {number} mandate - Mandate number
  * @param {string|null} country - Country name (optional, for country-filtered network)
  * @param {string|null} subject - Subject name (optional, for subject-filtered network)
@@ -393,41 +333,43 @@ export async function loadMandateData(mandate, country = null, subject = null) {
         }
       }
 
+      // Convert groupColors from object back to Map for cohesion data
+      let cohesionData = null;
+      if (precomputed.cohesionData) {
+        cohesionData = {
+          ...precomputed.cohesionData,
+          intergroupCohesion: precomputed.cohesionData.intergroupCohesion
+            ? {
+                ...precomputed.cohesionData.intergroupCohesion,
+                groupColors: new Map(
+                  Object.entries(
+                    precomputed.cohesionData.intergroupCohesion.groupColors ||
+                      {}
+                  )
+                ),
+              }
+            : null,
+        };
+      }
+
       return {
         nodes: precomputed.nodes,
         edges: precomputed.edges,
         agreementScores: precomputed.agreementScores || null,
         similarityScores: precomputed.similarityScores || null,
+        cohesionData: cohesionData, // Precomputed cohesion data
         subjects: precomputed.subjects || null, // Precomputed subjects list with >5 voting sessions
         votingSessions: precomputed.votingSessions || null, // Voting sessions data
         metadata: metadata,
       };
     }
 
-    // Fall back to loading from CSV and computing layout
-    // Note: CSV only has edges with weight > 0 (negative edges filtered out)
-    console.log(
-      `Computing layout for mandate ${mandate}${
-        country ? ` - ${country}` : ""
-      }${subject ? ` - ${subject}` : ""} (no precomputed data found)`
+    // No data found - throw error instead of falling back to CSV
+    throw new Error(
+      `No data found for mandate ${mandate}${country ? ` - ${country}` : ""}${
+        subject ? ` - ${subject}` : ""
+      }. Please ensure data.json or precomputed layout files exist.`
     );
-    const [nodes, edges] = await Promise.all([
-      loadNodes(mandate),
-      loadEdges(mandate),
-    ]);
-
-    // If country filter is requested, filter nodes and edges
-    if (country) {
-      const countryNodes = nodes.filter((node) => node.country === country);
-      const countryNodeIds = new Set(countryNodes.map((n) => n.id));
-      const countryEdges = edges.filter(
-        (edge) =>
-          countryNodeIds.has(edge.source) && countryNodeIds.has(edge.target)
-      );
-      return { nodes: countryNodes, edges: countryEdges };
-    }
-
-    return { nodes, edges };
   } catch (error) {
     console.error(
       `Error loading mandate ${mandate}${country ? ` - ${country}` : ""}${

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Papa from "papaparse";
 import { getCountryFlag } from "../lib/utils.js";
 
 export default function CountrySelector({
@@ -17,35 +16,33 @@ export default function CountrySelector({
 
   useEffect(() => {
     async function loadCountries() {
+      setLoading(true);
+      
+      // Load from precomputed layout (has all countries, no filtering)
       try {
-        const response = await fetch(
-          `/data/mandate_${currentMandate}/nodes.csv`
+        const precomputedResponse = await fetch(
+          `/data/precomputed/mandate_${currentMandate}.json`
         );
-        const text = await response.text();
-
-        // Parse CSV using PapaParse
-        Papa.parse(text, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (results) => {
+        if (precomputedResponse.ok) {
+          const precomputed = await precomputedResponse.json();
+          if (precomputed.nodes && precomputed.nodes.length > 0) {
             const countrySet = new Set();
-            results.data.forEach((row) => {
-              if (row.Country) {
-                countrySet.add(row.Country.trim());
+            precomputed.nodes.forEach((node) => {
+              if (node.country) {
+                countrySet.add(node.country.trim());
               }
             });
             const sortedCountries = Array.from(countrySet).sort();
             setCountries(sortedCountries);
             setLoading(false);
-          },
-          error: (error) => {
-            console.error("Error parsing CSV:", error);
-            setCountries([]);
-            setLoading(false);
-          },
-        });
+            return;
+          }
+        }
+        // If precomputed file doesn't exist or has no nodes, set empty list
+        setCountries([]);
+        setLoading(false);
       } catch (error) {
-        console.error("Error loading countries:", error);
+        console.error("Error loading countries from precomputed layout:", error);
         setCountries([]);
         setLoading(false);
       }
@@ -87,7 +84,7 @@ export default function CountrySelector({
   const displayText = currentCountry || "All Countries";
 
   return (
-    <div className="selector-dropdown" ref={dropdownRef}>
+    <div className={`selector-dropdown ${isOpen ? "open" : ""}`} ref={dropdownRef}>
       <div className="selector-header">
         <span className="selector-title">Country</span>
         <button

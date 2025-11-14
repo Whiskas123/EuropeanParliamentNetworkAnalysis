@@ -97,7 +97,7 @@ export default function SubjectSelector({
     : "All Subjects";
 
   return (
-    <div className="selector-dropdown" ref={dropdownRef}>
+    <div className={`selector-dropdown ${isOpen ? "open" : ""}`} ref={dropdownRef}>
       <div className="selector-header">
         <span className="selector-title">Subject</span>
         <button

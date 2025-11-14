@@ -264,6 +264,177 @@ async function countVotingSessionsPerSubject(mandate) {
   }
 }
 
+/**
+ * Compute cohesion data (intergroup, intragroup, country similarity)
+ * Uses ALL edges regardless of weight (weight filter is only for layout)
+ * @param {Array} allEdges - All edges (not filtered by weight)
+ * @param {Array} nodes - All nodes
+ * @returns {Object} Object with intergroupCohesion, intragroupCohesion, and countrySimilarity
+ */
+function computeCohesionData(allEdges, nodes) {
+  // Create node map for fast lookups
+  const nodeMap = new Map();
+  nodes.forEach((node) => {
+    nodeMap.set(node.id, node);
+  });
+
+  // Calculate intergroup cohesion (between different groups)
+  const intergroupMap = new Map(); // group1-group2 -> { count, sum }
+  // Calculate intragroup cohesion (within same group)
+  const intragroupMap = new Map(); // group -> { count, sum }
+  // Calculate country similarity (within same country)
+  const countryMap = new Map(); // country -> { count, sum }
+
+  allEdges.forEach((edge) => {
+    const sourceNode = nodeMap.get(edge.source);
+    const targetNode = nodeMap.get(edge.target);
+
+    if (!sourceNode || !targetNode) return;
+
+    const sourceGroup = sourceNode.groupId || "Unknown";
+    const targetGroup = targetNode.groupId || "Unknown";
+    const sourceCountry = sourceNode.country;
+    const targetCountry = targetNode.country;
+    const weight = edge.weight || 0;
+
+    if (sourceGroup === targetGroup) {
+      // Intra-group edge
+      if (!intragroupMap.has(sourceGroup)) {
+        intragroupMap.set(sourceGroup, { count: 0, sum: 0 });
+      }
+      const stats = intragroupMap.get(sourceGroup);
+      stats.count++;
+      stats.sum += weight;
+    } else {
+      // Inter-group edge
+      const key =
+        sourceGroup < targetGroup
+          ? `${sourceGroup}-${targetGroup}`
+          : `${targetGroup}-${sourceGroup}`;
+      if (!intergroupMap.has(key)) {
+        intergroupMap.set(key, {
+          count: 0,
+          sum: 0,
+          group1: sourceGroup,
+          group2: targetGroup,
+        });
+      }
+      const stats = intergroupMap.get(key);
+      stats.count++;
+      stats.sum += weight;
+    }
+
+    // Country similarity (within same country)
+    if (sourceCountry && targetCountry && sourceCountry === targetCountry) {
+      if (!countryMap.has(sourceCountry)) {
+        countryMap.set(sourceCountry, { count: 0, sum: 0 });
+      }
+      const countryStats = countryMap.get(sourceCountry);
+      countryStats.count++;
+      countryStats.sum += weight;
+    }
+  });
+
+  // Calculate averages for intra-group cohesion
+  const intragroupScores = Array.from(intragroupMap.entries())
+    .map(([group, stats]) => ({
+      group,
+      score: stats.count > 0 ? stats.sum / stats.count : 0,
+      count: stats.count,
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  // Calculate averages for country similarity
+  const countryScores = Array.from(countryMap.entries())
+    .map(([country, stats]) => ({
+      country,
+      score: stats.count > 0 ? stats.sum / stats.count : 0,
+      count: stats.count,
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  // Get all unique groups from nodes
+  const allGroups = new Set();
+  nodes.forEach((node) => {
+    if (node.groupId) allGroups.add(node.groupId);
+  });
+
+  // Canonical order: left to right politically
+  const canonicalOrder = [
+    "GUE/NGL",
+    "The Left",
+    "S&D",
+    "PSE",
+    "Greens/EFA",
+    "Verts/ALE",
+    "Renew",
+    "ALDE",
+    "RE",
+    "PPE",
+    "EPP",
+    "PPE-DE",
+    "EPP-ED",
+    "ECR",
+    "ID",
+    "ENF",
+    "PfE",
+    "EFDD",
+    "NI",
+    "UEN",
+    "ESN",
+    "IND/DEM",
+  ];
+
+  // Sort groups by canonical order
+  let groupsArray = Array.from(allGroups).sort((a, b) => {
+    const indexA = canonicalOrder.indexOf(a);
+    const indexB = canonicalOrder.indexOf(b);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  // Filter out NonAttached from heatmap
+  groupsArray = groupsArray.filter((group) => group !== "NonAttached");
+
+  // Create matrix for heatmap
+  const heatmapData = groupsArray.map((group1) =>
+    groupsArray.map((group2) => {
+      if (group1 === group2) {
+        // Diagonal: use intra-group score
+        const intra = intragroupScores.find((s) => s.group === group1);
+        // Return NaN if no intra-group score (e.g., only one MEP in the group, no edges)
+        return intra && intra.count > 0 ? intra.score : NaN;
+      } else {
+        // Off-diagonal: use inter-group score
+        const key =
+          group1 < group2 ? `${group1}-${group2}` : `${group2}-${group1}`;
+        const inter = intergroupMap.get(key);
+        return inter && inter.count > 0 ? inter.sum / inter.count : NaN;
+      }
+    })
+  );
+
+  // Get group colors for heatmap
+  const groupColors = new Map();
+  nodes.forEach((node) => {
+    if (node.groupId && !groupColors.has(node.groupId)) {
+      groupColors.set(node.groupId, node.color);
+    }
+  });
+
+  return {
+    intergroupCohesion: {
+      groups: groupsArray,
+      matrix: heatmapData,
+      groupColors: Object.fromEntries(groupColors), // Convert Map to object for JSON
+    },
+    intragroupCohesion: intragroupScores,
+    countrySimilarity: countryScores,
+  };
+}
+
 // Find the group to use for rotation (priority order)
 function findRotationGroup(initialPositions) {
   // Priority 1: GUE/NGL
@@ -551,6 +722,15 @@ async function precomputeLayoutForCountry(
       } MEPs`
     );
 
+    // Calculate cohesion data using ALL edges (not filtered by weight)
+    console.log(`    Computing cohesion data (using all edges)...`);
+    // Filter allEdges to only include edges between country nodes (but keep ALL weights)
+    const countryAllEdges = allEdges.filter(
+      (edge) => nodeIdSet.has(edge.source) && nodeIdSet.has(edge.target)
+    );
+    const cohesionData = computeCohesionData(countryAllEdges, nodes);
+    console.log(`    ✓ Computed cohesion data`);
+
     // Clean up graph to free memory before stringifying
     graph.clear();
 
@@ -562,6 +742,7 @@ async function precomputeLayoutForCountry(
       edges: edgesWithWeights,
       agreementScores: agreementScores,
       similarityScores: similarityScores,
+      cohesionData: cohesionData, // Add cohesion data
       subjects: subjectsList, // List of subjects with >5 voting sessions
       votingSessions: {
         total: votingSessionsData.total,
@@ -829,6 +1010,12 @@ async function precomputeLayoutForSubject(
       } MEPs`
     );
 
+    // Calculate cohesion data using ALL edges (not filtered by weight)
+    console.log(`    Computing cohesion data (using all edges)...`);
+    // Use allEdges (not filtered by weight > 0.6) for cohesion calculation
+    const cohesionData = computeCohesionData(allEdges, nodes);
+    console.log(`    ✓ Computed cohesion data`);
+
     // Clean up graph to free memory before stringifying
     graph.clear();
 
@@ -840,6 +1027,7 @@ async function precomputeLayoutForSubject(
       edges: edgesWithWeights,
       agreementScores: agreementScores,
       similarityScores: similarityScores,
+      cohesionData: cohesionData, // Add cohesion data
       subjects: subjectsList, // List of subjects with >5 voting sessions
       votingSessions: {
         total: votingSessionsData.total,
@@ -1123,6 +1311,15 @@ async function precomputeLayoutForCountryAndSubject(
       } MEPs`
     );
 
+    // Calculate cohesion data using ALL edges (not filtered by weight)
+    console.log(`    Computing cohesion data (using all edges)...`);
+    // Filter allEdges to only include edges between country nodes (but keep ALL weights)
+    const countryAllEdges = allEdges.filter(
+      (edge) => nodeIdSet.has(edge.source) && nodeIdSet.has(edge.target)
+    );
+    const cohesionData = computeCohesionData(countryAllEdges, nodes);
+    console.log(`    ✓ Computed cohesion data`);
+
     // Clean up graph to free memory before stringifying
     graph.clear();
 
@@ -1135,6 +1332,7 @@ async function precomputeLayoutForCountryAndSubject(
       edges: edgesWithWeights,
       agreementScores: agreementScores,
       similarityScores: similarityScores,
+      cohesionData: cohesionData, // Add cohesion data
       subjects: subjectsList, // List of subjects with >5 voting sessions
       votingSessions: {
         total: votingSessionsData.total,
@@ -1425,6 +1623,12 @@ async function precomputeLayout(
       } MEPs`
     );
 
+    // Calculate cohesion data using ALL edges (not filtered by weight)
+    console.log(`  Computing cohesion data (using all edges)...`);
+    // Use allEdges (not filtered by weight > 0.6) for cohesion calculation
+    const cohesionData = computeCohesionData(allEdges, nodes);
+    console.log(`  ✓ Computed cohesion data`);
+
     // Use precomputed voting sessions data (passed as parameter)
 
     // Clean up graph to free memory before stringifying
@@ -1437,6 +1641,7 @@ async function precomputeLayout(
       edges: edgesWithWeights,
       agreementScores: agreementScores,
       similarityScores: similarityScores,
+      cohesionData: cohesionData, // Add cohesion data
       subjects: subjectsList, // List of subjects with >5 voting sessions
       votingSessions: {
         total: votingSessionsData.total,
@@ -1531,16 +1736,21 @@ async function main() {
         }
 
         // Get unique countries and subjects from nodes
+        // Process ALL countries and ALL subjects separately (no combinations)
         const countries = [
           ...new Set(data.nodes.map((node) => node.Country).filter(Boolean)),
         ].sort();
 
-        // Get subjects from edgesBySubject
+        // Get ALL subjects from edgesBySubject (not filtered by voting sessions count)
         const subjects = data.edgesBySubject
           ? Object.keys(data.edgesBySubject).sort()
           : [];
 
-        // Process countries in parallel batches
+        console.log(
+          `  Processing ${countries.length} countries and ${subjects.length} subjects separately...`
+        );
+
+        // Process countries in parallel batches (each country separately)
         const countryResults = await processInBatches(
           countries,
           5, // Process 5 countries at a time
@@ -1568,7 +1778,7 @@ async function main() {
 
         results.push(...countryResults.filter((r) => r && !r.error));
 
-        // Process subjects in parallel batches
+        // Process subjects in parallel batches (each subject separately, no country combinations)
         const subjectResults = await processInBatches(
           subjects,
           5, // Process 5 subjects at a time

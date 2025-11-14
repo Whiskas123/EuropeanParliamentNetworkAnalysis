@@ -5,6 +5,7 @@ import { loadMandateData } from "../../lib/dataLoader.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
+import MobileMenu from "../../components/MobileMenu";
 import NetworkCanvas from "../../components/NetworkCanvas";
 import Sidebar from "../../components/Sidebar";
 import HoverTooltip from "../../components/HoverTooltip";
@@ -30,12 +31,6 @@ export default function VisualizationPage() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const previousGraphDataRef = useRef(null);
   const currentGraphDataRef = useRef(null);
-  const cohesionDataRef = useRef({
-    intergroup: null,
-    intragroup: null,
-    graphDataId: null,
-  });
-  const cohesionGraphDataRef = useRef(null); // Track which graphData the cohesion belongs to
 
   // Cache the imported modules
   const modulesRef = useRef(null);
@@ -73,41 +68,11 @@ export default function VisualizationPage() {
           edges,
           agreementScores,
           similarityScores,
+          cohesionData: precomputedCohesionData,
           subjects: precomputedSubjects,
           votingSessions: precomputedVotingSessions,
           metadata,
         } = await loadMandateData(mandateNum, country, subject);
-
-        // Load ALL edges and nodes separately (without filters) for heatmap calculations
-        // This ensures the heatmap uses all edges with all weights regardless of current filters
-        let allEdges = edges; // Default to filtered edges if loading all fails
-        let allNodesMap = null; // Map of all nodes for heatmap calculations
-        if (country || subject) {
-          try {
-            const allData = await loadMandateData(mandateNum, null, null);
-            if (allData && allData.edges) {
-              allEdges = allData.edges;
-            }
-            // Also store all nodes for heatmap calculations
-            if (allData && allData.nodes) {
-              allNodesMap = new Map();
-              allData.nodes.forEach((node) => {
-                allNodesMap.set(node.id, {
-                  id: node.id,
-                  label: node.label,
-                  color: node.color,
-                  country: node.country,
-                  groupId: node.groupId,
-                  groups: node.groups || [],
-                  partyNames: node.partyNames || [],
-                  photoURL: node.photoURL || null,
-                });
-              });
-            }
-          } catch (error) {
-            console.warn("Could not load all edges for heatmap, using filtered edges:", error);
-          }
-        }
 
         // Check if nodes already have positions (precomputed)
         const hasPrecomputedPositions =
@@ -306,9 +271,7 @@ export default function VisualizationPage() {
         const newGraphData = {
           nodes: finalNodes,
           links: finalEdges,
-          allLinks: allEdges, // Store ALL edges (without filters) for heatmap and closest MEPs calculations
           nodeMap,
-          allNodesMap: allNodesMap || nodeMap, // Store ALL nodes map (without filters) for heatmap calculations
           agreementScores: agreementScores || null,
           similarityScores: similarityScores || null,
           subjects: subjectsList, // Store subjects for fast access (filtered to >5 voting sessions)
@@ -323,11 +286,17 @@ export default function VisualizationPage() {
 
         currentGraphDataRef.current = newGraphData;
 
-        // Clear cohesion data and its reference BEFORE setting new graphData
-        // This prevents showing old cohesion with new graphData
-        setIntragroupCohesion(null);
-        setIntergroupCohesion(null);
-        cohesionGraphDataRef.current = null;
+        // Set cohesion data from precomputed data (if available)
+        if (precomputedCohesionData) {
+          setIntergroupCohesion(precomputedCohesionData.intergroupCohesion);
+          setIntragroupCohesion(precomputedCohesionData.intragroupCohesion);
+          setCountrySimilarity(precomputedCohesionData.countrySimilarity);
+        } else {
+          // Clear cohesion data if not available
+          setIntragroupCohesion(null);
+          setIntergroupCohesion(null);
+          setCountrySimilarity(null);
+        }
 
         setGraphData(newGraphData);
 
@@ -381,7 +350,7 @@ export default function VisualizationPage() {
       setAgreementScores(agreementArray.length > 0 ? agreementArray : null);
     } else {
       // Fallback: calculate agreement scores from edges (slower)
-      const edgesToSearch = graphData.allLinks || graphData.links;
+      const edgesToSearch = graphData.links;
       const connectedEdges = edgesToSearch.filter(
         (link) => link.source === mepId || link.target === mepId
       );
@@ -413,7 +382,7 @@ export default function VisualizationPage() {
     }
 
     // Get connected edges once (used for closest MEPs and country similarity)
-    const edgesToSearch = graphData.allLinks || graphData.links;
+    const edgesToSearch = graphData.links;
     const connectedEdges = edgesToSearch.filter(
       (link) => link.source === mepId || link.target === mepId
     );
@@ -441,7 +410,8 @@ export default function VisualizationPage() {
         // Fallback: calculate from edges if agreementScores not available
         const groupEdges = connectedEdges
           .map((edge) => {
-            const otherNodeId = edge.source === mepId ? edge.target : edge.source;
+            const otherNodeId =
+              edge.source === mepId ? edge.target : edge.source;
             const otherNode = graphData.nodeMap.get(otherNodeId);
             return otherNode && otherNode.groupId === selectedGroup
               ? { weight: edge.weight || 0 }
@@ -451,7 +421,8 @@ export default function VisualizationPage() {
 
         const groupScore =
           groupEdges.length > 0
-            ? groupEdges.reduce((sum, e) => sum + e.weight, 0) / groupEdges.length
+            ? groupEdges.reduce((sum, e) => sum + e.weight, 0) /
+              groupEdges.length
             : 0;
 
         setGroupSimilarityScore({
@@ -562,213 +533,6 @@ export default function VisualizationPage() {
     }
   }, [graphData]);
 
-  // Calculate cohesion scores when graph data is loaded (async to avoid blocking)
-  useEffect(() => {
-    if (!graphData) {
-      // Don't clear immediately - keep old data visible
-      return;
-    }
-
-    // Create a unique ID for this graphData to track which cohesion belongs to which data
-    const graphDataId = `${mandate}-${selectedCountry || "all"}-${
-      graphData.nodes.length
-    }`;
-
-    // Calculate asynchronously to avoid blocking UI
-    const calculateCohesion = () => {
-      // Use all edges for accurate calculations
-      const edgesToUse = graphData.allLinks || graphData.links;
-      // Use all nodes map for heatmap (includes all nodes regardless of filters)
-      const nodesMapToUse = graphData.allNodesMap || graphData.nodeMap;
-
-      // Calculate intergroup cohesion (between different groups)
-      const intergroupMap = new Map(); // group1-group2 -> { count, sum }
-      // Calculate intragroup cohesion (within same group)
-      const intragroupMap = new Map(); // group -> { count, sum }
-      // Calculate country similarity (within same country)
-      const countryMap = new Map(); // country -> { count, sum }
-
-      edgesToUse.forEach((edge) => {
-        const sourceNode = nodesMapToUse.get(edge.source);
-        const targetNode = nodesMapToUse.get(edge.target);
-
-        if (!sourceNode || !targetNode) return;
-
-        const sourceGroup = sourceNode.groupId || "Unknown";
-        const targetGroup = targetNode.groupId || "Unknown";
-        const sourceCountry = sourceNode.country;
-        const targetCountry = targetNode.country;
-        const weight = edge.weight || 0;
-
-        if (sourceGroup === targetGroup) {
-          // Intra-group edge
-          if (!intragroupMap.has(sourceGroup)) {
-            intragroupMap.set(sourceGroup, { count: 0, sum: 0 });
-          }
-          const stats = intragroupMap.get(sourceGroup);
-          stats.count++;
-          stats.sum += weight;
-        } else {
-          // Inter-group edge
-          const key =
-            sourceGroup < targetGroup
-              ? `${sourceGroup}-${targetGroup}`
-              : `${targetGroup}-${sourceGroup}`;
-          if (!intergroupMap.has(key)) {
-            intergroupMap.set(key, {
-              count: 0,
-              sum: 0,
-              group1: sourceGroup,
-              group2: targetGroup,
-            });
-          }
-          const stats = intergroupMap.get(key);
-          stats.count++;
-          stats.sum += weight;
-        }
-
-        // Country similarity (within same country)
-        if (sourceCountry && targetCountry && sourceCountry === targetCountry) {
-          if (!countryMap.has(sourceCountry)) {
-            countryMap.set(sourceCountry, { count: 0, sum: 0 });
-          }
-          const countryStats = countryMap.get(sourceCountry);
-          countryStats.count++;
-          countryStats.sum += weight;
-        }
-      });
-
-      // Calculate averages for intra-group cohesion
-      const intragroupScores = Array.from(intragroupMap.entries())
-        .map(([group, stats]) => ({
-          group,
-          score: stats.count > 0 ? stats.sum / stats.count : 0,
-          count: stats.count,
-        }))
-        .sort((a, b) => b.score - a.score);
-
-      // Calculate averages for country similarity
-      const countryScores = Array.from(countryMap.entries())
-        .map(([country, stats]) => ({
-          country,
-          score: stats.count > 0 ? stats.sum / stats.count : 0,
-          count: stats.count,
-        }))
-        .sort((a, b) => b.score - a.score);
-
-      // Get all unique groups from all nodes (not just filtered ones)
-      const allGroups = new Set();
-      // Use allNodesMap if available, otherwise fall back to filtered nodes
-      const nodesToCheck = graphData.allNodesMap 
-        ? Array.from(graphData.allNodesMap.values())
-        : graphData.nodes;
-      nodesToCheck.forEach((node) => {
-        if (node.groupId) allGroups.add(node.groupId);
-      });
-
-      // Canonical order: left to right politically
-      const canonicalOrder = [
-        "GUE/NGL",
-        "The Left",
-        "S&D",
-        "PSE",
-        "Greens/EFA",
-        "Verts/ALE",
-        "Renew",
-        "ALDE",
-        "RE",
-        "PPE",
-        "EPP",
-        "PPE-DE",
-        "EPP-ED",
-        "ECR",
-        "ID",
-        "ENF",
-        "PfE",
-        "EFDD",
-        "NI",
-        "UEN",
-        "ESN",
-        "IND/DEM",
-      ];
-
-      // Sort groups by canonical order
-      let groupsArray = Array.from(allGroups).sort((a, b) => {
-        const indexA = canonicalOrder.indexOf(a);
-        const indexB = canonicalOrder.indexOf(b);
-        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-        if (indexA !== -1) return -1;
-        if (indexB !== -1) return 1;
-        return a.localeCompare(b);
-      });
-
-      // Filter out NonAttached from heatmap
-      groupsArray = groupsArray.filter((group) => group !== "NonAttached");
-
-      // Create matrix for heatmap
-      const heatmapData = groupsArray.map((group1) =>
-        groupsArray.map((group2) => {
-          if (group1 === group2) {
-            // Diagonal: use intra-group score
-            const intra = intragroupScores.find((s) => s.group === group1);
-            // Return NaN if no intra-group score (e.g., only one MEP in the group, no edges)
-            return intra && intra.count > 0 ? intra.score : NaN;
-          } else {
-            // Off-diagonal: use inter-group score
-            const key =
-              group1 < group2 ? `${group1}-${group2}` : `${group2}-${group1}`;
-            const inter = intergroupMap.get(key);
-            return inter && inter.count > 0 ? inter.sum / inter.count : NaN;
-          }
-        })
-      );
-
-      // Get group colors for heatmap (from all nodes, not just filtered ones)
-      const groupColors = new Map();
-      const nodesForColors = graphData.allNodesMap 
-        ? Array.from(graphData.allNodesMap.values())
-        : graphData.nodes;
-      nodesForColors.forEach((node) => {
-        if (node.groupId && !groupColors.has(node.groupId)) {
-          groupColors.set(node.groupId, node.color);
-        }
-      });
-
-      // Only update if this is still the current graphData
-      if (currentGraphDataRef.current === graphData) {
-        setIntragroupCohesion(intragroupScores);
-        setCountrySimilarity(countryScores);
-        setIntergroupCohesion({
-          groups: groupsArray,
-          matrix: heatmapData,
-          groupColors: groupColors,
-        });
-        // Store in ref with ID and reference to graphData
-        cohesionDataRef.current = {
-          intergroup: {
-            groups: groupsArray,
-            matrix: heatmapData,
-            groupColors: groupColors,
-          },
-          intragroup: intragroupScores,
-          graphDataId: graphDataId,
-        };
-        cohesionGraphDataRef.current = graphData; // Track which graphData this cohesion belongs to
-      }
-    };
-
-    // Use requestIdleCallback if available, otherwise setTimeout
-    if (typeof window !== "undefined" && window.requestIdleCallback) {
-      const idleId = window.requestIdleCallback(calculateCohesion, {
-        timeout: 1000,
-      });
-      return () => window.cancelIdleCallback(idleId);
-    } else {
-      const timeoutId = setTimeout(calculateCohesion, 0);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [graphData, mandate, selectedCountry]);
-
   const handleNodeClick = useCallback((node) => {
     setSelectedNode(node);
     setSelectedGroup(null); // Clear group selection when selecting a node
@@ -878,34 +642,60 @@ export default function VisualizationPage() {
             </h1>
           </div>
           <div className="visualization-header-controls">
-            <MandateSelector
-              currentMandate={mandate}
-              onMandateChange={setMandate}
-            />
-            <CountrySelector
-              currentMandate={mandate}
-              currentCountry={selectedCountry}
-              onCountryChange={(country) => {
-                setSelectedCountry(country);
-                // If selecting a country, clear subject selection
-                if (country && selectedSubject) {
-                  setSelectedSubject(null);
-                }
-              }}
-              disabled={!!selectedSubject} // Disable when subject is selected
-            />
-            <SubjectSelector
-              currentMandate={mandate}
-              currentSubject={selectedSubject}
-              onSubjectChange={(subject) => {
-                setSelectedSubject(subject);
-                // If selecting a subject, clear country selection
-                if (subject && selectedCountry) {
-                  setSelectedCountry(null);
-                }
-              }}
-              disabled={!!selectedCountry} // Disable when country is selected
-            />
+            {/* Desktop: Show selectors directly */}
+            <div className="visualization-header-controls-desktop">
+              <MandateSelector
+                currentMandate={mandate}
+                onMandateChange={setMandate}
+              />
+              <CountrySelector
+                currentMandate={mandate}
+                currentCountry={selectedCountry}
+                onCountryChange={(country) => {
+                  setSelectedCountry(country);
+                  // If selecting a country, clear subject selection
+                  if (country && selectedSubject) {
+                    setSelectedSubject(null);
+                  }
+                }}
+                disabled={!!selectedSubject} // Disable when subject is selected
+              />
+              <SubjectSelector
+                currentMandate={mandate}
+                currentSubject={selectedSubject}
+                onSubjectChange={(subject) => {
+                  setSelectedSubject(subject);
+                  // If selecting a subject, clear country selection
+                  if (subject && selectedCountry) {
+                    setSelectedCountry(null);
+                  }
+                }}
+                disabled={!!selectedCountry} // Disable when country is selected
+              />
+            </div>
+            {/* Mobile: Show hamburger menu */}
+            <div className="visualization-header-controls-mobile">
+              <MobileMenu
+                mandate={mandate}
+                onMandateChange={setMandate}
+                selectedCountry={selectedCountry}
+                onCountryChange={(country) => {
+                  setSelectedCountry(country);
+                  // If selecting a country, clear subject selection
+                  if (country && selectedSubject) {
+                    setSelectedSubject(null);
+                  }
+                }}
+                selectedSubject={selectedSubject}
+                onSubjectChange={(subject) => {
+                  setSelectedSubject(subject);
+                  // If selecting a subject, clear country selection
+                  if (subject && selectedCountry) {
+                    setSelectedCountry(null);
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
 
@@ -946,23 +736,9 @@ export default function VisualizationPage() {
           agreementScores={agreementScores}
           closestMEPs={closestMEPs}
           selectedSubject={selectedSubject}
-          // Only show cohesion if it belongs to the current graphData
-          // This prevents showing old cohesion data with new graphData
-          intergroupCohesion={
-            graphData && cohesionGraphDataRef.current === graphData
-              ? intergroupCohesion
-              : null
-          }
-          intragroupCohesion={
-            graphData && cohesionGraphDataRef.current === graphData
-              ? intragroupCohesion
-              : null
-          }
-          countrySimilarity={
-            graphData && cohesionGraphDataRef.current === graphData
-              ? countrySimilarity
-              : null
-          }
+          intergroupCohesion={intergroupCohesion}
+          intragroupCohesion={intragroupCohesion}
+          countrySimilarity={countrySimilarity}
           onSelectNode={handleNodeClick}
           onSelectNodeFromGroup={handleNodeClickFromGroup}
           onClearNodeKeepGroup={handleClearNodeKeepGroup}

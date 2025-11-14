@@ -67,7 +67,9 @@ export default function CohesionHeatmap({
                     className="cohesion-heatmap-td-label clickable"
                     onClick={() => handleGroupClick(group1)}
                   >
-                    <span>{getGroupAcronym(group1, mandate)}</span>
+                    <span className="cohesion-heatmap-td-label-text">
+                      {getGroupAcronym(group1, mandate)}
+                    </span>
                     {intergroupCohesion.groupColors?.get(group1) && (
                       <span
                         className="cohesion-heatmap-td-label-color"
@@ -86,8 +88,10 @@ export default function CohesionHeatmap({
                       );
                     }
 
-                    // Handle NaN (no data) vs valid scores
-                    if (isNaN(score)) {
+                    // Handle NaN (no data) and 0 values vs valid scores
+                    // Check for NaN, exactly 0, or values that round to 0.0%
+                    const formattedScore = (score * 100).toFixed(1);
+                    if (isNaN(score) || score === 0 || formattedScore === "0.0") {
                       return (
                         <td
                           key={j}
@@ -98,7 +102,7 @@ export default function CohesionHeatmap({
                           )} - ${getGroupDisplayName(
                             intergroupCohesion.groups[j],
                             mandate
-                          )}: No data`}
+                          )}: ${isNaN(score) ? 'No data' : '0%'}`}
                         >
                           -
                         </td>

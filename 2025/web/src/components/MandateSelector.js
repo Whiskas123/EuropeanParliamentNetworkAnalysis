@@ -34,7 +34,7 @@ export default function MandateSelector({ currentMandate, onMandateChange }) {
   }, [isOpen]);
 
   return (
-    <div className="selector-dropdown" ref={dropdownRef}>
+    <div className={`selector-dropdown ${isOpen ? "open" : ""}`} ref={dropdownRef}>
       <div className="selector-header">
         <span className="selector-title">Term</span>
         <button
