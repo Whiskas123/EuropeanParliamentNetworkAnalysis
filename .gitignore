@@ -149,3 +149,4 @@ oldstuff/webpage/fullhemicicle.svg
 
 # Mandate data directories (too large for git)
 2025/web/public/data/mandate_*/
+2025/web/package-lock.json
