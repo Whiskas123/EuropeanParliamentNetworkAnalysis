@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   getGroupAcronym,
   getGroupDisplayName,
@@ -21,6 +22,8 @@ export default function CohesionHeatmap({
   mandate,
   onGroupClick,
 }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   if (!intergroupCohesion) return null;
 
   const handleGroupClick = (groupId) => {
@@ -31,9 +34,27 @@ export default function CohesionHeatmap({
 
   return (
     <div className="cohesion-heatmap">
-      <h3 className="cohesion-heatmap-title">Cross Group Average Similarity</h3>
-      <div className="cohesion-heatmap-container">
-        <div className="cohesion-heatmap-inner">
+      <h3
+        className="cohesion-heatmap-title collapsible-title"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        <span>Cross Group Similarity</span>
+        <svg
+          className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </h3>
+      <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+        <div className="cohesion-heatmap-container">
           <table className="cohesion-heatmap-table">
             <thead>
               <tr>
@@ -91,7 +112,11 @@ export default function CohesionHeatmap({
                     // Handle NaN (no data) and 0 values vs valid scores
                     // Check for NaN, exactly 0, or values that round to 0.0%
                     const formattedScore = (score * 100).toFixed(1);
-                    if (isNaN(score) || score === 0 || formattedScore === "0.0") {
+                    if (
+                      isNaN(score) ||
+                      score === 0 ||
+                      formattedScore === "0.0"
+                    ) {
                       return (
                         <td
                           key={j}
@@ -102,7 +127,7 @@ export default function CohesionHeatmap({
                           )} - ${getGroupDisplayName(
                             intergroupCohesion.groups[j],
                             mandate
-                          )}: ${isNaN(score) ? 'No data' : '0%'}`}
+                          )}: ${isNaN(score) ? "No data" : "0%"}`}
                         >
                           -
                         </td>

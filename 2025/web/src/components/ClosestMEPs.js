@@ -1,18 +1,69 @@
 "use client";
 
+import { useState } from "react";
 import { getCountryFlag, getSubjectEmoji } from "../lib/utils.js";
 
 export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
-  if (!meps || meps.length === 0) return null;
-
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
   const title = selectedSubject
     ? `5 Closest MEPs (${getSubjectEmoji(selectedSubject)} ${selectedSubject})`
     : "5 Closest MEPs";
 
+  if (!meps || meps.length === 0) {
+    return (
+      <div className="closest-meps">
+        <h4 
+          className="closest-meps-title collapsible-title"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          <span>{title}</span>
+          <svg
+            className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </h4>
+        <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+          <div className="closest-meps-empty">
+            <p>No similar MEPs found. This MEP may have unique voting patterns.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="closest-meps">
-      <h4 className="closest-meps-title">{title}</h4>
-      <div className="closest-meps-list">
+      <h4 
+        className="closest-meps-title collapsible-title"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        <span>{title}</span>
+        <svg
+          className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </h4>
+      <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+        <div className="closest-meps-list">
         {meps.map((mep, index) => (
           <div
             key={mep.id}
@@ -55,6 +106,7 @@ export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );

@@ -257,6 +257,39 @@ async function loadJsonData(mandate, country = null, subject = null) {
       }
     }
 
+    // Filter nodes to only include those present in the edges when subject is selected
+    // This ensures the network only shows MEPs that actually participated in the selected subject
+    if (subject && edges.length > 0) {
+      const nodeIdsInEdges = new Set();
+      edges.forEach((edge) => {
+        nodeIdsInEdges.add(edge.source);
+        nodeIdsInEdges.add(edge.target);
+      });
+      nodes = nodes.filter((node) => nodeIdsInEdges.has(node.id));
+      
+      // Filter similarity scores to only include nodes in the network
+      if (similarityScores) {
+        const filteredSimilarityScores = {};
+        nodes.forEach((node) => {
+          if (similarityScores[node.id]) {
+            filteredSimilarityScores[node.id] = similarityScores[node.id];
+          }
+        });
+        similarityScores = filteredSimilarityScores;
+      }
+      
+      // Filter agreement scores to only include nodes in the network
+      if (agreementScores) {
+        const filteredAgreementScores = {};
+        nodes.forEach((node) => {
+          if (agreementScores[node.id]) {
+            filteredAgreementScores[node.id] = agreementScores[node.id];
+          }
+        });
+        agreementScores = filteredAgreementScores;
+      }
+    }
+
     // Filter by country if requested
     if (country) {
       const countryNodes = nodes.filter((node) => node.country === country);

@@ -206,6 +206,12 @@ export default function GroupInfoPanel({
 
   const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
   const [subjectSortDirection, setSubjectSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
+  
+  // Collapsible state for sections
+  const [isSubjectCollapsed, setIsSubjectCollapsed] = useState(false);
+  const [isEntrancesCollapsed, setIsEntrancesCollapsed] = useState(false);
+  const [isExitsCollapsed, setIsExitsCollapsed] = useState(false);
+  const [isMEPsCollapsed, setIsMEPsCollapsed] = useState(false);
 
   // Calculate group similarity averages by subject using precomputed similarity scores
   const groupSubjectScores = useMemo(() => {
@@ -409,10 +415,26 @@ export default function GroupInfoPanel({
       {/* Group Similarity by Subject */}
       <div className="group-info-section">
         <div className="group-info-section-header">
-          <h4 className="group-info-section-title">
-            Subject by similarity to group
+          <h4 
+            className="group-info-section-title collapsible-title"
+            onClick={() => setIsSubjectCollapsed(!isSubjectCollapsed)}
+          >
+            <span>Subject by similarity to group</span>
+            <svg
+              className={`collapse-icon ${isSubjectCollapsed ? "collapsed" : ""}`}
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </h4>
-          {sortedSubjectScores && sortedSubjectScores.length > 0 && (
+          {sortedSubjectScores && sortedSubjectScores.length > 0 && !isSubjectCollapsed && (
             <button
               className="group-info-sort-button"
               onClick={toggleSubjectSortDirection}
@@ -446,7 +468,8 @@ export default function GroupInfoPanel({
             </button>
           )}
         </div>
-        <div className="group-subject-scores-wrapper">
+        <div className={`collapsible-content ${!isSubjectCollapsed ? "expanded" : ""}`}>
+          <div className="group-subject-scores-wrapper">
           {sortedSubjectScores && sortedSubjectScores.length > 0 ? (
             <div
               className="group-subject-scores-list"
@@ -482,6 +505,7 @@ export default function GroupInfoPanel({
               No subject data available
             </div>
           )}
+          </div>
         </div>
       </div>
 
@@ -489,8 +513,27 @@ export default function GroupInfoPanel({
         <>
           {groupInfo.entrances.length > 0 && (
             <div className="group-info-section">
-              <h4 className="group-info-section-title">Entrances</h4>
-              <div className="group-info-events-wrapper">
+              <h4 
+                className="group-info-section-title collapsible-title"
+                onClick={() => setIsEntrancesCollapsed(!isEntrancesCollapsed)}
+              >
+                <span>Entrances</span>
+                <svg
+                  className={`collapse-icon ${isEntrancesCollapsed ? "collapsed" : ""}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </h4>
+              <div className={`collapsible-content ${!isEntrancesCollapsed ? "expanded" : ""}`}>
+                <div className="group-info-events-wrapper">
                 <div className="group-info-events" ref={entrancesListRef}>
                   {groupInfo.entrances.map((event, idx) => {
                     // Find the MEP node for clicking
@@ -541,6 +584,7 @@ export default function GroupInfoPanel({
                       </div>
                     );
                   })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -548,9 +592,28 @@ export default function GroupInfoPanel({
 
           {groupInfo.exits.length > 0 && (
             <div className="group-info-section">
-              <h4 className="group-info-section-title">Exits</h4>
-              <div className="group-info-events-wrapper">
-                <div className="group-info-events" ref={exitsListRef}>
+              <h4 
+                className="group-info-section-title collapsible-title"
+                onClick={() => setIsExitsCollapsed(!isExitsCollapsed)}
+              >
+                <span>Exits</span>
+                <svg
+                  className={`collapse-icon ${isExitsCollapsed ? "collapsed" : ""}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </h4>
+              <div className={`collapsible-content ${!isExitsCollapsed ? "expanded" : ""}`}>
+                <div className="group-info-events-wrapper">
+                  <div className="group-info-events" ref={exitsListRef}>
                   {groupInfo.exits.map((event, idx) => {
                     // Find the MEP node for clicking
                     const mepNode = graphData?.nodeMap.get(event.mepId);
@@ -600,6 +663,7 @@ export default function GroupInfoPanel({
                       </div>
                     );
                   })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -610,24 +674,13 @@ export default function GroupInfoPanel({
       {sortedMEPs.length > 0 && (
         <div className="group-info-section">
           <div className="group-info-section-header">
-            <h4 className="group-info-section-title">
-              MEPs by similarity to group
-            </h4>
-            <button
-              className="group-info-sort-button"
-              onClick={toggleSortDirection}
-              title={
-                sortDirection === "desc"
-                  ? "Sort: Highest to Lowest (click to reverse)"
-                  : "Sort: Lowest to Highest (click to reverse)"
-              }
+            <h4 
+              className="group-info-section-title collapsible-title"
+              onClick={() => setIsMEPsCollapsed(!isMEPsCollapsed)}
             >
-              <span>
-                {sortDirection === "desc"
-                  ? "Highest to Lowest"
-                  : "Lowest to Highest"}
-              </span>
+              <span>MEPs by similarity to group</span>
               <svg
+                className={`collapse-icon ${isMEPsCollapsed ? "collapsed" : ""}`}
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
@@ -636,16 +689,46 @@ export default function GroupInfoPanel({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{
-                  transform:
-                    sortDirection === "asc" ? "rotate(180deg)" : "none",
-                }}
               >
-                <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
+                <path d="M6 9l6 6 6-6" />
               </svg>
-            </button>
+            </h4>
+            {!isMEPsCollapsed && (
+              <button
+                className="group-info-sort-button"
+                onClick={toggleSortDirection}
+                title={
+                  sortDirection === "desc"
+                    ? "Sort: Highest to Lowest (click to reverse)"
+                    : "Sort: Lowest to Highest (click to reverse)"
+                }
+              >
+                <span>
+                  {sortDirection === "desc"
+                    ? "Highest to Lowest"
+                    : "Lowest to Highest"}
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{
+                    transform:
+                      sortDirection === "asc" ? "rotate(180deg)" : "none",
+                  }}
+                >
+                  <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
+                </svg>
+              </button>
+            )}
           </div>
-          <div className="group-info-meps-wrapper">
+          <div className={`collapsible-content ${!isMEPsCollapsed ? "expanded" : ""}`}>
+            <div className="group-info-meps-wrapper">
             <div className="group-info-meps-list" ref={mepsListRef}>
               {sortedMEPs.map((item, idx) => {
                 const rank =
@@ -676,6 +759,7 @@ export default function GroupInfoPanel({
                   </div>
                 );
               })}
+            </div>
             </div>
           </div>
         </div>

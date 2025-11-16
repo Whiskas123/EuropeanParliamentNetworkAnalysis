@@ -10,7 +10,7 @@ import {
   getGroupColor,
 } from "../lib/utils.js";
 
-export default function MEPInfoPanel({ node, graphData, mandate }) {
+export default function MEPInfoPanel({ node, graphData, mandate, onSelectGroup }) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);
   const [showPartyTooltip, setShowPartyTooltip] = useState(false);
   const [groupTooltipPosition, setGroupTooltipPosition] = useState("right");
@@ -229,13 +229,19 @@ export default function MEPInfoPanel({ node, graphData, mandate }) {
           <div className="mep-info-group-label">Political Group</div>
           <div className="mep-info-group-content">
             <div
-              className="mep-info-group-color"
+              className="mep-info-group-color mep-info-group-color-clickable"
               style={{
                 backgroundColor:
                   graphData?.nodeMap.get(node.id)?.color || "#CCCCCC",
               }}
+              onClick={() => onSelectGroup && onSelectGroup(node.groupId)}
+              title="Click to view group details"
             />
-            <span className="mep-info-group-name">
+            <span 
+              className="mep-info-group-name mep-info-group-name-clickable"
+              onClick={() => onSelectGroup && onSelectGroup(node.groupId)}
+              title="Click to view group details"
+            >
               {getGroupAcronym(node.groupId, mandate)}
             </span>
             {changedGroups && (

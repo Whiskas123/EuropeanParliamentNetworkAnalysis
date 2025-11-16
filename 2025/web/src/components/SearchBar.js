@@ -28,13 +28,13 @@ export default function SearchBar({
               setSearchQuery(query);
               if (query.trim() && graphData) {
                 const queryLower = query.toLowerCase().trim();
-                
+
                 // First, try to match by country name (exact or partial match)
                 const countryMatches = graphData.nodes.filter((node) => {
                   if (!node.country) return false;
                   return node.country.toLowerCase().includes(queryLower);
                 });
-                
+
                 // If we have country matches, show all MEPs from matching countries
                 // Otherwise, search by MEP name
                 let results;
@@ -60,7 +60,7 @@ export default function SearchBar({
                       groupId: node.groupId,
                     }));
                 }
-                
+
                 setSearchResults(results);
               } else {
                 setSearchResults([]);
@@ -74,40 +74,51 @@ export default function SearchBar({
               }
             }}
           />
-          {searchResults.length > 0 && (
+          {searchQuery.trim() && (
             <div className="search-bar-results">
-              {searchResults.map((result) => (
-                <div
-                  key={result.id}
-                  className="search-bar-result-item"
-                  onClick={() => {
-                    onSelectNode({
-                      id: result.id,
-                      label: result.label,
-                      country: result.country,
-                      groupId: result.groupId,
-                    });
-                    setSearchQuery("");
-                    setSearchResults([]);
-                    setSearchOpen(false);
-                  }}
-                >
-                  <div className="search-bar-result-name">{result.label}</div>
+              {searchResults.length > 0 ? (
+                searchResults.map((result) => (
+                  <div
+                    key={result.id}
+                    className="search-bar-result-item"
+                    onClick={() => {
+                      onSelectNode({
+                        id: result.id,
+                        label: result.label,
+                        country: result.country,
+                        groupId: result.groupId,
+                      });
+                      setSearchQuery("");
+                      setSearchResults([]);
+                      setSearchOpen(false);
+                    }}
+                  >
+                    <div className="search-bar-result-name">{result.label}</div>
+                    <div className="search-bar-result-meta">
+                      {result.groupId && (
+                        <>
+                          <span>
+                            {getGroupAcronym(result.groupId, mandate)}
+                          </span>
+                          {result.country && <span>•</span>}
+                        </>
+                      )}
+                      {result.country && (
+                        <span>
+                          {getCountryFlag(result.country)} {result.country}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="search-bar-result-item search-bar-no-results">
+                  <div className="search-bar-result-name">No results found</div>
                   <div className="search-bar-result-meta">
-                    {result.groupId && (
-                      <>
-                        <span>{getGroupAcronym(result.groupId, mandate)}</span>
-                        {result.country && <span>•</span>}
-                      </>
-                    )}
-                    {result.country && (
-                      <span>
-                        {getCountryFlag(result.country)} {result.country}
-                      </span>
-                    )}
+                    Try searching by name or country
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           )}
         </div>

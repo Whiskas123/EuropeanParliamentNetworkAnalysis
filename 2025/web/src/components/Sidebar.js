@@ -126,38 +126,46 @@ export default function Sidebar({
       </div>
 
       <div className="sidebar-content">
+        {/* Show spinner prominently when loading and no data */}
+        {loading && !graphData && (
+          <LoadingSpinner message="Loading network data..." />
+        )}
+
         {/* Network Statistics */}
         {graphData && !selectedNode && !selectedGroup && (
-          <div className="network-stats">
-            <div className="network-stat-item">
-              <div className="network-stat-header">
-                <span className="network-stat-label">Visible MEPs</span>
-                <span className="network-stat-value">
-                  {graphData.nodes.length}
-                </span>
-              </div>
-              <div className="network-stat-description">
-                MEPs that participated in at least 50% of the voting sessions
-              </div>
-            </div>
-            {votingSessions !== null && (
+          <>
+            <h3 className="network-stats-title">Overview</h3>
+            <div className="network-stats">
               <div className="network-stat-item">
                 <div className="network-stat-header">
-                  <span className="network-stat-label">Voting Sessions</span>
-                  <span className="network-stat-value">{votingSessions}</span>
+                  <span className="network-stat-label">Visible MEPs</span>
+                  <span className="network-stat-value">
+                    {graphData.nodes.length}
+                  </span>
                 </div>
                 <div className="network-stat-description">
-                  {selectedSubject
-                    ? `Roll-call voting sessions for ${selectedSubject} in the ${formatMandateOrdinal(
-                        mandate
-                      )} term`
-                    : `Total roll-call voting sessions in the ${formatMandateOrdinal(
-                        mandate
-                      )} term`}
+                  MEPs that participated in at least 50% of the voting sessions
                 </div>
               </div>
-            )}
-          </div>
+              {votingSessions !== null && (
+                <div className="network-stat-item">
+                  <div className="network-stat-header">
+                    <span className="network-stat-label">Voting Sessions</span>
+                    <span className="network-stat-value">{votingSessions}</span>
+                  </div>
+                  <div className="network-stat-description">
+                    {selectedSubject
+                      ? `Roll-call voting sessions for ${selectedSubject} in the ${formatMandateOrdinal(
+                          mandate
+                        )} term`
+                      : `Total roll-call voting sessions in the ${formatMandateOrdinal(
+                          mandate
+                        )} term`}
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
         )}
 
         {selectedNode ? (
@@ -182,6 +190,7 @@ export default function Sidebar({
               node={selectedNode}
               graphData={graphData}
               mandate={mandate}
+              onSelectGroup={onSelectGroup}
             />
             <SimilarityScores
               groupSimilarityScore={groupSimilarityScore}
@@ -236,19 +245,24 @@ export default function Sidebar({
                 countrySimilarity={countrySimilarity}
                 graphData={graphData}
                 onCountryClick={onCountryClick}
+                selectedSubject={selectedSubject}
               />
             )}
             {!intergroupCohesion &&
               !intragroupCohesion &&
               !countrySimilarity &&
               graphData && (
-                <div className="sidebar-loading-text">
-                  Loading cohesion data...
+                <div className="sidebar-empty-state">
+                  <div className="sidebar-empty-icon">📊</div>
+                  <p className="sidebar-empty-text">
+                    Cohesion data is being calculated. This may take a moment...
+                  </p>
                 </div>
               )}
           </>
         )}
-        {loading && <LoadingSpinner />}
+        {/* Show spinner at bottom when loading and data exists (for updates) */}
+        {loading && graphData && <LoadingSpinner />}
       </div>
     </div>
   );

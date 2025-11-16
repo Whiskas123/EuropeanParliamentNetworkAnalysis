@@ -476,7 +476,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleZoomIn}
-          title="Zoom In"
+          title="Zoom In (or use mouse wheel)"
           aria-label="Zoom In"
         >
           <svg
@@ -518,7 +518,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleResetZoom}
-          title="Reset Zoom"
+          title="Reset Zoom (or double-click)"
           aria-label="Reset Zoom"
         >
           <svg
@@ -538,6 +538,21 @@ export default function NetworkCanvas({
           </svg>
         </button>
       </div>
+      <div className="network-canvas-tip" title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps">
+        💡 Tip: Click nodes or groups to explore
+      </div>
+      {!graphData && (
+        <div className="network-canvas-empty">
+          <div className="network-canvas-empty-content">
+            <div className="network-canvas-empty-icon">🌐</div>
+            <h3>Network Visualization</h3>
+            <p>Loading network data...</p>
+            <p className="network-canvas-empty-hint">
+              Once loaded, you can click on nodes to explore MEPs and their connections
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

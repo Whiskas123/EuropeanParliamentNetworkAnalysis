@@ -569,6 +569,31 @@ export default function VisualizationPage() {
     setTooltipPosition(position);
   }, []);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Escape key: Clear selection
+      if (event.key === "Escape") {
+        if (selectedNode) {
+          setSelectedNode(null);
+        } else if (selectedGroup) {
+          setSelectedGroup(null);
+        }
+      }
+      // Forward slash: Focus search
+      if (event.key === "/" && !event.ctrlKey && !event.metaKey) {
+        const searchInput = document.querySelector(".search-bar-input");
+        if (searchInput && document.activeElement !== searchInput) {
+          event.preventDefault();
+          searchInput.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedNode, selectedGroup]);
+
   return (
     <div className="visualization-page">
       {/* Left side - Network visualization (70%) */}
@@ -699,7 +724,23 @@ export default function VisualizationPage() {
           </div>
         </div>
 
-        {error && <div className="visualization-error">Error: {error}</div>}
+        {error && (
+          <div className="visualization-error">
+            <div className="visualization-error-icon">⚠️</div>
+            <div className="visualization-error-content">
+              <h3>Error loading data</h3>
+              <p>{error}</p>
+              <button
+                className="visualization-error-retry"
+                onClick={() =>
+                  loadAndPrepareGraph(mandate, selectedCountry, selectedSubject)
+                }
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
 
         {graphData && (
           <div className="visualization-content">
@@ -713,19 +754,19 @@ export default function VisualizationPage() {
               onNodeHover={handleNodeHover}
               onHoverPositionChange={handleHoverPositionChange}
             />
-            {loading && <LoadingSpinner />}
+            {loading && <LoadingSpinner message="Loading network data..." />}
           </div>
         )}
 
         {!graphData && loading && (
           <div className="visualization-content">
-            <LoadingSpinner />
+            <LoadingSpinner message="Preparing visualization..." />
           </div>
         )}
       </div>
 
       {/* Right side - Sidebar (30%) */}
-      {(graphData || previousGraphDataRef.current) && (
+      {(graphData || previousGraphDataRef.current || loading) && (
         <Sidebar
           mandate={mandate}
           selectedNode={selectedNode}

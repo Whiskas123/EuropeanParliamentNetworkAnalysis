@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { getGroupAcronym, getSubjectEmoji } from "../lib/utils.js";
+import {
+  getGroupAcronym,
+  getGroupDisplayName,
+  getSubjectEmoji,
+} from "../lib/utils.js";
 
 export default function SimilarityScores({
   groupSimilarityScore,
@@ -14,6 +18,11 @@ export default function SimilarityScores({
 }) {
   const [agreementSubject, setAgreementSubject] = useState(null);
   const [fallbackSubjects, setFallbackSubjects] = useState([]);
+
+  // Collapsible state for sections
+  const [isSimilarityScoresCollapsed, setIsSimilarityScoresCollapsed] =
+    useState(false);
+  const [isAgreementCollapsed, setIsAgreementCollapsed] = useState(false);
 
   // Get subjects from graphData (precomputed) - already filtered to >5 voting sessions
   const subjects = useMemo(() => {
@@ -143,60 +152,64 @@ export default function SimilarityScores({
 
   return (
     <div className="similarity-scores">
-      <h4 className="similarity-scores-title">Similarity Scores</h4>
-      <div className="similarity-scores-list">
-        {groupSimilarityScore !== null && (
-          <div className="similarity-score-item">
-            <div className="similarity-score-header">
-              <span className="similarity-score-label">
-                Group Similarity Average
-              </span>
-              <span className="similarity-score-value">
-                {(groupSimilarityScore.score * 100).toFixed(1)}%
-              </span>
-            </div>
-            <div className="similarity-score-description">
-              Average similarity with {groupSimilarityScore.count} MEP
-              {groupSimilarityScore.count !== 1 ? "s" : ""} from the same group
-            </div>
-            {groupSubjectScores && groupSubjectScores.length > 0 && (
-              <div className="group-subject-breakdown">
-                {groupSubjectScores.length >= 3 && (
-                  <div className="group-subject-section">
-                    <div className="group-subject-label">
-                      Agrees more with{" "}
-                      {getGroupAcronym(selectedNode.groupId, mandate)} members:
-                    </div>
-                    <div className="group-subject-list">
-                      {groupSubjectScores.slice(0, 3).map((item) => (
-                        <div key={item.subject} className="group-subject-item">
-                          <span className="group-subject-name agree-more">
-                            {getSubjectEmoji(item.subject)} {item.subject}
-                          </span>
-                          <span className="group-subject-score">
-                            {(item.score * 100).toFixed(1)}%
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {groupSubjectScores.length >= 3 && (
-                  <div className="group-subject-section">
-                    <div className="group-subject-label">
-                      Agrees less with{" "}
-                      {getGroupAcronym(selectedNode.groupId, mandate)} members:
-                    </div>
-                    <div className="group-subject-list">
-                      {groupSubjectScores
-                        .slice(-3)
-                        .reverse()
-                        .map((item) => (
+      <h4
+        className="similarity-scores-title collapsible-title"
+        onClick={() =>
+          setIsSimilarityScoresCollapsed(!isSimilarityScoresCollapsed)
+        }
+      >
+        <span>Similarity Scores</span>
+        <svg
+          className={`collapse-icon ${
+            isSimilarityScoresCollapsed ? "collapsed" : ""
+          }`}
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </h4>
+      <div
+        className={`collapsible-content ${
+          !isSimilarityScoresCollapsed ? "expanded" : ""
+        }`}
+      >
+        <div className="similarity-scores-list">
+          {groupSimilarityScore !== null && (
+            <div className="similarity-score-item">
+              <div className="similarity-score-header">
+                <span className="similarity-score-label">Group Similarity</span>
+                <span className="similarity-score-value">
+                  {(groupSimilarityScore.score * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="similarity-score-description">
+                Average similarity with {groupSimilarityScore.count} MEP
+                {groupSimilarityScore.count !== 1 ? "s" : ""} from the same
+                group
+              </div>
+              {groupSubjectScores && groupSubjectScores.length > 0 && (
+                <div className="group-subject-breakdown">
+                  {groupSubjectScores.length >= 3 && (
+                    <div className="group-subject-section">
+                      <div className="group-subject-label">
+                        Agrees more with{" "}
+                        {getGroupAcronym(selectedNode.groupId, mandate)}{" "}
+                        members:
+                      </div>
+                      <div className="group-subject-list">
+                        {groupSubjectScores.slice(0, 3).map((item) => (
                           <div
                             key={item.subject}
                             className="group-subject-item"
                           >
-                            <span className="group-subject-name agree-less">
+                            <span className="group-subject-name agree-more">
                               {getSubjectEmoji(item.subject)} {item.subject}
                             </span>
                             <span className="group-subject-score">
@@ -204,107 +217,165 @@ export default function SimilarityScores({
                             </span>
                           </div>
                         ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {countrySimilarityScore !== null && (
-          <div className="similarity-score-item">
-            <div className="similarity-score-header">
-              <span className="similarity-score-label">
-                Country Similarity Average
-              </span>
-              <span className="similarity-score-value">
-                {(countrySimilarityScore.score * 100).toFixed(1)}%
-              </span>
-            </div>
-            <div className="similarity-score-description">
-              Average similarity with {countrySimilarityScore.count} MEP
-              {countrySimilarityScore.count !== 1 ? "s" : ""} from the same
-              country
-            </div>
-          </div>
-        )}
-
-        {displayAgreementScores && displayAgreementScores.length > 0 && (
-          <div className="similarity-scores-agreement">
-            <div className="similarity-scores-agreement-header-section">
-              <h4 className="similarity-scores-agreement-title">
-                Average Similarity with Members of Groups
-                {agreementSubject &&
-                  ` (${getSubjectEmoji(agreementSubject)} ${agreementSubject})`}
-              </h4>
-              {subjects.length > 0 && (
-                <select
-                  className="agreement-subject-selector"
-                  value={agreementSubject || ""}
-                  onChange={(e) => setAgreementSubject(e.target.value || null)}
-                >
-                  <option value="">All Subjects</option>
-                  {subjects.map((subject) => (
-                    <option key={subject} value={subject}>
-                      {getSubjectEmoji(subject)} {subject}
-                    </option>
-                  ))}
-                </select>
+                  )}
+                  {groupSubjectScores.length >= 3 && (
+                    <div className="group-subject-section">
+                      <div className="group-subject-label">
+                        Agrees less with{" "}
+                        {getGroupAcronym(selectedNode.groupId, mandate)}{" "}
+                        members:
+                      </div>
+                      <div className="group-subject-list">
+                        {groupSubjectScores
+                          .slice(-3)
+                          .reverse()
+                          .map((item) => (
+                            <div
+                              key={item.subject}
+                              className="group-subject-item"
+                            >
+                              <span className="group-subject-name agree-less">
+                                {getSubjectEmoji(item.subject)} {item.subject}
+                              </span>
+                              <span className="group-subject-score">
+                                {(item.score * 100).toFixed(1)}%
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
-            <div className="similarity-scores-agreement-list-wrapper">
-              <div className="similarity-scores-agreement-list">
-                {(() => {
-                  // Filter out NonAttached
-                  const filteredScores = displayAgreementScores.filter(
-                    (item) => item.groupId !== "NonAttached"
-                  );
+          )}
 
-                  return filteredScores.map((item) => {
-                    // Get group color
-                    const groupNode = graphData?.nodes.find(
-                      (n) => n.groupId === item.groupId
-                    );
-                    const groupColor = groupNode?.color || "#CCCCCC";
-                    const widthPercent = item.score * 100;
-
-                    return (
-                      <div
-                        key={item.groupId}
-                        className="similarity-scores-agreement-item"
-                      >
-                        <div className="similarity-scores-agreement-header">
-                          <div className="similarity-scores-agreement-group">
-                            <div
-                              className="similarity-scores-agreement-color"
-                              style={{ backgroundColor: groupColor }}
-                            />
-                            <span className="similarity-scores-agreement-name">
-                              {getGroupAcronym(item.groupId, mandate)}
-                            </span>
-                          </div>
-                          <span className="similarity-scores-agreement-value">
-                            {(item.score * 100).toFixed(1)}%
-                          </span>
-                        </div>
-                        <div className="similarity-scores-agreement-bar-container">
-                          <div
-                            className="similarity-scores-agreement-bar"
-                            style={{
-                              width: `${widthPercent}%`,
-                              backgroundColor: groupColor,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  });
-                })()}
+          {countrySimilarityScore !== null && (
+            <div className="similarity-score-item">
+              <div className="similarity-score-header">
+                <span className="similarity-score-label">
+                  Country Similarity
+                </span>
+                <span className="similarity-score-value">
+                  {(countrySimilarityScore.score * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="similarity-score-description">
+                Average similarity with {countrySimilarityScore.count} MEP
+                {countrySimilarityScore.count !== 1 ? "s" : ""} from the same
+                country
               </div>
             </div>
-          </div>
-        )}
+          )}
+
+          {displayAgreementScores && displayAgreementScores.length > 0 && (
+            <div className="similarity-scores-agreement">
+              <div className="similarity-scores-agreement-header-section">
+                <h4
+                  className="similarity-scores-agreement-title collapsible-title"
+                  onClick={() => setIsAgreementCollapsed(!isAgreementCollapsed)}
+                >
+                  <span>
+                    Similarity with Groups
+                    {agreementSubject &&
+                      ` (${getSubjectEmoji(
+                        agreementSubject
+                      )} ${agreementSubject})`}
+                  </span>
+                  <svg
+                    className={`collapse-icon ${
+                      isAgreementCollapsed ? "collapsed" : ""
+                    }`}
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </h4>
+                {subjects.length > 0 && (
+                  <select
+                    className="agreement-subject-selector"
+                    value={agreementSubject || ""}
+                    onChange={(e) =>
+                      setAgreementSubject(e.target.value || null)
+                    }
+                  >
+                    <option value="">All Subjects</option>
+                    {subjects.map((subject) => (
+                      <option key={subject} value={subject}>
+                        {getSubjectEmoji(subject)} {subject}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+              <div
+                className={`collapsible-content ${
+                  !isAgreementCollapsed ? "expanded" : ""
+                }`}
+              >
+                <div className="similarity-scores-agreement-list-wrapper">
+                  <div className="similarity-scores-agreement-list">
+                    {(() => {
+                      // Filter out NonAttached
+                      const filteredScores = displayAgreementScores.filter(
+                        (item) => item.groupId !== "NonAttached"
+                      );
+
+                      return filteredScores.map((item) => {
+                        // Get group color
+                        const groupNode = graphData?.nodes.find(
+                          (n) => n.groupId === item.groupId
+                        );
+                        const groupColor = groupNode?.color || "#CCCCCC";
+                        const widthPercent = item.score * 100;
+
+                        return (
+                          <div
+                            key={item.groupId}
+                            className="similarity-scores-agreement-item"
+                          >
+                            <div className="similarity-scores-agreement-header">
+                              <div className="similarity-scores-agreement-group">
+                                <div
+                                  className="similarity-scores-agreement-color"
+                                  style={{ backgroundColor: groupColor }}
+                                />
+                                <span className="similarity-scores-agreement-name">
+                                  {getGroupDisplayName(item.groupId, mandate)}
+                                </span>
+                              </div>
+                              <span className="similarity-scores-agreement-value">
+                                {(item.score * 100).toFixed(1)}%
+                              </span>
+                            </div>
+                            <div className="similarity-scores-agreement-bar-container">
+                              <div
+                                className="similarity-scores-agreement-bar"
+                                style={{
+                                  width: `${widthPercent}%`,
+                                  backgroundColor: groupColor,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
