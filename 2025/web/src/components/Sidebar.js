@@ -93,7 +93,7 @@ export default function Sidebar({
               }
             }}
             className="sidebar-search-button"
-            title="Search MEP by name or country"
+            title="Search MEP by name, country, or national party"
           >
             <span>Search MEP</span>
 
