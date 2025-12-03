@@ -206,7 +206,7 @@ export default function GroupInfoPanel({
 
   const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
   const [subjectSortDirection, setSubjectSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
-  
+
   // Collapsible state for sections
   const [isSubjectCollapsed, setIsSubjectCollapsed] = useState(false);
   const [isEntrancesCollapsed, setIsEntrancesCollapsed] = useState(false);
@@ -415,13 +415,15 @@ export default function GroupInfoPanel({
       {/* Group Similarity by Subject */}
       <div className="group-info-section">
         <div className="group-info-section-header">
-          <h4 
+          <h4
             className="group-info-section-title collapsible-title"
             onClick={() => setIsSubjectCollapsed(!isSubjectCollapsed)}
           >
-            <span>Subject by similarity to group</span>
+            <span>Subject by average similarity</span>
             <svg
-              className={`collapse-icon ${isSubjectCollapsed ? "collapsed" : ""}`}
+              className={`collapse-icon ${
+                isSubjectCollapsed ? "collapsed" : ""
+              }`}
               width="16"
               height="16"
               viewBox="0 0 24 24"
@@ -434,77 +436,88 @@ export default function GroupInfoPanel({
               <path d="M6 9l6 6 6-6" />
             </svg>
           </h4>
-          {sortedSubjectScores && sortedSubjectScores.length > 0 && !isSubjectCollapsed && (
-            <button
-              className="group-info-sort-button"
-              onClick={toggleSubjectSortDirection}
-              title={
-                subjectSortDirection === "desc"
-                  ? "Sort: Highest to Lowest (click to reverse)"
-                  : "Sort: Lowest to Highest (click to reverse)"
-              }
-            >
-              <span>
-                {subjectSortDirection === "desc"
-                  ? "Highest to Lowest"
-                  : "Lowest to Highest"}
-              </span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  transform:
-                    subjectSortDirection === "asc" ? "rotate(180deg)" : "none",
-                }}
+          {sortedSubjectScores &&
+            sortedSubjectScores.length > 0 &&
+            !isSubjectCollapsed && (
+              <button
+                className="group-info-sort-button"
+                onClick={toggleSubjectSortDirection}
+                title={
+                  subjectSortDirection === "desc"
+                    ? "Sort: Highest to Lowest (click to reverse)"
+                    : "Sort: Lowest to Highest (click to reverse)"
+                }
               >
-                <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
-              </svg>
-            </button>
-          )}
+                <span>
+                  {subjectSortDirection === "desc"
+                    ? "Highest to Lowest"
+                    : "Lowest to Highest"}
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{
+                    transform:
+                      subjectSortDirection === "asc"
+                        ? "rotate(180deg)"
+                        : "none",
+                  }}
+                >
+                  <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
+                </svg>
+              </button>
+            )}
         </div>
-        <div className={`collapsible-content ${!isSubjectCollapsed ? "expanded" : ""}`}>
+        <div
+          className={`collapsible-content ${
+            !isSubjectCollapsed ? "expanded" : ""
+          }`}
+        >
           <div className="group-subject-scores-wrapper">
-          {sortedSubjectScores && sortedSubjectScores.length > 0 ? (
-            <div
-              className="group-subject-scores-list"
-              ref={subjectScoresListRef}
-            >
-              {sortedSubjectScores.map((item) => {
-                const widthPercent = item.score * 100;
-                return (
-                  <div key={item.subject} className="group-subject-score-item">
-                    <div className="group-subject-score-header">
-                      <span className="group-subject-score-name">
-                        {getSubjectEmoji(item.subject)} {item.subject}
-                      </span>
-                      <span className="group-subject-score-value">
-                        {(item.score * 100).toFixed(1)}%
-                      </span>
+            {sortedSubjectScores && sortedSubjectScores.length > 0 ? (
+              <div
+                className="group-subject-scores-list"
+                ref={subjectScoresListRef}
+              >
+                {sortedSubjectScores.map((item) => {
+                  const widthPercent = item.score * 100;
+                  return (
+                    <div
+                      key={item.subject}
+                      className="group-subject-score-item"
+                    >
+                      <div className="group-subject-score-header">
+                        <span className="group-subject-score-name">
+                          {getSubjectEmoji(item.subject)} {item.subject}
+                        </span>
+                        <span className="group-subject-score-value">
+                          {(item.score * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className="group-subject-score-bar-container">
+                        <div
+                          className="group-subject-score-bar"
+                          style={{
+                            width: `${widthPercent}%`,
+                            backgroundColor: groupColor,
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="group-subject-score-bar-container">
-                      <div
-                        className="group-subject-score-bar"
-                        style={{
-                          width: `${widthPercent}%`,
-                          backgroundColor: groupColor,
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="group-subject-scores-empty">
-              No subject data available
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="group-subject-scores-empty">
+                No subject data available
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -513,13 +526,15 @@ export default function GroupInfoPanel({
         <>
           {groupInfo.entrances.length > 0 && (
             <div className="group-info-section">
-              <h4 
+              <h4
                 className="group-info-section-title collapsible-title"
                 onClick={() => setIsEntrancesCollapsed(!isEntrancesCollapsed)}
               >
                 <span>Entrances</span>
                 <svg
-                  className={`collapse-icon ${isEntrancesCollapsed ? "collapsed" : ""}`}
+                  className={`collapse-icon ${
+                    isEntrancesCollapsed ? "collapsed" : ""
+                  }`}
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
@@ -532,58 +547,63 @@ export default function GroupInfoPanel({
                   <path d="M6 9l6 6 6-6" />
                 </svg>
               </h4>
-              <div className={`collapsible-content ${!isEntrancesCollapsed ? "expanded" : ""}`}>
+              <div
+                className={`collapsible-content ${
+                  !isEntrancesCollapsed ? "expanded" : ""
+                }`}
+              >
                 <div className="group-info-events-wrapper">
-                <div className="group-info-events" ref={entrancesListRef}>
-                  {groupInfo.entrances.map((event, idx) => {
-                    // Find the MEP node for clicking
-                    const mepNode = graphData?.nodeMap.get(event.mepId);
+                  <div className="group-info-events" ref={entrancesListRef}>
+                    {groupInfo.entrances.map((event, idx) => {
+                      // Find the MEP node for clicking
+                      const mepNode = graphData?.nodeMap.get(event.mepId);
 
-                    return (
-                      <div
-                        key={idx}
-                        className={`group-info-event ${
-                          mepNode ? "clickable" : ""
-                        }`}
-                        onClick={() => {
-                          if (mepNode && onSelectMEP) {
-                            onSelectMEP(mepNode);
-                          }
-                        }}
-                      >
-                        <div className="group-info-event-type">→</div>
-                        <div className="group-info-event-content">
-                          <div className="group-info-event-name">
-                            {event.mepName}
-                          </div>
-                          <div className="group-info-event-meta">
-                            {event.mepCountry && (
-                              <span className="group-info-event-country">
-                                {getCountryFlag(event.mepCountry)}{" "}
-                                {event.mepCountry}
+                      return (
+                        <div
+                          key={idx}
+                          className={`group-info-event ${
+                            mepNode ? "clickable" : ""
+                          }`}
+                          onClick={() => {
+                            if (mepNode && onSelectMEP) {
+                              onSelectMEP(mepNode);
+                            }
+                          }}
+                        >
+                          <div className="group-info-event-type">→</div>
+                          <div className="group-info-event-content">
+                            <div className="group-info-event-name">
+                              {event.mepName}
+                            </div>
+                            <div className="group-info-event-meta">
+                              {event.mepCountry && (
+                                <span className="group-info-event-country">
+                                  {getCountryFlag(event.mepCountry)}{" "}
+                                  {event.mepCountry}
+                                </span>
+                              )}
+                              {event.fromGroup && (
+                                <span className="group-info-event-group">
+                                  <span
+                                    className="group-info-event-group-color"
+                                    style={{
+                                      backgroundColor: getGroupColor(
+                                        event.fromGroup
+                                      ),
+                                    }}
+                                  />
+                                  from{" "}
+                                  {getGroupAcronym(event.fromGroup, mandate)}
+                                </span>
+                              )}
+                              <span className="group-info-event-date">
+                                {formatDate(event.date)}
                               </span>
-                            )}
-                            {event.fromGroup && (
-                              <span className="group-info-event-group">
-                                <span
-                                  className="group-info-event-group-color"
-                                  style={{
-                                    backgroundColor: getGroupColor(
-                                      event.fromGroup
-                                    ),
-                                  }}
-                                />
-                                from {getGroupAcronym(event.fromGroup, mandate)}
-                              </span>
-                            )}
-                            <span className="group-info-event-date">
-                              {formatDate(event.date)}
-                            </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -592,13 +612,15 @@ export default function GroupInfoPanel({
 
           {groupInfo.exits.length > 0 && (
             <div className="group-info-section">
-              <h4 
+              <h4
                 className="group-info-section-title collapsible-title"
                 onClick={() => setIsExitsCollapsed(!isExitsCollapsed)}
               >
                 <span>Exits</span>
                 <svg
-                  className={`collapse-icon ${isExitsCollapsed ? "collapsed" : ""}`}
+                  className={`collapse-icon ${
+                    isExitsCollapsed ? "collapsed" : ""
+                  }`}
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
@@ -611,58 +633,62 @@ export default function GroupInfoPanel({
                   <path d="M6 9l6 6 6-6" />
                 </svg>
               </h4>
-              <div className={`collapsible-content ${!isExitsCollapsed ? "expanded" : ""}`}>
+              <div
+                className={`collapsible-content ${
+                  !isExitsCollapsed ? "expanded" : ""
+                }`}
+              >
                 <div className="group-info-events-wrapper">
                   <div className="group-info-events" ref={exitsListRef}>
-                  {groupInfo.exits.map((event, idx) => {
-                    // Find the MEP node for clicking
-                    const mepNode = graphData?.nodeMap.get(event.mepId);
+                    {groupInfo.exits.map((event, idx) => {
+                      // Find the MEP node for clicking
+                      const mepNode = graphData?.nodeMap.get(event.mepId);
 
-                    return (
-                      <div
-                        key={idx}
-                        className={`group-info-event ${
-                          mepNode ? "clickable" : ""
-                        }`}
-                        onClick={() => {
-                          if (mepNode && onSelectMEP) {
-                            onSelectMEP(mepNode);
-                          }
-                        }}
-                      >
-                        <div className="group-info-event-type">←</div>
-                        <div className="group-info-event-content">
-                          <div className="group-info-event-name">
-                            {event.mepName}
-                          </div>
-                          <div className="group-info-event-meta">
-                            {event.mepCountry && (
-                              <span className="group-info-event-country">
-                                {getCountryFlag(event.mepCountry)}{" "}
-                                {event.mepCountry}
+                      return (
+                        <div
+                          key={idx}
+                          className={`group-info-event ${
+                            mepNode ? "clickable" : ""
+                          }`}
+                          onClick={() => {
+                            if (mepNode && onSelectMEP) {
+                              onSelectMEP(mepNode);
+                            }
+                          }}
+                        >
+                          <div className="group-info-event-type">←</div>
+                          <div className="group-info-event-content">
+                            <div className="group-info-event-name">
+                              {event.mepName}
+                            </div>
+                            <div className="group-info-event-meta">
+                              {event.mepCountry && (
+                                <span className="group-info-event-country">
+                                  {getCountryFlag(event.mepCountry)}{" "}
+                                  {event.mepCountry}
+                                </span>
+                              )}
+                              {event.toGroup && (
+                                <span className="group-info-event-group">
+                                  <span
+                                    className="group-info-event-group-color"
+                                    style={{
+                                      backgroundColor: getGroupColor(
+                                        event.toGroup
+                                      ),
+                                    }}
+                                  />
+                                  to {getGroupAcronym(event.toGroup, mandate)}
+                                </span>
+                              )}
+                              <span className="group-info-event-date">
+                                {formatDate(event.date)}
                               </span>
-                            )}
-                            {event.toGroup && (
-                              <span className="group-info-event-group">
-                                <span
-                                  className="group-info-event-group-color"
-                                  style={{
-                                    backgroundColor: getGroupColor(
-                                      event.toGroup
-                                    ),
-                                  }}
-                                />
-                                to {getGroupAcronym(event.toGroup, mandate)}
-                              </span>
-                            )}
-                            <span className="group-info-event-date">
-                              {formatDate(event.date)}
-                            </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -674,13 +700,15 @@ export default function GroupInfoPanel({
       {sortedMEPs.length > 0 && (
         <div className="group-info-section">
           <div className="group-info-section-header">
-            <h4 
+            <h4
               className="group-info-section-title collapsible-title"
               onClick={() => setIsMEPsCollapsed(!isMEPsCollapsed)}
             >
-              <span>MEPs by similarity to group</span>
+              <span>MEPs by average similarity to group members</span>
               <svg
-                className={`collapse-icon ${isMEPsCollapsed ? "collapsed" : ""}`}
+                className={`collapse-icon ${
+                  isMEPsCollapsed ? "collapsed" : ""
+                }`}
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
@@ -727,39 +755,45 @@ export default function GroupInfoPanel({
               </button>
             )}
           </div>
-          <div className={`collapsible-content ${!isMEPsCollapsed ? "expanded" : ""}`}>
+          <div
+            className={`collapsible-content ${
+              !isMEPsCollapsed ? "expanded" : ""
+            }`}
+          >
             <div className="group-info-meps-wrapper">
-            <div className="group-info-meps-list" ref={mepsListRef}>
-              {sortedMEPs.map((item, idx) => {
-                const rank =
-                  sortDirection === "desc" ? idx + 1 : sortedMEPs.length - idx;
-                return (
-                  <div
-                    key={item.mep.id}
-                    className="group-info-mep-item clickable"
-                    onClick={() => onSelectMEP && onSelectMEP(item.mep)}
-                  >
-                    <div className="group-info-mep-rank">{rank}</div>
-                    <div className="group-info-mep-content">
-                      <div className="group-info-mep-name">
-                        {item.mep.label}
-                      </div>
-                      <div className="group-info-mep-meta">
-                        {item.mep.country && (
-                          <span className="group-info-mep-country">
-                            {getCountryFlag(item.mep.country)}{" "}
-                            {item.mep.country}
+              <div className="group-info-meps-list" ref={mepsListRef}>
+                {sortedMEPs.map((item, idx) => {
+                  const rank =
+                    sortDirection === "desc"
+                      ? idx + 1
+                      : sortedMEPs.length - idx;
+                  return (
+                    <div
+                      key={item.mep.id}
+                      className="group-info-mep-item clickable"
+                      onClick={() => onSelectMEP && onSelectMEP(item.mep)}
+                    >
+                      <div className="group-info-mep-rank">{rank}</div>
+                      <div className="group-info-mep-content">
+                        <div className="group-info-mep-name">
+                          {item.mep.label}
+                        </div>
+                        <div className="group-info-mep-meta">
+                          {item.mep.country && (
+                            <span className="group-info-mep-country">
+                              {getCountryFlag(item.mep.country)}{" "}
+                              {item.mep.country}
+                            </span>
+                          )}
+                          <span className="group-info-mep-score">
+                            {(item.avgScore * 100).toFixed(1)}%
                           </span>
-                        )}
-                        <span className="group-info-mep-score">
-                          {(item.avgScore * 100).toFixed(1)}%
-                        </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
