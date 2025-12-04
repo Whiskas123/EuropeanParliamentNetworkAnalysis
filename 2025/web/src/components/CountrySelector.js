@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { getCountryFlag } from "../lib/utils.js";
+import { CountryFlag } from "../lib/utils.js";
 
 export default function CountrySelector({
   currentMandate,
@@ -80,7 +80,6 @@ export default function CountrySelector({
     );
   }
 
-  const displayFlag = currentCountry ? getCountryFlag(currentCountry) : "🇪🇺";
   const displayText = currentCountry || "All Countries";
 
   return (
@@ -94,7 +93,9 @@ export default function CountrySelector({
           disabled={disabled}
         >
           <span className="selector-value">
-            <span className="selector-flag">{displayFlag}</span>
+            <span className="selector-flag">
+              <CountryFlag country={currentCountry || "EU"} />
+            </span>
             {displayText}
           </span>
           <svg
@@ -123,7 +124,9 @@ export default function CountrySelector({
               setIsOpen(false);
             }}
           >
-            <span className="selector-flag">🇪🇺</span>
+            <span className="selector-flag">
+              <CountryFlag country="EU" />
+            </span>
             All Countries
           </button>
           {countries.map((country) => (
@@ -141,7 +144,9 @@ export default function CountrySelector({
               disabled={disabled}
               title={disabled ? "Clear subject selection first" : ""}
             >
-              <span className="selector-flag">{getCountryFlag(country)}</span>
+              <span className="selector-flag">
+                <CountryFlag country={country} />
+              </span>
               {country}
             </button>
           ))}

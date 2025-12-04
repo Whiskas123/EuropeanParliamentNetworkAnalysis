@@ -1,3 +1,106 @@
+"use client";
+
+import React from "react";
+import * as Flags from "country-flag-icons/react/3x2";
+
+// Helper function to get country code from country name (exported for use in other files)
+export function getCountryCode(countryName) {
+  // Handle EU flag
+  if (countryName === "EU" || countryName === "European Union") {
+    return "EU";
+  }
+
+  const countryToCode = {
+    Austria: "AT",
+    Belgium: "BE",
+    Bulgaria: "BG",
+    Croatia: "HR",
+    Cyprus: "CY",
+    Czechia: "CZ",
+    "Czech Republic": "CZ",
+    Denmark: "DK",
+    Estonia: "EE",
+    Finland: "FI",
+    France: "FR",
+    Germany: "DE",
+    Greece: "GR",
+    Hungary: "HU",
+    Ireland: "IE",
+    Italy: "IT",
+    Latvia: "LV",
+    Lithuania: "LT",
+    Luxembourg: "LU",
+    Malta: "MT",
+    Netherlands: "NL",
+    Poland: "PL",
+    Portugal: "PT",
+    Romania: "RO",
+    Slovakia: "SK",
+    Slovenia: "SI",
+    Spain: "ES",
+    Sweden: "SE",
+    "United Kingdom": "GB",
+    UK: "GB",
+  };
+
+  const code =
+    countryToCode[countryName] || countryName?.substring(0, 2).toUpperCase();
+
+  // Allow EU code (2 characters) or standard 2-character country codes
+  if (!code || (code.length !== 2 && code !== "EU")) {
+    return null;
+  }
+
+  return code.toUpperCase();
+}
+
+// CountryFlag component to display country flags using country-flag-icons
+export function CountryFlag({ country, className = "", style = {}, title, size = "1em" }) {
+  const code = getCountryCode(country);
+  
+  if (!code) {
+    // Return a default placeholder if country not found
+    return (
+      <span className={className} style={style} title={title || country}>
+        🏳️
+      </span>
+    );
+  }
+
+  // Get the flag component dynamically
+  const FlagComponent = Flags[code];
+  
+  if (!FlagComponent) {
+    // Fallback to emoji if flag component doesn't exist
+    const codePoints = code
+      .split("")
+      .map((char) => 127397 + char.charCodeAt());
+    const emojiFlag = String.fromCodePoint(...codePoints);
+    return (
+      <span className={className} style={style} title={title || country}>
+        {emojiFlag}
+      </span>
+    );
+  }
+
+  // Apply sizing to SVG flags - use CSS to control size via font-size
+  const flagStyle = {
+    display: "inline-block",
+    verticalAlign: "middle",
+    width: "1em",
+    height: "1em",
+    ...style,
+  };
+
+  return (
+    <FlagComponent
+      className={className}
+      style={flagStyle}
+      title={title || country}
+    />
+  );
+}
+
 // Helper function to normalize group ID to family (for detecting group changes)
 export function getGroupFamily(groupId) {
   // Groups that are considered the same family
@@ -166,51 +269,15 @@ export function getGroupColor(groupId) {
   return colorMap[groupId] || "#CCCCCC";
 }
 
-// Helper function to get flag emoji from country name
+// Helper function to get flag emoji from country name (deprecated - use CountryFlag component instead)
 export function getCountryFlag(countryName) {
-  const countryToCode = {
-    Austria: "AT",
-    Belgium: "BE",
-    Bulgaria: "BG",
-    Croatia: "HR",
-    Cyprus: "CY",
-    Czechia: "CZ",
-    "Czech Republic": "CZ",
-    Denmark: "DK",
-    Estonia: "EE",
-    Finland: "FI",
-    France: "FR",
-    Germany: "DE",
-    Greece: "GR",
-    Hungary: "HU",
-    Ireland: "IE",
-    Italy: "IT",
-    Latvia: "LV",
-    Lithuania: "LT",
-    Luxembourg: "LU",
-    Malta: "MT",
-    Netherlands: "NL",
-    Poland: "PL",
-    Portugal: "PT",
-    Romania: "RO",
-    Slovakia: "SK",
-    Slovenia: "SI",
-    Spain: "ES",
-    Sweden: "SE",
-    "United Kingdom": "GB",
-    UK: "GB",
-  };
-
-  const code =
-    countryToCode[countryName] || countryName?.substring(0, 2).toUpperCase();
-
-  if (!code || code.length !== 2) {
+  const code = getCountryCode(countryName);
+  if (!code) {
     return "🏳️"; // Default flag if country not found
   }
 
   // Convert country code to flag emoji
   const codePoints = code
-    .toUpperCase()
     .split("")
     .map((char) => 127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);

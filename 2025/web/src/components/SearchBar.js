@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getCountryFlag, getGroupAcronym } from "../lib/utils.js";
+import { CountryFlag, getGroupAcronym } from "../lib/utils.js";
 
 export default function SearchBar({
   searchQuery,
@@ -152,7 +152,7 @@ export default function SearchBar({
                       )}
                       {result.country && (
                         <span>
-                          {getCountryFlag(result.country)} {result.country}
+                          <CountryFlag country={result.country} /> {result.country}
                         </span>
                       )}
                     </div>

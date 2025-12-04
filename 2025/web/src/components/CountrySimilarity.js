@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getCountryFlag } from "../lib/utils.js";
+import { CountryFlag } from "../lib/utils.js";
 
 export default function CountrySimilarity({
   countrySimilarity,
@@ -74,7 +74,7 @@ export default function CountrySimilarity({
                 <div className="country-similarity-header">
                   <span className="country-similarity-name">
                     <span className="country-similarity-flag">
-                      {getCountryFlag(item.country)}
+                      <CountryFlag country={item.country} />
                     </span>
                     {item.country}
                   </span>

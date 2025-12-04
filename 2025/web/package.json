@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
+    "country-flag-icons": "^1.6.4",
     "d3": "^7.8.5",
     "graphology": "^0.25.4",
     "graphology-layout-forceatlas2": "^0.10.0",

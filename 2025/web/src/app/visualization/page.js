@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { loadMandateData } from "../../lib/dataLoader.js";
+import { checkSession } from "../../lib/passwordConfig.js";
+import PasswordModal from "../../components/PasswordModal";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
@@ -12,6 +15,10 @@ import HoverTooltip from "../../components/HoverTooltip";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function VisualizationPage() {
+  const router = useRouter();
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [mandate, setMandate] = useState(10);
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -34,6 +41,22 @@ export default function VisualizationPage() {
 
   // Cache the imported modules
   const modulesRef = useRef(null);
+
+  // Check authentication on mount
+  useEffect(() => {
+    const session = checkSession();
+    if (session.authenticated) {
+      setIsAuthenticated(true);
+    } else {
+      setShowPasswordModal(true);
+    }
+    setCheckingAuth(false);
+  }, []);
+
+  const handlePasswordSuccess = () => {
+    setIsAuthenticated(true);
+    setShowPasswordModal(false);
+  };
 
   const loadAndPrepareGraph = useCallback(
     async (mandateNum, country = null, subject = null) => {
@@ -594,6 +617,33 @@ export default function VisualizationPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedNode, selectedGroup]);
 
+  // Show loading while checking authentication
+  if (checkingAuth) {
+    return (
+      <div className="visualization-page">
+        <LoadingSpinner message="Checking access..." />
+        <PasswordModal
+          isOpen={showPasswordModal}
+          onClose={() => router.push("/")}
+          onSuccess={handlePasswordSuccess}
+        />
+      </div>
+    );
+  }
+
+  // Show content only if authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="visualization-page">
+        <PasswordModal
+          isOpen={showPasswordModal}
+          onClose={() => router.push("/")}
+          onSuccess={handlePasswordSuccess}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="visualization-page">
       {/* Left side - Network visualization (70%) */}
@@ -797,6 +847,13 @@ export default function VisualizationPage() {
         node={hoveredNode}
         position={tooltipPosition}
         mandate={mandate}
+      />
+
+      {/* Password Modal */}
+      <PasswordModal
+        isOpen={showPasswordModal}
+        onClose={() => router.push("/")}
+        onSuccess={handlePasswordSuccess}
       />
     </div>
   );

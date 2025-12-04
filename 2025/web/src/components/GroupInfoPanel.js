@@ -5,7 +5,7 @@ import {
   getGroupDisplayName,
   getGroupAcronym,
   getGroupColor,
-  getCountryFlag,
+  CountryFlag,
   getGroupFamily,
   getSubjectEmoji,
 } from "../lib/utils.js";
@@ -605,7 +605,7 @@ export default function GroupInfoPanel({
                         <div className="group-info-mep-meta">
                           {item.mep.country && (
                             <span className="group-info-mep-country">
-                              {getCountryFlag(item.mep.country)}{" "}
+                              <CountryFlag country={item.mep.country} />{" "}
                               {item.mep.country}
                             </span>
                           )}
@@ -678,7 +678,7 @@ export default function GroupInfoPanel({
                             <div className="group-info-event-meta">
                               {event.mepCountry && (
                                 <span className="group-info-event-country">
-                                  {getCountryFlag(event.mepCountry)}{" "}
+                                  <CountryFlag country={event.mepCountry} />{" "}
                                   {event.mepCountry}
                                 </span>
                               )}
@@ -764,7 +764,7 @@ export default function GroupInfoPanel({
                             <div className="group-info-event-meta">
                               {event.mepCountry && (
                                 <span className="group-info-event-country">
-                                  {getCountryFlag(event.mepCountry)}{" "}
+                                  <CountryFlag country={event.mepCountry} />{" "}
                                   {event.mepCountry}
                                 </span>
                               )}

@@ -6,7 +6,7 @@ import {
   getGroupFamily,
   getGroupAcronym,
   getGroupDisplayName,
-  getCountryFlag,
+  CountryFlag,
   getGroupColor,
 } from "../lib/utils.js";
 
@@ -144,7 +144,7 @@ export default function MEPInfoPanel({ node, graphData, mandate, onSelectGroup }
             {node.country && (
               <div className="mep-info-country">
                 <span className="mep-info-country-flag">
-                  {getCountryFlag(node.country)}
+                  <CountryFlag country={node.country} />
                 </span>
                 <span className="mep-info-country-name">{node.country}</span>
               </div>

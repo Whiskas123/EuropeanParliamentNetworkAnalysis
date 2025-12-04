@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getCountryFlag, getSubjectEmoji } from "../lib/utils.js";
+import { CountryFlag, getSubjectEmoji } from "../lib/utils.js";
 
 export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -91,7 +91,7 @@ export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
                 </div>
                 {mep.country && (
                   <span className="closest-meps-item-flag">
-                    {getCountryFlag(mep.country)}
+                    <CountryFlag country={mep.country} />
                   </span>
                 )}
               </div>

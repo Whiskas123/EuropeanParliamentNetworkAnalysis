@@ -1,6 +1,6 @@
 "use client";
 
-import { getGroupAcronym, getCountryFlag } from "../lib/utils.js";
+import { getGroupAcronym, CountryFlag } from "../lib/utils.js";
 
 export default function HoverTooltip({ node, position, mandate }) {
   if (!node) return null;
@@ -17,9 +17,10 @@ export default function HoverTooltip({ node, position, mandate }) {
       {node.groupId && (
         <div className="hover-tooltip-meta">
           <span>{getGroupAcronym(node.groupId, mandate)}</span>
+
           {node.country && (
             <span className="hover-tooltip-flag">
-              / {getCountryFlag(node.country)}
+              <CountryFlag country={node.country} />
             </span>
           )}
         </div>

@@ -148,7 +148,9 @@ a {
 }
 
 .selector-value {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -159,6 +161,16 @@ a {
 .selector-flag {
   font-size: 16px;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    flex-shrink: 0;
+  }
 }
 
 .selector-arrow {
@@ -193,6 +205,10 @@ a {
   gap: 8px;
   width: 100%;
   padding: 10px 12px;
+
+  .selector-flag {
+    flex-shrink: 0;
+  }
   text-align: left;
   background: none;
   border: none;
@@ -891,13 +907,13 @@ a {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  
+
   strong {
     font-size: 18px;
     color: white;
     font-weight: 600;
   }
-  
+
   span {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.9);
@@ -1066,7 +1082,7 @@ a {
     strong {
       font-size: 16px;
     }
-    
+
     span {
       font-size: 14px;
     }
@@ -1354,6 +1370,14 @@ a {
 }
 
 .mep-info-country-flag {
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
   font-size: 20px;
 }
 
@@ -1926,6 +1950,17 @@ a {
 
 .country-similarity-flag {
   font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 4px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    flex-shrink: 0;
+  }
 }
 
 .country-similarity-value {
@@ -2223,6 +2258,14 @@ a {
 }
 
 .closest-meps-item-flag {
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
   font-size: 16px;
 }
 
@@ -2382,7 +2425,17 @@ a {
 }
 
 .hover-tooltip-flag {
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
+  font-size: 15px;
 }
 
 // Clickable elements
@@ -2768,6 +2821,12 @@ a {
   display: flex;
   align-items: center;
   gap: 4px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
 }
 
 .group-info-event-group {
@@ -2903,6 +2962,12 @@ a {
   display: flex;
   align-items: center;
   gap: 4px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
 }
 
 .group-info-mep-score {
@@ -3215,5 +3280,210 @@ a {
     min-width: auto;
     width: auto;
     padding: 8px 4px;
+  }
+}
+
+// Password Modal Styles
+.password-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.password-modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.password-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+}
+
+.password-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.password-modal-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-right: 32px;
+}
+
+.password-modal-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  font-family: "Helvetica Neue Extended", Arial, sans-serif;
+}
+
+.password-modal-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.password-modal-expired {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.password-modal-expired-icon {
+  font-size: 32px;
+  margin: 0 0 8px 0;
+}
+
+.password-modal-expired-message {
+  font-size: 14px;
+  color: #856404;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.password-modal-expired-date {
+  font-size: 12px;
+  color: #856404;
+  margin: 0;
+}
+
+.password-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.password-modal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.password-modal-input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.password-modal-input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.password-modal-input-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.password-modal-input-error {
+  border-color: #dc3545 !important;
+}
+
+.password-modal-error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.password-modal-submit {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.password-modal-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.password-modal-submit:active {
+  transform: translateY(0);
+}
+
+// Mobile styles for password modal
+@media (max-width: 768px) {
+  .password-modal-content {
+    padding: 32px 24px;
+  }
+
+  .password-modal-header h2 {
+    font-size: 20px;
+  }
+
+  .password-modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 28px;
   }
 }
