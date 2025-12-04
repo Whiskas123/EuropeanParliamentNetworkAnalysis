@@ -38,7 +38,7 @@ export default function CohesionHeatmap({
         className="cohesion-heatmap-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Cross Group Similarity</span>
+        <span>Inter-Group Voting Agreement</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"
@@ -53,6 +53,9 @@ export default function CohesionHeatmap({
           <path d="M6 9l6 6 6-6" />
         </svg>
       </h3>
+      <div className="cohesion-heatmap-description">
+        Average voting agreement between members of different political groups
+      </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="cohesion-heatmap-container">
           <table className="cohesion-heatmap-table">

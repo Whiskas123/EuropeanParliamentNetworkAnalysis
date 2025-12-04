@@ -7,10 +7,10 @@ export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const title = selectedSubject
-    ? `Most Similar MEPs (${getSubjectEmoji(
+    ? `Highest Voting Agreement (${getSubjectEmoji(
         selectedSubject
       )} ${selectedSubject})`
-    : "Most Similar MEPs";
+    : "Highest Voting Agreement";
 
   if (!meps || meps.length === 0) {
     return (
@@ -39,7 +39,8 @@ export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
         >
           <div className="closest-meps-empty">
             <p>
-              No similar MEPs found. This MEP may have unique voting patterns.
+              No MEPs with high voting agreement found. This MEP may have unique
+              voting patterns.
             </p>
           </div>
         </div>

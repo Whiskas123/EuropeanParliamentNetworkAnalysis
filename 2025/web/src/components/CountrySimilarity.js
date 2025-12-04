@@ -31,7 +31,7 @@ export default function CountrySimilarity({
         className="country-similarity-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Country Similarity</span>
+        <span>Country Cohesion</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"
@@ -46,6 +46,9 @@ export default function CountrySimilarity({
           <path d="M6 9l6 6 6-6" />
         </svg>
       </h3>
+      <div className="country-similarity-description">
+        Average voting agreement among MEPs from the same country
+      </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="country-similarity-list">
           {countrySimilarity.map((item) => {
@@ -98,7 +101,7 @@ export default function CountrySimilarity({
                     className="country-similarity-bar"
                     style={{
                       width: `${widthPercent}%`,
-                      backgroundColor: "#CCCCCC",
+                      backgroundColor: "#6B7C93",
                     }}
                   />
                 </div>

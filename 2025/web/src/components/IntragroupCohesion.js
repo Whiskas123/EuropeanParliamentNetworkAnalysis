@@ -47,7 +47,7 @@ export default function IntragroupCohesion({
         className="intragroup-cohesion-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Group Similarity</span>
+        <span>Group Cohesion</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"
@@ -62,6 +62,9 @@ export default function IntragroupCohesion({
           <path d="M6 9l6 6 6-6" />
         </svg>
       </h3>
+      <div className="intragroup-cohesion-description">
+        Average voting agreement among members within each political group
+      </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="intragroup-cohesion-list">
           {filteredCohesion.map((item) => {

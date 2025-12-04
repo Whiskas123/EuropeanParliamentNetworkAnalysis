@@ -2,18 +2,28 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
+const EDGE_BASE_LINE_WIDTH = 0.2;
+const NODE_BORDER_BASE_LINE_WIDTH = 0.5;
+const SELECTED_BORDER_BASE_LINE_WIDTH = 3;
+
 export default function NetworkCanvas({
   graphData,
   selectedNode,
   onNodeClick,
   onNodeHover,
   onHoverPositionChange,
+  mandate,
+  selectedCountry,
+  selectedSubject,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const transformRef = useRef({ x: 0, y: 0, k: 1 });
   const zoomRef = useRef(null);
   const graphDataRef = useRef(null);
+  const pixelRatioRef = useRef(
+    typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1
+  );
   const handlersRef = useRef({
     mouseMove: null,
     mouseLeave: null,
@@ -45,16 +55,23 @@ export default function NetworkCanvas({
     if (!canvasReady) return;
 
     const canvas = canvasRef.current;
+    const pixelRatio =
+      pixelRatioRef.current ||
+      (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
     const ctx = canvas.getContext("2d");
     const width = canvas.width;
     const height = canvas.height;
     const t = transformRef.current;
 
-    // Clear canvas
-    ctx.clearRect(0, 0, width, height);
-
-    // Apply transform
+    // Clear entire canvas in device pixels
     ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    ctx.restore();
+
+    // Apply high-DPI scale followed by graph transforms
+    ctx.save();
+    ctx.scale(pixelRatio, pixelRatio);
     ctx.translate(t.x, t.y);
     ctx.scale(t.k, t.k);
 
@@ -69,7 +86,7 @@ export default function NetworkCanvas({
     // Default color for inter-group edges
     const defaultEdgeColor = "#999999";
     ctx.strokeStyle = defaultEdgeColor;
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = EDGE_BASE_LINE_WIDTH;
     ctx.globalAlpha = 0.3;
     sortedLinks.forEach((link) => {
       const sourceNode = graphData.nodeMap.get(link.source);
@@ -130,7 +147,7 @@ export default function NetworkCanvas({
 
         // Border ring
         ctx.strokeStyle = "#FFD700";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = SELECTED_BORDER_BASE_LINE_WIDTH;
         ctx.beginPath();
         ctx.arc(node.x, node.y, borderSize, 0, 2 * Math.PI);
         ctx.stroke();
@@ -149,7 +166,7 @@ export default function NetworkCanvas({
 
         // Add subtle border for better visibility
         ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH;
         ctx.beginPath();
         ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
         ctx.stroke();
@@ -179,11 +196,14 @@ export default function NetworkCanvas({
 
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
+    const pixelRatio =
+      typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    pixelRatioRef.current = pixelRatio;
 
     // Set up canvas
     const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = width * pixelRatio;
+    canvas.height = height * pixelRatio;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.style.cursor = "grab";
@@ -381,11 +401,11 @@ export default function NetworkCanvas({
     // Calculate initial transform to fit all nodes with margins
     const xExtent = d3.extent(graphData.nodes, (d) => d.x);
     const yExtent = d3.extent(graphData.nodes, (d) => d.y);
-    
+
     // Handle edge case: if all nodes are at the same position
     const fullWidth = Math.max(xExtent[1] - xExtent[0], 1);
     const fullHeight = Math.max(yExtent[1] - yExtent[0], 1);
-    
+
     const centerX = (xExtent[0] + xExtent[1]) / 2;
     const centerY = (yExtent[0] + yExtent[1]) / 2;
 
@@ -393,17 +413,17 @@ export default function NetworkCanvas({
     const margin = 0.1; // 10% margin on each side
     const availableWidth = width * (1 - 2 * margin);
     const availableHeight = height * (1 - 2 * margin);
-    
+
     // Calculate scale to fit nodes with margins
     const scaleX = availableWidth / fullWidth;
     const scaleY = availableHeight / fullHeight;
     const scale = Math.min(scaleX, scaleY);
-    
+
     // Ensure minimum scale to prevent extreme zoom
     const minScale = 0.01;
     const maxScale = 10;
     const clampedScale = Math.max(minScale, Math.min(maxScale, scale));
-    
+
     const initialTransform = {
       x: width / 2 - clampedScale * centerX,
       y: height / 2 - clampedScale * centerY,
@@ -468,6 +488,359 @@ export default function NetworkCanvas({
       .translate(initialTransform.x, initialTransform.y)
       .scale(initialTransform.k);
     zoomSelection.call(zoomRef.current.transform, newTransform);
+  };
+
+  const handleExportPNG = () => {
+    if (!canvasRef.current || !graphData) return;
+
+    const canvas = canvasRef.current;
+    const pixelRatio =
+      pixelRatioRef.current ||
+      (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
+    const logicalWidth = canvas.width / pixelRatio;
+    const logicalHeight = canvas.height / pixelRatio;
+
+    // Ensure canvas has valid dimensions
+    if (logicalWidth === 0 || logicalHeight === 0) {
+      console.error("Canvas has invalid dimensions");
+      return;
+    }
+
+    // Use high scale for print-quality exports, but limit canvas size
+    // Most browsers have practical limits around 8-16k pixels per dimension
+    // Also limit total pixels to avoid memory issues (e.g., 256MP = 16384^2)
+    const maxDimension = 16384; // Conservative limit for most browsers
+    const maxTotalPixels = 256 * 1024 * 1024; // 256 megapixels
+
+    const desiredScale = 8; // Reduced from 24 for better compatibility
+    const maxScaleByDimension = Math.floor(
+      maxDimension / Math.max(logicalWidth, logicalHeight)
+    );
+    const maxScaleByPixels = Math.floor(
+      Math.sqrt(maxTotalPixels / (logicalWidth * logicalHeight))
+    );
+
+    const scale = Math.max(
+      1,
+      Math.min(desiredScale, maxScaleByDimension, maxScaleByPixels)
+    );
+
+    if (scale < 1) {
+      console.error("Invalid scale calculated:", scale);
+      return;
+    }
+
+    const exportWidth = Math.floor(logicalWidth * scale);
+    const exportHeight = Math.floor(logicalHeight * scale);
+
+    // Final safety check
+    if (exportWidth > maxDimension || exportHeight > maxDimension) {
+      console.error(
+        "Export canvas dimensions exceed limits:",
+        exportWidth,
+        exportHeight
+      );
+      alert(
+        `Canvas too large for export (${Math.round(exportWidth)}x${Math.round(
+          exportHeight
+        )}). Try reducing the zoom level.`
+      );
+      return;
+    }
+
+    // Create a high-resolution canvas with white background
+    const exportCanvas = document.createElement("canvas");
+    exportCanvas.width = exportWidth;
+    exportCanvas.height = exportHeight;
+
+    if (exportCanvas.width === 0 || exportCanvas.height === 0) {
+      console.error("Export canvas has invalid dimensions");
+      return;
+    }
+
+    console.log(
+      `Exporting at ${exportWidth}x${exportHeight} (scale: ${scale}x)`
+    );
+
+    const exportCtx = exportCanvas.getContext("2d");
+
+    if (!exportCtx) {
+      console.error("Failed to get 2d context");
+      return;
+    }
+
+    // Enable high-quality rendering
+    exportCtx.imageSmoothingEnabled = true;
+    exportCtx.imageSmoothingQuality = "high";
+
+    // Fill with white background
+    exportCtx.fillStyle = "#ffffff";
+    exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+    // Apply transforms: scale to high resolution first, then apply view transform
+    const t = transformRef.current;
+    exportCtx.save();
+
+    // Scale to high resolution coordinate system first
+    exportCtx.scale(scale, scale);
+
+    // Then apply the view transform (same values as original rendering)
+    // After scaling the context, translate and scale transforms apply in the scaled space
+    exportCtx.translate(t.x, t.y);
+    exportCtx.scale(t.k, t.k);
+
+    // Draw links at high resolution with properly scaled line widths
+    const sortedLinks = [...graphData.links].sort((a, b) => {
+      const weightA = a.weight || 0;
+      const weightB = b.weight || 0;
+      return weightA - weightB;
+    });
+
+    const defaultEdgeColor = "#999999";
+    exportCtx.strokeStyle = defaultEdgeColor;
+    exportCtx.lineWidth = EDGE_BASE_LINE_WIDTH;
+    exportCtx.globalAlpha = 0.3;
+    exportCtx.lineCap = "round";
+    exportCtx.lineJoin = "round";
+
+    sortedLinks.forEach((link) => {
+      const sourceNode = graphData.nodeMap.get(link.source);
+      const targetNode = graphData.nodeMap.get(link.target);
+      if (sourceNode && targetNode) {
+        if (
+          sourceNode.groupId &&
+          targetNode.groupId &&
+          sourceNode.groupId === targetNode.groupId
+        ) {
+          exportCtx.strokeStyle = sourceNode.color || defaultEdgeColor;
+        } else {
+          exportCtx.strokeStyle = defaultEdgeColor;
+        }
+        exportCtx.beginPath();
+        exportCtx.moveTo(sourceNode.x, sourceNode.y);
+        exportCtx.lineTo(targetNode.x, targetNode.y);
+        exportCtx.stroke();
+      }
+    });
+
+    // Calculate node size (same as rendering)
+    const nodeCount = graphData.nodes.length;
+    const baseNodeSize = 15;
+    const minNodeSize = 3;
+    const maxNodeSize = 15;
+    const nodeSize = Math.max(
+      minNodeSize,
+      Math.min(maxNodeSize, baseNodeSize * Math.pow(nodeCount / 700, 0.4))
+    );
+    const selectedNodeSize = nodeSize * 1.2;
+    const haloSize1 = selectedNodeSize * 1.9;
+    const haloSize2 = selectedNodeSize * 1.6;
+    const haloSize3 = selectedNodeSize * 1.4;
+    const borderSize = selectedNodeSize * 1.1;
+
+    // Draw nodes at high resolution with properly scaled borders
+    exportCtx.globalAlpha = 1;
+    graphData.nodes.forEach((node) => {
+      if (selectedNode && node.id === selectedNode.id) {
+        // Outer glow/halo
+        exportCtx.fillStyle = "rgba(255, 215, 0, 0.2)";
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, haloSize1, 0, 2 * Math.PI);
+        exportCtx.fill();
+
+        exportCtx.fillStyle = "rgba(255, 215, 0, 0.3)";
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, haloSize2, 0, 2 * Math.PI);
+        exportCtx.fill();
+
+        exportCtx.fillStyle = "rgba(255, 215, 0, 0.4)";
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, haloSize3, 0, 2 * Math.PI);
+        exportCtx.fill();
+
+        // Border ring with scaled line width
+        exportCtx.strokeStyle = "#FFD700";
+        exportCtx.lineWidth = SELECTED_BORDER_BASE_LINE_WIDTH;
+        exportCtx.lineCap = "round";
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, borderSize, 0, 2 * Math.PI);
+        exportCtx.stroke();
+
+        // Selected node fill
+        exportCtx.fillStyle = node.color;
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, selectedNodeSize, 0, 2 * Math.PI);
+        exportCtx.fill();
+      } else {
+        // Regular node
+        exportCtx.fillStyle = node.color;
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
+        exportCtx.fill();
+
+        // Add subtle border with scaled line width
+        exportCtx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+        exportCtx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH;
+        exportCtx.lineCap = "round";
+        exportCtx.beginPath();
+        exportCtx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
+        exportCtx.stroke();
+      }
+    });
+
+    exportCtx.restore();
+
+    // Verify we actually drew something by sampling multiple regions (corners + center)
+    const sampleSize = 200;
+    const positions = [
+      { x: 0, y: 0 },
+      { x: exportCanvas.width - sampleSize, y: 0 },
+      { x: 0, y: exportCanvas.height - sampleSize },
+      {
+        x: exportCanvas.width - sampleSize,
+        y: exportCanvas.height - sampleSize,
+      },
+      {
+        x: Math.max(0, Math.floor((exportCanvas.width - sampleSize) / 2)),
+        y: Math.max(0, Math.floor((exportCanvas.height - sampleSize) / 2)),
+      },
+    ];
+    const clampedSize = Math.max(
+      1,
+      Math.min(sampleSize, exportCanvas.width, exportCanvas.height)
+    );
+
+    let hasContent = false;
+    for (const pos of positions) {
+      const sampleX = Math.max(
+        0,
+        Math.min(exportCanvas.width - clampedSize, pos.x)
+      );
+      const sampleY = Math.max(
+        0,
+        Math.min(exportCanvas.height - clampedSize, pos.y)
+      );
+
+      try {
+        const imageData = exportCtx.getImageData(
+          sampleX,
+          sampleY,
+          clampedSize,
+          clampedSize
+        );
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          if (
+            imageData.data[i] < 250 ||
+            imageData.data[i + 1] < 250 ||
+            imageData.data[i + 2] < 250
+          ) {
+            hasContent = true;
+            break;
+          }
+        }
+      } catch (err) {
+        console.warn("Failed to sample export canvas content:", err);
+        hasContent = true; // Avoid false negatives if sampling fails
+      }
+
+      if (hasContent) break;
+    }
+
+    if (!hasContent) {
+      console.error("Export canvas appears to be empty - no content detected");
+      alert(
+        "Failed to export: The canvas appears to be empty. Please try again."
+      );
+      return;
+    }
+
+    // Convert to PNG data URL with better error handling
+    let dataURL;
+    try {
+      dataURL = exportCanvas.toDataURL("image/png", 1.0); // Maximum quality
+      if (!dataURL || dataURL === "data:," || dataURL.length < 100) {
+        throw new Error("Invalid data URL generated");
+      }
+    } catch (error) {
+      console.error("Error generating data URL:", error);
+      console.error(
+        "Canvas dimensions:",
+        exportCanvas.width,
+        "x",
+        exportCanvas.height
+      );
+      console.error("Scale used:", scale);
+
+      // Try with a smaller canvas as fallback
+      const fallbackScale = Math.max(1, Math.floor(scale / 2));
+      if (fallbackScale < scale && fallbackScale >= 1) {
+        console.log(`Retrying with reduced scale: ${fallbackScale}x`);
+        const fallbackWidth = Math.floor(logicalWidth * fallbackScale);
+        const fallbackHeight = Math.floor(logicalHeight * fallbackScale);
+
+        try {
+          const fallbackCanvas = document.createElement("canvas");
+          fallbackCanvas.width = fallbackWidth;
+          fallbackCanvas.height = fallbackHeight;
+          const fallbackCtx = fallbackCanvas.getContext("2d");
+
+          if (fallbackCtx) {
+            fallbackCtx.fillStyle = "#ffffff";
+            fallbackCtx.fillRect(0, 0, fallbackWidth, fallbackHeight);
+            fallbackCtx.drawImage(canvas, 0, 0, fallbackWidth, fallbackHeight);
+            dataURL = fallbackCanvas.toDataURL("image/png", 1.0);
+
+            if (dataURL && dataURL !== "data:," && dataURL.length > 100) {
+              console.log(
+                `Successfully exported at reduced scale ${fallbackScale}x`
+              );
+            } else {
+              throw new Error("Fallback also failed");
+            }
+          } else {
+            throw new Error("Could not create fallback canvas");
+          }
+        } catch (fallbackError) {
+          console.error("Fallback export also failed:", fallbackError);
+          alert(
+            `Failed to export: Canvas too large (${exportCanvas.width}x${exportCanvas.height}). Try reducing the zoom level or browser window size.`
+          );
+          return;
+        }
+      } else {
+        alert(
+          `Failed to export: Could not generate image data. Canvas size: ${exportCanvas.width}x${exportCanvas.height}. Try reducing the zoom level.`
+        );
+        return;
+      }
+    }
+
+    // Generate filename with mandate, country, and subject
+    const sanitizeForFilename = (str) => {
+      return str
+        .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .toLowerCase();
+    };
+
+    const filenameParts = [`mandate-${mandate || "all"}`];
+    if (selectedCountry) {
+      filenameParts.push(`country-${sanitizeForFilename(selectedCountry)}`);
+    }
+    if (selectedSubject) {
+      filenameParts.push(`subject-${sanitizeForFilename(selectedSubject)}`);
+    } else if (graphData.subjects && graphData.subjects.length > 0) {
+      filenameParts.push("all-subjects");
+    }
+    const filename = `network-${filenameParts.join("-")}.png`;
+
+    // Create a temporary link element to trigger download
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = dataURL;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -537,9 +910,34 @@ export default function NetworkCanvas({
             <path d="M3 21v-5h5"></path>
           </svg>
         </button>
+        <button
+          className="network-zoom-button"
+          onClick={handleExportPNG}
+          title="Export Network as PNG"
+          aria-label="Export Network as PNG"
+          disabled={!graphData || !canvasReady}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
       </div>
-      <div className="network-canvas-tip" title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps">
-        💡 Tip: Click nodes or groups to explore
+      <div
+        className="network-canvas-tip"
+        title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps"
+      >
+        💡 Tip: Click MEP nodes or group names to explore more
       </div>
       {!graphData && (
         <div className="network-canvas-empty">
@@ -548,7 +946,8 @@ export default function NetworkCanvas({
             <h3>Network Visualization</h3>
             <p>Loading network data...</p>
             <p className="network-canvas-empty-hint">
-              Once loaded, you can click on nodes to explore MEPs and their connections
+              Once loaded, you can click on nodes to explore MEPs and their
+              connections
             </p>
           </div>
         </div>

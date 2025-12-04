@@ -603,7 +603,7 @@ export default function VisualizationPage() {
             <h1>
               <span className="title-line">European Parliament</span>
               <span className="title-line title-line-with-logo">
-                Network
+                Voting Network
                 <div className="visualization-logo">
                   <svg
                     width="32"
@@ -753,6 +753,9 @@ export default function VisualizationPage() {
               onNodeClick={handleNodeClick}
               onNodeHover={handleNodeHover}
               onHoverPositionChange={handleHoverPositionChange}
+              mandate={mandate}
+              selectedCountry={selectedCountry}
+              selectedSubject={selectedSubject}
             />
             {loading && <LoadingSpinner message="Loading network data..." />}
           </div>

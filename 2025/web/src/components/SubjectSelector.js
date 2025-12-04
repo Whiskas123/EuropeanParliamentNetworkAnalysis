@@ -44,7 +44,7 @@ export default function SubjectSelector({
           return;
         }
         const data = await response.json();
-        
+
         // Get subjects from edgesBySubject
         if (data.edgesBySubject) {
           const subjectList = Object.keys(data.edgesBySubject).sort();
@@ -83,7 +83,7 @@ export default function SubjectSelector({
     return (
       <div className="selector-dropdown">
         <div className="selector-header">
-          <span className="selector-title">Subject</span>
+          <span className="selector-title">Policy Area</span>
           <button className="selector-button" disabled>
             <span className="selector-value">Loading...</span>
           </button>
@@ -92,14 +92,17 @@ export default function SubjectSelector({
     );
   }
 
-  const displayText = currentSubject 
+  const displayText = currentSubject
     ? `${getSubjectEmoji(currentSubject)} ${currentSubject}`
-    : "All Subjects";
+    : "All Policy Areas";
 
   return (
-    <div className={`selector-dropdown ${isOpen ? "open" : ""}`} ref={dropdownRef}>
+    <div
+      className={`selector-dropdown ${isOpen ? "open" : ""}`}
+      ref={dropdownRef}
+    >
       <div className="selector-header">
-        <span className="selector-title">Subject</span>
+        <span className="selector-title">Policy Area</span>
         <button
           className={`selector-button ${disabled ? "disabled" : ""}`}
           onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -133,7 +136,7 @@ export default function SubjectSelector({
               setIsOpen(false);
             }}
           >
-            All Subjects
+            All Policy Areas
           </button>
           {subjects.map((subject) => (
             <button
@@ -158,4 +161,3 @@ export default function SubjectSelector({
     </div>
   );
 }
-

@@ -93,7 +93,7 @@ export default function Sidebar({
               }
             }}
             className="sidebar-search-button"
-            title="Search MEP by name, country, or national party"
+            title="Search for a Member of the European Parliament by name, country, or national party"
           >
             <span>Search MEP</span>
 
@@ -134,17 +134,17 @@ export default function Sidebar({
         {/* Network Statistics */}
         {graphData && !selectedNode && !selectedGroup && (
           <>
-            <h3 className="network-stats-title">Overview</h3>
+            <h3 className="network-stats-title">Network Overview</h3>
             <div className="network-stats">
               <div className="network-stat-item">
                 <div className="network-stat-header">
-                  <span className="network-stat-label">Visible MEPs</span>
+                  <span className="network-stat-label">MEPs in Network</span>
                   <span className="network-stat-value">
                     {graphData.nodes.length}
                   </span>
                 </div>
                 <div className="network-stat-description">
-                  MEPs that participated in at least 50% of the voting sessions
+                  Members of the European Parliament who participated in at least 50% of voting sessions
                 </div>
               </div>
               {votingSessions !== null && (
@@ -155,12 +155,12 @@ export default function Sidebar({
                   </div>
                   <div className="network-stat-description">
                     {selectedSubject
-                      ? `Roll-call voting sessions for ${selectedSubject} in the ${formatMandateOrdinal(
+                      ? `Roll-call votes analyzed for ${selectedSubject} in the ${formatMandateOrdinal(
                           mandate
-                        )} term`
-                      : `Total roll-call voting sessions in the ${formatMandateOrdinal(
+                        )} parliamentary term`
+                      : `Total roll-call votes analyzed in the ${formatMandateOrdinal(
                           mandate
-                        )} term`}
+                        )} parliamentary term`}
                   </div>
                 </div>
               )}
@@ -248,14 +248,14 @@ export default function Sidebar({
                 selectedSubject={selectedSubject}
               />
             )}
-            {!intergroupCohesion &&
+              {!intergroupCohesion &&
               !intragroupCohesion &&
               !countrySimilarity &&
               graphData && (
                 <div className="sidebar-empty-state">
                   <div className="sidebar-empty-icon">📊</div>
                   <p className="sidebar-empty-text">
-                    Cohesion data is being calculated. This may take a moment...
+                    Calculating group and country similarity metrics. This may take a moment...
                   </p>
                 </div>
               )}

@@ -857,10 +857,60 @@ a {
   font-size: 20px;
   line-height: 1.6;
   margin: 0 0 40px 0;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   opacity: 0.95;
+}
+
+.landingFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  text-align: left;
+}
+
+.landingFeature {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.landingFeatureIcon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.landingFeatureText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  
+  strong {
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+  }
+  
+  span {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+  }
+}
+
+.landingActions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .enterButton {
@@ -914,6 +964,82 @@ a {
   }
 }
 
+.methodologyButton {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  letter-spacing: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  &:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+.methodologySection {
+  max-width: 800px;
+  margin: 40px auto 0;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.methodologyTitle {
+  font-size: 32px;
+  margin: 0 0 24px 0;
+  color: #003399;
+  font-weight: 600;
+}
+
+.methodologyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.methodologyItem {
+  h3 {
+    font-size: 20px;
+    margin: 0 0 12px 0;
+    color: #003399;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: #555;
+  }
+}
+
 @media (max-width: 768px) {
   .landingTitle {
     font-size: 40px;
@@ -924,9 +1050,63 @@ a {
     padding: 0 20px;
   }
 
+  .landingFeatures {
+    padding: 0 20px;
+  }
+
+  .landingFeature {
+    padding: 16px;
+  }
+
+  .landingFeatureIcon {
+    font-size: 28px;
+  }
+
+  .landingFeatureText {
+    strong {
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .landingActions {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+  }
+
   .enterButton {
     padding: 14px 36px;
     font-size: 16px;
+    width: 100%;
+  }
+
+  .methodologyButton {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .methodologySection {
+    margin: 40px 20px 0;
+    padding: 24px;
+  }
+
+  .methodologyTitle {
+    font-size: 24px;
+  }
+
+  .methodologyItem {
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
   }
 }
 
@@ -1691,11 +1871,18 @@ a {
 // Ensure country title matches intragroup title exactly
 .country-similarity-title,
 .intragroup-cohesion-title {
-  margin: 0 0 20px 0;
+  margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: -0.3px;
+}
+
+.country-similarity-description,
+.intragroup-cohesion-description {
+  font-size: 11px;
+  color: #666;
+  margin: 0 0 12px 0;
   position: relative;
   padding-bottom: 12px;
 
@@ -1803,11 +1990,17 @@ a {
 }
 
 .cohesion-heatmap-title {
-  margin: 0 0 20px 0;
+  margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: -0.3px;
+}
+
+.cohesion-heatmap-description {
+  font-size: 11px;
+  color: #666;
+  margin: 0 0 12px 0;
   position: relative;
   padding-bottom: 12px;
 

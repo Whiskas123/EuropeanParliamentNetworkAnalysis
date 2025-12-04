@@ -190,18 +190,18 @@ export default function SimilarityScores({
                 </span>
               </div>
               <div className="similarity-score-description">
-                Average similarity with {groupSimilarityScore.count} MEP
+                Average voting agreement with {groupSimilarityScore.count} MEP
                 {groupSimilarityScore.count !== 1 ? "s" : ""} from the same
-                group
+                political group
               </div>
               {groupSubjectScores && groupSubjectScores.length > 0 && (
                 <div className="group-subject-breakdown">
                   {groupSubjectScores.length >= 3 && (
                     <div className="group-subject-section">
                       <div className="group-subject-label">
-                        Agrees more with{" "}
-                        {getGroupAcronym(selectedNode.groupId, mandate)}{" "}
-                        members:
+                        Higher voting agreement with{" "}
+                        {getGroupAcronym(selectedNode.groupId, mandate)} members
+                        on:
                       </div>
                       <div className="group-subject-list">
                         {groupSubjectScores.slice(0, 3).map((item) => (
@@ -223,9 +223,9 @@ export default function SimilarityScores({
                   {groupSubjectScores.length >= 3 && (
                     <div className="group-subject-section">
                       <div className="group-subject-label">
-                        Agrees less with{" "}
-                        {getGroupAcronym(selectedNode.groupId, mandate)}{" "}
-                        members:
+                        Lower voting agreement with{" "}
+                        {getGroupAcronym(selectedNode.groupId, mandate)} members
+                        on:
                       </div>
                       <div className="group-subject-list">
                         {groupSubjectScores
@@ -263,7 +263,7 @@ export default function SimilarityScores({
                 </span>
               </div>
               <div className="similarity-score-description">
-                Average similarity with {countrySimilarityScore.count} MEP
+                Average voting agreement with {countrySimilarityScore.count} MEP
                 {countrySimilarityScore.count !== 1 ? "s" : ""} from the same
                 country
               </div>
@@ -278,7 +278,7 @@ export default function SimilarityScores({
                   onClick={() => setIsAgreementCollapsed(!isAgreementCollapsed)}
                 >
                   <span>
-                    Similarity with Groups
+                    Voting Agreement with Political Groups
                     {agreementSubject &&
                       ` (${getSubjectEmoji(
                         agreementSubject
@@ -300,7 +300,7 @@ export default function SimilarityScores({
                     <path d="M6 9l6 6 6-6" />
                   </svg>
                 </h4>
-                {subjects.length > 0 && (
+                {subjects.length > 0 && !selectedSubject && (
                   <select
                     className="agreement-subject-selector"
                     value={agreementSubject || ""}
@@ -308,7 +308,7 @@ export default function SimilarityScores({
                       setAgreementSubject(e.target.value || null)
                     }
                   >
-                    <option value="">All Subjects</option>
+                    <option value="">All Policy Areas</option>
                     {subjects.map((subject) => (
                       <option key={subject} value={subject}>
                         {getSubjectEmoji(subject)} {subject}
