@@ -24,6 +24,11 @@ export default function NetworkCanvas({
   const pixelRatioRef = useRef(
     typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1
   );
+  // Detect Safari for rendering adjustments
+  const isSafariRef = useRef(
+    typeof window !== "undefined" &&
+      /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  );
   const handlersRef = useRef({
     mouseMove: null,
     mouseLeave: null,
@@ -70,8 +75,12 @@ export default function NetworkCanvas({
     ctx.restore();
 
     // Apply high-DPI scale followed by graph transforms
+    // Safari uses 1:1 canvas, so no scaling needed
+    const isSafari = isSafariRef.current;
+    const effectivePixelRatio = isSafari ? 1 : pixelRatio;
+
     ctx.save();
-    ctx.scale(pixelRatio, pixelRatio);
+    ctx.scale(effectivePixelRatio, effectivePixelRatio);
     ctx.translate(t.x, t.y);
     ctx.scale(t.k, t.k);
 
@@ -86,8 +95,15 @@ export default function NetworkCanvas({
     // Default color for inter-group edges
     const defaultEdgeColor = "#999999";
     ctx.strokeStyle = defaultEdgeColor;
-    ctx.lineWidth = EDGE_BASE_LINE_WIDTH;
-    ctx.globalAlpha = 0.3;
+    // Line width: divide by effectivePixelRatio since context is scaled
+    ctx.lineWidth = EDGE_BASE_LINE_WIDTH / effectivePixelRatio;
+    // Safari renders edges more prominently, use lower alpha to match Chrome/Firefox
+    ctx.globalAlpha = isSafari ? 0.05 : 0.3;
+
+    // Debug: Log Safari detection (can be removed later)
+    if (isSafari) {
+      console.log("Safari detected - using reduced edge alpha");
+    }
     sortedLinks.forEach((link) => {
       const sourceNode = graphData.nodeMap.get(link.source);
       const targetNode = graphData.nodeMap.get(link.target);
@@ -147,7 +163,7 @@ export default function NetworkCanvas({
 
         // Border ring
         ctx.strokeStyle = "#FFD700";
-        ctx.lineWidth = SELECTED_BORDER_BASE_LINE_WIDTH;
+        ctx.lineWidth = SELECTED_BORDER_BASE_LINE_WIDTH / effectivePixelRatio;
         ctx.beginPath();
         ctx.arc(node.x, node.y, borderSize, 0, 2 * Math.PI);
         ctx.stroke();
@@ -166,7 +182,7 @@ export default function NetworkCanvas({
 
         // Add subtle border for better visibility
         ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-        ctx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH;
+        ctx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH / effectivePixelRatio;
         ctx.beginPath();
         ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
         ctx.stroke();
@@ -196,14 +212,21 @@ export default function NetworkCanvas({
 
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
+    const isSafari = isSafariRef.current;
+    // Safari handles high-DPI differently, use 1:1 canvas for consistent rendering
+    const effectivePixelRatio = isSafari
+      ? 1
+      : typeof window !== "undefined"
+      ? window.devicePixelRatio || 1
+      : 1;
     const pixelRatio =
       typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
     pixelRatioRef.current = pixelRatio;
 
     // Set up canvas
     const canvas = document.createElement("canvas");
-    canvas.width = width * pixelRatio;
-    canvas.height = height * pixelRatio;
+    canvas.width = width * effectivePixelRatio;
+    canvas.height = height * effectivePixelRatio;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.style.cursor = "grab";
