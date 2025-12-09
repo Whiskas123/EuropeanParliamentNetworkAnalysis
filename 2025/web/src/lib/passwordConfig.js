@@ -7,16 +7,17 @@ export const passwordConfig = {
   // Format: password: expirationDate (ISO string or null)
   passwords: {
     // Example: Password expires on December 31, 2025
-    "demo2025": "2025-12-31",
+    demo2025: "2025-12-31",
     // Example: Password with no expiration (set to null)
     // "permanent": null,
     // Example: Another password expiring on a specific date
     // "client2": "2025-06-30",
   },
-  
+
   // Default expiration message
-  defaultExpirationMessage: "Your access has expired. Please contact the administrator for a new password.",
-  
+  defaultExpirationMessage:
+    "Your access has expired. Please contact the administrator for a new password.",
+
   // Session storage key
   sessionKey: "ep_network_auth",
 };
@@ -28,21 +29,21 @@ export const passwordConfig = {
  */
 export function validatePassword(password) {
   const config = passwordConfig.passwords[password];
-  
+
   if (!config) {
     return { valid: false, expired: false, expirationDate: null };
   }
-  
+
   // If expiration is null, password never expires
   if (config === null) {
     return { valid: true, expired: false, expirationDate: null };
   }
-  
+
   // Check if expired
   const expirationDate = new Date(config);
   const now = new Date();
   const expired = now > expirationDate;
-  
+
   return {
     valid: true,
     expired: expired,
@@ -58,29 +59,33 @@ export function checkSession() {
   if (typeof window === "undefined") {
     return { authenticated: false, expired: false, expirationDate: null };
   }
-  
+
   const sessionData = localStorage.getItem(passwordConfig.sessionKey);
-  
+
   if (!sessionData) {
     return { authenticated: false, expired: false, expirationDate: null };
   }
-  
+
   try {
     const { password, timestamp } = JSON.parse(sessionData);
     const validation = validatePassword(password);
-    
+
     if (!validation.valid) {
       // Password no longer exists in config
       localStorage.removeItem(passwordConfig.sessionKey);
       return { authenticated: false, expired: false, expirationDate: null };
     }
-    
+
     if (validation.expired) {
       // Password has expired
       localStorage.removeItem(passwordConfig.sessionKey);
-      return { authenticated: false, expired: true, expirationDate: validation.expirationDate };
+      return {
+        authenticated: false,
+        expired: true,
+        expirationDate: validation.expirationDate,
+      };
     }
-    
+
     return {
       authenticated: true,
       expired: false,
@@ -99,12 +104,12 @@ export function checkSession() {
  */
 export function saveSession(password) {
   if (typeof window === "undefined") return;
-  
+
   const sessionData = {
     password,
     timestamp: new Date().toISOString(),
   };
-  
+
   localStorage.setItem(passwordConfig.sessionKey, JSON.stringify(sessionData));
 }
 
@@ -115,4 +120,3 @@ export function clearSession() {
   if (typeof window === "undefined") return;
   localStorage.removeItem(passwordConfig.sessionKey);
 }
-
