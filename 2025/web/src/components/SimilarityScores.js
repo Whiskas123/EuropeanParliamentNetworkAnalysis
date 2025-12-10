@@ -190,9 +190,19 @@ export default function SimilarityScores({
                 </span>
               </div>
               <div className="similarity-score-description">
-                Average voting agreement with {groupSimilarityScore.count} MEP
-                {groupSimilarityScore.count !== 1 ? "s" : ""} from the same
-                political group
+                Average voting agreement{" "}
+                {selectedNode?.groupId === "NonAttached" ? (
+                  <>
+                    with {groupSimilarityScore.count} non attached MEP
+                    {groupSimilarityScore.count !== 1 ? "s" : ""}
+                  </>
+                ) : (
+                  <>
+                    with {groupSimilarityScore.count} MEP
+                    {groupSimilarityScore.count !== 1 ? "s" : ""} from the same
+                    political group
+                  </>
+                )}
               </div>
               {groupSubjectScores && groupSubjectScores.length > 0 && (
                 <div className="group-subject-breakdown">
