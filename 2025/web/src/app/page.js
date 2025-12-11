@@ -7,7 +7,6 @@ import { checkSession } from "../lib/passwordConfig";
 
 export default function Home() {
   const router = useRouter();
-  const [showMethodology, setShowMethodology] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   const handleEnter = () => {
@@ -86,29 +85,38 @@ export default function Home() {
         </div>
         <h1 className="landingTitle">European Parliament Voting Network</h1>
         <p className="landingDescription">
-          Analyze voting patterns and political cohesion in the European Parliament through an interactive network visualization. Discover alliances, group dynamics, and voting behavior across parliamentary terms and policy areas.
+          Analyze voting patterns and political cohesion in the European
+          Parliament through an interactive network visualization. Discover
+          alliances, group dynamics, and voting behavior across parliamentary
+          terms and policy areas.
         </p>
-        
+
         <div className="landingFeatures">
           <div className="landingFeature">
             <div className="landingFeatureIcon">🔍</div>
             <div className="landingFeatureText">
               <strong>Explore Voting Patterns</strong>
-              <span>Visualize how MEPs vote together across different policy areas</span>
+              <span>
+                Visualize how MEPs vote together across different policy areas
+              </span>
             </div>
           </div>
           <div className="landingFeature">
             <div className="landingFeatureIcon">📊</div>
             <div className="landingFeatureText">
               <strong>Analyze Group Cohesion</strong>
-              <span>Measure similarity scores within and between political groups</span>
+              <span>
+                Measure similarity scores within and between political groups
+              </span>
             </div>
           </div>
           <div className="landingFeature">
             <div className="landingFeatureIcon">🌍</div>
             <div className="landingFeatureText">
-              <strong>Filter by Term & Subject</strong>
-              <span>Examine specific parliamentary terms and policy domains</span>
+              <strong>Filter by Term, Subject and Country</strong>
+              <span>
+                Examine specific policy domains, countries, and mandates
+              </span>
             </div>
           </div>
         </div>
@@ -117,54 +125,9 @@ export default function Home() {
           <button className="enterButton" onClick={handleEnter}>
             Explore the Network
           </button>
-          <button 
-            className="methodologyButton" 
-            onClick={() => setShowMethodology(!showMethodology)}
-          >
-            {showMethodology ? "Hide" : "Show"} Methodology
-          </button>
         </div>
-
-        {showMethodology && (
-          <div className="methodologySection">
-            <h2 className="methodologyTitle">Methodology</h2>
-            <div className="methodologyContent">
-              <div className="methodologyItem">
-                <h3>Network Construction</h3>
-                <p>
-                  The network is built by calculating voting similarity between each pair of Members of the European Parliament (MEPs). 
-                  Each MEP is represented as a node, and connections (edges) between MEPs are weighted by their voting agreement rate.
-                </p>
-              </div>
-              <div className="methodologyItem">
-                <h3>Similarity Calculation</h3>
-                <p>
-                  For each pair of MEPs, we calculate the percentage of votes where they agreed (both voted "For", "Against", or "Abstain"). 
-                  The similarity score ranges from 0% (complete disagreement) to 100% (perfect agreement). Only MEPs who participated in 
-                  at least 50% of voting sessions are included in the network.
-                </p>
-              </div>
-              <div className="methodologyItem">
-                <h3>Data Sources</h3>
-                <p>
-                  Voting data comes from roll-call votes in the European Parliament across multiple terms (6th through 10th mandate). 
-                  The visualization includes filters for specific policy subjects and parliamentary terms, allowing for detailed analysis 
-                  of voting behavior in different contexts.
-                </p>
-              </div>
-              <div className="methodologyItem">
-                <h3>Visualization</h3>
-                <p>
-                  The network layout uses Force Atlas 2 algorithm, positioning MEPs closer together when they vote similarly. 
-                  Colors represent political groups, and edge thickness indicates the strength of voting agreement. 
-                  The tool provides detailed statistics on group cohesion, country similarity, and individual MEP voting patterns.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-      
+
       <PasswordModal
         isOpen={showPasswordModal}
         onClose={() => setShowPasswordModal(false)}
