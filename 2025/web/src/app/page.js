@@ -1,26 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import PasswordModal from "../components/PasswordModal";
-import { checkSession } from "../lib/passwordConfig";
 
 export default function Home() {
   const router = useRouter();
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   const handleEnter = () => {
-    // Check if user is already authenticated
-    const session = checkSession();
-    if (session.authenticated) {
-      router.push("/visualization");
-    } else {
-      setShowPasswordModal(true);
-    }
-  };
-
-  const handlePasswordSuccess = () => {
-    setShowPasswordModal(false);
     router.push("/visualization");
   };
 
@@ -127,12 +112,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-
-      <PasswordModal
-        isOpen={showPasswordModal}
-        onClose={() => setShowPasswordModal(false)}
-        onSuccess={handlePasswordSuccess}
-      />
     </div>
   );
 }
