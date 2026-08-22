@@ -678,26 +678,12 @@ export default function VisualizationPage() {
               <CountrySelector
                 currentMandate={mandate}
                 currentCountry={selectedCountry}
-                onCountryChange={(country) => {
-                  setSelectedCountry(country);
-                  // If selecting a country, clear subject selection
-                  if (country && selectedSubject) {
-                    setSelectedSubject(null);
-                  }
-                }}
-                disabled={!!selectedSubject} // Disable when subject is selected
+                onCountryChange={setSelectedCountry}
               />
               <SubjectSelector
                 currentMandate={mandate}
                 currentSubject={selectedSubject}
-                onSubjectChange={(subject) => {
-                  setSelectedSubject(subject);
-                  // If selecting a subject, clear country selection
-                  if (subject && selectedCountry) {
-                    setSelectedCountry(null);
-                  }
-                }}
-                disabled={!!selectedCountry} // Disable when country is selected
+                onSubjectChange={setSelectedSubject}
               />
             </div>
             {/* Mobile: Show hamburger menu */}
@@ -706,21 +692,9 @@ export default function VisualizationPage() {
                 mandate={mandate}
                 onMandateChange={setMandate}
                 selectedCountry={selectedCountry}
-                onCountryChange={(country) => {
-                  setSelectedCountry(country);
-                  // If selecting a country, clear subject selection
-                  if (country && selectedSubject) {
-                    setSelectedSubject(null);
-                  }
-                }}
+                onCountryChange={setSelectedCountry}
                 selectedSubject={selectedSubject}
-                onSubjectChange={(subject) => {
-                  setSelectedSubject(subject);
-                  // If selecting a subject, clear country selection
-                  if (subject && selectedCountry) {
-                    setSelectedCountry(null);
-                  }
-                }}
+                onSubjectChange={setSelectedSubject}
               />
             </div>
           </div>

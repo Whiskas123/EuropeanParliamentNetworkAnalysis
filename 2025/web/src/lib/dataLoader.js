@@ -95,30 +95,29 @@ async function countVotingSessions(mandate, subject = null) {
   }
 
   try {
-    const url = `/data/enriched_data/ep_votes_${mandate}.json`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      console.warn(`Could not load ep_votes for mandate ${mandate}`);
+    // Counts come precomputed from the data pipeline. This used to fetch
+    // /data/enriched_data/ep_votes_{mandate}.json and count vote ids in the
+    // browser - a 500-850 MB download per mandate just to produce one number.
+    if (votingSessionsCache.__counts === undefined) {
+      const response = await fetch(`/data/voting_sessions.json`);
+      votingSessionsCache.__counts = response.ok ? await response.json() : null;
+    }
+    const counts = votingSessionsCache.__counts;
+    if (!counts || !counts[mandate]) {
+      console.warn(`No voting-session counts for mandate ${mandate}`);
       return null;
     }
 
-    const epVotes = await response.json();
-
-    // Filter by subject if specified, then count unique voteids
-    let votesToCount = epVotes;
-    if (subject) {
-      votesToCount = epVotes.filter((vote) => vote.subject === subject);
-    }
-
-    // Count unique voteids
-    const uniqueVoteIds = new Set(votesToCount.map((vote) => vote.voteid));
-    const count = uniqueVoteIds.size;
+    const entry = counts[mandate];
+    const count = subject
+      ? (entry.bySubject && entry.bySubject[subject]) || 0
+      : entry.total;
 
     votingSessionsCache[cacheKey] = count;
     return count;
   } catch (error) {
     console.error(
-      `Error counting voting sessions for mandate ${mandate}${
+      `Error reading voting session counts for mandate ${mandate}${
         subject ? ` - ${subject}` : ""
       }:`,
       error

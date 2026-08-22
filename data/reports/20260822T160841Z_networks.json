@@ -1,0 +1,102 @@
+{
+  "run": "networks",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-22T16:08:41.687079+00:00",
+    "seconds": 27.3,
+    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 8,
+    "passed": 8,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 2: build networks",
+      "facts": {
+        "mandate 10: voting sessions": 4245,
+        "mandate 10: MEPs casting any vote": 732,
+        "mandate 10: MEPs in network": 696,
+        "mandate 10: edges": 241860,
+        "mandate 10: nodes": 696,
+        "mandate 10: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_10/data.json (305 MB)"
+      },
+      "seconds": 21.9
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "mandate 10: network is non-trivial",
+      "ok": true,
+      "detail": "696 MEPs, 241860 edges",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every edge connects two known nodes",
+      "ok": true,
+      "detail": "0 edges reference an MEP missing from the node list",
+      "fatal": false,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every node has a political group",
+      "ok": true,
+      "detail": "some nodes have an empty GroupID",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every node has a country",
+      "ok": true,
+      "detail": "some nodes have an empty Country",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: all edge weights are real numbers",
+      "ok": true,
+      "detail": "some weights are NaN or infinite, which would produce invalid JSON",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: edge weights are within [0, 1]",
+      "ok": true,
+      "detail": "range is [0.1335, 1.0]",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "6": {
+    "nodes_2025": 658,
+    "nodes_now": 658,
+    "nodes_added": [],
+    "nodes_removed": [],
+    "nodes_added_count": 0,
+    "nodes_removed_count": 0,
+    "group_changes": [],
+    "group_changes_count": 0,
+    "country_changes_count": 0,
+    "edges_2025": 216153,
+    "edges_now": 216153,
+    "edges_only_2025": 0,
+    "edges_only_now": 0,
+    "edges_compared": 216153,
+    "edges_differing": 0,
+    "max_weight_delta": 0.0,
+    "worst_diffs": []
+  },
+  "7": {
+    "nodes_2025": 714,
+    "nodes_now": 714,
+    "nodes_added": [],
+    "nodes_removed": [],
+    "nodes_added_count": 0,
+    "nodes_removed_count": 0,
+    "group_changes": [],
+    "group_changes_count": 0,
+    "country_changes_count": 0,
+    "edges_2025": 254541,
+    "edges_now": 254541,
+    "edges_only_2025": 0,
+    "edges_only_now": 0,
+    "edges_compared": 254541,
+    "edges_differing": 0,
+    "max_weight_delta": 0.0,
+    "worst_diffs": []
+  },
+  "8": {
+    "nodes_2025": 694,
+    "nodes_now": 694,
+    "nodes_added": [],
+    "nodes_removed": [],
+    "nodes_added_count": 0,
+    "nodes_removed_count": 0,
+    "group_changes": [],
+    "group_changes_count": 0,
+    "country_changes_count": 0,
+    "edges_2025": 240471,
+    "edges_now": 240471,
+    "edges_only_2025": 0,
+    "edges_only_now": 0,
+    "edges_compared": 240471,
+    "edges_differing": 0,
+    "max_weight_delta": 0.0,
+    "worst_diffs": []
+  },
+  "9": {
+    "nodes_2025": 697,
+    "nodes_now": 697,
+    "nodes_added": [],
+    "nodes_removed": [],
+    "nodes_added_count": 0,
+    "nodes_removed_count": 0,
+    "group_changes": [],
+    "group_changes_count": 0,
+    "country_changes_count": 0,
+    "edges_2025": 242556,
+    "edges_now": 242556,
+    "edges_only_2025": 0,
+    "edges_only_now": 0,
+    "edges_compared": 242556,
+    "edges_differing": 0,
+    "max_weight_delta": 0.0,
+    "worst_diffs": []
+  },
+  "10": {
+    "nodes_2025": 702,
+    "nodes_now": 696,
+    "nodes_added": [
+      "M198183",
+      "M256956",
+      "M267485"
+    ],
+    "nodes_removed": [
+      "M124715",
+      "M197469",
+      "M256850",
+      "M256861",
+      "M256864",
+      "M256866",
+      "M256927",
+      "M256991",
+      "M257129"
+    ],
+    "nodes_added_count": 3,
+    "nodes_removed_count": 9,
+    "group_changes": [
+      [
+        "M197618",
+        "S&D",
+        "RE"
+      ],
+      [
+        "M256823",
+        "GUE/NGL",
+        "S&D"
+      ],
+      [
+        "M125325",
+        "PPE",
+        "ECR"
+      ],
+      [
+        "M257069",
+        "ESN",
+        "PfE"
+      ],
+      [
+        "M257256",
+        "NonAttached",
+        "ECR"
+      ],
+      [
+        "M256921",
+        "PPE",
+        "PfE"
+      ],
+      [
+        "M220908",
+        "PPE",
+        "NonAttached"
+      ],
+      [
+        "M197842",
+        "NonAttached",
+        "ECR"
+      ],
+      [
+        "M124846",
+        "S&D",
+        "RE"
+      ],
+      [
+        "M256852",
+        "PfE",
+        "ECR"
+      ],
+      [
+        "M256971",
+        "NonAttached",
+        "RE"
+      ],
+      [
+        "M256983",
+        "PPE",
+        "ECR"
+      ],
+      [
+        "M257125",
+        "PfE",
+        "ESN"
+      ]
+    ],
+    "group_changes_count": 13,
+    "country_changes_count": 0,
+    "edges_2025": 246051,
+    "edges_now": 241860,
+    "edges_only_2025": 6273,
+    "edges_only_now": 2082,
+    "edges_compared": 239778,
+    "edges_differing": 235539,
+    "max_weight_delta": 0.402,
+    "worst_diffs": [
+      {
+        "pair": [
+          "M256871",
+          "M257038"
+        ],
+        "was": -0.235,
+        "now": 0.16700000000000004,
+        "delta": 0.402
+      },
+      {
+        "pair": [
+          "M197440",
+          "M256871"
+        ],
+        "was": -0.234,
+        "now": 0.139,
+        "delta": 0.373
+      },
+      {
+        "pair": [
+          "M249603",
+          "M256871"
+        ],
+        "was": 0.084,
+        "now": 0.44199999999999995,
+        "delta": 0.358
+      },
+      {
+        "pair": [
+          "M197422",
+          "M256871"
+        ],
+        "was": 0.036,
+        "now": 0.385,
+        "delta": 0.349
+      },
+      {
+        "pair": [
+          "M220801",
+          "M256871"
+        ],
+        "was": -0.169,
+        "now": 0.17300000000000004,
+        "delta": 0.342
+      },
+      {
+        "pair": [
+          "M256804",
+          "M256871"
+        ],
+        "was": 0.057,
+        "now": 0.3959999999999999,
+        "delta": 0.339
+      },
+      {
+        "pair": [
+          "M256871",
+          "M257098"
+        ],
+        "was": -0.12,
+        "now": 0.21399999999999997,
+        "delta": 0.334
+      },
+      {
+        "pair": [
+          "M256871",
+          "M257068"
+        ],
+        "was": 0.037,
+        "now": 0.369,
+        "delta": 0.332
+      },
+      {
+        "pair": [
+          "M197408",
+          "M256871"
+        ],
+        "was": 0.08,
+        "now": 0.40900000000000003,
+        "delta": 0.329
+      },
+      {
+        "pair": [
+          "M256871",
+          "M257081"
+        ],
+        "was": 0.058,
+        "now": 0.381,
+        "delta": 0.323
+      }
+    ]
+  }
+}

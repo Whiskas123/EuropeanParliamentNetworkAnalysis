@@ -1,0 +1,1152 @@
+[
+ {
+  "flag": "=",
+  "code": "A10-0134/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/0129",
+  "expected_epref": "2025/0129",
+  "got_epref": "2025/0129",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "A10-0015/2024",
+  "expected": "Civil Liberties, Justice and Home Affairs",
+  "got": "Civil Liberties, Justice and Home Affairs",
+  "route": "epref:2024/0128",
+  "expected_epref": "2024/0128",
+  "got_epref": "2024/0128",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0018/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2023/0453",
+  "expected_epref": "2023/0453",
+  "got_epref": "2023/0453",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "A10-0147/2025",
+  "expected": "Internal Market and Consumer Protection",
+  "got": "Internal Market and Consumer Protection",
+  "route": "epref:2024/2103",
+  "expected_epref": "2024/2103",
+  "got_epref": "2024/2103",
+  "votes": 57
+ },
+ {
+  "flag": "=",
+  "code": "A10-0020/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2023/0455",
+  "expected_epref": "2023/0455",
+  "got_epref": "2023/0455",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "A10-0189/2025",
+  "expected": "Internal Market and Consumer Protection",
+  "got": "Internal Market and Consumer Protection",
+  "route": "epref:2024/2119",
+  "expected_epref": "2024/2119",
+  "got_epref": "2024/2119",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0001/2024",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2024/0046",
+  "expected_epref": "2024/0046",
+  "got_epref": "2024/0046",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0050/2025",
+  "expected": "Budgetary Control",
+  "got": "Budgetary Control",
+  "route": "epref:2024/2022",
+  "expected_epref": "2024/2022",
+  "got_epref": "2024/2022",
+  "votes": 6
+ },
+ {
+  "flag": "=",
+  "code": "A10-0072/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2022",
+  "expected_epref": "2025/2022",
+  "got_epref": "2025/2022",
+  "votes": 4
+ },
+ {
+  "flag": "=",
+  "code": "A10-0168/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2025/0245",
+  "expected_epref": "2025/0245",
+  "got_epref": "2025/0245",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "A10-0040/2025",
+  "expected": "Fisheries",
+  "got": "Fisheries",
+  "route": "committee:PECH",
+  "expected_epref": "2024/0159",
+  "got_epref": null,
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "A10-0010/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2080",
+  "expected_epref": "2024/2080",
+  "got_epref": "2024/2080",
+  "votes": 68
+ },
+ {
+  "flag": "=",
+  "code": "A10-0119/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2023/0158",
+  "expected_epref": "2023/0158",
+  "got_epref": "2023/0158",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0123/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2008",
+  "expected_epref": "2025/2008",
+  "got_epref": "2025/2008",
+  "votes": 8
+ },
+ {
+  "flag": "=",
+  "code": "A10-0160/2025",
+  "expected": "Employment and Social Affairs",
+  "got": "Employment and Social Affairs",
+  "route": "epref:2025/0154",
+  "expected_epref": "2025/0154",
+  "got_epref": "2025/0154",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0003/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2024/2054",
+  "expected_epref": "2024/2054",
+  "got_epref": "2024/2054",
+  "votes": 29
+ },
+ {
+  "flag": "=",
+  "code": "A10-0076/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2024/2051",
+  "expected_epref": "2024/2051",
+  "got_epref": "2024/2051",
+  "votes": 13
+ },
+ {
+  "flag": "=",
+  "code": "A10-0085/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/0039",
+  "expected_epref": "2025/0039",
+  "got_epref": "2025/0039",
+  "votes": 19
+ },
+ {
+  "flag": "=",
+  "code": "A10-0006/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/0258",
+  "expected_epref": "2024/0258",
+  "got_epref": "2024/0258",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0192/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2025/0210",
+  "expected_epref": "2025/0210",
+  "got_epref": "2025/0210",
+  "votes": 126
+ },
+ {
+  "flag": "=",
+  "code": "A10-0204/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2023/0232",
+  "expected_epref": "2023/0232",
+  "got_epref": "2023/0232",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0175/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2023/0410",
+  "expected_epref": "2023/0410",
+  "got_epref": "2023/0410",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "A10-0014/2025",
+  "expected": "Employment and Social Affairs",
+  "got": "Employment and Social Affairs",
+  "route": "epref:2024/2077",
+  "expected_epref": "2024/2077",
+  "got_epref": "2024/2077",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "A10-0046/2025",
+  "expected": "Budgetary Control",
+  "got": "Budgetary Control",
+  "route": "epref:2024/2026",
+  "expected_epref": "2024/2026",
+  "got_epref": "2024/2026",
+  "votes": 4
+ },
+ {
+  "flag": "=",
+  "code": "A10-0124/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2024/2116",
+  "expected_epref": "2024/2116",
+  "got_epref": "2024/2116",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0003/2024",
+  "expected": "Budgetary Control",
+  "got": "Budgetary Control",
+  "route": "epref:2023/2131",
+  "expected_epref": "2023/2131",
+  "got_epref": "2023/2131",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "A10-0087/2025",
+  "expected": "International Trade",
+  "got": "International Trade",
+  "route": "epref:2025/0021",
+  "expected_epref": "2025/0021",
+  "got_epref": "2025/0021",
+  "votes": 6
+ },
+ {
+  "flag": "=",
+  "code": "A10-0004/2025",
+  "expected": "Fisheries",
+  "got": "Fisheries",
+  "route": "epref:2024/0133",
+  "expected_epref": "2024/0133",
+  "got_epref": "2024/0133",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0068/2025",
+  "expected": "Budgetary Control",
+  "got": "Budgetary Control",
+  "route": "epref:2024/2052",
+  "expected_epref": "2024/2052",
+  "got_epref": "2024/2052",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0165/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2025/0206",
+  "expected_epref": "2025/0206",
+  "got_epref": "2025/0206",
+  "votes": 9
+ },
+ {
+  "flag": "=",
+  "code": "A10-0024/2024",
+  "expected": "International Trade",
+  "got": "International Trade",
+  "route": "epref:2024/0010",
+  "expected_epref": "2024/0010",
+  "got_epref": "2024/0010",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "A10-0030/2024",
+  "expected": "Women’s Rights and Gender Equality",
+  "got": "Women’s Rights and Gender Equality",
+  "route": "epref:2024/2057",
+  "expected_epref": "2024/2057",
+  "got_epref": "2024/2057",
+  "votes": 39
+ },
+ {
+  "flag": "=",
+  "code": "A10-0163/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2025/0198",
+  "expected_epref": "2025/0198",
+  "got_epref": "2025/0198",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "A10-0137/2025",
+  "expected": "Regional Development",
+  "got": "Regional Development",
+  "route": "epref:2024/2121",
+  "expected_epref": "2024/2121",
+  "got_epref": "2024/2121",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "A10-0056/2025",
+  "expected": "Budgetary Control",
+  "got": "Budgetary Control",
+  "route": "epref:2024/2031",
+  "expected_epref": "2024/2031",
+  "got_epref": "2024/2031",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "B10-0145/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2835",
+  "expected_epref": "2024/2835",
+  "got_epref": "2024/2835",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0209/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2536",
+  "expected_epref": "2025/2536",
+  "got_epref": "2025/2536",
+  "votes": 19
+ },
+ {
+  "flag": "=",
+  "code": "B10-0319/2025",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2025/2140",
+  "expected_epref": "2025/2140",
+  "got_epref": "2025/2140",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0061/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/3010",
+  "expected_epref": "2024/3010",
+  "got_epref": "2024/3010",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0321/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/2739",
+  "expected_epref": "2025/2739",
+  "got_epref": "2025/2739",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0023/2024",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2024/2810",
+  "expected_epref": "2024/2810",
+  "got_epref": "2024/2810",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0277/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2656",
+  "expected_epref": "2025/2656",
+  "got_epref": "2025/2656",
+  "votes": 32
+ },
+ {
+  "flag": "=",
+  "code": "B10-0407/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/2807",
+  "expected_epref": "2025/2807",
+  "got_epref": "2025/2807",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0217/2024",
+  "expected": "Regional Development",
+  "got": "Regional Development",
+  "route": "epref:2024/3000",
+  "expected_epref": "2024/3000",
+  "got_epref": "2024/3000",
+  "votes": 9
+ },
+ {
+  "flag": "=",
+  "code": "B10-0149/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2839",
+  "expected_epref": "2024/2839",
+  "got_epref": "2024/2839",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0150/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2838",
+  "expected_epref": "2024/2838",
+  "got_epref": "2024/2838",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0156/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2718",
+  "expected_epref": "2024/2718",
+  "got_epref": "2024/2718",
+  "votes": 15
+ },
+ {
+  "flag": "=",
+  "code": "B10-0457/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2809",
+  "expected_epref": "2025/2809",
+  "got_epref": "2025/2809",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0148/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2836",
+  "expected_epref": "2024/2836",
+  "got_epref": "2024/2836",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0215/2024",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2024/2115",
+  "expected_epref": "2024/2115",
+  "got_epref": "2024/2115",
+  "votes": 13
+ },
+ {
+  "flag": "=",
+  "code": "B10-0408/2025",
+  "expected": "Employment and Social Affairs",
+  "got": "Employment and Social Affairs",
+  "route": "epref:2025/2654",
+  "expected_epref": "2025/2654",
+  "got_epref": "2025/2654",
+  "votes": 19
+ },
+ {
+  "flag": "=",
+  "code": "B10-0445/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/2666",
+  "expected_epref": "2025/2666",
+  "got_epref": "2025/2666",
+  "votes": 21
+ },
+ {
+  "flag": "=",
+  "code": "B10-0450/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/2618",
+  "expected_epref": "2025/2618",
+  "got_epref": "2025/2618",
+  "votes": 8
+ },
+ {
+  "flag": "=",
+  "code": "B10-0246/2025",
+  "expected": "Internal Market and Consumer Protection",
+  "got": "Internal Market and Consumer Protection",
+  "route": "epref:2025/2542",
+  "expected_epref": "2025/2542",
+  "got_epref": "2025/2542",
+  "votes": 16
+ },
+ {
+  "flag": "=",
+  "code": "B10-0318/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2025/2740",
+  "expected_epref": "2025/2740",
+  "got_epref": "2025/2740",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0152/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2837",
+  "expected_epref": "2024/2837",
+  "got_epref": "2024/2837",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0464/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2809",
+  "expected_epref": "2025/2809",
+  "got_epref": "2025/2809",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0196/2024",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2024/2877",
+  "expected_epref": "2024/2877",
+  "got_epref": "2024/2877",
+  "votes": 4
+ },
+ {
+  "flag": "=",
+  "code": "B10-0244/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/2647",
+  "expected_epref": "2025/2647",
+  "got_epref": "2025/2647",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0216/2024",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2024/2999",
+  "expected_epref": "2024/2999",
+  "got_epref": "2024/2999",
+  "votes": 7
+ },
+ {
+  "flag": "=",
+  "code": "B10-0194/2024",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2024/2877",
+  "expected_epref": "2024/2877",
+  "got_epref": "2024/2877",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0146/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2840",
+  "expected_epref": "2024/2840",
+  "got_epref": "2024/2840",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0021/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2759",
+  "expected_epref": "2024/2759",
+  "got_epref": "2024/2759",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0147/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/2834",
+  "expected_epref": "2024/2834",
+  "got_epref": "2024/2834",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "B10-0402/2025",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2025/2173",
+  "expected_epref": "2025/2173",
+  "got_epref": "2025/2173",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0456/2025",
+  "expected": "Budgets",
+  "got": "Budgets",
+  "route": "epref:2025/2846",
+  "expected_epref": "2025/2846",
+  "got_epref": "2025/2846",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "B10-0316/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2025/2740",
+  "expected_epref": "2025/2740",
+  "got_epref": "2025/2740",
+  "votes": 1
+ },
+ {
+  "flag": "-",
+  "code": "B10-0101/2024",
+  "expected": "Foreign Affairs",
+  "got": "Others",
+  "route": "-",
+  "expected_epref": "2024/2857",
+  "got_epref": null,
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "B10-0060/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/3011",
+  "expected_epref": "2024/3011",
+  "got_epref": "2024/3011",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "B10-0178/2024",
+  "expected": "Employment and Social Affairs",
+  "got": "Employment and Social Affairs",
+  "route": "epref:2024/2842",
+  "expected_epref": "2024/2842",
+  "got_epref": "2024/2842",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "C10-0038/2025",
+  "expected": "Legal Affairs",
+  "got": "Legal Affairs",
+  "route": "epref:2025/0044",
+  "expected_epref": "2025/0044",
+  "got_epref": "2025/0044",
+  "votes": 9
+ },
+ {
+  "flag": "=",
+  "code": "C10-0137/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/0524",
+  "expected_epref": "2025/0524",
+  "got_epref": "2025/0524",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "C10-0130/2025",
+  "expected": "Transport and Tourism",
+  "got": "Transport and Tourism",
+  "route": "epref:2025/0188",
+  "expected_epref": "2025/0188",
+  "got_epref": "2025/0188",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "C10-0044/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/0058",
+  "expected_epref": "2025/0058",
+  "got_epref": "2025/0058",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "C10-0064/2025",
+  "expected": "Employment and Social Affairs",
+  "got": "Employment and Social Affairs",
+  "route": "epref:2025/0085",
+  "expected_epref": "2025/0085",
+  "got_epref": "2025/0085",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "C10-0062/2025",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2025/0070",
+  "expected_epref": "2025/0070",
+  "got_epref": "2025/0070",
+  "votes": 22
+ },
+ {
+  "flag": "=",
+  "code": "C10-0059/2025",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2025/0077",
+  "expected_epref": "2025/0077",
+  "got_epref": "2025/0077",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "C10-0063/2025",
+  "expected": "Regional Development",
+  "got": "Regional Development",
+  "route": "epref:2025/0084",
+  "expected_epref": "2025/0084",
+  "got_epref": "2025/0084",
+  "votes": 1
+ },
+ {
+  "flag": "+",
+  "code": "C10-0071/2025",
+  "expected": "Others",
+  "got": "Agriculture and Rural Development",
+  "route": "epref:2025/0104",
+  "expected_epref": null,
+  "got_epref": "2025/0104",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "C10-0119/2024",
+  "expected": "Environment, Climate and Food Safety",
+  "got": "Environment, Climate and Food Safety",
+  "route": "epref:2024/0249",
+  "expected_epref": "2024/0249",
+  "got_epref": "2024/0249",
+  "votes": 11
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0156/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2528",
+  "expected_epref": "2025/2528",
+  "got_epref": "2025/2528",
+  "votes": 46
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0028/2024",
+  "expected": "International Trade",
+  "got": "International Trade",
+  "route": "epref:2024/2799",
+  "expected_epref": "2024/2799",
+  "got_epref": "2024/2799",
+  "votes": 43
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0249/2025",
+  "expected": "Regional Development",
+  "got": "Regional Development",
+  "route": "epref:2025/2691",
+  "expected_epref": "2025/2691",
+  "got_epref": "2025/2691",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0355/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2811",
+  "expected_epref": "2025/2811",
+  "got_epref": "2025/2811",
+  "votes": 8
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0371/2025",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2025/2860",
+  "expected_epref": "2025/2860",
+  "got_epref": "2025/2860",
+  "votes": 9
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0218/2024",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2024/2994",
+  "expected_epref": "2024/2994",
+  "got_epref": "2024/2994",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0095/2024",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2856",
+  "expected_epref": "2024/2856",
+  "got_epref": "2024/2856",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0219/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2629",
+  "expected_epref": "2025/2629",
+  "got_epref": "2025/2629",
+  "votes": 3
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0146/2025",
+  "expected": "Industry, Research and Energy",
+  "got": "Industry, Research and Energy",
+  "route": "epref:2025/2565",
+  "expected_epref": "2025/2565",
+  "got_epref": "2025/2565",
+  "votes": 106
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0335/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2798",
+  "expected_epref": "2025/2798",
+  "got_epref": "2025/2798",
+  "votes": 10
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0066/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2511",
+  "expected_epref": "2025/2511",
+  "got_epref": "2025/2511",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0471/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2933",
+  "expected_epref": "2025/2933",
+  "got_epref": "2025/2933",
+  "votes": 20
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0304/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2710",
+  "expected_epref": "2025/2710",
+  "got_epref": "2025/2710",
+  "votes": 14
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0173/2024",
+  "expected": "Public Health",
+  "got": "Public Health",
+  "route": "epref:2024/2911",
+  "expected_epref": "2024/2911",
+  "got_epref": "2024/2911",
+  "votes": 17
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0392/2025",
+  "expected": "Constitutional Affairs",
+  "got": "Constitutional Affairs",
+  "route": "epref:2025/2861",
+  "expected_epref": "2025/2861",
+  "got_epref": "2025/2861",
+  "votes": 4
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0133/2024",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2890",
+  "expected_epref": "2024/2890",
+  "got_epref": "2024/2890",
+  "votes": 8
+ },
+ {
+  "flag": "!",
+  "code": "RC-B10-0190/2024",
+  "expected": "Regional Development",
+  "got": "ERROR:RemoteUnavailable",
+  "route": "giving up on https://data.europarl.europa.eu/api/v2/documents/RC-10-20",
+  "expected_epref": "2024/2952",
+  "got_epref": null,
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0328/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2796",
+  "expected_epref": "2025/2796",
+  "got_epref": "2025/2796",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0102/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2553",
+  "expected_epref": "2025/2553",
+  "got_epref": "2025/2553",
+  "votes": 9
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0248/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2692",
+  "expected_epref": "2025/2692",
+  "got_epref": "2025/2692",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0126/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2547",
+  "expected_epref": "2025/2547",
+  "got_epref": "2025/2547",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0327/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2797",
+  "expected_epref": "2025/2797",
+  "got_epref": "2025/2797",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0070/2024",
+  "expected": "Legal Affairs",
+  "got": "Legal Affairs",
+  "route": "epref:2024/2822",
+  "expected_epref": "2024/2822",
+  "got_epref": "2024/2822",
+  "votes": 10
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0220/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2628",
+  "expected_epref": "2025/2628",
+  "got_epref": "2025/2628",
+  "votes": 4
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0324/2025",
+  "expected": "Internal Market and Consumer Protection",
+  "got": "Internal Market and Consumer Protection",
+  "route": "epref:2025/2800",
+  "expected_epref": "2025/2800",
+  "got_epref": "2025/2800",
+  "votes": 10
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0211/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2612",
+  "expected_epref": "2025/2612",
+  "got_epref": "2025/2612",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0412/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2906",
+  "expected_epref": "2025/2906",
+  "got_epref": "2025/2906",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0415/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2872",
+  "expected_epref": "2025/2872",
+  "got_epref": "2025/2872",
+  "votes": 8
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0064/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2519",
+  "expected_epref": "2025/2519",
+  "got_epref": "2025/2519",
+  "votes": 13
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0284/2025",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2025/2753",
+  "expected_epref": "2025/2753",
+  "got_epref": "2025/2753",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0188/2024",
+  "expected": "Regional Development",
+  "got": "Regional Development",
+  "route": "epref:2024/2951",
+  "expected_epref": "2024/2951",
+  "got_epref": "2024/2951",
+  "votes": 2
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0134/2024",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2891",
+  "expected_epref": "2024/2891",
+  "got_epref": "2024/2891",
+  "votes": 5
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0222/2024",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2993",
+  "expected_epref": "2024/2993",
+  "got_epref": "2024/2993",
+  "votes": 1
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0161/2024",
+  "expected": "Economic and Monetary Affairs",
+  "got": "Economic and Monetary Affairs",
+  "route": "epref:2024/2885",
+  "expected_epref": "2024/2885",
+  "got_epref": "2024/2885",
+  "votes": 8
+ },
+ {
+  "flag": "=",
+  "code": "RC-B10-0208/2024",
+  "expected": "Foreign Affairs",
+  "got": "Foreign Affairs",
+  "route": "epref:2024/2950",
+  "expected_epref": "2024/2950",
+  "got_epref": "2024/2950",
+  "votes": 1
+ }
+]

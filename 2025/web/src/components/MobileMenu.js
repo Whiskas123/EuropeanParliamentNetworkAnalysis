@@ -104,7 +104,6 @@ export default function MobileMenu({
               onCountryChange(country);
               setIsOpen(false);
             }}
-            disabled={!!selectedSubject}
           />
           <SubjectSelector
             currentMandate={mandate}
@@ -113,7 +112,6 @@ export default function MobileMenu({
               onSubjectChange(subject);
               setIsOpen(false);
             }}
-            disabled={!!selectedCountry}
           />
         </div>
       </div>

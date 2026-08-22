@@ -7,7 +7,7 @@ export default function SubjectSelector({
   currentMandate,
   currentSubject,
   onSubjectChange,
-  disabled = false, // Disable when country is selected
+  disabled = false, // Optional; no longer set by the app - country and subject can be combined
 }) {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);

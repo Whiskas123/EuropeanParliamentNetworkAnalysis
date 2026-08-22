@@ -144,8 +144,7 @@ oldstuff/webpage/fullhemicicle.svg
 *.gephi
 *.DS_Store
 
-# Enriched data files (too large for git)
-2025/web/public/data/enriched_data/
+# Enriched data moved to data/archive/ on 2026-08-22 (see its README)
 
 # Mandate data directories (too large for git)
 2025/web/public/data/mandate_*/
@@ -155,3 +154,15 @@ TODO
 2025/web/scripts/add-cohesion-to-mandate-9-subjects.py
 2025/web/scripts/fix-mandate-9-subjects.py
 TODO.md
+
+# Data pipeline (see pipeline/README.md)
+# Bulk inputs and outputs are regenerable and far too large for git.
+data/raw/
+data/final/
+data/networks/
+data/archive/*
+!data/archive/README.md
+# The caches and run reports ARE tracked on purpose: they are small, and they
+# are what makes a past run reproducible and auditable.
+!data/cache/
+!data/reports/

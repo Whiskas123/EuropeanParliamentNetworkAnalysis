@@ -1,0 +1,105 @@
+{
+  "run": "verify",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-22T18:15:11.955139+00:00",
+    "seconds": 6.7,
+    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 9,
+    "passed": 9,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 6: verify the published site data",
+      "facts": {
+        "mandate 10: networks expected": 644,
+        "precomputed files checked": 644
+      },
+      "seconds": 6.6
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "voting-session counts file exists",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/voting_sessions.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_10/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 4245, 'bySubject': {'Others': 59, 'Foreign Affairs': 1049, 'Environment, Climate and Food Safety': 297, 'Transport and Tourism': 12, 'Industry, Research and Energy': 313, 'International Trade': 199, 'Economic and Monetary Affairs': 202, 'Budgets': 525, 'Legal Affairs': 190, 'Budgetary Control': 169, 'Employment and Social Affairs': 311, 'Public Health': 38, 'Constitutional Affairs': 84, 'Civil Liberties, Justice and Home Affairs': 170, 'Regional Development': 72, 'Agriculture and Rural Development': 75, 'Petitions': 40, 'Women’s Rights and Gender Equality': 176, 'Fisheries': 29, 'Internal Market and Consumer Protection': 174, 'Culture and Education': 2, 'Security and Defence': 59}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_10.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    }
+  ]
+}

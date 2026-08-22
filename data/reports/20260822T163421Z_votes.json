@@ -1,0 +1,327 @@
+{
+  "run": "votes",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-22T16:34:21.609442+00:00",
+    "seconds": 84.7,
+    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 21,
+    "passed": 21,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 1: split raw votes by mandate and assign subjects",
+      "facts": {
+        "subjects already in cache": 44556,
+        "sessions in raw dump": 44648,
+        "sessions kept": 44556,
+        "sessions per mandate": {
+          "6": 5838,
+          "7": 4360,
+          "8": 11286,
+          "9": 18827,
+          "10": 4245
+        },
+        "sessions skipped": {
+          "no votes recorded": 92
+        },
+        "distinct vote-type keys": [
+          "+",
+          "-",
+          "0"
+        ],
+        "sessions needing subject resolution": 0,
+        "subject counts per mandate": {
+          "6": {
+            "Foreign Affairs": 932,
+            "Environment, Climate and Food Safety": 705,
+            "Budgets": 545,
+            "Employment and Social Affairs": 386,
+            "Economic and Monetary Affairs": 358,
+            "Constitutional Affairs": 354,
+            "Civil Liberties, Justice and Home Affairs": 321,
+            "Transport and Tourism": 298,
+            "Agriculture and Rural Development": 285,
+            "Industry, Research and Energy": 270,
+            "Budgetary Control": 254,
+            "International Trade": 163,
+            "Culture and Education": 153,
+            "Legal Affairs": 151,
+            "Regional Development": 145,
+            "Others": 143,
+            "Fisheries": 127,
+            "Internal Market and Consumer Protection": 108,
+            "Women’s Rights and Gender Equality": 56,
+            "Security and Defence": 42,
+            "Petitions": 23,
+            "Public Health": 19
+          },
+          "7": {
+            "Environment, Climate and Food Safety": 541,
+            "Budgets": 517,
+            "Foreign Affairs": 417,
+            "Budgetary Control": 416,
+            "Agriculture and Rural Development": 363,
+            "Economic and Monetary Affairs": 322,
+            "Employment and Social Affairs": 296,
+            "Constitutional Affairs": 216,
+            "International Trade": 187,
+            "Industry, Research and Energy": 179,
+            "Women’s Rights and Gender Equality": 148,
+            "Legal Affairs": 143,
+            "Civil Liberties, Justice and Home Affairs": 140,
+            "Fisheries": 131,
+            "Internal Market and Consumer Protection": 104,
+            "Transport and Tourism": 80,
+            "Security and Defence": 48,
+            "Culture and Education": 47,
+            "Regional Development": 46,
+            "Public Health": 15,
+            "Petitions": 3,
+            "Others": 1
+          },
+          "8": {
+            "Foreign Affairs": 1510,
+            "Budgets": 1202,
+            "Environment, Climate and Food Safety": 934,
+            "Economic and Monetary Affairs": 934,
+            "Budgetary Control": 779,
+            "Civil Liberties, Justice and Home Affairs": 770,
+            "Industry, Research and Energy": 685,
+            "Constitutional Affairs": 597,
+            "Employment and Social Affairs": 536,
+            "International Trade": 528,
+            "Transport and Tourism": 434,
+            "Women’s Rights and Gender Equality": 361,
+            "Agriculture and Rural Development": 330,
+            "Regional Development": 317,
+            "Legal Affairs": 290,
+            "Internal Market and Consumer Protection": 275,
+            "Others": 199,
+            "Fisheries": 175,
+            "Petitions": 149,
+            "Culture and Education": 143,
+            "Security and Defence": 138
+          },
+          "9": {
+            "Foreign Affairs": 3552,
+            "Environment, Climate and Food Safety": 2497,
+            "Constitutional Affairs": 1397,
+            "Civil Liberties, Justice and Home Affairs": 1376,
+            "Budgetary Control": 1201,
+            "Agriculture and Rural Development": 1067,
+            "Regional Development": 1051,
+            "Budgets": 1038,
+            "Employment and Social Affairs": 1026,
+            "Economic and Monetary Affairs": 841,
+            "Industry, Research and Energy": 530,
+            "Others": 469,
+            "Transport and Tourism": 467,
+            "Internal Market and Consumer Protection": 462,
+            "Women’s Rights and Gender Equality": 385,
+            "Legal Affairs": 353,
+            "Public Health": 309,
+            "Fisheries": 289,
+            "International Trade": 217,
+            "Culture and Education": 126,
+            "Petitions": 118,
+            "Security and Defence": 56
+          },
+          "10": {
+            "Foreign Affairs": 1049,
+            "Budgets": 525,
+            "Industry, Research and Energy": 313,
+            "Employment and Social Affairs": 311,
+            "Environment, Climate and Food Safety": 297,
+            "Economic and Monetary Affairs": 202,
+            "International Trade": 199,
+            "Legal Affairs": 190,
+            "Women’s Rights and Gender Equality": 176,
+            "Internal Market and Consumer Protection": 174,
+            "Civil Liberties, Justice and Home Affairs": 170,
+            "Budgetary Control": 169,
+            "Constitutional Affairs": 84,
+            "Agriculture and Rural Development": 75,
+            "Regional Development": 72,
+            "Others": 59,
+            "Security and Defence": 59,
+            "Petitions": 40,
+            "Public Health": 38,
+            "Fisheries": 29,
+            "Transport and Tourism": 12,
+            "Culture and Education": 2
+          }
+        }
+      },
+      "seconds": 84.6
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "vote-type vocabulary is the expected {+,-,0}",
+      "ok": true,
+      "detail": "unexpected vote types: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "vote ids are unique",
+      "ok": true,
+      "detail": "0 duplicate vote ids",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "every mandate has votes",
+      "ok": true,
+      "detail": "missing: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 6: sessions written matches scan",
+      "ok": true,
+      "detail": "expected 5838, got 5838",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 7: sessions written matches scan",
+      "ok": true,
+      "detail": "expected 4360, got 4360",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 8: sessions written matches scan",
+      "ok": true,
+      "detail": "expected 11286, got 11286",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 9: sessions written matches scan",
+      "ok": true,
+      "detail": "expected 18827, got 18827",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 10: sessions written matches scan",
+      "ok": true,
+      "detail": "expected 4245, got 4245",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "every written vote has a subject",
+      "ok": true,
+      "detail": "0 votes had no cached subject",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 6: subjects are all canonical",
+      "ok": true,
+      "detail": "non-canonical subjects: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 6: 'Others' share is sane",
+      "ok": true,
+      "detail": "143/5838 (2.4%) unlabelled",
+      "fatal": false,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 7: subjects are all canonical",
+      "ok": true,
+      "detail": "non-canonical subjects: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 7: 'Others' share is sane",
+      "ok": true,
+      "detail": "1/4360 (0.0%) unlabelled",
+      "fatal": false,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 8: subjects are all canonical",
+      "ok": true,
+      "detail": "non-canonical subjects: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 8: 'Others' share is sane",
+      "ok": true,
+      "detail": "199/11286 (1.8%) unlabelled",
+      "fatal": false,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 9: subjects are all canonical",
+      "ok": true,
+      "detail": "non-canonical subjects: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 9: 'Others' share is sane",
+      "ok": true,
+      "detail": "469/18827 (2.5%) unlabelled",
+      "fatal": false,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 10: subjects are all canonical",
+      "ok": true,
+      "detail": "non-canonical subjects: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "mandate 10: 'Others' share is sane",
+      "ok": true,
+      "detail": "59/4245 (1.4%) unlabelled",
+      "fatal": false,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    }
+  ]
+}

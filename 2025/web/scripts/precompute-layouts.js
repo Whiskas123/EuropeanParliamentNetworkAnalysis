@@ -14,7 +14,67 @@ const forceAtlas2 = require("graphology-layout-forceatlas2");
 
 const DATA_DIR = path.join(__dirname, "../public/data");
 const OUTPUT_DIR = path.join(__dirname, "../public/data/precomputed");
-const ENRICHED_DATA_DIR = path.join(__dirname, "../public/data/enriched_data");
+
+/**
+ * Seeded random number generator (mulberry32).
+ *
+ * Force Atlas 2 starts from random positions, so with Math.random() two runs
+ * over identical data produce different layouts. That makes it impossible to
+ * tell a real data change from layout noise when diffing output, and it churns
+ * historical networks visually for no reason. Seeding per network keeps every
+ * run reproducible while leaving the layouts just as good.
+ */
+function makeRandom(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Stable seed derived from the network's identity, so each network keeps its
+ * own layout across runs but different networks do not start identically. */
+function seedFor(...parts) {
+  const key = parts.filter(Boolean).join("|");
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** Whether to also build the country x subject combination networks.
+ * Off by default: it is ~2,900 extra files and by far the longest part of a
+ * run, so a routine data refresh should not pay for it. Pass --combinations. */
+function wantsCombinations() {
+  return (
+    process.argv.includes("--combinations") ||
+    process.argv.includes("--combinations-only")
+  );
+}
+
+/** Build ONLY the country x subject networks, leaving the full/country/subject
+ * layouts on disk untouched. Needed for closed mandates: their positions are
+ * already published, and regenerating them would move every node for no
+ * reason. */
+function combinationsOnly() {
+  return process.argv.includes("--combinations-only");
+}
+
+/** Mandates to process, from --mandates 6,7,10 (default: all). */
+function requestedMandates(all) {
+  const arg = process.argv.indexOf("--mandates");
+  if (arg === -1 || !process.argv[arg + 1]) return all;
+  const wanted = process.argv[arg + 1]
+    .split(",")
+    .map((m) => parseInt(m.trim(), 10))
+    .filter((m) => !Number.isNaN(m));
+  return wanted.length ? all.filter((m) => wanted.includes(m)) : all;
+}
 
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
@@ -206,58 +266,47 @@ function computeSimilarityScoresWithSubjects(data, nodes, graph) {
  * @param {number} mandate - Mandate number
  * @returns {Promise<Object>} Object with total voting sessions and per-subject counts
  */
-async function countVotingSessionsPerSubject(mandate) {
+async function countVotingSessionsPerSubject(mandate, data) {
+  // Counts are computed by the Python pipeline and carried in the mandate's
+  // own data.json, with a small voting_sessions.json as a fallback. Previously
+  // this parsed the 500-850 MB enriched vote dump on every run purely to count
+  // vote ids.
   try {
-    const epVotesPath = path.join(
-      ENRICHED_DATA_DIR,
-      `ep_votes_${mandate}.json`
-    );
+    let counts = data && data.metadata && data.metadata.votingSessionCounts;
 
-    if (!fs.existsSync(epVotesPath)) {
+    if (!counts) {
+      const countsPath = path.join(DATA_DIR, "voting_sessions.json");
+      if (fs.existsSync(countsPath)) {
+        const all = JSON.parse(await fsPromises.readFile(countsPath, "utf-8"));
+        counts = all[String(mandate)];
+      }
+    }
+
+    if (!counts || !counts.bySubject) {
       console.log(
-        `    ⚠️  ep_votes_${mandate}.json not found, skipping voting session counts`
+        `    \u26a0\ufe0f  No voting-session counts for mandate ${mandate}`
       );
       return { total: null, bySubject: {} };
     }
 
-    console.log(`    Loading ep_votes_${mandate}.json...`);
-    const epVotesText = await fsPromises.readFile(epVotesPath, "utf-8");
-    const epVotes = JSON.parse(epVotesText);
-
-    // Count total unique voteids
-    const allVoteIds = new Set(epVotes.map((vote) => vote.voteid));
-    const total = allVoteIds.size;
-
-    // Count unique voteids per subject
-    const subjectVoteIds = {};
-    epVotes.forEach((vote) => {
-      if (vote.subject && vote.voteid) {
-        if (!subjectVoteIds[vote.subject]) {
-          subjectVoteIds[vote.subject] = new Set();
-        }
-        subjectVoteIds[vote.subject].add(vote.voteid);
-      }
-    });
-
-    // Convert Sets to counts and filter subjects with >5 voting sessions
+    // Only subjects with more than 5 voting sessions are offered in the UI.
     const bySubject = {};
-    Object.keys(subjectVoteIds).forEach((subject) => {
-      const count = subjectVoteIds[subject].size;
-      if (count > 5) {
-        bySubject[subject] = count;
+    Object.keys(counts.bySubject).forEach((subject) => {
+      if (counts.bySubject[subject] > 5) {
+        bySubject[subject] = counts.bySubject[subject];
       }
     });
 
     console.log(
-      `    ✓ Counted ${total} total voting sessions, ${
+      `    \u2713 ${counts.total} voting sessions, ${
         Object.keys(bySubject).length
       } subjects with >5 sessions`
     );
 
-    return { total, bySubject };
+    return { total: counts.total, bySubject };
   } catch (error) {
     console.error(
-      `    ✗ Error counting voting sessions for mandate ${mandate}:`,
+      `    \u2717 Error reading voting session counts for mandate ${mandate}:`,
       error.message
     );
     return { total: null, bySubject: {} };
@@ -531,6 +580,8 @@ async function precomputeLayoutForCountry(
       return null;
     }
 
+    // Deterministic starting positions: same data in, same layout out.
+    const rand = makeRandom(seedFor("mandate", mandate, "country", country));
     // Create graphology graph
     const graph = new Graph({ type: "undirected" });
 
@@ -538,8 +589,8 @@ async function precomputeLayoutForCountry(
     nodes.forEach((node) => {
       graph.addNode(node.id, {
         label: node.label,
-        x: Math.random() * 1000,
-        y: Math.random() * 1000,
+        x: rand() * 1000,
+        y: rand() * 1000,
         color: node.color,
         country: node.country,
         groupId: node.groupId,
@@ -817,6 +868,8 @@ async function precomputeLayoutForSubject(
       return null;
     }
 
+    // Deterministic starting positions: same data in, same layout out.
+    const rand = makeRandom(seedFor("mandate", mandate, "subject", subject));
     // Create graphology graph
     const graph = new Graph({ type: "undirected" });
 
@@ -824,8 +877,8 @@ async function precomputeLayoutForSubject(
     nodes.forEach((node) => {
       graph.addNode(node.id, {
         label: node.label,
-        x: Math.random() * 1000,
-        y: Math.random() * 1000,
+        x: rand() * 1000,
+        y: rand() * 1000,
         color: node.color,
         country: node.country,
         groupId: node.groupId,
@@ -1117,11 +1170,19 @@ async function precomputeLayoutForCountryAndSubject(
       `    Loaded ${edges.length} edges for ${country} - ${subject} (weight > 0.6)`
     );
 
-    if (edges.length === 0) {
-      console.log(`    ⚠️  No edges found for ${country} - ${subject}`);
-      return null;
+    // A small country can have no strong links within a single policy area.
+    // Write the file anyway, with the nodes arranged in a circle: the loader
+    // expects every node to carry a position, and returning null here left the
+    // file missing, so the page rendered its MEPs at undefined coordinates.
+    const noStrongEdges = edges.length === 0;
+    if (noStrongEdges) {
+      console.log(
+        `    ℹ️  No edges above the layout threshold for ${country} - ${subject}; using a circular layout`
+      );
     }
 
+    // Deterministic starting positions: same data in, same layout out.
+    const rand = makeRandom(seedFor("mandate", mandate, "country", country, "subject", subject));
     // Create graphology graph
     const graph = new Graph({ type: "undirected" });
 
@@ -1129,8 +1190,8 @@ async function precomputeLayoutForCountryAndSubject(
     nodes.forEach((node) => {
       graph.addNode(node.id, {
         label: node.label,
-        x: Math.random() * 1000,
-        y: Math.random() * 1000,
+        x: rand() * 1000,
+        y: rand() * 1000,
         color: node.color,
         country: node.country,
         groupId: node.groupId,
@@ -1156,18 +1217,32 @@ async function precomputeLayoutForCountryAndSubject(
     console.log(`    Added ${edgesAdded} edges to graph`);
 
     // Compute Force Atlas 2 layout
-    console.log(`    Computing Force Atlas 2 layout (100 iterations)...`);
-    const startTime = Date.now();
-    const positions = forceAtlas2(graph, {
-      iterations: 100,
-      settings: {
-        gravity: 1,
-        scalingRatio: 10,
-        strongGravityMode: false,
-      },
-    });
-    const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
-    console.log(`    ✓ Layout computed in ${elapsed}s`);
+    let positions = {};
+    if (noStrongEdges) {
+      // Nothing to attract or repel: place the nodes on a circle so they stay
+      // readable and the positions stay stable between runs.
+      const radius = 200 + nodes.length * 8;
+      nodes.forEach((node, i) => {
+        const angle = (2 * Math.PI * i) / Math.max(nodes.length, 1);
+        positions[node.id] = {
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius,
+        };
+      });
+    } else {
+      console.log(`    Computing Force Atlas 2 layout (100 iterations)...`);
+      const startTime = Date.now();
+      positions = forceAtlas2(graph, {
+        iterations: 100,
+        settings: {
+          gravity: 1,
+          scalingRatio: 10,
+          strongGravityMode: false,
+        },
+      });
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+      console.log(`    ✓ Layout computed in ${elapsed}s`);
+    }
 
     // Get initial positions
     const initialPositions = nodes.map((node) => {
@@ -1411,6 +1486,8 @@ async function precomputeLayout(
       `  Loaded ${edges.length} edges (weight > 0.6) out of ${allEdges.length} total`
     );
 
+    // Deterministic starting positions: same data in, same layout out.
+    const rand = makeRandom(seedFor("mandate", mandate));
     // Create graphology graph
     const graph = new Graph({ type: "undirected" });
 
@@ -1418,8 +1495,8 @@ async function precomputeLayout(
     nodes.forEach((node) => {
       graph.addNode(node.id, {
         label: node.label,
-        x: Math.random() * 1000,
-        y: Math.random() * 1000,
+        x: rand() * 1000,
+        y: rand() * 1000,
         color: node.color,
         country: node.country,
         groupId: node.groupId,
@@ -1681,12 +1758,17 @@ async function main() {
   console.log("Precomputing network layouts for all mandates...");
   console.log("=".repeat(60));
 
-  const mandates = [6, 7, 8, 9, 10];
+  const mandates = requestedMandates([6, 7, 8, 9, 10]);
   const results = [];
 
-  // Process all mandates in parallel
-  await Promise.all(
-    mandates.map(async (mandate) => {
+  // One mandate at a time. Each mandate's data.json is a few hundred MB on
+  // disk and several GB once parsed into JS objects, so running them in
+  // parallel (as this used to) exhausts the default ~4.5 GB V8 heap and aborts
+  // the run. Sequential keeps peak memory flat regardless of how many mandates
+  // are requested; the per-country and per-subject work inside is still
+  // batched in parallel.
+  for (const mandate of mandates) {
+    await (async () => {
       try {
         const mandateDir = path.join(DATA_DIR, `mandate_${mandate}`);
         const dataPath = path.join(mandateDir, "data.json");
@@ -1709,7 +1791,10 @@ async function main() {
 
         // Count voting sessions once per mandate (reused for all variations)
         console.log(`Counting voting sessions for mandate ${mandate}...`);
-        const votingSessionsData = await countVotingSessionsPerSubject(mandate);
+        const votingSessionsData = await countVotingSessionsPerSubject(
+          mandate,
+          data
+        );
         const subjectsList = Object.keys(votingSessionsData.bySubject)
           .sort()
           .map((subject) => ({
@@ -1718,12 +1803,14 @@ async function main() {
           }));
 
         // Precompute full network
-        const fullData = await precomputeLayout(
-          mandate,
-          data,
-          votingSessionsData,
-          subjectsList
-        );
+        const fullData = combinationsOnly()
+          ? null
+          : await precomputeLayout(
+              mandate,
+              data,
+              votingSessionsData,
+              subjectsList
+            );
         if (fullData) {
           results.push({
             mandate,
@@ -1751,7 +1838,7 @@ async function main() {
         );
 
         // Process countries in parallel batches (each country separately)
-        const countryResults = await processInBatches(
+        const countryResults = combinationsOnly() ? [] : await processInBatches(
           countries,
           5, // Process 5 countries at a time
           async (country) => {
@@ -1778,8 +1865,8 @@ async function main() {
 
         results.push(...countryResults.filter((r) => r && !r.error));
 
-        // Process subjects in parallel batches (each subject separately, no country combinations)
-        const subjectResults = await processInBatches(
+        // Process subjects in parallel batches (each subject separately)
+        const subjectResults = combinationsOnly() ? [] : await processInBatches(
           subjects,
           5, // Process 5 subjects at a time
           async (subject) => {
@@ -1805,11 +1892,51 @@ async function main() {
         );
 
         results.push(...subjectResults.filter((r) => r && !r.error));
+
+        // Country x subject combinations. dataLoader.js has always requested
+        // these files (mandate_{m}_{Country}_subject_{Subject}.json) and
+        // precomputeLayoutForCountryAndSubject has always existed, but main()
+        // never called it, so the files were never produced.
+        if (wantsCombinations()) {
+          const pairs = [];
+          countries.forEach((country) => {
+            subjects.forEach((subject) => pairs.push({ country, subject }));
+          });
+          console.log(
+            `  Processing ${pairs.length} country x subject combinations...`
+          );
+          const comboResults = await processInBatches(
+            pairs,
+            5,
+            async ({ country, subject }) => {
+              const comboData = await precomputeLayoutForCountryAndSubject(
+                mandate,
+                country,
+                subject,
+                data,
+                votingSessionsData,
+                subjectsList
+              );
+              if (comboData) {
+                return {
+                  mandate,
+                  country,
+                  subject,
+                  success: true,
+                  nodes: comboData.nodes.length,
+                  edges: comboData.edges.length,
+                };
+              }
+              return null;
+            }
+          );
+          results.push(...comboResults.filter((r) => r && !r.error));
+        }
       } catch (error) {
         results.push({ mandate, success: false, error: error.message });
       }
-    })
-  );
+    })();
+  }
 
   console.log("\n" + "=".repeat(60));
   console.log("Summary:");

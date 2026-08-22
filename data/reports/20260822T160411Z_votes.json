@@ -1,0 +1,148 @@
+{
+  "run": "votes",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-22T16:04:11.165093+00:00",
+    "seconds": 147.8,
+    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 6,
+    "passed": 5,
+    "warnings": 0,
+    "failures": 1
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 1: split raw votes by mandate and assign subjects",
+      "facts": {
+        "subjects already in cache": 43787,
+        "sessions in raw dump": 44648,
+        "sessions kept": 44556,
+        "sessions per mandate": {
+          "6": 5838,
+          "7": 4360,
+          "8": 11286,
+          "9": 18827,
+          "10": 4245
+        },
+        "sessions skipped": {
+          "no votes recorded": 92
+        },
+        "distinct vote-type keys": [
+          "+",
+          "-",
+          "0"
+        ],
+        "sessions needing subject resolution": 769,
+        "distinct document codes to resolve": 83,
+        "distinct procedure references to resolve": 1,
+        "lookup stats": {
+          "from_voteid_cache": 0,
+          "resolved_via_epref": 758,
+          "resolved_via_committee": 4,
+          "budget_title_fallback": 0,
+          "unresolved": 6,
+          "no_reference": 6,
+          "lookup_failures": 1
+        },
+        "cache sizes": {
+          "subject_by_voteid": 44555,
+          "code_to_epref": 7110,
+          "code_to_committees": 267,
+          "epref_to_label": 6911,
+          "epref_to_second_level": 16,
+          "committee_names": 21,
+          "sitting_code_maps": 3
+        },
+        "http stats": {
+          "requests": 172,
+          "retries": 10,
+          "blocked": 0
+        },
+        "newly resolved subjects": {
+          "Employment and Social Affairs": 197,
+          "Foreign Affairs": 188,
+          "Internal Market and Consumer Protection": 57,
+          "Women’s Rights and Gender Equality": 57,
+          "Civil Liberties, Justice and Home Affairs": 45,
+          "Economic and Monetary Affairs": 44,
+          "Security and Defence": 40,
+          "Industry, Research and Energy": 32,
+          "International Trade": 24,
+          "Budgets": 21,
+          "Petitions": 20,
+          "Environment, Climate and Food Safety": 11,
+          "Legal Affairs": 7,
+          "Others": 6,
+          "Regional Development": 6,
+          "Fisheries": 6,
+          "Budgetary Control": 3,
+          "Constitutional Affairs": 2,
+          "Agriculture and Rural Development": 2,
+          "null": 1
+        }
+      },
+      "seconds": 147.7
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "vote-type vocabulary is the expected {+,-,0}",
+      "ok": true,
+      "detail": "unexpected vote types: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "vote ids are unique",
+      "ok": true,
+      "detail": "0 duplicate vote ids",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "every mandate has votes",
+      "ok": true,
+      "detail": "missing: []",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    },
+    {
+      "name": "every lookup completed",
+      "ok": false,
+      "detail": "1 lookups failed; first few: [{'voteid': 189250, 'ref': 'A10-0049/2026', 'error': 'giving up on https://data.europarl.europa.eu/api/v2/documents/A-10-2026-0049: https://data.europarl.europa.eu/api/v2/documents/A-10-2026-0049 -> HTTP 429'}]",
+      "fatal": true,
+      "step": "Step 1: split raw votes by mandate and assign subjects"
+    }
+  ]
+}

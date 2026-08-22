@@ -1,0 +1,235 @@
+{
+  "run": "compare",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-22T16:24:48.387514+00:00",
+    "seconds": 6.5,
+    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 20,
+    "passed": 20,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 3: compare against the 2025 results",
+      "facts": {
+        "mandate 6 vs 2025": {
+          "nodes_2025": 658,
+          "nodes_now": 658,
+          "nodes_added_count": 0,
+          "nodes_removed_count": 0,
+          "group_changes_count": 0,
+          "edges_2025": 216153,
+          "edges_now": 216153,
+          "edges_differing": 0,
+          "max_weight_delta": 0.0
+        },
+        "mandate 7 vs 2025": {
+          "nodes_2025": 714,
+          "nodes_now": 714,
+          "nodes_added_count": 0,
+          "nodes_removed_count": 0,
+          "group_changes_count": 0,
+          "edges_2025": 254541,
+          "edges_now": 254541,
+          "edges_differing": 0,
+          "max_weight_delta": 0.0
+        },
+        "mandate 8 vs 2025": {
+          "nodes_2025": 694,
+          "nodes_now": 694,
+          "nodes_added_count": 0,
+          "nodes_removed_count": 0,
+          "group_changes_count": 0,
+          "edges_2025": 240471,
+          "edges_now": 240471,
+          "edges_differing": 0,
+          "max_weight_delta": 0.0
+        },
+        "mandate 9 vs 2025": {
+          "nodes_2025": 697,
+          "nodes_now": 697,
+          "nodes_added_count": 0,
+          "nodes_removed_count": 0,
+          "group_changes_count": 0,
+          "edges_2025": 242556,
+          "edges_now": 242556,
+          "edges_differing": 0,
+          "max_weight_delta": 0.0
+        },
+        "mandate 10 vs 2025": {
+          "nodes_2025": 702,
+          "nodes_now": 696,
+          "nodes_added_count": 3,
+          "nodes_removed_count": 9,
+          "group_changes_count": 13,
+          "edges_2025": 246051,
+          "edges_now": 241860,
+          "edges_differing": 235539,
+          "max_weight_delta": 0.402
+        }
+      },
+      "seconds": 3.8
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "something to work with",
+      "ok": true,
+      "detail": "no built networks found - run the 'networks' step first",
+      "fatal": true,
+      "step": null
+    },
+    {
+      "name": "mandate 6: same MEPs in the network as 2025",
+      "ok": true,
+      "detail": "added [], removed []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 6: same edge set as 2025",
+      "ok": true,
+      "detail": "0 lost, 0 gained",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 6: edge weights reproduce 2025",
+      "ok": true,
+      "detail": "0 edges differ, worst delta 0.000000",
+      "fatal": true,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 6: political groups unchanged",
+      "ok": true,
+      "detail": "0 MEPs changed group, e.g. []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 7: same MEPs in the network as 2025",
+      "ok": true,
+      "detail": "added [], removed []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 7: same edge set as 2025",
+      "ok": true,
+      "detail": "0 lost, 0 gained",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 7: edge weights reproduce 2025",
+      "ok": true,
+      "detail": "0 edges differ, worst delta 0.000000",
+      "fatal": true,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 7: political groups unchanged",
+      "ok": true,
+      "detail": "0 MEPs changed group, e.g. []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 8: same MEPs in the network as 2025",
+      "ok": true,
+      "detail": "added [], removed []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 8: same edge set as 2025",
+      "ok": true,
+      "detail": "0 lost, 0 gained",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 8: edge weights reproduce 2025",
+      "ok": true,
+      "detail": "0 edges differ, worst delta 0.000000",
+      "fatal": true,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 8: political groups unchanged",
+      "ok": true,
+      "detail": "0 MEPs changed group, e.g. []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 9: same MEPs in the network as 2025",
+      "ok": true,
+      "detail": "added [], removed []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 9: same edge set as 2025",
+      "ok": true,
+      "detail": "0 lost, 0 gained",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 9: edge weights reproduce 2025",
+      "ok": true,
+      "detail": "0 edges differ, worst delta 0.000000",
+      "fatal": true,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 9: political groups unchanged",
+      "ok": true,
+      "detail": "0 MEPs changed group, e.g. []",
+      "fatal": false,
+      "step": "Step 3: compare against the 2025 results"
+    },
+    {
+      "name": "mandate 10: network grew, as expected for the sitting term",
+      "ok": true,
+      "detail": "696 nodes, 241860 edges",
+      "fatal": true,
+      "step": "Step 3: compare against the 2025 results"
+    }
+  ]
+}
