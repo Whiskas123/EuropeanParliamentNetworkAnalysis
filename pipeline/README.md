@@ -33,6 +33,7 @@ Useful flags:
 | `--layout-mandates 10` | choose which mandates get new positions (default: only those whose network changed) |
 | `--combinations` | also build the country × subject networks |
 | `--combinations-only` | build *only* those, leaving existing layouts untouched |
+| `--missing-only` | only build networks whose file does not exist; never recomputes a published layout |
 | `--force-publish` | publish despite warnings, after reviewing them |
 
 Every run writes `data/reports/<timestamp>_<step>.json` plus
@@ -87,8 +88,10 @@ the full one, one per country, one per subject, and — with `--combinations` �
 one per country × subject pair (~2,900 files, ~700 MB, roughly 2.5 min per
 mandate).
 
-Use `--combinations-only` on a closed mandate: it adds the combination files
-without regenerating that mandate's published positions.
+Two flags exist so that closed mandates keep the positions already published:
+`--combinations-only` adds just the combination files, and `--missing-only`
+fills any gap (a network a previous run skipped) while skipping everything
+already on disk. They compose.
 
 **6. Verify** (`verify_site.py`)
 Re-reads every file the browser can fetch and checks it parses, has the fields
@@ -184,6 +187,37 @@ positions published before this change.
   twice: all 50 output files were byte-identical apart from the `computedAt`
   timestamp.
 - `npm run build` succeeds against the published data.
+- `python3 -m pipeline.run verify --combinations`: 33/33 checks, **3,237
+  precomputed networks** present, parsing, and carrying a position for every
+  node.
+
+## The country × subject networks (2026-08-22)
+
+Added in this round; previously the site had per-country and per-subject
+networks but not the crossing of the two. The feature was two-thirds built and
+never finished: `dataLoader.js` already requested
+`mandate_{m}_{Country}_subject_{Subject}.json`, and
+`precomputeLayoutForCountryAndSubject()` already existed, but `main()` never
+called it and the two selectors disabled each other in the UI. Wiring up all
+three layers produced **2,986 combination files (~700 MB)**.
+
+Three defects surfaced while doing it, all now fixed:
+
+1. **Nodes at undefined coordinates.** When a small country had no edges above
+   the layout threshold in one policy area, the generator returned `null` and
+   wrote nothing; the loader then 404'd, left the nodes without positions, and
+   `NetworkCanvas` drew them at `undefined`. Cyprus × Public Health hit this
+   exactly (1 node, 0 edges). A file is now always written, using a circular
+   layout when there is nothing to lay out.
+2. **Out-of-memory on multi-mandate runs.** `main()` processed all mandates
+   through `Promise.all`; each parsed payload is several GB in JS, so four at
+   once aborted the run with `JavaScript heap out of memory` (exit 134).
+   Mandates are now processed sequentially, so peak memory does not depend on
+   how many are requested. The per-country and per-subject work inside is still
+   batched in parallel.
+3. **A missing network from the 2025 run.** Mandate 9 had no
+   `subject_Women_s_Rights_and_Gender_Equality` file even though every other
+   mandate did, so selecting it would have 404'd. Filled with `--missing-only`.
 
 ## Leftovers from the 2025 process
 

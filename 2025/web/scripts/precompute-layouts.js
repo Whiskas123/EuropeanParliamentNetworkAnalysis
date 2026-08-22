@@ -65,6 +65,22 @@ function combinationsOnly() {
   return process.argv.includes("--combinations-only");
 }
 
+/** Only produce networks whose output file does not exist yet.
+ * Fills gaps (a network that a previous run skipped or never generated)
+ * without recomputing — and so without visually changing — anything already
+ * published. */
+function missingOnly() {
+  return process.argv.includes("--missing-only");
+}
+
+function skipBecausePresent(outputPath, label) {
+  if (missingOnly() && fs.existsSync(outputPath)) {
+    console.log(`    ↷ ${label} already present, skipping (--missing-only)`);
+    return true;
+  }
+  return false;
+}
+
 /** Mandates to process, from --mandates 6,7,10 (default: all). */
 function requestedMandates(all) {
   const arg = process.argv.indexOf("--mandates");
@@ -533,6 +549,8 @@ async function precomputeLayoutForCountry(
     `mandate_${mandate}_${country.replace(/\s+/g, "_")}.json`
   );
 
+  if (skipBecausePresent(countryOutputPath, `${country}`)) return null;
+
   try {
     // Filter nodes by country
     const allNodes = data.nodes.map((node) => ({
@@ -830,6 +848,7 @@ async function precomputeLayoutForSubject(
     OUTPUT_DIR,
     `mandate_${mandate}_subject_${subjectKey}.json`
   );
+  if (skipBecausePresent(outputPath, `${subject}`)) return null;
 
   try {
     // Check if edgesBySubject exists
@@ -1119,6 +1138,7 @@ async function precomputeLayoutForCountryAndSubject(
     OUTPUT_DIR,
     `mandate_${mandate}_${countryKey}_subject_${subjectKey}.json`
   );
+  if (skipBecausePresent(outputPath, `${country} - ${subject}`)) return null;
 
   try {
     // Check if edgesBySubject exists
@@ -1461,6 +1481,7 @@ async function precomputeLayout(
   console.log(`\nProcessing mandate ${mandate}...`);
 
   const outputPath = path.join(OUTPUT_DIR, `mandate_${mandate}.json`);
+  if (skipBecausePresent(outputPath, `mandate ${mandate} (full)`)) return null;
 
   try {
     const nodes = data.nodes.map((node) => ({

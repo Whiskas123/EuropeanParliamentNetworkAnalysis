@@ -31,7 +31,8 @@ def check_inputs(report):
     report.end_step()
 
 
-def run_layouts(report, mandates, combinations=False, combinations_only=False):
+def run_layouts(report, mandates, combinations=False, combinations_only=False,
+                missing_only=False):
     report.step("Step 5: precompute layouts")
     if not mandates:
         report.note("no mandate needs new positions")
@@ -50,6 +51,10 @@ def run_layouts(report, mandates, combinations=False, combinations_only=False):
         cmd.append("--combinations-only")
     elif combinations:
         cmd.append("--combinations")
+    if missing_only:
+        # Fill gaps without recomputing - and so without visually changing -
+        # anything already published.
+        cmd.append("--missing-only")
     report.note(f"running: {' '.join(cmd)} (in {config.WEB_ROOT})")
     proc = subprocess.run(cmd, cwd=config.WEB_ROOT)
     report.check("layout script succeeded", proc.returncode == 0,
@@ -75,6 +80,9 @@ def main(argv=None):
     parser.add_argument("--combinations-only", action="store_true",
                         help="lay out ONLY the country x subject networks, "
                              "leaving existing layouts untouched")
+    parser.add_argument("--missing-only", action="store_true",
+                        help="only produce networks whose file does not exist "
+                             "yet; never recomputes a published layout")
     args = parser.parse_args(argv)
 
     mandates = args.mandates.split(",") if args.mandates else config.MANDATE_ORDER
@@ -123,13 +131,14 @@ def main(argv=None):
                     or s.get("nodes_added_count")
                     or s.get("nodes_removed_count")
                 ] or ([config.CURRENT_MANDATE] if not summary else [])
-                if args.combinations_only:
+                if args.combinations_only or args.missing_only:
                     layout_targets = mandates
             run_layouts(
                 report,
                 layout_targets,
                 combinations=args.combinations,
                 combinations_only=args.combinations_only,
+                missing_only=args.missing_only,
             )
         if "verify" in steps:
             verify_site.run(
