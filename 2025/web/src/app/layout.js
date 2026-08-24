@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "European Parliament Network",
-  description: "European Parliament Network Visualization and Analysis Tool",
+  title: "Constelações Parlamentares",
+  description:
+    "Every roll-call vote of the European Parliament since 2004, redrawn as a network of who votes with whom.",
 };
 
 export default function RootLayout({ children }) {
