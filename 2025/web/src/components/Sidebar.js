@@ -24,6 +24,7 @@ export default function Sidebar({
   intragroupCohesion,
   countrySimilarity,
   selectedSubject,
+  baseline,
   onSelectNode,
   onSelectNodeFromGroup,
   onClearNodeKeepGroup,
@@ -145,6 +146,12 @@ export default function Sidebar({
                 </div>
                 <div className="network-stat-description">
                   Members of the European Parliament who participated in at least 50% of voting sessions
+                  {baseline?.scores?.nodeCount ? (
+                    <span className="baseline-note">
+                      {graphData.nodes.length} of the{" "}
+                      {baseline.scores.nodeCount} in {baseline.label}.
+                    </span>
+                  ) : null}
                 </div>
               </div>
               {votingSessions !== null && (
@@ -229,6 +236,7 @@ export default function Sidebar({
               <CohesionHeatmap
                 intergroupCohesion={intergroupCohesion}
                 mandate={mandate}
+                baseline={baseline}
                 onGroupClick={handleGroupClick}
               />
             )}
@@ -237,6 +245,7 @@ export default function Sidebar({
                 intragroupCohesion={intragroupCohesion}
                 graphData={graphData}
                 mandate={mandate}
+                baseline={baseline}
                 onGroupClick={handleGroupClick}
               />
             )}
@@ -246,6 +255,7 @@ export default function Sidebar({
                 graphData={graphData}
                 onCountryClick={onCountryClick}
                 selectedSubject={selectedSubject}
+                baseline={baseline}
               />
             )}
               {!intergroupCohesion &&

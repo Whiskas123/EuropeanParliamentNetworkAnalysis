@@ -4,6 +4,97 @@ const dataCache = {};
 // Cache for voting sessions counts
 const votingSessionsCache = {};
 
+// baselines.json, fetched at most once per page load. Held as the in-flight
+// promise rather than the parsed result so that several panels asking for a
+// baseline at the same moment share one request.
+let baselinesPromise = null;
+
+/**
+ * Load the baseline reference figures for every mandate.
+ * ~60 KB for all five terms; see scripts/build-baselines.js.
+ * @returns {Promise<Object|null>}
+ */
+async function loadBaselines() {
+  if (baselinesPromise === null) {
+    baselinesPromise = fetch("/data/baselines.json")
+      .then((response) => (response.ok ? response.json() : null))
+      .catch((error) => {
+        console.warn("Baselines not available:", error);
+        return null;
+      });
+  }
+  return baselinesPromise;
+}
+
+/**
+ * The reference figures the current view should be compared against.
+ *
+ * Always the same view with exactly one filter removed, so a delta isolates a
+ * single variable rather than mixing two:
+ *
+ *   country + subject -> that country across all policy areas
+ *   subject only      -> the whole Parliament across all policy areas
+ *   country only      -> the whole Parliament
+ *   neither           -> null, the view is already the baseline
+ *
+ * @param {number} mandate
+ * @param {string|null} country
+ * @param {string|null} subject
+ * @returns {Promise<{scores: Object, label: string, comparing: string}|null>}
+ */
+export async function getBaseline(mandate, country = null, subject = null) {
+  if (!country && !subject) return null;
+
+  const all = await loadBaselines();
+  const forMandate = all && all[String(mandate)];
+  if (!forMandate) return null;
+
+  if (subject) {
+    // A country with no baseline of its own (one that never had a country
+    // network generated) falls back to the whole Parliament. The delta then
+    // mixes the country and subject effects, so the label has to say so.
+    const scoped = country ? forMandate[country] : null;
+    if (country && scoped) {
+      return {
+        scores: scoped,
+        label: `${country}, all policy areas`,
+        comparing: "subject",
+      };
+    }
+    if (country) {
+      return {
+        scores: forMandate._all,
+        label: "the whole Parliament, all policy areas",
+        comparing: "both",
+      };
+    }
+    return {
+      scores: forMandate._all,
+      label: "all policy areas",
+      comparing: "subject",
+    };
+  }
+
+  return {
+    scores: forMandate._all,
+    label: "the whole Parliament",
+    comparing: "country",
+  };
+}
+
+/**
+ * Baseline score for a pair of political groups, in either order.
+ * @param {Object|null} baseline - as returned by getBaseline
+ * @param {string} groupA
+ * @param {string} groupB
+ * @returns {number|null}
+ */
+export function baselineForGroupPair(baseline, groupA, groupB) {
+  const key = [groupA, groupB].sort().join("|");
+  const value = baseline?.scores?.intergroup?.[key];
+  return typeof value === "number" ? value : null;
+}
+
 /**
  * Load MEP info for a mandate
  * @param {number} mandate - Mandate number

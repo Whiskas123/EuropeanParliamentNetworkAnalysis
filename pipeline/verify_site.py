@@ -26,6 +26,42 @@ def _country_key(country):
     return country.replace(" ", "_")
 
 
+def _check_baselines(report, mandates):
+    """Verify baselines.json covers every mandate with usable reference figures.
+
+    Returns the parsed file, or None if it is unusable — callers then skip the
+    per-mandate checks rather than reporting the same failure once per term.
+    """
+    path = config.WEB_DATA_DIR / "baselines.json"
+    if not report.check(
+        "baselines published",
+        path.exists(),
+        f"{path} — run `npm run baselines` in 2025/web",
+        fatal=False,
+    ):
+        return None
+
+    try:
+        baselines = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        report.check("baselines file parses", False, f"{exc}", fatal=False)
+        return None
+
+    incomplete = [
+        m
+        for m in mandates
+        if not (baselines.get(str(m), {}).get("_all", {}).get("intragroup"))
+    ]
+    report.check(
+        "every mandate has a whole-Parliament baseline",
+        not incomplete,
+        f"missing or empty for mandates {incomplete}",
+        fatal=False,
+    )
+    report.fact("mandates with baselines", len(baselines))
+    return baselines
+
+
 def run(report, mandates=None, expect_combinations=None):
     report.step("Step 6: verify the published site data")
     mandates = mandates or config.MANDATE_ORDER
@@ -33,6 +69,11 @@ def run(report, mandates=None, expect_combinations=None):
     counts_path = config.WEB_DATA_DIR / "voting_sessions.json"
     report.check("voting-session counts file exists", counts_path.exists(), str(counts_path))
     counts = json.loads(counts_path.read_text(encoding="utf-8"))
+
+    # The sidebar's baseline comparisons. Derived from the precomputed files
+    # rather than from the votes, so a layout run that died part-way can leave
+    # this stale or absent while everything else looks fine.
+    baselines = _check_baselines(report, mandates)
 
     total_checked = 0
     for mandate in mandates:
@@ -118,6 +159,20 @@ def run(report, mandates=None, expect_combinations=None):
         report.check(
             f"mandate {mandate}: MEP info published", mep_info.exists(), str(mep_info)
         )
+
+        if baselines is not None:
+            entry = baselines.get(str(mandate)) or {}
+            # A country the UI can select but the baselines file does not know
+            # about degrades quietly to a whole-Parliament comparison, so this
+            # is worth reporting without being fatal.
+            absent = [c for c in countries if c not in entry]
+            report.check(
+                f"mandate {mandate}: every country has a baseline",
+                not absent,
+                f"{len(absent)} without one, e.g. {absent[:4]}. "
+                "Those views compare against the whole Parliament instead.",
+                fatal=False,
+            )
 
     report.fact("precomputed files checked", total_checked)
     report.end_step()

@@ -316,3 +316,62 @@ export function getSubjectEmoji(subjectName) {
 
   return subjectEmojiMap[subjectLower] || "📋";
 }
+
+/**
+ * Difference between a score and its baseline, in percentage points.
+ *
+ * Both inputs are on the [0, 1] scale the networks use. Returns null whenever
+ * a comparison would be meaningless — no baseline, a missing group or country,
+ * a non-finite score — so callers can render nothing rather than "NaN pp".
+ *
+ * @param {number|null|undefined} score - the current view's figure
+ * @param {number|null|undefined} baseline - the same figure without one filter
+ * @returns {{text: string, points: number, direction: -1|0|1}|null}
+ */
+export function getDelta(score, baseline) {
+  if (typeof score !== "number" || !isFinite(score)) return null;
+  if (typeof baseline !== "number" || !isFinite(baseline)) return null;
+
+  const points = (score - baseline) * 100;
+
+  // Scores are displayed to one decimal place, so anything below 0.05pp would
+  // render as a signed zero next to two identical-looking numbers.
+  if (Math.abs(points) < 0.05) {
+    return { text: "±0.0", points: 0, direction: 0 };
+  }
+
+  const sign = points > 0 ? "+" : "−"; // real minus, to match "+" in width
+  return {
+    text: `${sign}${Math.abs(points).toFixed(1)}`,
+    points,
+    direction: points > 0 ? 1 : -1,
+  };
+}
+
+/**
+ * Diverging colour ramp for a signed difference, centred on no change.
+ *
+ * The red-to-green ramp above encodes "how much agreement"; this one encodes
+ * "more or less agreement than usual", so it has to be symmetric around a
+ * neutral middle. Sharing the endpoints of getRedGreenColor keeps the two
+ * scales reading as one family: green still means more agreement.
+ *
+ * @param {number} t - signed, clamped to [-1, 1]; 0 is no change
+ * @returns {{r: number, g: number, b: number}}
+ */
+export function getDivergingColor(t) {
+  const clamped = Math.max(-1, Math.min(1, t));
+
+  const negative = { r: 215, g: 48, b: 39 }; // #d73027, same red as the ramp above
+  const neutral = { r: 242, g: 242, b: 240 }; // near-white, so zero recedes
+  const positive = { r: 26, g: 152, b: 80 }; // #1a9850, same green
+
+  const target = clamped < 0 ? negative : positive;
+  const weight = Math.abs(clamped);
+
+  return {
+    r: Math.round(neutral.r + (target.r - neutral.r) * weight),
+    g: Math.round(neutral.g + (target.g - neutral.g) * weight),
+    b: Math.round(neutral.b + (target.b - neutral.b) * weight),
+  };
+}

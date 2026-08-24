@@ -2,15 +2,24 @@
 
 import { useState } from "react";
 import { CountryFlag } from "../lib/utils.js";
+import DeltaBadge from "./DeltaBadge";
 
 export default function CountrySimilarity({
   countrySimilarity,
   graphData,
   onCountryClick,
   selectedSubject,
+  baseline,
 }) {
   const [showTooltip, setShowTooltip] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  // In a country view this panel lists that one country, and its figure comes
+  // from exactly the same pairs as the whole-Parliament figure for it, so the
+  // delta is zero by construction. Showing "±0.0" there would imply something
+  // was measured. Removing the *subject* filter does produce a real
+  // comparison, which is kept.
+  const comparable = Boolean(baseline) && baseline.comparing !== "country";
+
   if (!countrySimilarity || countrySimilarity.length === 0) return null;
   if (!graphData) return null;
 
@@ -48,6 +57,11 @@ export default function CountrySimilarity({
       </h3>
       <div className="country-similarity-description">
         Average voting agreement among MEPs from the same country
+        {comparable && (
+          <span className="baseline-note">
+            Change shown against {baseline.label}.
+          </span>
+        )}
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="country-similarity-list">
@@ -94,6 +108,16 @@ export default function CountrySimilarity({
                     </span>
                     {" · "}
                     {(item.score * 100).toFixed(1)}%
+                    <DeltaBadge
+                      score={item.score}
+                      baseline={
+                        comparable
+                          ? baseline.scores?.country?.[item.country]
+                          : null
+                      }
+                      label={baseline?.label}
+                      what={`${item.country} cohesion`}
+                    />
                   </span>
                 </div>
                 <div className="country-similarity-bar-container">

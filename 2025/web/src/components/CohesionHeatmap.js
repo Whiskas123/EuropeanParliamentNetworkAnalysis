@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   getGroupAcronym,
   getGroupDisplayName,
   getRedGreenColor,
+  getDivergingColor,
 } from "../lib/utils.js";
+import { baselineForGroupPair } from "../lib/dataLoader.js";
 
 // Special function for X-axis labels in heatmap - shows "Greens" instead of "Greens/EFA"
 function getHeatmapXAxisLabel(groupId, mandate) {
@@ -20,9 +22,45 @@ function getHeatmapXAxisLabel(groupId, mandate) {
 export default function CohesionHeatmap({
   intergroupCohesion,
   mandate,
+  baseline,
   onGroupClick,
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showChange, setShowChange] = useState(false);
+
+  // Deltas against the baseline, plus the largest one, which sets the scale.
+  // Normalising to the largest change actually present rather than to a fixed
+  // range stops a view where every pair moved a point or two from rendering as
+  // a uniformly blank grid.
+  const change = useMemo(() => {
+    if (!baseline || !intergroupCohesion) return null;
+    const { groups, matrix } = intergroupCohesion;
+    const deltas = matrix.map((row, i) =>
+      row.map((score, j) => {
+        if (typeof score !== "number" || isNaN(score) || score === 0) {
+          return null;
+        }
+        const ref = baselineForGroupPair(baseline, groups[i], groups[j]);
+        if (ref === null) return null;
+        return { points: (score - ref) * 100, reference: ref };
+      })
+    );
+
+    const present = deltas.flat().filter((cell) => cell !== null);
+    if (present.length === 0) return null;
+
+    const maxAbs = present.reduce(
+      (max, cell) => Math.max(max, Math.abs(cell.points)),
+      0
+    );
+    // A view where nothing moved would divide by zero; 1 leaves every cell at
+    // the neutral middle of the ramp, which is the honest picture.
+    return { deltas, maxAbs: maxAbs || 1 };
+  }, [baseline, intergroupCohesion]);
+
+  // The toggle only renders when there is something to switch to, but a
+  // mandate change can leave the flag set while the next baseline resolves.
+  const inChangeMode = showChange && change !== null;
 
   if (!intergroupCohesion) return null;
 
@@ -54,8 +92,34 @@ export default function CohesionHeatmap({
         </svg>
       </h3>
       <div className="cohesion-heatmap-description">
-        Average voting agreement between members of different political groups
+        {inChangeMode
+          ? `Change against ${baseline.label}, in percentage points`
+          : "Average voting agreement between members of different political groups"}
       </div>
+      {change && (
+        <div
+          className="heatmap-mode-toggle"
+          role="group"
+          aria-label="Heatmap values"
+        >
+          <button
+            type="button"
+            className={!showChange ? "is-active" : ""}
+            onClick={() => setShowChange(false)}
+            aria-pressed={!showChange}
+          >
+            Agreement
+          </button>
+          <button
+            type="button"
+            className={showChange ? "is-active" : ""}
+            onClick={() => setShowChange(true)}
+            aria-pressed={showChange}
+          >
+            Change
+          </button>
+        </div>
+      )}
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="cohesion-heatmap-container">
           <table className="cohesion-heatmap-table">
@@ -109,6 +173,64 @@ export default function CohesionHeatmap({
                     if (i < j) {
                       return (
                         <td key={j} className="cohesion-heatmap-td-empty" />
+                      );
+                    }
+
+                    const pairLabel = `${getGroupDisplayName(
+                      group1,
+                      mandate
+                    )} - ${getGroupDisplayName(
+                      intergroupCohesion.groups[j],
+                      mandate
+                    )}`;
+
+                    // Change mode. A cell with no baseline to compare against
+                    // is drawn as "no data" rather than as zero change, which
+                    // would read as "these groups did not move".
+                    if (inChangeMode) {
+                      const cell = change.deltas[i][j];
+                      if (cell === null) {
+                        return (
+                          <td
+                            key={j}
+                            className="cohesion-heatmap-td-no-data"
+                            title={`${pairLabel}: no baseline to compare against`}
+                          >
+                            -
+                          </td>
+                        );
+                      }
+
+                      const color = getDivergingColor(
+                        cell.points / change.maxAbs
+                      );
+                      const bgColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+                      const luminance =
+                        (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) /
+                        255;
+                      const rounded = Math.abs(cell.points) < 0.05
+                        ? "0.0"
+                        : `${cell.points > 0 ? "+" : "−"}${Math.abs(
+                            cell.points
+                          ).toFixed(1)}`;
+
+                      return (
+                        <td
+                          key={j}
+                          className="cohesion-heatmap-td-score"
+                          style={{
+                            backgroundColor: bgColor,
+                            color: luminance > 0.5 ? "#000" : "#fff",
+                          }}
+                          title={`${pairLabel}: ${(score * 100).toFixed(
+                            1
+                          )}% here vs ${(cell.reference * 100).toFixed(
+                            1
+                          )}% in ${baseline.label} (${rounded} pp)`}
+                          onClick={() => handleGroupClick(group1)}
+                        >
+                          {rounded}
+                        </td>
                       );
                     }
 

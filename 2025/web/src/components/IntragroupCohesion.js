@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { getGroupDisplayName } from "../lib/utils.js";
+import DeltaBadge from "./DeltaBadge";
 
 export default function IntragroupCohesion({
   intragroupCohesion,
   graphData,
   mandate,
+  baseline,
   onGroupClick,
 }) {
   const [showTooltip, setShowTooltip] = useState(null);
@@ -64,6 +66,11 @@ export default function IntragroupCohesion({
       </h3>
       <div className="intragroup-cohesion-description">
         Average voting agreement among members within each political group
+        {baseline && (
+          <span className="baseline-note">
+            Change shown against {baseline.label}.
+          </span>
+        )}
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="intragroup-cohesion-list">
@@ -99,6 +106,15 @@ export default function IntragroupCohesion({
                     </span>
                     {" · "}
                     {(item.score * 100).toFixed(1)}%
+                    <DeltaBadge
+                      score={item.score}
+                      baseline={baseline?.scores?.intragroup?.[item.group]}
+                      label={baseline?.label}
+                      what={`${getGroupDisplayName(
+                        item.group,
+                        mandate
+                      )} cohesion`}
+                    />
                   </span>
                 </div>
                 <div className="intragroup-cohesion-bar-container">

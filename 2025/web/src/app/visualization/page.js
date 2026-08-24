@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { loadMandateData } from "../../lib/dataLoader.js";
+import { loadMandateData, getBaseline } from "../../lib/dataLoader.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
@@ -31,6 +31,7 @@ export default function VisualizationPage() {
   const [agreementScores, setAgreementScores] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
+  const [baseline, setBaseline] = useState(null);
   const previousGraphDataRef = useRef(null);
   const currentGraphDataRef = useRef(null);
 
@@ -42,6 +43,11 @@ export default function VisualizationPage() {
       setLoading(true);
       setError(null);
       setSelectedNode(null);
+
+      // The reference figures every statistic is compared against. Resolved
+      // before the network so the sidebar never renders a score for one view
+      // beside a delta computed for the previous one.
+      setBaseline(await getBaseline(mandateNum, country, subject));
 
       try {
         // Import libraries only once and cache them
@@ -769,6 +775,7 @@ export default function VisualizationPage() {
           agreementScores={agreementScores}
           closestMEPs={closestMEPs}
           selectedSubject={selectedSubject}
+          baseline={baseline}
           intergroupCohesion={intergroupCohesion}
           intragroupCohesion={intragroupCohesion}
           countrySimilarity={countrySimilarity}

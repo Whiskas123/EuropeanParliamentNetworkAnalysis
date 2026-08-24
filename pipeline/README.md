@@ -93,11 +93,53 @@ Two flags exist so that closed mandates keep the positions already published:
 fills any gap (a network a previous run skipped) while skipping everything
 already on disk. They compose.
 
+The stage finishes by rebuilding `2025/web/public/data/baselines.json` (see
+below). That is derived from the files it just wrote, so it always runs, and a
+failure there is reported without failing the stage — the site simply shows no
+comparisons.
+
 **6. Verify** (`verify_site.py`)
 Re-reads every file the browser can fetch and checks it parses, has the fields
 the loader reads, and carries a position for every node. The layout stage is a
 separate Node process that can die part-way through and leave a truncated file
 that looks present; only a check after the fact catches that.
+
+## Baselines (`baselines.json`)
+
+Every cohesion figure on the site describes whichever network is open, which on
+its own says nothing: "Poland, 57.2%" only means something once you know Poland
+usually sits at 72.9%. `2025/web/scripts/build-baselines.js` supplies the
+"usually".
+
+A baseline is always **the same view with one filter removed**, so a delta
+isolates a single variable:
+
+| Current view | Compared against |
+|---|---|
+| Poland × Gender Equality | Poland, all policy areas |
+| all countries × Gender Equality | all countries, all policy areas |
+| Poland, all policy areas | the whole Parliament |
+| the whole Parliament | nothing — it is the baseline |
+
+So the file holds, per mandate, the unfiltered network's cohesion figures plus
+one set per country. Those all exist already as precomputed layouts; the script
+only lifts their `cohesionData` out and drops the positions, edges and
+per-MEP scores. The result is **~60 KB for all five terms**, against 16 MB for a
+single precomputed file, which is what makes it affordable for the baseline to
+be present on every view.
+
+```bash
+cd 2025/web && npm run baselines     # standalone; also runs at the end of `layouts`
+```
+
+It reads from disk rather than from the layout stage's in-memory payloads, so it
+is correct whether the layouts were just regenerated or have sat there since
+2025. Regenerate it after anything that changes a published network.
+
+One deliberate omission: in a country view, that country's own cohesion figure
+is computed from exactly the same MEP pairs as the whole-Parliament figure for
+it, so the delta is zero by construction. The UI drops the comparison there
+rather than printing "±0.0", which would imply something had been measured.
 
 ## Caches
 
@@ -136,6 +178,8 @@ The run aborts (publishing nothing) if any of these fail:
   that the site cannot parse
 - closed mandates (6–9) reproduce the previous run's edge weights exactly
 - (verify) every published network parses and every node has a position
+- (verify, warning only) `baselines.json` exists, parses, covers every mandate,
+  and has an entry for every country the UI can select
 
 Warnings (recorded, and blocking `publish` unless `--force-publish`) cover
 things worth a human's eye but which cannot corrupt a number: MEPs appearing or

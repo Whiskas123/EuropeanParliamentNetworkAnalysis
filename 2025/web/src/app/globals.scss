@@ -3541,3 +3541,94 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 28px;
   }
 }
+
+// Baseline comparison
+//
+// Every cohesion figure in the sidebar describes whichever network is open.
+// These two elements carry the comparison: what the current view is being
+// measured against, and how far it sits from it.
+
+.baseline-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+.delta-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: help;
+  vertical-align: baseline;
+
+  // Same direction as the heatmap ramp: green is more agreement, red is less.
+  // Kept desaturated so a column of badges never outshouts the scores they
+  // annotate.
+  &--up {
+    background-color: #e4f2e8;
+    color: #1a6b3c;
+  }
+
+  &--down {
+    background-color: #fbe8e6;
+    color: #a32a1e;
+  }
+
+  &--flat {
+    background-color: #efefef;
+    color: #777;
+  }
+}
+
+.delta-badge-unit {
+  font-size: 8px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.heatmap-mode-toggle {
+  display: inline-flex;
+  margin: 0 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+
+  button {
+    padding: 3px 10px;
+    border: none;
+    background: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+
+    &:hover {
+      background: #f2f2f2;
+    }
+
+    &.is-active {
+      background: #4a4a4a;
+      color: #fff;
+    }
+
+    &:not(:first-child) {
+      border-left: 1px solid #ddd;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #4a4a4a;
+      outline-offset: -2px;
+    }
+  }
+}

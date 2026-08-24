@@ -12,6 +12,8 @@ const path = require("path");
 const Graph = require("graphology");
 const forceAtlas2 = require("graphology-layout-forceatlas2");
 
+const { main: buildBaselines } = require("./build-baselines");
+
 const DATA_DIR = path.join(__dirname, "../public/data");
 const OUTPUT_DIR = path.join(__dirname, "../public/data/precomputed");
 
@@ -1971,6 +1973,17 @@ async function main() {
       console.log(`  ✗ Mandate ${result.mandate}: ${result.error}`);
     }
   });
+  // Baselines are derived from the files just written, so they have to be
+  // rebuilt whenever any layout is. Cheap enough (~60 KB, reads only the
+  // full-mandate and per-country files) to run unconditionally.
+  console.log("");
+  try {
+    await buildBaselines();
+  } catch (error) {
+    console.log(`  \u2717 Could not rebuild baselines.json: ${error.message}`);
+    console.log("    The sidebar will fall back to showing no comparison.");
+  }
+
   console.log("\nDone!");
 }
 
