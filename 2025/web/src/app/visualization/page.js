@@ -84,6 +84,7 @@ export default function VisualizationPage() {
 
         let finalNodes = nodes;
         let finalEdges = edges;
+        let allEdgesForStats = [];
         let nodeMap = new Map();
 
         if (!hasPrecomputedPositions) {
@@ -191,6 +192,13 @@ export default function VisualizationPage() {
             weight: edge.weight,
           }));
 
+          // The filtering above is purely for drawing — a dense network is
+          // unreadable and slow. Statistics must never use it: averaging only
+          // over the links that survived a weight cut counts an MEP's
+          // agreements and discards their disagreements, which inflates every
+          // score and silently changes the denominator per MEP.
+          allEdgesForStats = edgesWithWeights;
+
           finalNodes = d3Nodes;
         } else {
           // Use precomputed positions - just filter edges for visualization
@@ -242,6 +250,9 @@ export default function VisualizationPage() {
             weight: edge.weight,
           }));
 
+          // Statistics use the complete set, never the display filter above.
+          allEdgesForStats = edgesWithWeights;
+
           finalNodes = d3Nodes;
         }
 
@@ -273,6 +284,8 @@ export default function VisualizationPage() {
         const newGraphData = {
           nodes: finalNodes,
           links: finalEdges,
+          // Unfiltered, for statistics. See the note where this is built.
+          allLinks: allEdgesForStats.length ? allEdgesForStats : finalEdges,
           nodeMap,
           agreementScores: agreementScores || null,
           similarityScores: similarityScores || null,
@@ -352,7 +365,7 @@ export default function VisualizationPage() {
       setAgreementScores(agreementArray.length > 0 ? agreementArray : null);
     } else {
       // Fallback: calculate agreement scores from edges (slower)
-      const edgesToSearch = graphData.links;
+      const edgesToSearch = graphData.allLinks || graphData.links;
       const connectedEdges = edgesToSearch.filter(
         (link) => link.source === mepId || link.target === mepId
       );
@@ -384,7 +397,7 @@ export default function VisualizationPage() {
     }
 
     // Get connected edges once (used for closest MEPs and country similarity)
-    const edgesToSearch = graphData.links;
+    const edgesToSearch = graphData.allLinks || graphData.links;
     const connectedEdges = edgesToSearch.filter(
       (link) => link.source === mepId || link.target === mepId
     );
