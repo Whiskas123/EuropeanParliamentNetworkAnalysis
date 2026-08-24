@@ -1,0 +1,290 @@
+// Five-term comparison.
+//
+// The chart is the point of this panel, so the chrome recedes: hairline grid,
+// no axis frame, ticks in the sidebar's secondary grey. Series identity is
+// carried three ways at once — colour, dash pattern and marker shape — because
+// these end up printed, sometimes in greyscale.
+
+.trends-panel {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.trends-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+}
+
+.trends-description {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+.trends-status {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+// --- legend ---------------------------------------------------------------
+
+.trends-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.trends-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #666;
+  cursor: help;
+
+  svg {
+    flex-shrink: 0;
+    display: block;
+  }
+}
+
+// --- chart ----------------------------------------------------------------
+
+.trends-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.trends-grid {
+  stroke: #ededed;
+  stroke-width: 1;
+}
+
+.trends-crosshair {
+  stroke: #c8c8c8;
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.trends-axis-label {
+  font-size: 8px;
+  fill: #aaa;
+  font-variant-numeric: tabular-nums;
+}
+
+.trends-point-label {
+  font-size: 8.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.trends-tick {
+  font-size: 9px;
+  fill: #888;
+
+  // The term currently open, so the chart says where you are.
+  &.current {
+    fill: #1a1a1a;
+    font-weight: 700;
+  }
+}
+
+.trends-tick-years {
+  font-size: 7.5px;
+  fill: #b5b5b5;
+}
+
+// One hit target per term, wider than the marks it covers.
+.trends-hit {
+  fill: transparent;
+  cursor: pointer;
+
+  &:hover {
+    fill: rgba(0, 0, 0, 0.025);
+  }
+
+  &:focus-visible {
+    fill: rgba(0, 0, 0, 0.05);
+    outline: 2px solid #4a4a4a;
+    outline-offset: -2px;
+  }
+}
+
+// --- readout --------------------------------------------------------------
+
+.trends-readout {
+  margin-top: 6px;
+  padding: 7px 9px;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.trends-readout-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.trends-readout-meps {
+  font-weight: 400;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+}
+
+.trends-readout-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.trends-readout-swatch {
+  width: 8px;
+  height: 2px;
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+.trends-readout-label {
+  flex: 1 1 auto;
+  color: #666;
+}
+
+.trends-readout-value {
+  color: #1a1a1a;
+  font-variant-numeric: tabular-nums;
+}
+
+// --- the lowest pair, on its own scale ------------------------------------
+
+.trends-spark-block {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #ededed;
+}
+
+.trends-spark-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.trends-spark-note {
+  font-size: 9.5px;
+  color: #999;
+  line-height: 1.4;
+}
+
+// --- honesty about the axis ----------------------------------------------
+
+.trends-axis-note {
+  font-size: 9.5px;
+  line-height: 1.4;
+  color: #aaa;
+  font-style: italic;
+  margin: 8px 0 0;
+}
+
+// --- table view -----------------------------------------------------------
+
+.trends-table-toggle {
+  margin-top: 8px;
+  padding: 3px 8px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 10px;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2;
+    color: #1a1a1a;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4a4a4a;
+    outline-offset: 1px;
+  }
+}
+
+.trends-table-scroll {
+  margin-top: 8px;
+  overflow-x: auto;
+}
+
+.trends-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 4px 5px;
+    text-align: right;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-weight: 500;
+    color: #999;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tbody th {
+    text-align: left;
+    font-weight: 500;
+    color: #1a1a1a;
+  }
+
+  td {
+    color: #666;
+  }
+
+  tr.current {
+    background-color: #f7f7f7;
+
+    th,
+    td {
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+  }
+}
+
+.trends-table-caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 9.5px;
+  color: #999;
+  padding-bottom: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trends-hit,
+  .trends-table-toggle {
+    transition: none;
+  }
+}
