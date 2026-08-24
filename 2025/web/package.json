@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "precompute": "node scripts/precompute-layouts.js",
-    "baselines": "node scripts/build-baselines.js"
+    "baselines": "node scripts/build-baselines.js",
+    "findings": "node scripts/build-findings.js"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
