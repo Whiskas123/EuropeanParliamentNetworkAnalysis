@@ -10,9 +10,14 @@ import IntragroupCohesion from "./IntragroupCohesion";
 import CountrySimilarity from "./CountrySimilarity";
 import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
+import UnusualHerePanel from "./UnusualHerePanel";
+import FindingsPanel from "./FindingsPanel";
+import TrendsPanel from "./TrendsPanel";
+import StructurePanel from "./StructurePanel";
 
 export default function Sidebar({
   mandate,
+  selectedCountry,
   selectedNode,
   selectedGroup,
   graphData,
@@ -25,11 +30,15 @@ export default function Sidebar({
   countrySimilarity,
   selectedSubject,
   baseline,
+  renderSettings,
+  onRenderSettingsChange,
+  onSelectSubject,
   onSelectNode,
   onSelectNodeFromGroup,
   onClearNodeKeepGroup,
   onSelectGroup,
   onCountryClick,
+  onMandateChange,
   loading = false,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -232,6 +241,35 @@ export default function Sidebar({
           </>
         ) : (
           <>
+            <UnusualHerePanel
+              graphData={graphData}
+              baseline={baseline}
+              mandate={mandate}
+              selectedCountry={selectedCountry}
+              selectedSubject={selectedSubject}
+              intergroupCohesion={intergroupCohesion}
+              intragroupCohesion={intragroupCohesion}
+              countrySimilarity={countrySimilarity}
+              onSelectGroup={onSelectGroup}
+              onCountryClick={onCountryClick}
+            />
+            <FindingsPanel
+              mandate={mandate}
+              selectedCountry={selectedCountry}
+              selectedSubject={selectedSubject}
+              graphData={graphData}
+              onSelectNode={onSelectNode}
+              onSelectGroup={onSelectGroup}
+              onCountryClick={onCountryClick}
+              onSelectSubject={onSelectSubject}
+            />
+            <StructurePanel
+              graphData={graphData}
+              mandate={mandate}
+              onSelectNode={onSelectNode}
+              onSelectGroup={onSelectGroup}
+            />
+            <TrendsPanel mandate={mandate} onMandateChange={onMandateChange} />
             {intergroupCohesion && (
               <CohesionHeatmap
                 intergroupCohesion={intergroupCohesion}

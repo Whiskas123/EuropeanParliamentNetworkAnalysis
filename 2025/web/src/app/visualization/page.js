@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { loadMandateData, getBaseline } from "../../lib/dataLoader.js";
+import { DEFAULT_VIEW, decodeView, encodeView } from "../../lib/viewState.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
@@ -32,6 +33,21 @@ export default function VisualizationPage() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [baseline, setBaseline] = useState(null);
+
+  // How the network is drawn. Separate from which network is loaded: changing
+  // any of these repaints without refetching. Threaded to both the canvas and
+  // the export so a print matches the screen.
+  const [renderSettings, setRenderSettings] = useState({
+    edgePercentile: DEFAULT_VIEW.edgePercentile,
+    edgeWidth: DEFAULT_VIEW.edgeWidth,
+    colorMode: DEFAULT_VIEW.colorMode,
+    dim: DEFAULT_VIEW.dim,
+  });
+
+  // Guards the first render: the URL is the source of truth on load, and
+  // writing back before reading would erase whatever was shared.
+  const urlReadRef = useRef(false);
+  const pendingMepRef = useRef(null);
   const previousGraphDataRef = useRef(null);
   const currentGraphDataRef = useRef(null);
 
@@ -339,9 +355,67 @@ export default function VisualizationPage() {
     []
   );
 
+  // The URL is the source of truth on first paint, so a shared link, a
+  // bookmark or a QR code on a printed panel opens the exact view it names.
+  useEffect(() => {
+    if (urlReadRef.current) return;
+    urlReadRef.current = true;
+    if (typeof window === "undefined") return;
+
+    const view = decodeView(window.location.search.replace(/^\?/, ""));
+    setMandate(view.mandate);
+    setSelectedCountry(view.country);
+    setSelectedSubject(view.subject);
+    setRenderSettings({
+      edgePercentile: view.edgePercentile,
+      edgeWidth: view.edgeWidth,
+      colorMode: view.colorMode,
+      dim: view.dim,
+    });
+    if (view.group) setSelectedGroup(view.group);
+    // The MEP is applied once the network is loaded, below — the node object
+    // it selects does not exist yet at this point.
+    if (view.mep) pendingMepRef.current = view.mep;
+  }, []);
+
+  // Write the view back, replacing rather than pushing: dragging a slider
+  // should not bury the back button under a hundred history entries.
+  useEffect(() => {
+    if (!urlReadRef.current || typeof window === "undefined") return;
+    const query = encodeView({
+      mandate,
+      country: selectedCountry,
+      subject: selectedSubject,
+      ...renderSettings,
+      mep: selectedNode?.id || null,
+      group: selectedGroup || null,
+    });
+    const next = query
+      ? `${window.location.pathname}?${query}`
+      : window.location.pathname;
+    if (next !== window.location.pathname + window.location.search) {
+      window.history.replaceState(null, "", next);
+    }
+  }, [
+    mandate,
+    selectedCountry,
+    selectedSubject,
+    renderSettings,
+    selectedNode,
+    selectedGroup,
+  ]);
+
   useEffect(() => {
     loadAndPrepareGraph(mandate, selectedCountry, selectedSubject);
   }, [mandate, selectedCountry, selectedSubject, loadAndPrepareGraph]);
+
+  // An MEP named in the URL can only be selected once its node exists.
+  useEffect(() => {
+    if (!graphData || !pendingMepRef.current) return;
+    const node = graphData.nodeMap.get(pendingMepRef.current);
+    pendingMepRef.current = null;
+    if (node) setSelectedNode(node);
+  }, [graphData]);
 
   // Calculate closest MEPs and similarity scores when a node is selected
   useEffect(() => {
@@ -751,6 +825,12 @@ export default function VisualizationPage() {
               mandate={mandate}
               selectedCountry={selectedCountry}
               selectedSubject={selectedSubject}
+              renderSettings={renderSettings}
+              onRenderSettingsChange={setRenderSettings}
+              baseline={baseline}
+              intergroupCohesion={intergroupCohesion}
+              intragroupCohesion={intragroupCohesion}
+              countrySimilarity={countrySimilarity}
             />
             {loading && <LoadingSpinner message="Loading network data..." />}
           </div>
@@ -767,6 +847,7 @@ export default function VisualizationPage() {
       {(graphData || previousGraphDataRef.current || loading) && (
         <Sidebar
           mandate={mandate}
+          selectedCountry={selectedCountry}
           selectedNode={selectedNode}
           selectedGroup={selectedGroup}
           graphData={graphData || previousGraphDataRef.current}
@@ -784,6 +865,10 @@ export default function VisualizationPage() {
           onClearNodeKeepGroup={handleClearNodeKeepGroup}
           onSelectGroup={handleGroupClick}
           onCountryClick={handleCountryClick}
+          onMandateChange={setMandate}
+          onSelectSubject={setSelectedSubject}
+          renderSettings={renderSettings}
+          onRenderSettingsChange={setRenderSettings}
           loading={loading}
         />
       )}
