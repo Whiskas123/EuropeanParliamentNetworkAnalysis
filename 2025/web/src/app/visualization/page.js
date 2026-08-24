@@ -13,6 +13,43 @@ import Sidebar from "../../components/Sidebar";
 import HoverTooltip from "../../components/HoverTooltip";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
+/**
+ * An MEP's average agreement with their compatriots.
+ *
+ * Read from the published figures rather than computed from the edges held in
+ * memory. Those are filtered for legibility, and an average over them is wrong
+ * by 17 percentage points on average — 56 at worst — because it keeps an MEP's
+ * agreements and discards their disagreements.
+ *
+ * Falls back to the in-memory edges only when the published file is missing,
+ * which is a degraded but non-empty result.
+ */
+function readCountrySimilarity(graphData, mepId, selectedNodeData) {
+  const published = graphData.countrySimilarityByMep;
+  const entry = published && published[mepId];
+  if (entry) {
+    return { score: entry[0], count: entry[1] };
+  }
+
+  const links = graphData.allLinks || graphData.links || [];
+  const country = selectedNodeData?.country;
+  const weights = links
+    .filter((link) => link.source === mepId || link.target === mepId)
+    .map((link) => {
+      const otherId = link.source === mepId ? link.target : link.source;
+      const other = graphData.nodeMap.get(otherId);
+      return other && other.country === country ? link.weight || 0 : null;
+    })
+    .filter((weight) => weight !== null);
+
+  return {
+    score: weights.length
+      ? weights.reduce((sum, weight) => sum + weight, 0) / weights.length
+      : 0,
+    count: weights.length,
+  };
+}
+
 export default function VisualizationPage() {
   const router = useRouter();
   const [mandate, setMandate] = useState(10);
@@ -93,6 +130,7 @@ export default function VisualizationPage() {
           agreementScores,
           similarityScores,
           cohesionData: precomputedCohesionData,
+          countrySimilarityByMep,
           subjects: precomputedSubjects,
           votingSessions: precomputedVotingSessions,
           metadata,
@@ -311,6 +349,9 @@ export default function VisualizationPage() {
           nodeMap,
           agreementScores: agreementScores || null,
           similarityScores: similarityScores || null,
+          // Published per-MEP compatriot agreement. Not derivable from the
+          // edges above: those are filtered for the drawing.
+          countrySimilarityByMep: countrySimilarityByMep || null,
           subjects: subjectsList, // Store subjects for fast access (filtered to >5 voting sessions)
           votingSessions: precomputedVotingSessions || null, // Voting sessions data (total and bySubject)
           metadata: metadata || null,
@@ -526,27 +567,13 @@ export default function VisualizationPage() {
         });
       }
 
-      // For country similarity, calculate from edges (not in precomputed)
-      const countryEdges = connectedEdges
-        .map((edge) => {
-          const otherNodeId = edge.source === mepId ? edge.target : edge.source;
-          const otherNode = graphData.nodeMap.get(otherNodeId);
-          return otherNode && otherNode.country === selectedCountry
-            ? { weight: edge.weight || 0 }
-            : null;
-        })
-        .filter((e) => e !== null);
-
-      const countryScore =
-        countryEdges.length > 0
-          ? countryEdges.reduce((sum, e) => sum + e.weight, 0) /
-            countryEdges.length
-          : 0;
-
-      setCountrySimilarityScore({
-        score: countryScore,
-        count: countryEdges.length,
-      });
+      // Country similarity comes from the published figures, not from the
+      // edges in memory: those are filtered to weight > 0.6 for the drawing,
+      // and averaging over them counts an MEP's agreements while dropping
+      // their disagreements. See loadCountrySimilarity in dataLoader.js.
+      setCountrySimilarityScore(
+        readCountrySimilarity(graphData, mepId, selectedNodeData)
+      );
     } else {
       // Fallback: calculate from edges (slower)
       const selectedGroup = selectedNodeData.groupId;
@@ -567,30 +594,13 @@ export default function VisualizationPage() {
           ? groupEdges.reduce((sum, e) => sum + e.weight, 0) / groupEdges.length
           : 0;
 
-      const countryEdges = connectedEdges
-        .map((edge) => {
-          const otherNodeId = edge.source === mepId ? edge.target : edge.source;
-          const otherNode = graphData.nodeMap.get(otherNodeId);
-          return otherNode && otherNode.country === selectedCountry
-            ? { weight: edge.weight || 0 }
-            : null;
-        })
-        .filter((e) => e !== null);
-
-      const countryScore =
-        countryEdges.length > 0
-          ? countryEdges.reduce((sum, e) => sum + e.weight, 0) /
-            countryEdges.length
-          : 0;
-
       setGroupSimilarityScore({
         score: groupScore,
         count: groupEdges.length,
       });
-      setCountrySimilarityScore({
-        score: countryScore,
-        count: countryEdges.length,
-      });
+      setCountrySimilarityScore(
+        readCountrySimilarity(graphData, mepId, selectedNodeData)
+      );
     }
 
     // Calculate closest MEPs (using already computed connectedEdges)

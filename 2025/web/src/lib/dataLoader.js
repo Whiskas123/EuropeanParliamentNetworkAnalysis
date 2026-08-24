@@ -95,6 +95,48 @@ export function baselineForGroupPair(baseline, groupA, groupB) {
   return typeof value === "number" ? value : null;
 }
 
+// country_similarity.json, fetched at most once per page load.
+let countrySimilarityPromise = null;
+
+/**
+ * Each MEP's average agreement with their compatriots.
+ *
+ * Published rather than derived in the browser because it is the one figure
+ * the MEP panel shows that cannot survive reading the precomputed layout: that
+ * file's edge array is filtered to weight > 0.6 for legibility, and averaging
+ * over it counts an MEP's agreements while dropping their disagreements —
+ * measured at 17 percentage points of error on average, 56 at worst.
+ *
+ * See scripts/build-country-similarity.js.
+ */
+async function loadCountrySimilarity() {
+  if (countrySimilarityPromise === null) {
+    countrySimilarityPromise = fetch("/data/country_similarity.json")
+      .then((response) => (response.ok ? response.json() : null))
+      .catch((error) => {
+        console.warn("Country similarity not available:", error);
+        return null;
+      });
+  }
+  return countrySimilarityPromise;
+}
+
+/**
+ * The country-similarity lookup for one view.
+ *
+ * A country view needs no entry of its own: restricting the network to a
+ * single country keeps every pair of compatriots, so an MEP's figure there is
+ * the same as in the full view.
+ *
+ * @returns {Promise<Object|null>} mepId to [score, count]
+ */
+export async function getCountrySimilarity(mandate, subject = null) {
+  const all = await loadCountrySimilarity();
+  const forMandate = all && all[String(mandate)];
+  if (!forMandate) return null;
+  return (subject ? forMandate[subject] : forMandate._all) || null;
+}
+
 /**
  * Load MEP info for a mandate
  * @param {number} mandate - Mandate number
@@ -447,18 +489,20 @@ async function loadJsonData(mandate, country = null, subject = null) {
  */
 export async function loadMandateData(mandate, country = null, subject = null) {
   try {
-    // Try to load from JSON format first (includes all edges, normalized to [0,1])
-    const jsonData = await loadJsonData(mandate, country, subject);
-    if (jsonData && jsonData.nodes && jsonData.edges) {
-      console.log(
-        `Using JSON data for mandate ${mandate}${
-          country ? ` - ${country}` : ""
-        }${subject ? ` - ${subject}` : ""} (includes all edges)`
-      );
-      return jsonData;
-    }
-
-    // Try to load precomputed layout second
+    // The precomputed layout is tried first and data.json only as a fallback.
+    // The two differ by a factor of twenty in size — 16 MB against 305 MB —
+    // and the small one already carries positions, agreement scores,
+    // similarity scores, cohesion and the subject list. It used to be the
+    // other way round, which meant a 305 MB download every time a filter
+    // changed.
+    //
+    // The one thing it cannot supply is a correct average over all edges: its
+    // `edges` array is filtered to weight > 0.6 so the drawing stays legible.
+    // Everything numeric the UI reads is therefore taken from fields computed
+    // at precompute time over the complete edge set — `agreementScores`,
+    // `cohesionData` — or from a published side file, in the single case of
+    // per-MEP country similarity. Verified before the switch: agreement scores
+    // match the full set exactly, and no MEP's five closest neighbours change.
     const precomputed = await loadPrecomputedLayout(mandate, country, subject);
     if (precomputed && precomputed.nodes && precomputed.edges) {
       console.log(
@@ -534,9 +578,29 @@ export async function loadMandateData(mandate, country = null, subject = null) {
         agreementScores: agreementScores,
         similarityScores: precomputed.similarityScores || null,
         cohesionData: cohesionData, // Precomputed cohesion data
+        // The only statistic with no correct source in this file; see
+        // loadCountrySimilarity above.
+        countrySimilarityByMep: await getCountrySimilarity(mandate, subject),
         subjects: precomputed.subjects || null, // Precomputed subjects list with >5 voting sessions
         votingSessions: precomputed.votingSessions || null, // Voting sessions data
         metadata: metadata,
+      };
+    }
+
+    // Fallback: the full data.json. Reached when a view has no precomputed
+    // file of its own — chiefly a country x subject combination that was never
+    // generated. Correct but slow, so it is the exception rather than, as
+    // before, the default path for every view.
+    console.warn(
+      `No precomputed layout for mandate ${mandate}${
+        country ? ` - ${country}` : ""
+      }${subject ? ` - ${subject}` : ""}; falling back to data.json`
+    );
+    const jsonData = await loadJsonData(mandate, country, subject);
+    if (jsonData && jsonData.nodes && jsonData.edges) {
+      return {
+        ...jsonData,
+        countrySimilarityByMep: await getCountrySimilarity(mandate, subject),
       };
     }
 

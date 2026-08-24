@@ -154,15 +154,27 @@ export default function GroupInfoPanel({
 
     // Calculate average similarity for each MEP with all other MEPs in the group
     // Use the same method as in visualization page for consistency
+    // Each member's average agreement with the rest of the group, taken from
+    // the precomputed scores. Those are computed over the complete edge set,
+    // whereas the edges held here are filtered to weight > 0.6 so the network
+    // stays legible — averaging over that keeps a member's agreements and
+    // drops their disagreements, which inflates every figure and moves the
+    // ranking. Falls back to the edges only when the scores are absent.
     const edgesToUse = graphData.allLinks || graphData.links;
     const mepScores = currentMEPs.map((mep) => {
-      // Find all edges connected to this MEP
-      const connectedEdges = edgesToUse.filter(
-        (edge) => edge.source === mep.id || edge.target === mep.id
-      );
+      const precomputed = graphData.similarityScores
+        ? graphData.agreementScores?.[mep.id]?.[groupId]
+        : null;
+      if (precomputed && precomputed.count > 0) {
+        return {
+          mep,
+          avgScore: precomputed.score || 0,
+          count: precomputed.count,
+        };
+      }
 
-      // Filter to only edges with other MEPs in the same group
-      const groupEdges = connectedEdges
+      const groupEdges = edgesToUse
+        .filter((edge) => edge.source === mep.id || edge.target === mep.id)
         .map((edge) => {
           const otherNodeId =
             edge.source === mep.id ? edge.target : edge.source;
