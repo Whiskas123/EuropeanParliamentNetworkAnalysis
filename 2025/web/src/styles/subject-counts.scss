@@ -1,0 +1,64 @@
+// Voting-session counts beside each policy area.
+//
+// Policy areas differ enormously in how much data sits behind them — 1,049
+// voting sessions for Foreign Affairs against 12 for Transport and Tourism in
+// term 10 — and the thin ones produce the most dramatic numbers on the site.
+// The count is shown so the reader can weigh a figure before printing it; it
+// is context, so it stays quieter than the name it annotates.
+
+.subject-option-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subject-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.subject-count-value {
+  font-size: 10px;
+  color: #8a8a8a;
+  // Digits line up down the list so relative size reads without the bar.
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  text-align: right;
+}
+
+// Proportional to the largest policy area in the term, so the eye can compare
+// weights without reading every figure.
+.subject-count-bar {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background-color: #e8e8e8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.subject-count-bar-fill {
+  display: block;
+  height: 100%;
+  background-color: #b0b0b0;
+  border-radius: 2px;
+}
+
+// The count for the currently-selected policy area, shown in the closed
+// selector so the sample size is visible without reopening the dropdown.
+.subject-count-inline {
+  margin-left: 6px;
+  font-size: 10px;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+
+  &::before {
+    content: "·";
+    margin-right: 6px;
+  }
+}
