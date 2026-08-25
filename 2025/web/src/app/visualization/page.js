@@ -85,6 +85,7 @@ export default function VisualizationPage() {
   // writing back before reading would erase whatever was shared.
   const urlReadRef = useRef(false);
   const pendingMepRef = useRef(null);
+  const pendingGroupRef = useRef(null);
   const previousGraphDataRef = useRef(null);
   const currentGraphDataRef = useRef(null);
 
@@ -468,9 +469,12 @@ export default function VisualizationPage() {
       colorMode: view.colorMode,
       dim: view.dim,
     });
-    if (view.group) setSelectedGroup(view.group);
-    // The MEP is applied once the network is loaded, below — the node object
-    // it selects does not exist yet at this point.
+    // Both of these are applied once the network is loaded, below. Setting the
+    // group here instead looks like it works and does not: loadAndPrepareGraph
+    // clears both selections partway through every load, including the first
+    // one, so a group set at this point is wiped a few hundred milliseconds
+    // later and `?g=` silently opens the plain network view.
+    if (view.group) pendingGroupRef.current = view.group;
     if (view.mep) pendingMepRef.current = view.mep;
   }, []);
 
@@ -511,6 +515,22 @@ export default function VisualizationPage() {
     const node = graphData.nodeMap.get(pendingMepRef.current);
     pendingMepRef.current = null;
     if (node) setSelectedNode(node);
+  }, [graphData]);
+
+  // Same for a group named in the URL, and for the same reason: the load
+  // clears selections, so this has to land after it rather than before.
+  //
+  // Dropped when no MEP in the open network belongs to it. A country x policy
+  // area view holds a fraction of Parliament and may well contain none of a
+  // given group, and selecting one that is not there opens a panel with
+  // nothing in it and no way back to the network.
+  useEffect(() => {
+    if (!graphData || !pendingGroupRef.current) return;
+    const groupId = pendingGroupRef.current;
+    pendingGroupRef.current = null;
+    if (graphData.nodes.some((node) => node.groupId === groupId)) {
+      setSelectedGroup(groupId);
+    }
   }, [graphData]);
 
   // Calculate closest MEPs and similarity scores when a node is selected
