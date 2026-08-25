@@ -1,0 +1,11 @@
+# Third-party dependencies of the pipeline. Everything else is standard library.
+#
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#   .venv/bin/python -m pipeline.run all
+#
+# numpy and requests are needed by every run; anthropic only by the `classify`
+# step, which is the one stage that asks a model rather than an authority.
+numpy>=1.26
+requests>=2.31
+anthropic>=1.0

@@ -260,30 +260,63 @@ def _clean_label(label):
     return re.sub(r"\s+", " ", out).strip()
 
 
+def _match_count(data):
+    """How many procedures the search actually matched, from the year facet."""
+    total = 0
+    for field in data.get("fields", []):
+        if field.get("name") == "year":
+            for value in field.get("availableValues", []):
+                m = re.match(r"^(\d{4})\s*\((\d+)\)$", (value.get("label") or "").strip())
+                if m:
+                    total += int(m.group(2))
+    return total
+
+
 def _oeil_query(http, epref):
+    """Look up one procedure in OEIL.
+
+    `fullText.term` is a text search, not a reference lookup: a procedure
+    reference that also appears inside an unrelated file matches both, and the
+    facets are then aggregated across them, so the committee handed back can
+    belong to the wrong procedure. Constraining the search to the year the
+    reference already carries removes that whole class of error.
+
+    Returns (data, match_count) so the caller can refuse to trust a lookup that
+    is still ambiguous after filtering.
+    """
     ref = EPREF_BARE.search(str(epref))
     if not ref:
-        return None
-    r = http.get(
-        OEIL_FACETS,
-        params={"fullText.term": ref.group(1), "fullText.mode": "EXACT_WORD"},
-    )
+        return None, 0
+    reference = ref.group(1)
+    params = {"fullText.term": reference, "fullText.mode": "EXACT_WORD"}
+    year = reference.split("/")[0]
+    if re.fullmatch(r"(?:19|20)\d{2}", year):
+        params["year"] = year
+
+    r = http.get(OEIL_FACETS, params=params)
     if r is None:
-        return None
+        return None, 0
     try:
-        return r.json()
+        data = r.json()
     except ValueError as exc:
         raise RemoteUnavailable(f"OEIL returned non-JSON for {epref} ({exc})")
+    return data, _match_count(data)
 
 
 def fetch_subject(http, epref):
     """Primary subject lookup: committee responsible, else Commission DG, else
     the first-level policy area. Mirrors the 2025 notebook's `fetch_topic`."""
-    data = _oeil_query(http, epref)
+    data, matches = _oeil_query(http, epref)
     if data is None:
         return NOT_FOUND
 
-    for field in data.get("fields", []):
+    # Still ambiguous after narrowing by year: any committee in the facets may
+    # belong to another procedure, so refuse rather than guess. The policy-area
+    # fallback below is aggregated and safe to read either way.
+    trust_committee = matches <= 1
+
+    committee_fields = data.get("fields", []) if trust_committee else []
+    for field in committee_fields:
         if field.get("name") == "committee" and field.get("type") == "field-group":
             for sub in field.get("fields", []):
                 if sub.get("name") == "committeeResponsible":
@@ -317,7 +350,7 @@ def fetch_second_level_subject(http, epref):
     """Fallback used when the primary label does not map to a canonical subject:
     the first second-level policy area, e.g. '3.45 Enterprise policy' ->
     'Enterprise policy, inter-company cooperation'."""
-    data = _oeil_query(http, epref)
+    data, _ = _oeil_query(http, epref)
     if data is None:
         return NOT_FOUND
     for field in data.get("fields", []):

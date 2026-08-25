@@ -156,13 +156,79 @@ SUBJECT_MAPPING = {
     'Common foreign and security policy (CFSP) (1)': 'Foreign Affairs',
     'Fisheries policy (1)': 'Fisheries',
     'Security and Defence': 'Security and Defence',
+
+    # Seen in live OEIL responses but absent from the 2025 table, so these were
+    # falling through to "Others".
+    'European External Action Service': 'Foreign Affairs',
+    # JUDGEMENT CALL: the housing special committee (created in term 10) has no
+    # obvious home among the 22. Filed under social affairs because its remit is
+    # affordable and social housing; change here if you'd rather it sat under
+    # Regional Development.
+    'Special committee on the Housing Crisis in the European Union': 'Employment and Social Affairs',
 }
 
-CANONICAL_SUBJECTS = sorted(set(SUBJECT_MAPPING.values()))
+# Votes about the House's own business - the order of the agenda, the sitting
+# calendar, a group's request to add or drop an item. They are real votes, but
+# not about a policy area, so no OEIL label maps to them and they never come
+# out of SUBJECT_MAPPING. The `classify` step assigns this name so they stop
+# sitting in "Others", which is the absence of a subject rather than one.
+PROCEDURE_SUBJECT = "Parliamentary Procedure"
+
+CANONICAL_SUBJECTS = sorted(set(SUBJECT_MAPPING.values()) | {PROCEDURE_SUBJECT})
+
+# --- subjects that did not exist for the whole period ------------------------
+# ENVI was the "Committee on the Environment, Public Health and Food Safety"
+# until 2024. A separate public health committee (SANT) exists only from term
+# 10, so a distinct "Public Health" subject in terms 6-9 is an anachronism: it
+# describes a committee that was not there. Those votes belong with ENVI, which
+# is where the Parliament actually handled them.
+#
+# Keyed by mandate so the current term keeps the split that now genuinely
+# exists. Applied when votes are written, not when subjects are resolved, since
+# only the writer knows the mandate.
+SUBJECT_MERGES = {
+    "6": {"Public Health": "Environment, Climate and Food Safety"},
+    "7": {"Public Health": "Environment, Climate and Food Safety"},
+    "8": {"Public Health": "Environment, Climate and Food Safety"},
+    "9": {"Public Health": "Environment, Climate and Food Safety"},
+}
+
+# A per-subject network needs enough votes for a position to mean anything.
+# Below this, pairwise agreement is mostly sampling noise - at 12 votes the
+# standard error on an agreement rate is about 14 points, which is wider than
+# the differences the layout is drawing. Such a network is not merely weak, it
+# is indistinguishable from a strong one once it is on screen, so it is not
+# published at all.
+MIN_SUBJECT_VOTES = 50
+
+
+def subject_for_mandate(subject, mandate):
+    """The subject as it should be recorded for this particular term."""
+    return SUBJECT_MERGES.get(str(mandate), {}).get(subject, subject)
+
+
+def _normalise_label(text):
+    """Fold the typographic variants that stop an exact match.
+
+    OEIL sends a curly apostrophe (U+2019); parts of the table above were typed
+    with the ASCII one (U+0027). They never compared equal, so e.g. the
+    pesticides special committee silently fell through to "Others".
+    """
+    return (
+        str(text)
+        .replace("\u2019", "'")
+        .replace("\u2018", "'")
+        .replace("\u00a0", " ")
+        .strip()
+    )
+
+
+# Lookup table keyed on the normalised form, so either apostrophe resolves.
+_NORMALISED_MAPPING = {_normalise_label(k): v for k, v in SUBJECT_MAPPING.items()}
 
 
 def canonical_subject(raw):
     """Map a raw committee/policy label onto the canonical vocabulary."""
     if not raw:
         return FALLBACK_SUBJECT
-    return SUBJECT_MAPPING.get(raw.strip() if isinstance(raw, str) else raw, FALLBACK_SUBJECT)
+    return _NORMALISED_MAPPING.get(_normalise_label(raw), FALLBACK_SUBJECT)

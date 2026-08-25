@@ -193,6 +193,9 @@ def write_mandate_files(report, resolver, expected_counts):
                 subject = config.FALLBACK_SUBJECT
             else:
                 subject = cached["subject"]
+            # A subject that did not exist in this term is recorded as the
+            # committee that actually handled it - see config.SUBJECT_MERGES.
+            subject = config.subject_for_mandate(subject, mandate)
             session["subject"] = subject
             subjects[mandate][subject] += 1
             writers[mandate].write(session)

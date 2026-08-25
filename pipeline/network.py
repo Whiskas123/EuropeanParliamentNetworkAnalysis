@@ -326,8 +326,15 @@ def build_mandate_payload(mandate, report, meps):
     subjects = np.array(builder.subject_of_row)
     edges_by_subject = {}
     subject_meta = {}
+    thin = {}
     for subject in sorted(set(builder.subject_of_row)):
         rows = np.flatnonzero(subjects == subject)
+        # Too few votes to position anyone. Such a network is not weak-looking
+        # on screen - it looks exactly like a well-supported one - so it is not
+        # published rather than published with a caveat nobody reads.
+        if rows.size < config.MIN_SUBJECT_VOTES:
+            thin[subject] = int(rows.size)
+            continue
         sub_matrix = matrix[rows]
         sub_edges, _, sub_stats = edges_from_matrix(sub_matrix, builder.mep_ids)
         if not sub_edges:
@@ -343,6 +350,13 @@ def build_mandate_payload(mandate, report, meps):
             "voteCount": int(rows.size),
             "mepCount": sub_stats["meps_kept"],
         }
+
+    if thin:
+        report.note(
+            f"mandate {mandate}: {len(thin)} subject(s) withheld for having "
+            f"fewer than {config.MIN_SUBJECT_VOTES} votes: "
+            + ", ".join(f"{k} ({v})" for k, v in sorted(thin.items(),
+                                                        key=lambda kv: kv[1])))
 
     all_weights = [normalise(w) for _, _, w in edges]
     # Key order matters for reading these files back cheaply: everything small

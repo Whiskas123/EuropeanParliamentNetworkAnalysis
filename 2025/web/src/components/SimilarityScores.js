@@ -8,6 +8,7 @@ import {
 } from "../lib/utils.js";
 
 export default function SimilarityScores({
+  selectedCountry,
   groupSimilarityScore,
   countrySimilarityScore,
   agreementScores,
@@ -136,6 +137,20 @@ export default function SimilarityScores({
     return null;
   }, [selectedNode, graphData]);
 
+  // These scores compare the MEP against the group members *present in the
+  // current network*. In a country view that is only their compatriots — often
+  // a single person — so the label has to say so rather than implying the
+  // whole group.
+  const groupPeerLabel = (() => {
+    const acronym = getGroupAcronym(selectedNode?.groupId, mandate);
+    const counts = new Set(groupSubjectScores.map((i) => i.count));
+    const n = counts.size === 1 ? [...counts][0] : null;
+    const where = selectedCountry ? ` in ${selectedCountry}` : "";
+    if (n === 1) return `the other ${acronym} member${where}`;
+    if (n) return `${acronym} members${where} (${n} MEPs)`;
+    return `${acronym} members${where}`;
+  })();
+
   if (
     groupSimilarityScore === null &&
     countrySimilarityScore === null &&
@@ -209,9 +224,7 @@ export default function SimilarityScores({
                   {groupSubjectScores.length >= 3 && (
                     <div className="group-subject-section">
                       <div className="group-subject-label">
-                        Higher voting agreement with{" "}
-                        {getGroupAcronym(selectedNode.groupId, mandate)} members
-                        on:
+                        Higher voting agreement with {groupPeerLabel} on:
                       </div>
                       <div className="group-subject-list">
                         {groupSubjectScores.slice(0, 3).map((item) => (
@@ -233,9 +246,7 @@ export default function SimilarityScores({
                   {groupSubjectScores.length >= 3 && (
                     <div className="group-subject-section">
                       <div className="group-subject-label">
-                        Lower voting agreement with{" "}
-                        {getGroupAcronym(selectedNode.groupId, mandate)} members
-                        on:
+                        Lower voting agreement with {groupPeerLabel} on:
                       </div>
                       <div className="group-subject-list">
                         {groupSubjectScores

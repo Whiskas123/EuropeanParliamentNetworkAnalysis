@@ -209,6 +209,7 @@ export default function Sidebar({
               onSelectGroup={onSelectGroup}
             />
             <SimilarityScores
+              selectedCountry={selectedCountry}
               groupSimilarityScore={groupSimilarityScore}
               countrySimilarityScore={countrySimilarityScore}
               agreementScores={agreementScores}

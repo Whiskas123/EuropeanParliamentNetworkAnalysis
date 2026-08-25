@@ -39,8 +39,7 @@ export default function ClosestMEPs({ meps, onSelectMEP, selectedSubject }) {
         >
           <div className="closest-meps-empty">
             <p>
-              No MEPs with high voting agreement found. This MEP may have unique
-              voting patterns.
+              No MEPs with high voting agreement found.
             </p>
           </div>
         </div>

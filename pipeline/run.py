@@ -7,6 +7,7 @@
     python -m pipeline.run publish          # copy into the site
     python -m pipeline.run layouts          # ForceAtlas2 positions (node)
     python -m pipeline.run verify           # check what is on disk for the site
+    python -m pipeline.run classify         # label the "Others" residual with a model
 
 Nothing is published unless every validation gate passed.
 """
@@ -15,11 +16,16 @@ import argparse
 import subprocess
 import sys
 
-from . import build_networks, build_votes, config, verify_site
+from . import build_networks, build_votes, config, llm_subjects, verify_site
 from .network import load_meps
-from .report import PipelineError, Report
+from .report import PipelineError, Report, atomic_write_json
 
 STEPS = ["votes", "networks", "compare", "publish", "layouts", "verify"]
+
+# Deliberately outside `all`: it costs money, calls a model rather than an
+# authority, and its output should be reviewed before it becomes a published
+# number.
+EXTRA_STEPS = ["classify"]
 
 
 def check_inputs(report):
@@ -62,10 +68,66 @@ def run_layouts(report, mandates, combinations=False, combinations_only=False,
     report.end_step()
 
 
+def run_classify(report, mandates, args):
+    """Label the votes the evidence chain could not reach.
+
+    Three modes, all read-only unless --apply is given:
+      --validate N   score the classifier on known-good labels and stop
+      (default)      classify the residual and report the shift it would cause
+      --apply        additionally write the labels into data/final
+    """
+    try:
+        return _classify(report, mandates, args)
+    except RuntimeError as exc:
+        report.print_summary()
+        print(f"\nClassification stopped: {exc}", file=sys.stderr)
+        return 1
+
+
+def _classify(report, mandates, args):
+    report.step("Step 7: classify the residual with a model")
+    report.fact("prompt version", llm_subjects.PROMPT_VERSION)
+
+    if args.validate is not None:
+        result = llm_subjects.validate(args.validate, report=report,
+                                       model=args.model, effort=args.effort)
+        report.end_step()
+        report.print_summary()
+        print(f"\nValidation detail: {llm_subjects.VALIDATION_PATH}")
+        for row in result["disagreements"][:15]:
+            print(f"  expected {row['expected']!r} got {row['got']!r} "
+                  f"({row['confidence']}) - {row['title'][:70]}")
+        return 0
+
+    cases = llm_subjects.collect_cases(mandates, report=report)
+    atomic_write_json(llm_subjects.CASES_PATH, cases, indent=1)
+    report.note(f"cases written to {llm_subjects.CASES_PATH}")
+
+    answers = llm_subjects.classify_cases(cases, limit=args.limit, report=report,
+                                          model=args.model, effort=args.effort)
+    answers = llm_subjects.apply_overrides(answers, report=report)
+    summary = llm_subjects.apply_labels(cases, answers, mandates,
+                                        report=report, dry_run=not args.apply)
+    report.end_step()
+
+    print("\nSubjects the model assigned to the residual:")
+    for subject, n in summary["by_subject"].items():
+        print(f"  {n:5d}  {subject}")
+    print("\nBy confidence:", summary["by_confidence"])
+    if summary["dry_run"]:
+        print("\nNothing was written. Re-run with --apply to accept these labels,")
+        print("then re-run `networks`, `publish`, `layouts` and `verify`.")
+
+    report.write()
+    report.print_summary()
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("step", choices=STEPS + ["all"], help="which stage to run")
+    parser.add_argument("step", choices=STEPS + EXTRA_STEPS + ["all"],
+                        help="which stage to run")
     parser.add_argument("--mandates", default=None,
                         help="comma-separated subset, e.g. 10")
     parser.add_argument("--offline", action="store_true",
@@ -83,6 +145,21 @@ def main(argv=None):
     parser.add_argument("--missing-only", action="store_true",
                         help="only produce networks whose file does not exist "
                              "yet; never recomputes a published layout")
+    parser.add_argument("--apply", action="store_true",
+                        help="classify: write the labels. Without it the step "
+                             "reports what would change and writes nothing.")
+    parser.add_argument("--validate", type=int, default=None, metavar="N",
+                        help="classify: score the classifier against N votes "
+                             "whose deterministic label is known-good, and stop")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="classify: only send this many cases to the model")
+    parser.add_argument("--model", default=None,
+                        help=f"classify: which model to use "
+                             f"(default {llm_subjects.MODEL})")
+    parser.add_argument("--effort", default=None,
+                        choices=["low", "medium", "high", "xhigh", "max"],
+                        help=f"classify: reasoning effort "
+                             f"(default {llm_subjects.EFFORT})")
     args = parser.parse_args(argv)
 
     mandates = args.mandates.split(",") if args.mandates else config.MANDATE_ORDER
@@ -95,6 +172,8 @@ def main(argv=None):
     built = {}
 
     try:
+        if args.step == "classify":
+            return run_classify(report, mandates, args)
         check_inputs(report)
         if "votes" in steps:
             build_votes.run(report, offline=args.offline)

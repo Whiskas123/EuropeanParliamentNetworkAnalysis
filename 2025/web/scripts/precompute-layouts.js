@@ -1818,7 +1818,18 @@ async function main() {
           mandate,
           data
         );
+        // The selector is built from this list, so it must only offer
+        // subjects that actually have a network to open. Two different filters
+        // decide that and they do not agree: this script keeps subjects with
+        // more than 5 voting sessions, while the pipeline withholds any
+        // subject under config.MIN_SUBJECT_VOTES (50) because a layout built
+        // on fewer votes is sampling noise that looks like signal. Taking the
+        // session count alone would list subjects the pipeline deliberately
+        // withheld, giving a menu entry that opens nothing. edgesBySubject is
+        // the authoritative set of what was actually published.
+        const publishable = new Set(Object.keys(data.edgesBySubject || {}));
         const subjectsList = Object.keys(votingSessionsData.bySubject)
+          .filter((subject) => publishable.has(subject))
           .sort()
           .map((subject) => ({
             name: subject,

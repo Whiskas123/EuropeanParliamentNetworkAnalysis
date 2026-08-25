@@ -311,7 +311,12 @@ export function getSubjectEmoji(subjectName) {
     "employment and social affairs": "👔",
     "public health": "🏥",
     "agriculture and rural development": "🌾",
-    "Women’s Rights and Gender Equality": "♀️",
+    // Lookup is by subjectName.toLowerCase(), so the key has to be lowercase
+    // too - and has to carry the same curly apostrophe the data uses, or it
+    // silently falls through to the default icon.
+    "women’s rights and gender equality": "♀️",
+    "security and defence": "🛡️",
+    "parliamentary procedure": "🗳️",
   };
 
   return subjectEmojiMap[subjectLower] || "📋";
