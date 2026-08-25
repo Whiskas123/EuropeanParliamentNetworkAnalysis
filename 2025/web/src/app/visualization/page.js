@@ -294,6 +294,10 @@ export default function VisualizationPage() {
           // over the links that survived a weight cut counts an MEP's
           // agreements and discards their disagreements, which inflates every
           // score and silently changes the denominator per MEP.
+          //
+          // This branch runs only when a view has no precomputed layout, so
+          // here the edges really are every pair, straight from data.json. The
+          // precomputed branch below is the normal path and its array is not.
           allEdgesForStats = edgesWithWeights;
 
           finalNodes = d3Nodes;
@@ -347,7 +351,18 @@ export default function VisualizationPage() {
             weight: edge.weight,
           }));
 
-          // Statistics use the complete set, never the display filter above.
+          // Every edge this view was given, before the display cut above.
+          //
+          // NOT the complete set of pairs. On the precomputed path — which is
+          // now the normal one — the file itself ships only weights above 0.6,
+          // 135,776 of 241,860 for term 10. So an average over this array is an
+          // average over the high tail: it keeps an MEP's agreements and drops
+          // their disagreements, the very error the note above warns about.
+          //
+          // Anything numeric must come from `agreementScores`, `cohesionData`
+          // or `countrySimilarityByMep`, all computed over every pair at
+          // precompute time. This array is for drawing, for edge selection, and
+          // for the degraded fallbacks that run when those fields are missing.
           allEdgesForStats = edgesWithWeights;
 
           finalNodes = d3Nodes;
@@ -381,7 +396,8 @@ export default function VisualizationPage() {
         const newGraphData = {
           nodes: finalNodes,
           links: finalEdges,
-          // Unfiltered, for statistics. See the note where this is built.
+          // Every edge this view was given, before the display cut — which is
+          // not the same as every pair. See the note where this is built.
           allLinks: allEdgesForStats.length ? allEdgesForStats : finalEdges,
           nodeMap,
           agreementScores: agreementScores || null,

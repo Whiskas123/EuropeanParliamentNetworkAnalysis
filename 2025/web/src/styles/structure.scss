@@ -1,0 +1,351 @@
+// Structure panel — detected communities vs political groups, and bridge MEPs.
+//
+// Two results in one panel, so the separation has to be unambiguous at 380px:
+// each section gets its own small-caps label and hairline rule, and the method
+// note sits directly under the section it qualifies rather than at the top.
+// Figures are tabular-nums throughout because these are columns to compare down,
+// not sentences to read across.
+
+.structure-panel {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+
+  // The shared .collapsible-content caps expanded height at 5000px, which two
+  // fully expanded 40-row lists plus the community cards can exceed. Raising
+  // the cap only for this panel; the transition still works, it just has more
+  // room to travel.
+  .collapsible-content.expanded {
+    max-height: 20000px;
+  }
+}
+
+.structure-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+}
+
+.structure-description {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+.structure-status {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+// --- section scaffolding ---------------------------------------------------
+
+.structure-section {
+  & + & {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+  }
+}
+
+.structure-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+
+.structure-section-lede {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+// The one line that says what was done to the data before the algorithm ran.
+// It qualifies every number below it, so it is set apart rather than inlined.
+.structure-method {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #666;
+  background: #f7f7f7;
+  border-left: 2px solid #d0d0d0;
+  padding: 6px 8px;
+  margin: 0 0 10px;
+
+  strong {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .structure-method-figure {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// --- headline figures ------------------------------------------------------
+
+.structure-headline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.structure-headline-item {
+  min-width: 0;
+}
+
+.structure-headline-value {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.structure-headline-label {
+  font-size: 10px;
+  line-height: 1.3;
+  color: #666;
+  margin-top: 2px;
+}
+
+// --- community rows --------------------------------------------------------
+
+.structure-communities {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.structure-community {
+  padding: 7px 8px;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  background: #fcfcfc;
+}
+
+.structure-community-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.structure-community-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a1a1a;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.structure-community-size {
+  font-size: 10px;
+  color: #666;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// Stacked bar: one segment per political group inside the community.
+.structure-bar {
+  display: flex;
+  height: 7px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #ececec;
+}
+
+.structure-bar-segment {
+  height: 100%;
+  min-width: 1px;
+}
+
+.structure-community-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 5px;
+}
+
+.structure-part {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #666;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover .structure-part-name {
+    text-decoration: underline;
+  }
+}
+
+.structure-part-swatch {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.structure-part-name {
+  color: #1a1a1a;
+}
+
+.structure-part-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.structure-community-note {
+  font-size: 10px;
+  line-height: 1.4;
+  color: #666;
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px dotted #e0e0e0;
+
+  strong {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+}
+
+// --- MEP rows (shared by the mismatch list and the bridge list) -------------
+
+.structure-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.structure-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 2px;
+  border: 0;
+  border-bottom: 1px solid #f0f0f0;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background: #f7f7f7;
+  }
+}
+
+.structure-row-rank {
+  font-size: 10px;
+  color: #999;
+  width: 15px;
+  flex-shrink: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.structure-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.structure-row-name {
+  font-size: 11px;
+  color: #1a1a1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.structure-row-sub {
+  font-size: 10px;
+  color: #666;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.structure-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.structure-chip-swatch {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.structure-row-figure {
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #1a1a1a;
+  min-width: 52px;
+}
+
+.structure-row-figure-sub {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: #666;
+  margin-top: 2px;
+}
+
+// Crossed over: agrees more with another group than with their own.
+.structure-figure-negative {
+  color: #c0392b;
+}
+
+.structure-figure-positive {
+  color: #1a1a1a;
+}
+
+// --- footer ----------------------------------------------------------------
+
+.structure-more {
+  font-size: 10px;
+  color: #888;
+  padding: 6px 2px 0;
+}
+
+.structure-toggle {
+  font-size: 10px;
+  color: #666;
+  background: none;
+  border: 0;
+  padding: 6px 2px 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+}
