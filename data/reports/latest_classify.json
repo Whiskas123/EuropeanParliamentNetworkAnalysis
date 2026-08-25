@@ -1,0 +1,53 @@
+{
+  "run": "classify",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T01:26:44.573811+00:00",
+    "seconds": 65.5,
+    "git_commit": "2d37ce16a5d60780b2cc33c49ad0d60da016db9d",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 1,
+    "passed": 1,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 7: classify the residual with a model",
+      "facts": {
+        "prompt version": "2026-08-24.2",
+        "cases to classify": 450,
+        "votes covered": 871,
+        "model": "claude-sonnet-5",
+        "effort": "low",
+        "cases already cached": 450,
+        "cases to send": 0,
+        "hand-verified overrides applied": 2,
+        "mandate 6: votes relabelled": 143,
+        "mandate 7: votes relabelled": 1,
+        "mandate 8: votes relabelled": 199,
+        "mandate 9: votes relabelled": 469,
+        "mandate 10: votes relabelled": 59,
+        "votes relabelled": 871
+      },
+      "seconds": 65.4
+    }
+  ],
+  "checks": [
+    {
+      "name": "every override matched a case",
+      "ok": true,
+      "detail": "0 override(s) named a case that does not exist",
+      "fatal": false,
+      "step": "Step 7: classify the residual with a model"
+    }
+  ]
+}

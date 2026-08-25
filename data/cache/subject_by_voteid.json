@@ -1,7 +1,7 @@
 {
  "7754": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7818": {
   "subject": "Budgets",
@@ -368,8 +368,8 @@
   "via": "baseline-2025"
  },
  "7740": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7681": {
   "subject": "Economic and Monetary Affairs",
@@ -392,8 +392,8 @@
   "via": "baseline-2025"
  },
  "7741": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7855": {
   "subject": "Foreign Affairs",
@@ -416,8 +416,8 @@
   "via": "baseline-2025"
  },
  "7742": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7856": {
   "subject": "Foreign Affairs",
@@ -440,8 +440,8 @@
   "via": "baseline-2025"
  },
  "7743": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7857": {
   "subject": "Foreign Affairs",
@@ -464,8 +464,8 @@
   "via": "baseline-2025"
  },
  "7744": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "7858": {
   "subject": "Foreign Affairs",
@@ -816,8 +816,8 @@
   "via": "baseline-2025"
  },
  "8954": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "8946": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -1216,8 +1216,8 @@
   "via": "baseline-2025"
  },
  "8650": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "8791": {
   "subject": "Employment and Social Affairs",
@@ -2536,8 +2536,8 @@
   "via": "baseline-2025"
  },
  "8418": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "8860": {
   "subject": "Environment, Climate and Food Safety",
@@ -2804,8 +2804,8 @@
   "via": "baseline-2025"
  },
  "8319": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "8884": {
   "subject": "Foreign Affairs",
@@ -3064,8 +3064,8 @@
   "via": "baseline-2025"
  },
  "8183": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "8332": {
   "subject": "Foreign Affairs",
@@ -4256,8 +4256,8 @@
   "via": "baseline-2025"
  },
  "8134": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "8504": {
   "subject": "Foreign Affairs",
@@ -5116,8 +5116,8 @@
   "via": "baseline-2025"
  },
  "7898": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "7983": {
   "subject": "Foreign Affairs",
@@ -5136,8 +5136,8 @@
   "via": "baseline-2025"
  },
  "7899": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "7986": {
   "subject": "Foreign Affairs",
@@ -5148,16 +5148,16 @@
   "via": "baseline-2025"
  },
  "7900": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "7877": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "7901": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "7878": {
   "subject": "Constitutional Affairs",
@@ -5944,8 +5944,8 @@
   "via": "baseline-2025"
  },
  "9817": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Legal Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "10010": {
   "subject": "Regional Development",
@@ -6352,8 +6352,8 @@
   "via": "baseline-2025"
  },
  "9783": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "9758": {
   "subject": "Fisheries",
@@ -6384,8 +6384,8 @@
   "via": "baseline-2025"
  },
  "9784": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "9759": {
   "subject": "Regional Development",
@@ -6416,8 +6416,8 @@
   "via": "baseline-2025"
  },
  "9785": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "9760": {
   "subject": "Economic and Monetary Affairs",
@@ -6444,8 +6444,8 @@
   "via": "baseline-2025"
  },
  "9786": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "9675": {
   "subject": "Foreign Affairs",
@@ -7080,8 +7080,8 @@
   "via": "baseline-2025"
  },
  "9635": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9560": {
   "subject": "Foreign Affairs",
@@ -7104,8 +7104,8 @@
   "via": "baseline-2025"
  },
  "9636": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9617": {
   "subject": "Economic and Monetary Affairs",
@@ -7128,8 +7128,8 @@
   "via": "baseline-2025"
  },
  "9637": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9618": {
   "subject": "Economic and Monetary Affairs",
@@ -7156,8 +7156,8 @@
   "via": "baseline-2025"
  },
  "9638": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9563": {
   "subject": "Foreign Affairs",
@@ -7184,8 +7184,8 @@
   "via": "baseline-2025"
  },
  "9639": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9564": {
   "subject": "Foreign Affairs",
@@ -7208,8 +7208,8 @@
   "via": "baseline-2025"
  },
  "9640": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Employment and Social Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "9565": {
   "subject": "Foreign Affairs",
@@ -8844,8 +8844,8 @@
   "via": "baseline-2025"
  },
  "9229": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9083": {
   "subject": "Employment and Social Affairs",
@@ -8876,8 +8876,8 @@
   "via": "baseline-2025"
  },
  "9230": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9285": {
   "subject": "Employment and Social Affairs",
@@ -8904,8 +8904,8 @@
   "via": "baseline-2025"
  },
  "9231": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9286": {
   "subject": "Employment and Social Affairs",
@@ -8932,8 +8932,8 @@
   "via": "baseline-2025"
  },
  "9232": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9078": {
   "subject": "Foreign Affairs",
@@ -8960,8 +8960,8 @@
   "via": "baseline-2025"
  },
  "9233": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9079": {
   "subject": "Foreign Affairs",
@@ -8988,8 +8988,8 @@
   "via": "baseline-2025"
  },
  "9234": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9339": {
   "subject": "Economic and Monetary Affairs",
@@ -9372,8 +9372,8 @@
   "via": "baseline-2025"
  },
  "11422": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "9007": {
   "subject": "Budgets",
@@ -11860,8 +11860,8 @@
   "via": "baseline-2025"
  },
  "10803": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "10781": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -11872,8 +11872,8 @@
   "via": "baseline-2025"
  },
  "10804": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "10782": {
   "subject": "Foreign Affairs",
@@ -13372,8 +13372,8 @@
   "via": "baseline-2025"
  },
  "10679": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "10384": {
   "subject": "Regional Development",
@@ -14564,8 +14564,8 @@
   "via": "baseline-2025"
  },
  "10499": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "10121": {
   "subject": "Transport and Tourism",
@@ -14660,8 +14660,8 @@
   "via": "baseline-2025"
  },
  "10231": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "10194": {
   "subject": "Environment, Climate and Food Safety",
@@ -14676,8 +14676,8 @@
   "via": "baseline-2025"
  },
  "10232": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "10195": {
   "subject": "Women’s Rights and Gender Equality",
@@ -14692,8 +14692,8 @@
   "via": "baseline-2025"
  },
  "10233": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "10196": {
   "subject": "Women’s Rights and Gender Equality",
@@ -14704,8 +14704,8 @@
   "via": "baseline-2025"
  },
  "10234": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "10125": {
   "subject": "Transport and Tourism",
@@ -14720,8 +14720,8 @@
   "via": "baseline-2025"
  },
  "10235": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "10126": {
   "subject": "Transport and Tourism",
@@ -15660,8 +15660,8 @@
   "via": "baseline-2025"
  },
  "12672": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12885": {
   "subject": "Industry, Research and Energy",
@@ -15824,8 +15824,8 @@
   "via": "baseline-2025"
  },
  "12892": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Environment, Climate and Food Safety",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12836": {
   "subject": "Agriculture and Rural Development",
@@ -15860,8 +15860,8 @@
   "via": "baseline-2025"
  },
  "12658": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12748": {
   "subject": "Budgets",
@@ -15888,8 +15888,8 @@
   "via": "baseline-2025"
  },
  "12659": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "International Trade",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12708": {
   "subject": "Employment and Social Affairs",
@@ -16004,8 +16004,8 @@
   "via": "baseline-2025"
  },
  "12664": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12713": {
   "subject": "Environment, Climate and Food Safety",
@@ -16304,8 +16304,8 @@
   "via": "baseline-2025"
  },
  "12633": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12558": {
   "subject": "Transport and Tourism",
@@ -16344,8 +16344,8 @@
   "via": "baseline-2025"
  },
  "12634": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12697": {
   "subject": "Fisheries",
@@ -16376,8 +16376,8 @@
   "via": "baseline-2025"
  },
  "12635": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12698": {
   "subject": "Fisheries",
@@ -16396,8 +16396,8 @@
   "via": "baseline-2025"
  },
  "12484": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12770": {
   "subject": "Budgets",
@@ -16580,8 +16580,8 @@
   "via": "baseline-2025"
  },
  "12461": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12642": {
   "subject": "Environment, Climate and Food Safety",
@@ -16620,12 +16620,12 @@
   "via": "baseline-2025"
  },
  "12462": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12778": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12733": {
   "subject": "Employment and Social Affairs",
@@ -16636,8 +16636,8 @@
   "via": "baseline-2025"
  },
  "12779": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12863": {
   "subject": "Agriculture and Rural Development",
@@ -16656,8 +16656,8 @@
   "via": "baseline-2025"
  },
  "12463": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12734": {
   "subject": "Employment and Social Affairs",
@@ -16688,8 +16688,8 @@
   "via": "baseline-2025"
  },
  "12464": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12865": {
   "subject": "Agriculture and Rural Development",
@@ -16792,8 +16792,8 @@
   "via": "baseline-2025"
  },
  "12497": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12435": {
   "subject": "Foreign Affairs",
@@ -16820,8 +16820,8 @@
   "via": "baseline-2025"
  },
  "12498": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12436": {
   "subject": "Foreign Affairs",
@@ -16840,8 +16840,8 @@
   "via": "baseline-2025"
  },
  "12499": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12437": {
   "subject": "Foreign Affairs",
@@ -16860,8 +16860,8 @@
   "via": "baseline-2025"
  },
  "12500": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12438": {
   "subject": "International Trade",
@@ -16880,8 +16880,8 @@
   "via": "baseline-2025"
  },
  "12501": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12439": {
   "subject": "Agriculture and Rural Development",
@@ -16896,8 +16896,8 @@
   "via": "baseline-2025"
  },
  "12502": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12540": {
   "subject": "Environment, Climate and Food Safety",
@@ -16916,8 +16916,8 @@
   "via": "baseline-2025"
  },
  "12503": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12541": {
   "subject": "Legal Affairs",
@@ -16936,8 +16936,8 @@
   "via": "baseline-2025"
  },
  "12504": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12542": {
   "subject": "Legal Affairs",
@@ -16956,8 +16956,8 @@
   "via": "baseline-2025"
  },
  "12505": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12543": {
   "subject": "Legal Affairs",
@@ -16972,8 +16972,8 @@
   "via": "baseline-2025"
  },
  "12506": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12476": {
   "subject": "Women’s Rights and Gender Equality",
@@ -16988,8 +16988,8 @@
   "via": "baseline-2025"
  },
  "12507": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Public Health",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12477": {
   "subject": "Women’s Rights and Gender Equality",
@@ -17124,8 +17124,8 @@
   "via": "baseline-2025"
  },
  "12305": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12590": {
   "subject": "Industry, Research and Energy",
@@ -17140,8 +17140,8 @@
   "via": "baseline-2025"
  },
  "12517": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12591": {
   "subject": "Industry, Research and Energy",
@@ -17360,8 +17360,8 @@
   "via": "baseline-2025"
  },
  "12402": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12317": {
   "subject": "Legal Affairs",
@@ -17532,8 +17532,8 @@
   "via": "baseline-2025"
  },
  "12615": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12412": {
   "subject": "Foreign Affairs",
@@ -17548,8 +17548,8 @@
   "via": "baseline-2025"
  },
  "12616": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12249": {
   "subject": "Transport and Tourism",
@@ -17576,8 +17576,8 @@
   "via": "baseline-2025"
  },
  "12617": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12250": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -17608,8 +17608,8 @@
   "via": "baseline-2025"
  },
  "12618": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12329": {
   "subject": "Constitutional Affairs",
@@ -17640,8 +17640,8 @@
   "via": "baseline-2025"
  },
  "12619": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12416": {
   "subject": "Foreign Affairs",
@@ -17672,8 +17672,8 @@
   "via": "baseline-2025"
  },
  "12620": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12417": {
   "subject": "Foreign Affairs",
@@ -17708,8 +17708,8 @@
   "via": "baseline-2025"
  },
  "12621": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12254": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -17740,8 +17740,8 @@
   "via": "baseline-2025"
  },
  "12622": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12255": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -17772,8 +17772,8 @@
   "via": "baseline-2025"
  },
  "12623": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12256": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -17804,8 +17804,8 @@
   "via": "baseline-2025"
  },
  "12624": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12296": {
   "subject": "Internal Market and Consumer Protection",
@@ -17836,8 +17836,8 @@
   "via": "baseline-2025"
  },
  "12625": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12297": {
   "subject": "Agriculture and Rural Development",
@@ -17872,8 +17872,8 @@
   "via": "baseline-2025"
  },
  "12626": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12259": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -17900,8 +17900,8 @@
   "via": "baseline-2025"
  },
  "12627": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12299": {
   "subject": "Agriculture and Rural Development",
@@ -18000,16 +18000,16 @@
   "via": "baseline-2025"
  },
  "12169": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12263": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "12304": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12381": {
   "subject": "Transport and Tourism",
@@ -18028,8 +18028,8 @@
   "via": "baseline-2025"
  },
  "12430": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12170": {
   "subject": "Foreign Affairs",
@@ -18220,16 +18220,16 @@
   "via": "baseline-2025"
  },
  "12182": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12276": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "12183": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12229": {
   "subject": "Environment, Climate and Food Safety",
@@ -18240,8 +18240,8 @@
   "via": "baseline-2025"
  },
  "12184": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12230": {
   "subject": "Environment, Climate and Food Safety",
@@ -18256,16 +18256,16 @@
   "via": "baseline-2025"
  },
  "12185": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12279": {
   "subject": "Budgets",
   "via": "baseline-2025"
  },
  "12186": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12232": {
   "subject": "Environment, Climate and Food Safety",
@@ -18276,8 +18276,8 @@
   "via": "baseline-2025"
  },
  "12187": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12233": {
   "subject": "Environment, Climate and Food Safety",
@@ -18288,8 +18288,8 @@
   "via": "baseline-2025"
  },
  "12188": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12234": {
   "subject": "Environment, Climate and Food Safety",
@@ -18300,8 +18300,8 @@
   "via": "baseline-2025"
  },
  "12189": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12235": {
   "subject": "Environment, Climate and Food Safety",
@@ -18432,8 +18432,8 @@
   "via": "baseline-2025"
  },
  "12127": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12056": {
   "subject": "Industry, Research and Energy",
@@ -18460,8 +18460,8 @@
   "via": "baseline-2025"
  },
  "12128": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12013": {
   "subject": "Agriculture and Rural Development",
@@ -18484,8 +18484,8 @@
   "via": "baseline-2025"
  },
  "12129": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12200": {
   "subject": "Economic and Monetary Affairs",
@@ -18500,8 +18500,8 @@
   "via": "baseline-2025"
  },
  "12130": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12246": {
   "subject": "Foreign Affairs",
@@ -18516,8 +18516,8 @@
   "via": "baseline-2025"
  },
  "12131": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12096": {
   "subject": "Transport and Tourism",
@@ -18536,8 +18536,8 @@
   "via": "baseline-2025"
  },
  "12132": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12097": {
   "subject": "Transport and Tourism",
@@ -18552,8 +18552,8 @@
   "via": "baseline-2025"
  },
  "12133": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12098": {
   "subject": "Transport and Tourism",
@@ -18568,8 +18568,8 @@
   "via": "baseline-2025"
  },
  "12134": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12099": {
   "subject": "Transport and Tourism",
@@ -18584,8 +18584,8 @@
   "via": "baseline-2025"
  },
  "12135": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12020": {
   "subject": "International Trade",
@@ -18596,8 +18596,8 @@
   "via": "baseline-2025"
  },
  "12136": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12064": {
   "subject": "Foreign Affairs",
@@ -18608,16 +18608,16 @@
   "via": "baseline-2025"
  },
  "11980": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "12101": {
   "subject": "Transport and Tourism",
   "via": "baseline-2025"
  },
  "12137": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "11964": {
   "subject": "Foreign Affairs",
@@ -18628,8 +18628,8 @@
   "via": "baseline-2025"
  },
  "11954": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12065": {
   "subject": "Foreign Affairs",
@@ -18644,8 +18644,8 @@
   "via": "baseline-2025"
  },
  "11981": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "11965": {
   "subject": "Legal Affairs",
@@ -18664,20 +18664,20 @@
   "via": "baseline-2025"
  },
  "11955": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "12139": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12023": {
   "subject": "International Trade",
   "via": "baseline-2025"
  },
  "11982": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "11966": {
   "subject": "Foreign Affairs",
@@ -18688,12 +18688,12 @@
   "via": "baseline-2025"
  },
  "12140": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11956": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "11840": {
   "subject": "Budgets",
@@ -18708,8 +18708,8 @@
   "via": "baseline-2025"
  },
  "11983": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "11967": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -18720,8 +18720,8 @@
   "via": "baseline-2025"
  },
  "12141": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11841": {
   "subject": "Budgets",
@@ -18740,16 +18740,16 @@
   "via": "baseline-2025"
  },
  "11984": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "11968": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "12142": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12105": {
   "subject": "Transport and Tourism",
@@ -18768,16 +18768,16 @@
   "via": "baseline-2025"
  },
  "11985": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "12026": {
   "subject": "Budgetary Control",
   "via": "baseline-2025"
  },
  "12143": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11969": {
   "subject": "Budgets",
@@ -18800,8 +18800,8 @@
   "via": "baseline-2025"
  },
  "12144": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Security and Defence",
+  "via": "llm:claude-sonnet-5:low"
  },
  "11986": {
   "subject": "Budgets",
@@ -19040,8 +19040,8 @@
   "via": "baseline-2025"
  },
  "12153": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11894": {
   "subject": "Budgetary Control",
@@ -19300,8 +19300,8 @@
   "via": "baseline-2025"
  },
  "11861": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12087": {
   "subject": "Employment and Social Affairs",
@@ -19324,8 +19324,8 @@
   "via": "baseline-2025"
  },
  "11862": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12088": {
   "subject": "Foreign Affairs",
@@ -19344,8 +19344,8 @@
   "via": "baseline-2025"
  },
  "11863": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12089": {
   "subject": "Foreign Affairs",
@@ -19360,8 +19360,8 @@
   "via": "baseline-2025"
  },
  "11864": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12048": {
   "subject": "Culture and Education",
@@ -19372,8 +19372,8 @@
   "via": "baseline-2025"
  },
  "11865": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "12049": {
   "subject": "Culture and Education",
@@ -19388,8 +19388,8 @@
   "via": "baseline-2025"
  },
  "11866": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11909": {
   "subject": "Budgetary Control",
@@ -19400,8 +19400,8 @@
   "via": "baseline-2025"
  },
  "11867": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11910": {
   "subject": "Budgetary Control",
@@ -19412,20 +19412,20 @@
   "via": "baseline-2025"
  },
  "11868": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11911": {
   "subject": "Budgetary Control",
   "via": "baseline-2025"
  },
  "11869": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11870": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11912": {
   "subject": "Budgetary Control",
@@ -19716,8 +19716,8 @@
   "via": "baseline-2025"
  },
  "11666": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "11818": {
   "subject": "Foreign Affairs",
@@ -20140,8 +20140,8 @@
   "via": "baseline-2025"
  },
  "11446": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "11946": {
   "subject": "Budgetary Control",
@@ -20248,8 +20248,8 @@
   "via": "baseline-2025"
  },
  "11631": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11518": {
   "subject": "Agriculture and Rural Development",
@@ -20444,8 +20444,8 @@
   "via": "baseline-2025"
  },
  "13625": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11715": {
   "subject": "Economic and Monetary Affairs",
@@ -20468,8 +20468,8 @@
   "via": "baseline-2025"
  },
  "13626": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11716": {
   "subject": "Economic and Monetary Affairs",
@@ -20492,8 +20492,8 @@
   "via": "baseline-2025"
  },
  "13627": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "11717": {
   "subject": "Economic and Monetary Affairs",
@@ -22192,8 +22192,8 @@
   "via": "baseline-2025"
  },
  "13299": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "13980": {
   "subject": "Budgets",
@@ -22212,8 +22212,8 @@
   "via": "baseline-2025"
  },
  "13300": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "13981": {
   "subject": "Budgets",
@@ -22232,8 +22232,8 @@
   "via": "baseline-2025"
  },
  "13301": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "13982": {
   "subject": "Budgets",
@@ -22252,8 +22252,8 @@
   "via": "baseline-2025"
  },
  "13302": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Economic and Monetary Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "13983": {
   "subject": "Economic and Monetary Affairs",
@@ -29076,8 +29076,8 @@
   "via": "baseline-2025"
  },
  "38387": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "16905": {
   "subject": "Budgetary Control",
@@ -41196,8 +41196,8 @@
   "via": "baseline-2025"
  },
  "48701": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "50029": {
   "subject": "Internal Market and Consumer Protection",
@@ -41568,8 +41568,8 @@
   "via": "baseline-2025"
  },
  "47643": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "48725": {
   "subject": "Budgets",
@@ -42452,8 +42452,8 @@
   "via": "baseline-2025"
  },
  "60387": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "62453": {
   "subject": "Industry, Research and Energy",
@@ -46352,8 +46352,8 @@
   "via": "baseline-2025"
  },
  "54727": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "56012": {
   "subject": "Environment, Climate and Food Safety",
@@ -46432,8 +46432,8 @@
   "via": "baseline-2025"
  },
  "54728": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "54833": {
   "subject": "Budgets",
@@ -48316,8 +48316,8 @@
   "via": "baseline-2025"
  },
  "52356": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "51910": {
   "subject": "Legal Affairs",
@@ -50960,8 +50960,8 @@
   "via": "baseline-2025"
  },
  "74682": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "74456": {
   "subject": "International Trade",
@@ -52696,8 +52696,8 @@
   "via": "baseline-2025"
  },
  "72705": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "73952": {
   "subject": "Budgets",
@@ -53312,8 +53312,8 @@
   "via": "baseline-2025"
  },
  "72187": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "72919": {
   "subject": "Employment and Social Affairs",
@@ -54220,8 +54220,8 @@
   "via": "baseline-2025"
  },
  "70881": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "72252": {
   "subject": "Employment and Social Affairs",
@@ -54840,8 +54840,8 @@
   "via": "baseline-2025"
  },
  "69441": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "70068": {
   "subject": "Fisheries",
@@ -55312,8 +55312,8 @@
   "via": "baseline-2025"
  },
  "69041": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "71346": {
   "subject": "Economic and Monetary Affairs",
@@ -56868,8 +56868,8 @@
   "via": "baseline-2025"
  },
  "65185": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "65888": {
   "subject": "Legal Affairs",
@@ -56884,8 +56884,8 @@
   "via": "baseline-2025"
  },
  "65186": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "64981": {
   "subject": "Transport and Tourism",
@@ -56904,8 +56904,8 @@
   "via": "baseline-2025"
  },
  "65187": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "66904": {
   "subject": "Foreign Affairs",
@@ -58040,8 +58040,8 @@
   "via": "baseline-2025"
  },
  "63921": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "65173": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58588,8 +58588,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64752": {
   "subject": "Employment and Social Affairs",
@@ -58616,8 +58616,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64769": {
   "subject": "Employment and Social Affairs",
@@ -58656,8 +58656,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63083": {
   "subject": "Economic and Monetary Affairs",
@@ -58684,8 +58684,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64135": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58716,8 +58716,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64139": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58748,8 +58748,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-6.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64140": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58776,8 +58776,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-7.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64141": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58804,8 +58804,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-8.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64142": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58832,8 +58832,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-9.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64143": {
   "subject": "Women’s Rights and Gender Equality",
@@ -58860,8 +58860,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-10.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-12-14 00:00:00-11.": {
   "subject": "Petitions",
@@ -58888,8 +58888,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-11.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-12-14 00:00:00-12.": {
   "subject": "Petitions",
@@ -58912,8 +58912,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-12.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-12-14 00:00:00-13.": {
   "subject": "Petitions",
@@ -58940,8 +58940,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-13.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64466": {
   "subject": "Internal Market and Consumer Protection",
@@ -58960,8 +58960,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-14.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64646": {
   "subject": "International Trade",
@@ -58980,8 +58980,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-15.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64653": {
   "subject": "International Trade",
@@ -58996,8 +58996,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-16.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64655": {
   "subject": "International Trade",
@@ -59016,8 +59016,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-17.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64480": {
   "subject": "Petitions",
@@ -59036,8 +59036,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-18.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64434": {
   "subject": "Economic and Monetary Affairs",
@@ -59060,8 +59060,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-19.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63114": {
   "subject": "Industry, Research and Energy",
@@ -59076,8 +59076,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-20.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64720": {
   "subject": "International Trade",
@@ -59088,16 +59088,16 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-21.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64721": {
   "subject": "International Trade",
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-22.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63700": {
   "subject": "Foreign Affairs",
@@ -59108,8 +59108,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-23.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63701": {
   "subject": "Foreign Affairs",
@@ -59120,8 +59120,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-24.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63702": {
   "subject": "Foreign Affairs",
@@ -59132,8 +59132,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-25.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63703": {
   "subject": "Foreign Affairs",
@@ -59144,8 +59144,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-26.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "63511": {
   "subject": "Petitions",
@@ -59160,16 +59160,16 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-27.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64729": {
   "subject": "International Trade",
   "via": "baseline-2025"
  },
  "2017-11-13 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2017-11-16 00:00:00-1.": {
   "subject": "Foreign Affairs",
@@ -59180,8 +59180,8 @@
   "via": "baseline-2025"
  },
  "2017-11-13 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-11-15 00:00:00-1.": {
   "subject": "Transport and Tourism",
@@ -59196,8 +59196,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-28.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64731": {
   "subject": "International Trade",
@@ -59228,8 +59228,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-29.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-11-14 00:00:00-2.": {
   "subject": "Transport and Tourism",
@@ -59260,8 +59260,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-30.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2017-11-30 00:00:00-4.": {
   "subject": "Budgets",
@@ -59288,8 +59288,8 @@
   "via": "baseline-2025"
  },
  "2017-12-13 00:00:00-31.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "64349": {
   "subject": "Foreign Affairs",
@@ -59572,8 +59572,8 @@
   "via": "baseline-2025"
  },
  "2017-10-23 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2017-12-13 00:00:00-46.": {
   "subject": "Economic and Monetary Affairs",
@@ -59864,8 +59864,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-11-16 00:00:00-31.": {
   "subject": "Employment and Social Affairs",
@@ -59900,8 +59900,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-26 00:00:00-11.": {
   "subject": "Regional Development",
@@ -59940,8 +59940,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-58.": {
   "subject": "Economic and Monetary Affairs",
@@ -59972,8 +59972,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-59.": {
   "subject": "Economic and Monetary Affairs",
@@ -60004,8 +60004,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-60.": {
   "subject": "Economic and Monetary Affairs",
@@ -60036,8 +60036,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-6.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-61.": {
   "subject": "Economic and Monetary Affairs",
@@ -60068,8 +60068,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-7.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-62.": {
   "subject": "Economic and Monetary Affairs",
@@ -60100,8 +60100,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-8.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-11-16 00:00:00-39.": {
   "subject": "Employment and Social Affairs",
@@ -60128,8 +60128,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-9.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-17.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60168,8 +60168,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-10.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-65.": {
   "subject": "Economic and Monetary Affairs",
@@ -60200,8 +60200,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-11.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-66.": {
   "subject": "Economic and Monetary Affairs",
@@ -60228,8 +60228,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-12.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-20.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60252,8 +60252,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-13.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-21.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60276,8 +60276,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-14.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-22.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60300,8 +60300,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-15.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-23.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60324,8 +60324,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-16.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-24.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60348,8 +60348,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-17.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-25 00:00:00-26.": {
   "subject": "Budgets",
@@ -60376,8 +60376,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-18.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-26 00:00:00-28.": {
   "subject": "International Trade",
@@ -60404,8 +60404,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-19.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-27.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60428,8 +60428,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-20.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-28.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60452,8 +60452,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-21.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-29.": {
   "subject": "Internal Market and Consumer Protection",
@@ -60476,8 +60476,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-22.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-77.": {
   "subject": "Economic and Monetary Affairs",
@@ -60496,8 +60496,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-23.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-78.": {
   "subject": "Economic and Monetary Affairs",
@@ -60516,8 +60516,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-24.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-79.": {
   "subject": "Economic and Monetary Affairs",
@@ -60536,8 +60536,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-25.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-80.": {
   "subject": "Economic and Monetary Affairs",
@@ -60564,8 +60564,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-26.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-26 00:00:00-37.": {
   "subject": "International Trade",
@@ -60588,8 +60588,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-27.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-24 00:00:00-36.": {
   "subject": "Fisheries",
@@ -60604,8 +60604,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-28.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-83.": {
   "subject": "Economic and Monetary Affairs",
@@ -60624,8 +60624,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-29.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-12-13 00:00:00-84.": {
   "subject": "Economic and Monetary Affairs",
@@ -60648,8 +60648,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-30.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-26 00:00:00-42.": {
   "subject": "International Trade",
@@ -60668,8 +60668,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-31.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-25 00:00:00-42.": {
   "subject": "Budgets",
@@ -60700,8 +60700,8 @@
   "via": "baseline-2025"
  },
  "2017-10-03 00:00:00-32.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2017-10-26 00:00:00-44.": {
   "subject": "Legal Affairs",
@@ -61596,8 +61596,8 @@
   "via": "baseline-2025"
  },
  "2017-07-03 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2017-07-04 00:00:00-1.": {
   "subject": "Foreign Affairs",
@@ -62964,8 +62964,8 @@
   "via": "baseline-2025"
  },
  "80345": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "79782": {
   "subject": "Legal Affairs",
@@ -62988,8 +62988,8 @@
   "via": "baseline-2025"
  },
  "79301": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "79726": {
   "subject": "Foreign Affairs",
@@ -63404,8 +63404,8 @@
   "via": "baseline-2025"
  },
  "78660": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "80200": {
   "subject": "Budgetary Control",
@@ -64980,8 +64980,8 @@
   "via": "baseline-2025"
  },
  "2018-12-10 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-4.": {
   "subject": "Budgets",
@@ -64996,8 +64996,8 @@
   "via": "baseline-2025"
  },
  "2018-12-10 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-13 00:00:00-5.": {
   "subject": "Industry, Research and Energy",
@@ -65012,8 +65012,8 @@
   "via": "baseline-2025"
  },
  "2018-12-10 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-5.": {
   "subject": "Budgets",
@@ -65028,8 +65028,8 @@
   "via": "baseline-2025"
  },
  "2018-12-10 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "77501": {
   "subject": "Environment, Climate and Food Safety",
@@ -65268,8 +65268,8 @@
   "via": "baseline-2025"
  },
  "2018-12-12 00:00:00-14.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2018-12-13 00:00:00-16.": {
   "subject": "Economic and Monetary Affairs",
@@ -65844,8 +65844,8 @@
   "via": "baseline-2025"
  },
  "2018-11-28 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "79840": {
   "subject": "Foreign Affairs",
@@ -66200,8 +66200,8 @@
   "via": "baseline-2025"
  },
  "2018-11-12 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-15 00:00:00-9.": {
   "subject": "Transport and Tourism",
@@ -66980,8 +66980,8 @@
   "via": "baseline-2025"
  },
  "2018-10-22 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-29 00:00:00-43.": {
   "subject": "Petitions",
@@ -66992,8 +66992,8 @@
   "via": "baseline-2025"
  },
  "2018-10-22 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-10-24 00:00:00-4.": {
   "subject": "Budgets",
@@ -67016,8 +67016,8 @@
   "via": "baseline-2025"
  },
  "2018-10-22 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-29 00:00:00-44.": {
   "subject": "Petitions",
@@ -67912,8 +67912,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-10-25 00:00:00-36.": {
   "subject": "Fisheries",
@@ -67932,8 +67932,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-10-23 00:00:00-32.": {
   "subject": "Environment, Climate and Food Safety",
@@ -67948,8 +67948,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-104.": {
   "subject": "Internal Market and Consumer Protection",
@@ -67960,8 +67960,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-14 00:00:00-61.": {
   "subject": "Budgets",
@@ -67980,8 +67980,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2018-10-25 00:00:00-38.": {
   "subject": "Fisheries",
@@ -68000,8 +68000,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-6.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-29 00:00:00-76.": {
   "subject": "Foreign Affairs",
@@ -68012,8 +68012,8 @@
   "via": "baseline-2025"
  },
  "2018-10-01 00:00:00-7.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-106.": {
   "subject": "Internal Market and Consumer Protection",
@@ -68524,8 +68524,8 @@
   "via": "baseline-2025"
  },
  "2018-09-10 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-128.": {
   "subject": "Security and Defence",
@@ -68552,8 +68552,8 @@
   "via": "baseline-2025"
  },
  "2018-09-10 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-11-14 00:00:00-85.": {
   "subject": "Environment, Climate and Food Safety",
@@ -69236,8 +69236,8 @@
   "via": "baseline-2025"
  },
  "2018-07-02 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-154.": {
   "subject": "Security and Defence",
@@ -69700,8 +69700,8 @@
   "via": "baseline-2025"
  },
  "2018-06-11 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-07-04 00:00:00-24.": {
   "subject": "Industry, Research and Energy",
@@ -70248,8 +70248,8 @@
   "via": "baseline-2025"
  },
  "2018-05-28 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-12-12 00:00:00-198.": {
   "subject": "Foreign Affairs",
@@ -70260,8 +70260,8 @@
   "via": "baseline-2025"
  },
  "2018-05-28 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-30 00:00:00-1.": {
   "subject": "Budgets",
@@ -70280,8 +70280,8 @@
   "via": "baseline-2025"
  },
  "2018-05-28 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-03 00:00:00-1.": {
   "subject": "Foreign Affairs",
@@ -70292,12 +70292,12 @@
   "via": "baseline-2025"
  },
  "2018-05-28 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-02 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-07-04 00:00:00-49.": {
   "subject": "Transport and Tourism",
@@ -70316,12 +70316,12 @@
   "via": "baseline-2025"
  },
  "2018-05-28 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-02 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-03 00:00:00-2.": {
   "subject": "Foreign Affairs",
@@ -70736,8 +70736,8 @@
   "via": "baseline-2025"
  },
  "90047": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-05-30 00:00:00-22.": {
   "subject": "Agriculture and Rural Development",
@@ -71548,8 +71548,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-1.": {
   "subject": "Foreign Affairs",
@@ -71580,8 +71580,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-2.": {
   "subject": "Foreign Affairs",
@@ -71608,8 +71608,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-31 00:00:00-59.": {
   "subject": "Petitions",
@@ -71644,8 +71644,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-4.": {
   "subject": "Fisheries",
@@ -71672,8 +71672,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-31 00:00:00-61.": {
   "subject": "Petitions",
@@ -71704,8 +71704,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-6.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-31 00:00:00-62.": {
   "subject": "Petitions",
@@ -71740,8 +71740,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-7.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-7.": {
   "subject": "Environment, Climate and Food Safety",
@@ -71772,8 +71772,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-8.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-8.": {
   "subject": "Environment, Climate and Food Safety",
@@ -71804,8 +71804,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-9.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-9.": {
   "subject": "Environment, Climate and Food Safety",
@@ -71836,8 +71836,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-10.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-10.": {
   "subject": "Environment, Climate and Food Safety",
@@ -71868,8 +71868,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-11.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-11.": {
   "subject": "Economic and Monetary Affairs",
@@ -71896,8 +71896,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-12.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-04-19 00:00:00-45.": {
   "subject": "Economic and Monetary Affairs",
@@ -71928,8 +71928,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-13.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-264.": {
   "subject": "Industry, Research and Energy",
@@ -71956,8 +71956,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-14.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-265.": {
   "subject": "Industry, Research and Energy",
@@ -71980,8 +71980,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-15.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-266.": {
   "subject": "Industry, Research and Energy",
@@ -72016,8 +72016,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-16.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-01 00:00:00-5.": {
   "subject": "Environment, Climate and Food Safety",
@@ -72044,8 +72044,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-17.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-01 00:00:00-6.": {
   "subject": "Environment, Climate and Food Safety",
@@ -72068,8 +72068,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-18.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-04-18 00:00:00-48.": {
   "subject": "Budgetary Control",
@@ -72096,8 +72096,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-19.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-04-18 00:00:00-49.": {
   "subject": "Budgetary Control",
@@ -72124,8 +72124,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-20.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-04-18 00:00:00-50.": {
   "subject": "Budgetary Control",
@@ -72152,8 +72152,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-21.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-75.": {
   "subject": "Constitutional Affairs",
@@ -72176,8 +72176,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-22.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-76.": {
   "subject": "Constitutional Affairs",
@@ -72204,8 +72204,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-23.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-275.": {
   "subject": "Industry, Research and Energy",
@@ -72228,8 +72228,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-24.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-25.": {
   "subject": "Economic and Monetary Affairs",
@@ -72248,8 +72248,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-25.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-79.": {
   "subject": "Foreign Affairs",
@@ -72276,8 +72276,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-26.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-80.": {
   "subject": "Foreign Affairs",
@@ -72300,8 +72300,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-27.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-81.": {
   "subject": "Foreign Affairs",
@@ -72328,8 +72328,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-28.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-01 00:00:00-18.": {
   "subject": "Environment, Climate and Food Safety",
@@ -72340,8 +72340,8 @@
   "via": "baseline-2025"
  },
  "2018-02-28 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-04-18 00:00:00-59.": {
   "subject": "Budgetary Control",
@@ -72364,8 +72364,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-29.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-31.": {
   "subject": "Economic and Monetary Affairs",
@@ -72388,8 +72388,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-30.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-32.": {
   "subject": "Economic and Monetary Affairs",
@@ -72412,8 +72412,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-31.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-33.": {
   "subject": "Economic and Monetary Affairs",
@@ -72432,8 +72432,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-32.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-284.": {
   "subject": "Industry, Research and Energy",
@@ -72460,8 +72460,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-33.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-15 00:00:00-35.": {
   "subject": "Economic and Monetary Affairs",
@@ -72484,8 +72484,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-34.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-02-07 00:00:00-1.": {
   "subject": "Constitutional Affairs",
@@ -72512,8 +72512,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-35.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-287.": {
   "subject": "Industry, Research and Energy",
@@ -72544,8 +72544,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-36.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-288.": {
   "subject": "Industry, Research and Energy",
@@ -72576,8 +72576,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-37.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-289.": {
   "subject": "Industry, Research and Energy",
@@ -72604,8 +72604,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-38.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-92.": {
   "subject": "Foreign Affairs",
@@ -72636,8 +72636,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-39.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-291.": {
   "subject": "Industry, Research and Energy",
@@ -72672,8 +72672,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-40.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-05-30 00:00:00-94.": {
   "subject": "Foreign Affairs",
@@ -72696,8 +72696,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-41.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-293.": {
   "subject": "Industry, Research and Energy",
@@ -72728,8 +72728,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-42.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-03-01 00:00:00-32.": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -72764,8 +72764,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-43.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-02-08 00:00:00-10.": {
   "subject": "Foreign Affairs",
@@ -72796,8 +72796,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-44.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-02-08 00:00:00-11.": {
   "subject": "Foreign Affairs",
@@ -72832,8 +72832,8 @@
   "via": "baseline-2025"
  },
  "2018-03-14 00:00:00-45.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "hand:verified"
  },
  "2018-12-12 00:00:00-297.": {
   "subject": "Industry, Research and Energy",
@@ -73808,8 +73808,8 @@
   "via": "baseline-2025"
  },
  "2018-01-15 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-03-14 00:00:00-82.": {
   "subject": "Budgets",
@@ -73828,8 +73828,8 @@
   "via": "baseline-2025"
  },
  "2018-01-15 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-01-17 00:00:00-1.": {
   "subject": "International Trade",
@@ -74296,8 +74296,8 @@
   "via": "baseline-2025"
  },
  "108032": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108181": {
   "subject": "Foreign Affairs",
@@ -74712,8 +74712,8 @@
   "via": "baseline-2025"
  },
  "107801": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-03-14 00:00:00-114.": {
   "subject": "Budgets",
@@ -74732,8 +74732,8 @@
   "via": "baseline-2025"
  },
  "107802": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108017": {
   "subject": "Industry, Research and Energy",
@@ -74748,8 +74748,8 @@
   "via": "baseline-2025"
  },
  "107803": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-03-14 00:00:00-115.": {
   "subject": "Budgets",
@@ -74768,8 +74768,8 @@
   "via": "baseline-2025"
  },
  "107804": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "107440": {
   "subject": "Economic and Monetary Affairs",
@@ -74788,8 +74788,8 @@
   "via": "baseline-2025"
  },
  "107806": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-01-17 00:00:00-35.": {
   "subject": "Industry, Research and Energy",
@@ -74808,8 +74808,8 @@
   "via": "baseline-2025"
  },
  "107807": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-04-18 00:00:00-147.": {
   "subject": "Budgetary Control",
@@ -75072,8 +75072,8 @@
   "via": "baseline-2025"
  },
  "2019-04-03 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "106217": {
   "subject": "Transport and Tourism",
@@ -75100,8 +75100,8 @@
   "via": "baseline-2025"
  },
  "2019-04-03 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "107581": {
   "subject": "Legal Affairs",
@@ -75128,8 +75128,8 @@
   "via": "baseline-2025"
  },
  "2019-04-03 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-03-14 00:00:00-126.": {
   "subject": "Budgets",
@@ -75152,8 +75152,8 @@
   "via": "baseline-2025"
  },
  "2019-04-03 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "106221": {
   "subject": "Transport and Tourism",
@@ -75548,8 +75548,8 @@
   "via": "baseline-2025"
  },
  "104862": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "107952": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -75560,8 +75560,8 @@
   "via": "baseline-2025"
  },
  "104863": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2018-01-17 00:00:00-65.": {
   "subject": "Environment, Climate and Food Safety",
@@ -76480,8 +76480,8 @@
   "via": "baseline-2025"
  },
  "2019-03-11 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "105500": {
   "subject": "Economic and Monetary Affairs",
@@ -76500,8 +76500,8 @@
   "via": "baseline-2025"
  },
  "2019-03-11 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "105799": {
   "subject": "Industry, Research and Energy",
@@ -77108,8 +77108,8 @@
   "via": "baseline-2025"
  },
  "2019-03-13 00:00:00-50.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Fisheries",
+  "via": "llm:claude-sonnet-5:high"
  },
  "104474": {
   "subject": "Economic and Monetary Affairs",
@@ -77128,8 +77128,8 @@
   "via": "baseline-2025"
  },
  "2019-03-13 00:00:00-51.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Fisheries",
+  "via": "llm:claude-sonnet-5:high"
  },
  "104478": {
   "subject": "Economic and Monetary Affairs",
@@ -77144,8 +77144,8 @@
   "via": "baseline-2025"
  },
  "2019-03-13 00:00:00-52.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Fisheries",
+  "via": "llm:claude-sonnet-5:high"
  },
  "105114": {
   "subject": "Regional Development",
@@ -77168,8 +77168,8 @@
   "via": "baseline-2025"
  },
  "2019-03-13 00:00:00-53.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Transport and Tourism",
+  "via": "llm:claude-sonnet-5:high"
  },
  "105115": {
   "subject": "Regional Development",
@@ -77708,8 +77708,8 @@
   "via": "baseline-2025"
  },
  "105362": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "2019-03-13 00:00:00-69.": {
   "subject": "Environment, Climate and Food Safety",
@@ -77736,8 +77736,8 @@
   "via": "baseline-2025"
  },
  "105363": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "104521": {
   "subject": "Economic and Monetary Affairs",
@@ -77764,8 +77764,8 @@
   "via": "baseline-2025"
  },
  "105375": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "101242": {
   "subject": "Constitutional Affairs",
@@ -77828,8 +77828,8 @@
   "via": "baseline-2025"
  },
  "101407": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-03-14 00:00:00-83.": {
   "subject": "International Trade",
@@ -78436,8 +78436,8 @@
   "via": "baseline-2025"
  },
  "2019-01-30 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "104927": {
   "subject": "Budgetary Control",
@@ -78468,8 +78468,8 @@
   "via": "baseline-2025"
  },
  "2019-01-30 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "104929": {
   "subject": "Budgetary Control",
@@ -79472,8 +79472,8 @@
   "via": "baseline-2025"
  },
  "100087": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-03-13 00:00:00-128.": {
   "subject": "Economic and Monetary Affairs",
@@ -81232,12 +81232,12 @@
   "via": "baseline-2025"
  },
  "2019-03-25 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-03-25 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "102486": {
   "subject": "Legal Affairs",
@@ -83148,36 +83148,36 @@
   "via": "baseline-2025"
  },
  "2019-04-15 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-15 00:00:00-2.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-15 00:00:00-3.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-15 00:00:00-4.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-15 00:00:00-5.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-15 00:00:00-6.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-16 00:00:00-1.": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "2019-04-17 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-04-16 00:00:00-2.": {
   "subject": "Legal Affairs",
@@ -84696,8 +84696,8 @@
   "via": "baseline-2025"
  },
  "99541": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "97748": {
   "subject": "International Trade",
@@ -85936,8 +85936,8 @@
   "via": "baseline-2025"
  },
  "108425": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108533": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -85976,8 +85976,8 @@
   "via": "baseline-2025"
  },
  "2019-07-15 00:00:00-1.": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "2019-07-18 00:00:00-1.": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -86016,16 +86016,16 @@
   "via": "baseline-2025"
  },
  "108579": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108580": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108581": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108563": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -86128,12 +86128,12 @@
   "via": "baseline-2025"
  },
  "108885": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108886": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "108801": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -86568,8 +86568,8 @@
   "via": "baseline-2025"
  },
  "109061": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109624": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -86584,12 +86584,12 @@
   "via": "baseline-2025"
  },
  "109062": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109063": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109626": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -86600,16 +86600,16 @@
   "via": "baseline-2025"
  },
  "109064": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109627": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "109065": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109101": {
   "subject": "Budgets",
@@ -86976,28 +86976,28 @@
   "via": "baseline-2025"
  },
  "109923": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109925": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109926": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109927": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109928": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109929": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109781": {
   "subject": "Economic and Monetary Affairs",
@@ -87140,12 +87140,12 @@
   "via": "baseline-2025"
  },
  "111241": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "111244": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "111141": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -87992,8 +87992,8 @@
   "via": "baseline-2025"
  },
  "109968": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "109961": {
   "subject": "International Trade",
@@ -88688,8 +88688,8 @@
   "via": "baseline-2025"
  },
  "110121": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "110402": {
   "subject": "Environment, Climate and Food Safety",
@@ -88700,8 +88700,8 @@
   "via": "baseline-2025"
  },
  "110122": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "110406": {
   "subject": "Environment, Climate and Food Safety",
@@ -88900,24 +88900,24 @@
   "via": "baseline-2025"
  },
  "112247": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112249": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112250": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112101": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "112241": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112263": {
   "subject": "Legal Affairs",
@@ -88996,24 +88996,24 @@
   "via": "baseline-2025"
  },
  "112406": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112407": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112408": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112409": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112410": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "112321": {
   "subject": "International Trade",
@@ -89488,8 +89488,8 @@
   "via": "baseline-2025"
  },
  "113149": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "113018": {
   "subject": "Regional Development",
@@ -89988,8 +89988,8 @@
   "via": "baseline-2025"
  },
  "113700": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Agriculture and Rural Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "113647": {
   "subject": "Budgets",
@@ -93520,12 +93520,12 @@
   "via": "baseline-2025"
  },
  "114906": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "114907": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "115117": {
   "subject": "Regional Development",
@@ -106944,8 +106944,8 @@
   "via": "baseline-2025"
  },
  "125904": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Constitutional Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "125521": {
   "subject": "International Trade",
@@ -121488,8 +121488,8 @@
   "via": "baseline-2025"
  },
  "129452": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "128993": {
   "subject": "Foreign Affairs",
@@ -122324,56 +122324,56 @@
   "via": "baseline-2025"
  },
  "136618": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136370": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "136620": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136371": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "136621": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136373": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "136622": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136374": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "136624": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135787": {
   "subject": "Economic and Monetary Affairs",
   "via": "baseline-2025"
  },
  "136625": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136376": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "136626": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "135788": {
   "subject": "Economic and Monetary Affairs",
@@ -122384,8 +122384,8 @@
   "via": "baseline-2025"
  },
  "136627": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135789": {
   "subject": "Economic and Monetary Affairs",
@@ -122396,8 +122396,8 @@
   "via": "baseline-2025"
  },
  "136629": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135790": {
   "subject": "Economic and Monetary Affairs",
@@ -122408,8 +122408,8 @@
   "via": "baseline-2025"
  },
  "136630": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135970": {
   "subject": "Economic and Monetary Affairs",
@@ -122420,8 +122420,8 @@
   "via": "baseline-2025"
  },
  "136631": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135971": {
   "subject": "Economic and Monetary Affairs",
@@ -122432,8 +122432,8 @@
   "via": "baseline-2025"
  },
  "136632": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135791": {
   "subject": "Economic and Monetary Affairs",
@@ -122448,8 +122448,8 @@
   "via": "baseline-2025"
  },
  "136633": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135792": {
   "subject": "Economic and Monetary Affairs",
@@ -122460,8 +122460,8 @@
   "via": "baseline-2025"
  },
  "136634": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136385": {
   "subject": "Environment, Climate and Food Safety",
@@ -122472,8 +122472,8 @@
   "via": "baseline-2025"
  },
  "136635": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135950": {
   "subject": "Legal Affairs",
@@ -122488,8 +122488,8 @@
   "via": "baseline-2025"
  },
  "136636": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135951": {
   "subject": "Transport and Tourism",
@@ -122504,8 +122504,8 @@
   "via": "baseline-2025"
  },
  "136637": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135952": {
   "subject": "Fisheries",
@@ -122520,8 +122520,8 @@
   "via": "baseline-2025"
  },
  "136638": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135953": {
   "subject": "Environment, Climate and Food Safety",
@@ -122536,8 +122536,8 @@
   "via": "baseline-2025"
  },
  "136639": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135954": {
   "subject": "Economic and Monetary Affairs",
@@ -122548,8 +122548,8 @@
   "via": "baseline-2025"
  },
  "136640": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135976": {
   "subject": "Economic and Monetary Affairs",
@@ -122560,8 +122560,8 @@
   "via": "baseline-2025"
  },
  "136641": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136394": {
   "subject": "Environment, Climate and Food Safety",
@@ -122576,8 +122576,8 @@
   "via": "baseline-2025"
  },
  "136642": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "135796": {
   "subject": "Economic and Monetary Affairs",
@@ -122592,8 +122592,8 @@
   "via": "baseline-2025"
  },
  "136643": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135979": {
   "subject": "Economic and Monetary Affairs",
@@ -122608,8 +122608,8 @@
   "via": "baseline-2025"
  },
  "136644": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "135980": {
   "subject": "Economic and Monetary Affairs",
@@ -122624,8 +122624,8 @@
   "via": "baseline-2025"
  },
  "136646": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135981": {
   "subject": "Economic and Monetary Affairs",
@@ -122640,8 +122640,8 @@
   "via": "baseline-2025"
  },
  "136647": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "135797": {
   "subject": "Economic and Monetary Affairs",
@@ -122652,8 +122652,8 @@
   "via": "baseline-2025"
  },
  "136648": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "136401": {
   "subject": "Environment, Climate and Food Safety",
@@ -122668,8 +122668,8 @@
   "via": "baseline-2025"
  },
  "136650": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136402": {
   "subject": "Environment, Climate and Food Safety",
@@ -122684,8 +122684,8 @@
   "via": "baseline-2025"
  },
  "136652": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136403": {
   "subject": "Environment, Climate and Food Safety",
@@ -122700,8 +122700,8 @@
   "via": "baseline-2025"
  },
  "136654": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136405": {
   "subject": "Environment, Climate and Food Safety",
@@ -122720,8 +122720,8 @@
   "via": "baseline-2025"
  },
  "136656": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136406": {
   "subject": "Environment, Climate and Food Safety",
@@ -122740,8 +122740,8 @@
   "via": "baseline-2025"
  },
  "136657": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136177": {
   "subject": "Environment, Climate and Food Safety",
@@ -122756,8 +122756,8 @@
   "via": "baseline-2025"
  },
  "136658": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136210": {
   "subject": "Employment and Social Affairs",
@@ -122768,8 +122768,8 @@
   "via": "baseline-2025"
  },
  "136660": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136176": {
   "subject": "Internal Market and Consumer Protection",
@@ -122780,16 +122780,16 @@
   "via": "baseline-2025"
  },
  "136661": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136851": {
   "subject": "Economic and Monetary Affairs",
   "via": "baseline-2025"
  },
  "136662": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136409": {
   "subject": "Employment and Social Affairs",
@@ -122800,8 +122800,8 @@
   "via": "baseline-2025"
  },
  "136664": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136410": {
   "subject": "Employment and Social Affairs",
@@ -122812,8 +122812,8 @@
   "via": "baseline-2025"
  },
  "136666": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136211": {
   "subject": "Employment and Social Affairs",
@@ -122824,8 +122824,8 @@
   "via": "baseline-2025"
  },
  "136667": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136212": {
   "subject": "Employment and Social Affairs",
@@ -122836,8 +122836,8 @@
   "via": "baseline-2025"
  },
  "136668": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136411": {
   "subject": "Employment and Social Affairs",
@@ -122848,8 +122848,8 @@
   "via": "baseline-2025"
  },
  "136669": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136413": {
   "subject": "Employment and Social Affairs",
@@ -122860,8 +122860,8 @@
   "via": "baseline-2025"
  },
  "136670": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136414": {
   "subject": "Employment and Social Affairs",
@@ -122872,8 +122872,8 @@
   "via": "baseline-2025"
  },
  "136671": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136415": {
   "subject": "Employment and Social Affairs",
@@ -122884,24 +122884,24 @@
   "via": "baseline-2025"
  },
  "136672": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136417": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "136673": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136770": {
   "subject": "Economic and Monetary Affairs",
   "via": "baseline-2025"
  },
  "136674": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136418": {
   "subject": "Employment and Social Affairs",
@@ -122912,8 +122912,8 @@
   "via": "baseline-2025"
  },
  "136675": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136419": {
   "subject": "Employment and Social Affairs",
@@ -122924,8 +122924,8 @@
   "via": "baseline-2025"
  },
  "136676": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136420": {
   "subject": "Employment and Social Affairs",
@@ -122936,8 +122936,8 @@
   "via": "baseline-2025"
  },
  "136678": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136421": {
   "subject": "Employment and Social Affairs",
@@ -122948,8 +122948,8 @@
   "via": "baseline-2025"
  },
  "136679": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136422": {
   "subject": "Employment and Social Affairs",
@@ -122960,8 +122960,8 @@
   "via": "baseline-2025"
  },
  "136680": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136424": {
   "subject": "Employment and Social Affairs",
@@ -122972,8 +122972,8 @@
   "via": "baseline-2025"
  },
  "136681": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136425": {
   "subject": "Employment and Social Affairs",
@@ -122984,8 +122984,8 @@
   "via": "baseline-2025"
  },
  "136682": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136426": {
   "subject": "Employment and Social Affairs",
@@ -122996,16 +122996,16 @@
   "via": "baseline-2025"
  },
  "136683": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136428": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "136684": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136858": {
   "subject": "Economic and Monetary Affairs",
@@ -123016,8 +123016,8 @@
   "via": "baseline-2025"
  },
  "136685": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136860": {
   "subject": "Economic and Monetary Affairs",
@@ -123028,16 +123028,16 @@
   "via": "baseline-2025"
  },
  "136687": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136861": {
   "subject": "Economic and Monetary Affairs",
   "via": "baseline-2025"
  },
  "136689": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136431": {
   "subject": "Employment and Social Affairs",
@@ -123048,8 +123048,8 @@
   "via": "baseline-2025"
  },
  "136691": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136432": {
   "subject": "Employment and Social Affairs",
@@ -123060,8 +123060,8 @@
   "via": "baseline-2025"
  },
  "136692": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136866": {
   "subject": "Economic and Monetary Affairs",
@@ -123072,8 +123072,8 @@
   "via": "baseline-2025"
  },
  "136693": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136867": {
   "subject": "Economic and Monetary Affairs",
@@ -123084,8 +123084,8 @@
   "via": "baseline-2025"
  },
  "136696": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136868": {
   "subject": "Economic and Monetary Affairs",
@@ -123096,8 +123096,8 @@
   "via": "baseline-2025"
  },
  "136697": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136870": {
   "subject": "Economic and Monetary Affairs",
@@ -123108,8 +123108,8 @@
   "via": "baseline-2025"
  },
  "136698": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136871": {
   "subject": "Economic and Monetary Affairs",
@@ -123120,8 +123120,8 @@
   "via": "baseline-2025"
  },
  "136699": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136776": {
   "subject": "Economic and Monetary Affairs",
@@ -123132,16 +123132,16 @@
   "via": "baseline-2025"
  },
  "136700": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136777": {
   "subject": "Economic and Monetary Affairs",
   "via": "baseline-2025"
  },
  "136701": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136213": {
   "subject": "Employment and Social Affairs",
@@ -123152,8 +123152,8 @@
   "via": "baseline-2025"
  },
  "136702": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136442": {
   "subject": "Employment and Social Affairs",
@@ -123164,8 +123164,8 @@
   "via": "baseline-2025"
  },
  "136703": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136443": {
   "subject": "Employment and Social Affairs",
@@ -123176,16 +123176,16 @@
   "via": "baseline-2025"
  },
  "136704": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136445": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "136705": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136780": {
   "subject": "Economic and Monetary Affairs",
@@ -123196,8 +123196,8 @@
   "via": "baseline-2025"
  },
  "136706": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136781": {
   "subject": "Economic and Monetary Affairs",
@@ -123208,8 +123208,8 @@
   "via": "baseline-2025"
  },
  "136707": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136874": {
   "subject": "Economic and Monetary Affairs",
@@ -123220,8 +123220,8 @@
   "via": "baseline-2025"
  },
  "136708": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136875": {
   "subject": "Economic and Monetary Affairs",
@@ -123232,8 +123232,8 @@
   "via": "baseline-2025"
  },
  "136709": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "136877": {
   "subject": "Economic and Monetary Affairs",
@@ -123244,8 +123244,8 @@
   "via": "baseline-2025"
  },
  "136710": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136878": {
   "subject": "Economic and Monetary Affairs",
@@ -123256,8 +123256,8 @@
   "via": "baseline-2025"
  },
  "136711": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136812": {
   "subject": "Constitutional Affairs",
@@ -123268,8 +123268,8 @@
   "via": "baseline-2025"
  },
  "136712": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "136813": {
   "subject": "Constitutional Affairs",
@@ -123280,8 +123280,8 @@
   "via": "baseline-2025"
  },
  "136713": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136814": {
   "subject": "Constitutional Affairs",
@@ -123292,16 +123292,16 @@
   "via": "baseline-2025"
  },
  "136714": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136815": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "136715": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136458": {
   "subject": "Employment and Social Affairs",
@@ -123312,16 +123312,16 @@
   "via": "baseline-2025"
  },
  "136716": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136459": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "136717": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136817": {
   "subject": "Constitutional Affairs",
@@ -123332,8 +123332,8 @@
   "via": "baseline-2025"
  },
  "136718": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136818": {
   "subject": "Constitutional Affairs",
@@ -123344,8 +123344,8 @@
   "via": "baseline-2025"
  },
  "136719": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136897": {
   "subject": "Constitutional Affairs",
@@ -123356,8 +123356,8 @@
   "via": "baseline-2025"
  },
  "136720": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "136898": {
   "subject": "Constitutional Affairs",
@@ -125656,152 +125656,152 @@
   "via": "baseline-2025"
  },
  "137281": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137282": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137283": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137284": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137285": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137286": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137287": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137288": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137289": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137290": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137291": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137292": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137294": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137295": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137297": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137298": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137299": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137301": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137302": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137303": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137304": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137305": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137307": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137308": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137310": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137311": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137312": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137317": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137319": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137320": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137321": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137322": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137323": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137324": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137325": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137326": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137327": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137335": {
   "subject": "Budgets",
@@ -125824,8 +125824,8 @@
   "via": "baseline-2025"
  },
  "137460": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137461": {
   "subject": "Budgets",
@@ -132036,8 +132036,8 @@
   "via": "baseline-2025"
  },
  "141201": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Regional Development",
+  "via": "llm:claude-sonnet-5:low"
  },
  "141209": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -132396,8 +132396,8 @@
   "via": "baseline-2025"
  },
  "141902": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "141465": {
   "subject": "Culture and Education",
@@ -132876,12 +132876,12 @@
   "via": "baseline-2025"
  },
  "142782": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "142781": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "142529": {
   "subject": "Employment and Social Affairs",
@@ -134480,12 +134480,12 @@
   "via": "baseline-2025"
  },
  "143521": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "143522": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "143544": {
   "subject": "International Trade",
@@ -134696,16 +134696,16 @@
   "via": "baseline-2025"
  },
  "144321": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "145673": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "144322": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "143708": {
   "subject": "Industry, Research and Energy",
@@ -134716,8 +134716,8 @@
   "via": "baseline-2025"
  },
  "144323": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "145674": {
   "subject": "Foreign Affairs",
@@ -134732,16 +134732,16 @@
   "via": "baseline-2025"
  },
  "144324": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "143696": {
   "subject": "Fisheries",
   "via": "baseline-2025"
  },
  "144325": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "145675": {
   "subject": "Foreign Affairs",
@@ -137012,16 +137012,16 @@
   "via": "baseline-2025"
  },
  "146885": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "146886": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "146887": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "146649": {
   "subject": "Internal Market and Consumer Protection",
@@ -137576,8 +137576,8 @@
   "via": "baseline-2025"
  },
  "147785": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "147460": {
   "subject": "Legal Affairs",
@@ -138384,12 +138384,12 @@
   "via": "baseline-2025"
  },
  "148368": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "148367": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "148302": {
   "subject": "Environment, Climate and Food Safety",
@@ -138556,140 +138556,140 @@
   "via": "baseline-2025"
  },
  "148599": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148908": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "148603": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148912": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "148605": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148913": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "148606": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148914": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "148607": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148915": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "148608": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148595": {
   "subject": "Internal Market and Consumer Protection",
   "via": "baseline-2025"
  },
  "148609": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148596": {
   "subject": "Internal Market and Consumer Protection",
   "via": "baseline-2025"
  },
  "148610": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148841": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148612": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148842": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148613": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148846": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148614": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148848": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148615": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148849": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148616": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148850": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148619": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148851": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148620": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148853": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148623": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148624": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148854": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148628": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148856": {
   "subject": "Environment, Climate and Food Safety",
@@ -138700,28 +138700,28 @@
   "via": "baseline-2025"
  },
  "148630": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148631": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148859": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148635": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148860": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148637": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148861": {
   "subject": "Environment, Climate and Food Safety",
@@ -138732,24 +138732,24 @@
   "via": "baseline-2025"
  },
  "148638": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148869": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148639": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148870": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148641": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148871": {
   "subject": "Environment, Climate and Food Safety",
@@ -138760,176 +138760,176 @@
   "via": "baseline-2025"
  },
  "148643": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148874": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148647": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148875": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "148648": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148649": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148654": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148657": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148658": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148661": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148664": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148668": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148669": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148670": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148674": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148675": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148676": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148680": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148681": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148682": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148683": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148684": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148685": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148686": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148695": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148697": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148698": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148699": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148701": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148702": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148706": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148714": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148715": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148716": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148717": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148721": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148722": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Industry, Research and Energy",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149205": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149206": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149207": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149208": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149209": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149210": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149103": {
   "subject": "Employment and Social Affairs",
@@ -138972,32 +138972,32 @@
   "via": "baseline-2025"
  },
  "149563": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149123": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "149564": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149565": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149566": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149127": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "149567": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149130": {
   "subject": "Employment and Social Affairs",
@@ -139008,40 +139008,40 @@
   "via": "baseline-2025"
  },
  "149568": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149744": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "149571": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149745": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "149572": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149746": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "149573": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149131": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "149574": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149747": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -139064,24 +139064,24 @@
   "via": "baseline-2025"
  },
  "149586": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149730": {
   "subject": "Civil Liberties, Justice and Home Affairs",
   "via": "baseline-2025"
  },
  "149588": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149138": {
   "subject": "Employment and Social Affairs",
   "via": "baseline-2025"
  },
  "149589": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149751": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -139096,8 +139096,8 @@
   "via": "baseline-2025"
  },
  "149590": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149141": {
   "subject": "Employment and Social Affairs",
@@ -139112,8 +139112,8 @@
   "via": "baseline-2025"
  },
  "149591": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "148976": {
   "subject": "Budgetary Control",
@@ -139124,8 +139124,8 @@
   "via": "baseline-2025"
  },
  "149592": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149468": {
   "subject": "Constitutional Affairs",
@@ -139136,8 +139136,8 @@
   "via": "baseline-2025"
  },
  "149593": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149469": {
   "subject": "Constitutional Affairs",
@@ -139148,8 +139148,8 @@
   "via": "baseline-2025"
  },
  "149597": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149473": {
   "subject": "Constitutional Affairs",
@@ -139160,8 +139160,8 @@
   "via": "baseline-2025"
  },
  "149598": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149474": {
   "subject": "Constitutional Affairs",
@@ -139172,8 +139172,8 @@
   "via": "baseline-2025"
  },
  "149600": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149476": {
   "subject": "Constitutional Affairs",
@@ -139184,16 +139184,16 @@
   "via": "baseline-2025"
  },
  "149601": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149477": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "149602": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149478": {
   "subject": "Constitutional Affairs",
@@ -139204,8 +139204,8 @@
   "via": "baseline-2025"
  },
  "149603": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149479": {
   "subject": "Constitutional Affairs",
@@ -139216,8 +139216,8 @@
   "via": "baseline-2025"
  },
  "149604": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149752": {
   "subject": "Constitutional Affairs",
@@ -139228,12 +139228,12 @@
   "via": "baseline-2025"
  },
  "149605": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149623": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149777": {
   "subject": "Constitutional Affairs",
@@ -139248,8 +139248,8 @@
   "via": "baseline-2025"
  },
  "149625": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149758": {
   "subject": "Constitutional Affairs",
@@ -139276,8 +139276,8 @@
   "via": "baseline-2025"
  },
  "149628": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149768": {
   "subject": "Constitutional Affairs",
@@ -139300,20 +139300,20 @@
   "via": "baseline-2025"
  },
  "149629": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149482": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "149630": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149638": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149485": {
   "subject": "Environment, Climate and Food Safety",
@@ -139328,20 +139328,20 @@
   "via": "baseline-2025"
  },
  "149639": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149640": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149641": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "149657": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:low"
  },
  "149489": {
   "subject": "Environment, Climate and Food Safety",
@@ -139888,12 +139888,12 @@
   "via": "baseline-2025"
  },
  "149981": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149982": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "149840": {
   "subject": "Transport and Tourism",
@@ -140008,24 +140008,24 @@
   "via": "baseline-2025"
  },
  "150261": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "150262": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "150263": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "150264": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "150302": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "150134": {
   "subject": "Foreign Affairs",
@@ -140744,16 +140744,16 @@
   "via": "baseline-2025"
  },
  "151841": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "151842": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "151843": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "151821": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -141196,12 +141196,12 @@
   "via": "baseline-2025"
  },
  "154285": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155096": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154161": {
   "subject": "Constitutional Affairs",
@@ -141212,12 +141212,12 @@
   "via": "baseline-2025"
  },
  "155097": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154286": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154568": {
   "subject": "Regional Development",
@@ -141236,12 +141236,12 @@
   "via": "baseline-2025"
  },
  "155098": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154287": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154627": {
   "subject": "International Trade",
@@ -142152,16 +142152,16 @@
   "via": "baseline-2025"
  },
  "153633": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153489": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "153634": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155446": {
   "subject": "Regional Development",
@@ -142184,8 +142184,8 @@
   "via": "baseline-2025"
  },
  "153635": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155374": {
   "subject": "Constitutional Affairs",
@@ -142196,8 +142196,8 @@
   "via": "baseline-2025"
  },
  "153636": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155287": {
   "subject": "Budgetary Control",
@@ -142208,8 +142208,8 @@
   "via": "baseline-2025"
  },
  "153637": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153055": {
   "subject": "Foreign Affairs",
@@ -142232,8 +142232,8 @@
   "via": "baseline-2025"
  },
  "153638": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153271": {
   "subject": "Foreign Affairs",
@@ -142252,8 +142252,8 @@
   "via": "baseline-2025"
  },
  "153639": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153512": {
   "subject": "Industry, Research and Energy",
@@ -142384,16 +142384,16 @@
   "via": "baseline-2025"
  },
  "154139": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153529": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "154140": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155383": {
   "subject": "Constitutional Affairs",
@@ -142416,8 +142416,8 @@
   "via": "baseline-2025"
  },
  "154141": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153906": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -142448,8 +142448,8 @@
   "via": "baseline-2025"
  },
  "154142": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153753": {
   "subject": "Foreign Affairs",
@@ -142480,8 +142480,8 @@
   "via": "baseline-2025"
  },
  "154143": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154870": {
   "subject": "Budgetary Control",
@@ -142504,8 +142504,8 @@
   "via": "baseline-2025"
  },
  "154144": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153153": {
   "subject": "Industry, Research and Energy",
@@ -142648,8 +142648,8 @@
   "via": "baseline-2025"
  },
  "152665": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154083": {
   "subject": "Environment, Climate and Food Safety",
@@ -142668,8 +142668,8 @@
   "via": "baseline-2025"
  },
  "152666": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154953": {
   "subject": "Budgetary Control",
@@ -142684,8 +142684,8 @@
   "via": "baseline-2025"
  },
  "152667": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154084": {
   "subject": "Environment, Climate and Food Safety",
@@ -142704,8 +142704,8 @@
   "via": "baseline-2025"
  },
  "152668": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154890": {
   "subject": "Budgetary Control",
@@ -142728,8 +142728,8 @@
   "via": "baseline-2025"
  },
  "152669": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "152554": {
   "subject": "Budgets",
@@ -142752,8 +142752,8 @@
   "via": "baseline-2025"
  },
  "152671": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153551": {
   "subject": "Industry, Research and Energy",
@@ -142988,8 +142988,8 @@
   "via": "baseline-2025"
  },
  "152425": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153701": {
   "subject": "Employment and Social Affairs",
@@ -143016,8 +143016,8 @@
   "via": "baseline-2025"
  },
  "152426": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "154966": {
   "subject": "Budgetary Control",
@@ -143036,8 +143036,8 @@
   "via": "baseline-2025"
  },
  "152427": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153186": {
   "subject": "Industry, Research and Energy",
@@ -143056,8 +143056,8 @@
   "via": "baseline-2025"
  },
  "152428": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153188": {
   "subject": "Industry, Research and Energy",
@@ -143080,8 +143080,8 @@
   "via": "baseline-2025"
  },
  "152429": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "152461": {
   "subject": "Internal Market and Consumer Protection",
@@ -143112,8 +143112,8 @@
   "via": "baseline-2025"
  },
  "152430": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153190": {
   "subject": "Industry, Research and Energy",
@@ -143132,8 +143132,8 @@
   "via": "baseline-2025"
  },
  "152431": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "153713": {
   "subject": "Employment and Social Affairs",
@@ -144420,32 +144420,32 @@
   "via": "baseline-2025"
  },
  "155792": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155701": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "155793": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155702": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "155794": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155703": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "155795": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155704": {
   "subject": "Industry, Research and Energy",
@@ -144796,32 +144796,32 @@
   "via": "baseline-2025"
  },
  "156067": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156068": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156069": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156070": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156071": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156072": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156073": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "155896": {
   "subject": "International Trade",
@@ -145296,88 +145296,88 @@
   "via": "baseline-2025"
  },
  "156216": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156219": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156220": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156225": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156226": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156227": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156228": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156229": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156230": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156238": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156242": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156243": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156244": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156249": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156251": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156252": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156253": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156254": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156255": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156257": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156258": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156426": {
   "subject": "Environment, Climate and Food Safety",
@@ -145536,8 +145536,8 @@
   "via": "baseline-2025"
  },
  "156567": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "156749": {
   "subject": "International Trade",
@@ -147572,28 +147572,28 @@
   "via": "baseline-2025"
  },
  "158745": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158746": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158747": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158748": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158749": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158750": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "158763": {
   "subject": "Environment, Climate and Food Safety",
@@ -148016,24 +148016,24 @@
   "via": "baseline-2025"
  },
  "159227": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "159228": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "159229": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:medium"
  },
  "159230": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "159231": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "159337": {
   "subject": "Budgets",
@@ -148972,24 +148972,24 @@
   "via": "baseline-2025"
  },
  "160016": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "160017": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "160018": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "160019": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "160020": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "159752": {
   "subject": "Industry, Research and Energy",
@@ -149464,16 +149464,16 @@
   "via": "baseline-2025"
  },
  "161068": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "161069": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "161070": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "160111": {
   "subject": "Industry, Research and Energy",
@@ -151392,32 +151392,32 @@
   "via": "baseline-2025"
  },
  "162512": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "162513": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162514": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162515": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162516": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162517": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162518": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "162375": {
   "subject": "Environment, Climate and Food Safety",
@@ -153232,32 +153232,32 @@
   "via": "baseline-2025"
  },
  "163199": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163200": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163201": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163202": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163203": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163204": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163205": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "137742": {
   "subject": "Environment, Climate and Food Safety",
@@ -155568,20 +155568,20 @@
   "via": "baseline-2025"
  },
  "164066": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "164068": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "164069": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "164070": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "163782": {
   "subject": "Transport and Tourism",
@@ -157072,48 +157072,48 @@
   "via": "baseline-2025"
  },
  "165172": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165373": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "165173": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165174": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165374": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "165175": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165375": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "165176": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165177": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165377": {
   "subject": "Foreign Affairs",
   "via": "baseline-2025"
  },
  "165178": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "165379": {
   "subject": "Foreign Affairs",
@@ -157644,120 +157644,120 @@
   "via": "baseline-2025"
  },
  "165930": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165931": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165933": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165934": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165935": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165939": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165940": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165941": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165944": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165945": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165946": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165947": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165948": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165949": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165951": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165952": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165953": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165954": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165955": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165956": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165957": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165958": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165959": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165960": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165961": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165962": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165963": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165964": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165965": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165838": {
   "subject": "Foreign Affairs",
@@ -157804,120 +157804,120 @@
   "via": "baseline-2025"
  },
  "165966": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165967": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165968": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165970": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165971": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165972": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165974": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165975": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165976": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165979": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165981": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165982": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165983": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165984": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165985": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165986": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "165987": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Foreign Affairs",
+  "via": "llm:claude-sonnet-5:low"
  },
  "166325": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166379": {
   "subject": "Industry, Research and Energy",
   "via": "baseline-2025"
  },
  "166326": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166309": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "166327": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166310": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "166328": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166330": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166249": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "166331": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166133": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "166332": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "166077": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -158916,24 +158916,24 @@
   "via": "baseline-2025"
  },
  "168149": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168150": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168151": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168152": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168153": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "167906": {
   "subject": "Constitutional Affairs",
@@ -160396,64 +160396,64 @@
   "via": "baseline-2025"
  },
  "168684": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168685": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "168686": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168687": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168688": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168834": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "168689": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168690": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168836": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "168691": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "168837": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "168692": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168693": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168838": {
   "subject": "Constitutional Affairs",
   "via": "baseline-2025"
  },
  "168694": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "168839": {
   "subject": "Constitutional Affairs",
@@ -161244,12 +161244,12 @@
   "via": "baseline-2025"
  },
  "169367": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169368": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169338": {
   "subject": "Foreign Affairs",
@@ -161336,16 +161336,16 @@
   "via": "baseline-2025"
  },
  "169385": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169406": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169407": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169418": {
   "subject": "Environment, Climate and Food Safety",
@@ -161728,12 +161728,12 @@
   "via": "baseline-2025"
  },
  "169725": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169726": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169760": {
   "subject": "Industry, Research and Energy",
@@ -161824,12 +161824,12 @@
   "via": "baseline-2025"
  },
  "170005": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170006": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "169889": {
   "subject": "International Trade",
@@ -161876,12 +161876,12 @@
   "via": "baseline-2025"
  },
  "170244": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170245": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Budgets",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170256": {
   "subject": "Budgets",
@@ -162440,24 +162440,24 @@
   "via": "baseline-2025"
  },
  "170541": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170542": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170665": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170622": {
   "subject": "Environment, Climate and Food Safety",
   "via": "baseline-2025"
  },
  "170667": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170623": {
   "subject": "Environment, Climate and Food Safety",
@@ -162548,8 +162548,8 @@
   "via": "baseline-2025"
  },
  "170611": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "170671": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -163308,12 +163308,12 @@
   "via": "baseline-2025"
  },
  "171426": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "171427": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "171425": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -163508,8 +163508,8 @@
   "via": "baseline-2025"
  },
  "171785": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "171703": {
   "subject": "Transport and Tourism",
@@ -163800,12 +163800,12 @@
   "via": "baseline-2025"
  },
  "172159": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "172160": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "172102": {
   "subject": "Foreign Affairs",
@@ -163844,8 +163844,8 @@
   "via": "baseline-2025"
  },
  "172443": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "172115": {
   "subject": "International Trade",
@@ -164852,16 +164852,16 @@
   "via": "baseline-2025"
  },
  "174285": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "174286": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "174287": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "174288": {
   "subject": "Legal Affairs",
@@ -166256,24 +166256,24 @@
   "via": "baseline-2025"
  },
  "175669": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "175670": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "175671": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "175672": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "175673": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "175025": {
   "subject": "Public Health",
@@ -167608,12 +167608,12 @@
   "via": "baseline-2025"
  },
  "176944": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "176945": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "176884": {
   "subject": "Environment, Climate and Food Safety",
@@ -167828,16 +167828,16 @@
   "via": "baseline-2025"
  },
  "177125": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "177126": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "176982": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "176988": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -168712,8 +168712,8 @@
   "via": "baseline-2025"
  },
  "177945": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "178107": {
   "subject": "Economic and Monetary Affairs",
@@ -169616,8 +169616,8 @@
   "via": "baseline-2025"
  },
  "178758": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "178572": {
   "subject": "Environment, Climate and Food Safety",
@@ -170436,12 +170436,12 @@
   "via": "baseline-2025"
  },
  "179465": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "179466": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "179213": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -170944,20 +170944,20 @@
   "via": "baseline-2025"
  },
  "179909": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "179910": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "179911": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "179913": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "179786": {
   "subject": "Environment, Climate and Food Safety",
@@ -171752,12 +171752,12 @@
   "via": "baseline-2025"
  },
  "180521": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "180519": {
-  "subject": "Others",
-  "via": "baseline-2025"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "180250": {
   "subject": "Budgets",
@@ -173040,20 +173040,20 @@
   "via": "code:A10-0210/2025->epref:2024/2125"
  },
  "181825": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "181826": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "181827": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "181828": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "181995": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -174252,20 +174252,20 @@
   "via": "code:RC-B10-0545/2025->epref:2025/3001"
  },
  "182685": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "182686": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "182687": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "182688": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "182896": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -175820,12 +175820,12 @@
   "via": "code:RC-B10-0070/2026->epref:2026/2568"
  },
  "184681": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "184682": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "184172": {
   "subject": "Civil Liberties, Justice and Home Affairs",
@@ -176768,8 +176768,8 @@
   "via": "code:RC-B10-0143/2026->epref:2026/2599"
  },
  "188549": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "186899": {
   "subject": "Legal Affairs",
@@ -177936,16 +177936,16 @@
   "via": "code:B10-0155/2026->epref:2025/2875"
  },
  "189875": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "189876": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:low"
  },
  "189877": {
-  "subject": "Others",
-  "via": "unresolved"
+  "subject": "Parliamentary Procedure",
+  "via": "llm:claude-sonnet-5:high"
  },
  "189597": {
   "subject": "Civil Liberties, Justice and Home Affairs",

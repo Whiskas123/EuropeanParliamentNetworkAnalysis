@@ -1,0 +1,3602 @@
+{
+ "epref:2017/2847": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "OEIL area is Secretariat-General with no topical detail beyond a resolution code, giving minimal evidence for a specific policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2022/2830": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Resolution on EU's response to rising energy prices in Europe, an energy policy matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:RC-B9-0144/2024": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Joint motion RC-B9-0144/2024 numbering pattern from Feb 2024 corresponds to a resolution on a third-country/foreign policy topic typical of RC-B9 series; lacking specific text, best inferred as Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2018/2573": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Secretariat-General OEIL area with resolution texts B8-0134/2018 and B8-0135/2018 corresponds to the plenary debate on the EU's future financial framework, best matched to Budgets.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:RC-B9-0143/2024": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Joint motion RC-B9-0143/2024 with multiple recitals/paragraphs typical of a country/foreign policy resolution, no other topical clue but format matches Foreign Affairs joint motions common in this period",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:A9-0280/2019": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "high",
+  "reason": "Resolution on a European strategy for critical raw materials, an industrial policy topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B9-0664/2022": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Recommendation on investigation into Pegasus spyware surveillance concerns civil liberties and privacy/surveillance oversight",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2017/2964": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "The document codes B8-0676/2017 and B8-0677/2017 correspond to competing motions for resolution voted in December 2017, a period when Parliament debated the status of Jerusalem and related foreign policy issues, though the title lacks explicit topical text.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification de l'ordre du jour": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to changing the agenda, which is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0377/2008 - Santé maternelle": {
+  "subject": "Public Health",
+  "confidence": "low",
+  "reason": "Title refers to 'Santé maternelle' (maternal health), a public health topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0420/2008 - Programme de travail de la Commission 2009": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "Resolution on the Commission's Work Programme 2009 concerns institutional relations and legislative planning between Parliament and Commission",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0133/2008 - Situation au Tibet": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion on 'Situation au Tibet' concerns the human rights situation in a non-EU territory, a classic Foreign Affairs topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0217/2008 - Hausse des prix": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "The joint motion addresses rising prices (food/commodity prices), a topic Parliament debated in 2008 tied to agricultural markets, fitting Agriculture and Rural Development.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0161/2006": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "medium",
+  "reason": "The Lisbon Strategy resolution concerns economic reform and competitiveness policy, fitting Economic and Monetary Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:RC-B9-0147/2024": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "A joint motion for resolution (RC) without further title context, but the code prefix B9-0147/2024 typically corresponds to a foreign policy resolution debated in early 2024 plenary sessions; lacking topical detail beyond the code, this is a low-confidence guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2006/2592": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Resolution on 'Restructuration d'entreprises' concerns company restructuring's impact on employment and workers, falling under Employment and Social Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2007/2654": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Concerns the Commission's Annual Policy Strategy for 2009, which relates to budgetary planning priorities",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns a request to change Wednesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0155/2004": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for resolution on Cuba, a third country situation, falls under Foreign Affairs",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0043/2007": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "medium",
+  "reason": "The Lisbon Strategy resolution concerns EU economic reform and competitiveness, falling under Economic and Monetary Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0277/2008 Sommet UE-USA": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "The title refers to an EU-US Summit resolution, which concerns relations with a third country/foreign affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:06 06 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '06 06 01' indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0023/2004": {
+  "subject": "Foreign Affairs",
+  "confidence": "medium",
+  "reason": "The title concerns debt of developing countries, a development/foreign aid topic handled under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0107/2009": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "The Lisbon Strategy resolution concerns EU economic growth and competitiveness policy coordination.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 02 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '07 02 01' indicates a Union budget item vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0507/2006": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Title 'Immigration' concerns migration policy, an area under Civil Liberties, Justice and Home Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Calendrier des périodes de session": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title 'Calendrier des périodes de session' refers to setting Parliament's own session calendar, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe PPE - Wednesday’s Agenda - Request from the PPE Group - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Wednesday's agenda, which is House business per the stated convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to Wednesday's agenda - request by the GUE/NGL Group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0244/2008 - Birmanie": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Burma/Myanmar, a non-EU country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC - Situation en Géorgie - RC6-0402/2008": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Georgia, a non-EU country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0281/2008 - Processus de Barcelone": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Barcelona Process concerns EU relations with Mediterranean partner countries, a foreign relations topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title explicitly concerns a request to modify Tuesday's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the PfE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning the day's agenda by a political group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:03 02 05": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric budget line code, consistent with Budgets classification",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 03 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line format \"05 03 01\" indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:04 02 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "The title is a bare budget line number ('04 02 02'), typical of Union budget lines.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the order of Tuesday's agenda by a political group, which is House business rather than a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe The Left - Wednesday’s Agenda - Request from The Left group - Tagesordnung für Mittwoch - Antrag der Fraktion The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Wednesday's agenda from a political group is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 04 01": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "A bare budget line number '05 04 01' indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 10 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '07 10 01' indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 10 05": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '07 10 05' indicates a Union budget line item, not substantive policy text.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 02 05 10": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number ('08 02 05 10') indicates a Union budget line item, with no further topical content given.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 04 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number \"08 04 02\" indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 04 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '08 04 01' indicates a line item in the Union budget, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:1 4 0 5": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "The title is a bare numeric budget line reference ('1 4 0 5'), typical of budget line items rather than substantive policy text.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:11 10 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '11 10 01' indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '13 01 01' indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 02 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "The title is a bare budget line number ('13 01 02 01'), consistent with Union budget nomenclature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 02 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line item format ('13 01 02 02'), indicating a Union budget line.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 03 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '13 01 03 01' indicates a Union budget item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 02 03": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number ('13 01 02 03') indicates a Union budget item with no topical content beyond that.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 01 03 74": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line code '13 01 03 74' indicates a Union budget line item, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:14 02 01 10": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number ('14 02 01 10') indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 02 05": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '20 02 05' indicates a Union budget item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:14 04 03": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '14 04 03' with no other context, indicating a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 02 06 01": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "A bare budget line number format ('20 02 06 01') indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe ECR - Agenda of Tuesday - Request from the ECR group - Tagesordnung für Dienstag - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify Tuesday's agenda from the ECR group is purely House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Mardi - demande du groupe GUE/NGL 15/07/2019 17:09:37.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by GUE/NGL group regarding Tuesday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Monday’s agenda – Request by the ECR Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title explicitly refers to a group request regarding the day's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Calendrier des périodes de session 2008": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title 'Calendrier des périodes de session 2008' concerns Parliament's own session calendar, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe Renew - Agenda of Tuesday - Request from the Renew group - Tagesordnung für Dienstag - Antrag der Renew-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Tuesday's agenda by a political group, which is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID - Wednesday’s Agenda - Request from the ID Group - Tagesordnung für Mittwoch - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group concerning the agenda for Wednesday's plenary session, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe S&D - Wednesday’s Agenda - Request from the S&D Group - Tagesordnung für Mittwoch - Antrag der S&D-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify Wednesday's agenda is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly is a request about Wednesday's agenda by a political group, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe Verts/ALE - Wednesday’s Agenda - Request from the Verts/ALE group - Tagesordnung für Mittwoch - Antrag der Verts/ALE -Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request to modify Wednesday's agenda, which is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group ('Ordre du jour de mercredi - demande du groupe GUE/NGL') is House business, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns 'Ordre du jour du jeudi - demande du groupe GUE/NGL', a request to modify the agenda, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0425/2008 - Maîtrise des prix de l'énergie": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Title refers to controlling energy prices, a policy area handled by Industry, Research and Energy committee",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0242/2008 - Chine": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on China ('Chine'), a country situation resolution typical of Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request from The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request to change Thursday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the ESN Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to setting Wednesday's agenda upon a group's request, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the ECR Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Wednesday's agenda by a political group is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the ID Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group to change the agenda, which is House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request titled 'Wednesday's agenda – Request by the Verts/ALE Group' is House business, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PfE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns a request about Wednesday's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Renew Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the day's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request from The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the day's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Élection de la Commission": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly 'Élection de la Commission' - the House's own procedural business of electing the Commission, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:A9-0621/2020": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "Document code A9-0621/2020 with 'Décision' by rapporteur González Pons appears to concern institutional/procedural decision, consistent with Constitutional Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0209/2007": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Concerns the affair of the President of the World Bank, an international financial institution matter tied to economic governance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0338/2008": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the situation in China, a third-country matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0223/2005": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "European Council meeting resolution likely covering broad EU policy/foreign relations agenda, best fitting Foreign Affairs as general EU external/institutional summit topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0642/2005": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Rejection of the 2006 budget (budget 2006) directly concerns EU budget adoption.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0521/2006": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "'Brevets' means patents, a legal/IP subject matter falling under Legal Affairs jurisdiction.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B6-0318/2005": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "medium",
+  "reason": "A 'motion de censure' is a motion of censure against the Commission, which is procedural House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B8-0217/2019": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Bare document code with no descriptive title, giving very little to go on beyond a B8 resolution number",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B8-0221/2019": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Lack of substantive title beyond the plenary document code gives minimal evidence, but B8 resolutions from this session period often concerned foreign affairs topics; without more, this is a guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:B8-0218/2019": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Only a bare document code with no topical content given",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:C10-0071/2025": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Bare document code labeled only as a 'Commission proposal' with no topical content to identify the policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:C9-0057/2022": {
+  "subject": "Regional Development",
+  "confidence": "low",
+  "reason": "Concerns CARE - Cohesion's Action for Refugees in Europe, an EU funding measure related to regional/cohesion funds for refugees, likely tied to Regional Development committee handling of cohesion policy amendments.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:C9-0100/2021": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "medium",
+  "reason": "The vote concerns a request for urgent procedure on a legislative file, which is House business under Parliamentary Procedure conventions, though the underlying subject relates to digital certificates for third-country nationals.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "code:C9-0126/2021": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Concerns gas storage regulation, an energy sector matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:01 03 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line format ('01 03 01') indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "epref:2008/2647": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "Title refers to environmental inspections, a Community policy on environmental compliance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:01 04 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '01 04 01' indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:02 10 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line code '02 10 01' with no other context, typical of Union budget entries.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:02 10 02": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number ('02 10 02') indicates a Union budget item, with no other topical evidence provided.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:02 10 06": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare numeric budget line code ('02 10 06') indicating a Union budget item, with no topical content otherwise.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:02 20 04 02": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Bare numeric budget line item format",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:03 02 02": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '03 02 02' with no other context indicates a budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:02 20 04 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number ('02 20 04 01') indicates a specific Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:03 10 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line format ('03 10 02') indicates a budget line item vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:03 02 03 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number format (03 02 03 02) indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:04 02 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number (04 02 01) typically corresponds to the European Social Fund line, indicating a budget item vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 01 03": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '05 01 03' indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:04 10 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line code '04 10 01' indicates a Union budget line item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 02 12": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number '05 02 12' indicates a Union budget item, classified as Budgets.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 02 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '05 02 01' indicates a Union budget item under agriculture heading, but the format itself signals Budgets classification.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 03 03": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric budget line code '05 03 03' indicates a Union budget item, likely agriculture-related but the classification decisive marker is the budget line format itself.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 03 10": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '05 03 10' indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:06 20 04 01": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "A bare numeric budget line code ('06 20 04 01') indicates a line item in the Union budget.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:05 03 04": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '05 03 04', consistent with a Union budget item under agriculture heading, but treated as Budgets per convention for numeric budget lines.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 02 15": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number '07 02 15' with no topical content indicates a Budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 05 03": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line code, typical of Union budget nomenclature",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 06 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line item format ('07 06 02') indicates a Union budget line vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 10 08": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number '07 10 08' with no topical content indicates a Budgets line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 10 09": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number ('07 10 09') with no topical content, typical of a Union budget entry.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 03 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number format ('07 20 03 01') indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 04 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare numeric budget line item, consistent with Budgets convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 04 03": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '07 20 04 03' with no topical description indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 04 05": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line format ('07 20 04 05') indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 04 09": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric budget line code ('07 20 04 09') indicates a budget line item vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:07 20 04 10": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line item format ('07 20 04 10') matches typical EU budget nomenclature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 02 02 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '08 02 02 01' indicates a Union budget item, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 02 02 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line reference '08 02 02 02', typical of budget nomenclature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 02 02 03": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line code, typical of Union budget line items",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:08 02 05 11": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line format (08 02 05 11) indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:09 10 03": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number format ('09 10 03') indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:1 6 3 2": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric string resembling a budget line item, with no topical content given.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:1 0 0 4": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line notation, typical of budget items",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:1 6 5 4": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric string with no topical content, likely a budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:11 02 02": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare budget line number '11 02 02' indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:10-11 November": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "The title only references a calendar date span, giving no topical content beyond scheduling of sittings, typical House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:11 04": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line '11 04' indicates a Union budget item with no other topical content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 02 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line item code (13 02 01), indicating a Union budget line rather than substantive policy text.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 04 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare budget line number '13 04 01' indicates a Union budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:13 03 01": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget line number ('13 03 01') indicates a Union budget item, though with no descriptive text to confirm the topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:11-12 November": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "The title merely references dates without any policy content, indicating an agenda-related procedural matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:14 02 02 30": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric budget line code with no other content, suggesting a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:14 04 02": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric budget line reference ('14 04 02'), typical of Union budget items.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:14 20 03 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number format ('14 20 03 01') indicates a Union budget item, consistent with Budgets.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:15 02 01 01": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Bare budget line number '15 02 01 01' indicates a specific budget item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:2 0 0 7": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric fragment '2 0 0 7' with no topical content, likely a budget line year reference",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 01 04": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare numeric budget line code, typical of Union budget line items.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 01 02 04": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line notation '20 01 02 04' indicates a Union budget item, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 01 02 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number ('20 01 02 02') with no topical content, typical of Union budget nomenclature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 02 06 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare numeric budget line reference '20 02 06 02' matches the pattern of a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 03 01 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Bare numeric budget line format ('20 03 01 01') indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 03 01 02": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare budget line number format (20 03 01 02) indicates a Union budget line item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:3 0 0 3": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric string like '3 0 0 3' resembles a Union budget line item with no other topical content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:20 03 13 01": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare numeric budget line code with no topical content, matching the Budgets convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:3 2 5": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare numeric string '3 2 5' resembles a budget line item with no topical content given.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:A9-0088/202 - Clara Aguilera - Procédure d'approbation": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "Clara Aguilera is an MEP known for agriculture-related reports, and 'Procédure d'approbation' suggests an agricultural approval procedure under her committee role",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Application de l'article 191 du règlement": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The vote concerns the application of Rule 191 of the Parliament's own Rules of Procedure, which is House business rather than a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Autorisations de pêche pour les navires de pêche de l'Union dans les eaux du Royaume-Uni et opérations de pêche des navires de pêche du Royaume-Uni dans les eaux de l'Union": {
+  "subject": "Fisheries",
+  "confidence": "high",
+  "reason": "Title concerns fishing authorisations for EU and UK fishing vessels, clearly a fisheries matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Accord sur le retrait du Royaume-Uni de Grande-Bretagne et d'Irlande du Nord de l'Union européenne et de la Communauté européenne de l'énergie atomique": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "Concerns the UK withdrawal agreement from the EU, a constitutional matter regarding EU treaties and membership, handled by the Constitutional Affairs committee (AFCO)",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Autorisations de pêche pour les navires de pêche de l'Union dans les eaux du Royaume-Uni et opérations de pêche des navires de pêche du Royaume-Uni dans les eaux de l'Union - Vote: proposition de la Commission 13/03/2019 12:49:46.000": {
+  "subject": "Fisheries",
+  "confidence": "high",
+  "reason": "Concerns fishing authorisations for EU vessels in UK waters and vice versa, a fisheries policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 10": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare label 'Bloc 10' gives no topical content, likely a budget block vote but too thin to be certain.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:B7-04942/2013": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Only a bare document code with no topical content is provided, giving no substantive clue about subject matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 12": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Only a bare 'Bloc 12' label with no topical content, likely a budget line grouping but too thin to confirm specifics",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 13": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare 'Bloc 13' label gives no topical content, likely a budget block vote but too little evidence.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 11": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "The title 'Bloc 11' is a bare procedural block reference with no topical content, giving minimal evidence for any specific policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 14": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "The bare label \"Bloc 14\" gives no topical content, likely a budget block vote but too little evidence to be sure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 16": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A bare budget block reference with no topical content, likely a Union budget line item ('Bloc 16')",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 15": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Only a generic 'Bloc 15' label with no topical content, likely a budget block vote but too little evidence to be certain",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 3": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Only a generic block reference with no topical content, giving no clue to subject matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 2": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond a generic 'Bloc 2' voting block label, giving essentially no evidence of subject.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 4": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Bare fragment 'Bloc 4' gives no topical content, likely a budget/vote block with no substantive clue",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 5": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Only a generic 'Bloc 5' label with no topical content to identify subject matter, likely a budget block vote but too thin to be sure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 6": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "No topical content beyond a generic budget-block label, likely a budget vote line item but too thin to be certain",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 8": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "No topical content is given beyond a generic 'Bloc 8' label, offering no substantive clue to a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 9": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond a generic block reference, giving essentially no evidence for any policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Calendrier des périodes de session du Parlement – 2021": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title 'Calendrier des périodes de session du Parlement' concerns the Parliament's own session calendar, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Certains aspects de la sécurité et de la connectivité du transport ferroviaire eu égard au retrait du Royaume-Uni de Grande-Bretagne et d’Irlande du Nord de l’Union - Vote: proposition de la Commission 13/03/2019 12:50:27.000": {
+  "subject": "Transport and Tourism",
+  "confidence": "high",
+  "reason": "The title concerns rail transport safety and connectivity in light of UK withdrawal, a transport policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Bloc 7": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond a bare block/bloc label, giving minimal evidence to determine subject.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Commission proposal": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond a generic 'Commission proposal' reference, giving no substantive clue to policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Decision to maintain the action": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Title is too vague, referring only to a procedural 'decision to maintain the action' without any topical content, resembling a procedural vote rather than a substantive policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de consultation CoR 118/2": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Refers to a Committee of the Regions consultation request, a procedural matter regarding institutional consultation rather than substantive policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de consultation CES": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "The title only indicates a procedural request for consultation of the Economic and Social Committee, lacking topical content, which fits House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de consultation CoR-118/1": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Reference to Committee of the Regions consultation request has no topical content beyond a procedural code, giving little substantive evidence.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de consultation ESC-117": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Title refers to a request for consultation of the Economic and Social Committee, which is procedural House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Draft general of the European Union for the financial year 2025 – all sections – 07 02 01": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Budget line item (07 02 01) in the draft general budget for 2025",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de report de vote - Pedrero Silva Pereira - Recommandation et rapport 12/12/2018 13:06:28.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a procedural motion to postpone a vote, not a substantive policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de report de vote - Pedrero Silva Pereira - Recommandation et rapport": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a procedural request to postpone a vote, not substantive policy content, so it falls under House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande du groupe ENF - rapport Rübig": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a procedural request by the ENF group regarding scheduling of the Rübig report, not the substance itself",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Draft general of the European Union for the financial year 2025 – all sections – 07 02 15": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Budget line reference '07 02 15' in the draft general budget for 2025 is a Budgets item.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Demande de report du vote sur le rapport Corbett/Mendez De Vigo": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to postpone a vote, which is procedural House business rather than substantive policy, matching the 'Modification de l'ordre du jour' pattern.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Election of the Commission": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The vote is titled 'Election of the Commission', which is the House's own procedural business, matching the given convention explicitly.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Interprétation de l'article 32, paragraphe 5, premier alinéa, deuxième tiret, du règlement": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Vote on interpretation of the Rules of Procedure itself, purely institutional business",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification de l'ordre du jour 23/10/2017 17:38:13.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to modification of the agenda, which is House business, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Interprétation du règlement (art.19)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The vote concerns interpretation of the Parliament's own Rules of Procedure (art. 19), which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification de l'ordre du jour 03/07/2017 17:31:49.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title explicitly refers to modification of the agenda, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Interprétation de l'article 32, paragraphe 5, premier alinéa, deuxième tiret, du règlement 17/04/2019 12:47:44.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Interpretation of an article of the Rules of Procedure is internal House business",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification de l'ordre du jour, mardi - demande GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Explicit agenda modification request by GUE/NGL group, which is House business, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification du point 192 de l ordre du jour du mercredi: Persécution des chrétiens dans le monde, en liaison avec le meurtre d'étudiants au Kenya par le groupe terroriste Al-Shabaab": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a vote on modifying Wednesday's agenda, which is House business regardless of the topic mentioned",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Modification ordre du jour - Pakistan": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "The title explicitly refers to 'Modification ordre du jour' meaning an agenda change, which is House business regardless of the country mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Monday’s agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly references agenda setting and a request by a political group regarding Monday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Nomination de 4 membres de la Commission européenne - Jyrki Katainen, Jacek Dominik, Ferdinando Nelli Feroci et Martine Reicherts": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns the nomination/appointment of European Commission members, which is House business akin to election of the Commission.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Monday’s agenda – Request by the PPE and Verts/ALE groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the plenary agenda, which is House procedural business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande de 38+ députés et des groupes EFDD et ECR 03/04/2019 14:15:50.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Thursday's agenda by MEPs and political groups, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe ECR - Agenda of Thursday - Request from the ECR group - Tagesordnung für Donnerstag - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request about the agenda for Thursday, a purely procedural matter of House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe ECR - Thursday’s Agenda - Request from the ECR group - Tagesordnung für Donnerstag - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about Thursday's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande des groupes The Left, S&D et Verts/ALE - Thursday’s Agenda - Request from The Left, S&D and Verts/ALE groups - Tagesordnung für Donnerstag - Antrag der Fraktionen The Left, S&D und Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Thursday's agenda by political groups, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Monday’s agenda – Request by the PfE Group (epizootic)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change Monday's agenda by a political group, which per convention falls under the House's own business rather than the substantive topic (epizootic) it references.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe EFDD 03/04/2019 14:20:45.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request for Thursday's sitting by a political group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe PPE - Agenda of Thursday - Request from the PPE group - Tagesordnung für Donnerstag - Antrag der PPE-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group about the agenda for Thursday's session, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe PPE - Ajout d'une déclaration de la Commission (Espagne) - Thursday’s Agenda - Request from the PPE Group - Adding Commission statement (Spain) - Tagesordnung für Donnerstag - Antrag der PPE-Fraktion -Hinzufügung einer Erklärung der Kommission (Spanien)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Thursday's agenda, i.e. House business, not a policy substance vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe The Left - Thursday’s Agenda - Request from The Left Group - Tagesordnung für Donnerstag - Antrag der Fraktion The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Thursday's agenda by a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe Verts/ALE - Agenda of Thursday - Request from the Verts/ALE group - Tagesordnung für Donnerstag - Antrag der Verts/ALE - Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda of Thursday's session, purely House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe PPE - Ajout d'une déclaration de la Commission (Malte) - Thursday’s Agenda - Request from the PPE Group - Adding Commission statement (Malta) - Tagesordnung für Donnerstag - Antrag der PPE-Fraktion -Hinzufügung einer Erklärung der Kommission (Malta)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Thursday's agenda by a political group, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe Verts/ALE et The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is a request about Thursday's agenda from political groups, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - Demande du groupe Verts/ALE - Thursday’s Agenda - Request from the Verts/ALE group - Tagesordnung für Donnerstag - Antrag der Verts/ALE - Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda, which counts as House business per conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - demande du groupe GUE/NGL 01/10/2018 17:48:42.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request from GUE/NGL group about Thursday's agenda - internal House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi - demande du groupe EFDD 30/01/2019 16:15:56.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the EFDD group to modify Thursday's agenda, a House business procedural matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de jeudi- Demande du groupe S&D 03/04/2019 14:22:30.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group about Thursday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe The Left - Agenda of Monday - Request from The Left Group - Tagesordnung für Montag - Antrag der The Left-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda for Monday's session, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe ID - Agenda of Monday - Request from the ID group - Tagesordnung für Montag - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Monday's agenda by a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe ECR - Agenda of Wednesday - Request from the ECR group - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify the agenda by a political group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe Renew - Agenda of Monday - Request from the Renew Group - Tagesordnung für Montag - Antrag der Renew-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning the agenda of Monday's sitting from the Renew Group is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe The Left - Agenda of Monday - Request from The Left group - Tagesordnung für Montag - Antrag der The Left-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda by a political group, which is House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - demande du groupe EFDD 01/10/2018 17:32:11.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by EFDD group to modify Monday's agenda is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - Demande du groupe The Left - Monday’s Agenda - Request from The Left Group - Tagesordnung für Montag - Antrag der Fraktion The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Monday's agenda by a political group, a procedural matter about the House's own business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de lundi - demande du groupe S&D 01/10/2018 17:28:09.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request by a political group to modify Monday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Compromis à la demande du groupe Renew": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is about setting Tuesday's agenda following a group's request, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande des groupes ECR et PPE - Tuesday’s Agenda - Request from the ECR and EPP groups - Tagesordnung für Dienstag - Antrag der Fraktionen ECR und PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request about the agenda of a plenary sitting, House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande des groupes S&D, Verts/ALE et The Left - Tuesday’s Agenda - Request from the S&D, Verts/ALE and the Left Group - Tagesordnung für Dienstag - Antrag der Fraktionen S&D, Verts/ALE und The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is an agenda request by political groups, matching the House's own procedural business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande des groupes Verts/ALE et The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns setting Tuesday's agenda per a group request, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande des groupes Verts/ALE, Renew et S&D - Tuesday’s Agenda - Request from the Verts/ALE, Renew and S&D groups - Tagesordnung für Dienstag - Antrag der Fraktionen Verts/ALE, Renew and S&D": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by political groups, purely House business",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe ID - Agenda of Tuesday - Request from the ID group - Tagesordnung für Dienstag - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda ordering, matching the House's own business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe PPE - Tuesday’s Agenda - Request from the PPE Group - Tagesordnung für Dienstag - Antrag der PPE-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the order of Tuesday's agenda from the PPE Group, a procedural matter of the House itself.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe Renew": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the Renew group regarding Tuesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - Demande du groupe The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from a political group to change Tuesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - demande du groupe ENF 01/10/2018 17:38:40.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by the ENF group to change Tuesday's agenda is House business, not policy substance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - demande du groupe GUE/NGL sur la \"Contribution de l’Union européenne à l’élaboration d’un instrument contraignant des Nations unies pour réglementer les activités des sociétés transnationales au regard des droits de l’homme\" 01/10/2018 17:34:30.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Tuesday's agenda ('Ordre du jour de mardi - demande du groupe GUE/NGL'), which is House business regardless of the substantive topic mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - demande du groupe GUE/NGL sur la \"Montée de la violence néo-fasciste en Europe\" 01/10/2018 17:43:45.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to amend the agenda ('Ordre du jour de mardi - demande du groupe GUE/NGL'), which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is about a request from GUE/NGL group regarding Tuesday's agenda, a House business matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mardi - demande du groupe ID": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Tuesday's agenda by a political group is purely House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande des groupes PPE, S&D, Renew et Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by political groups regarding Wednesday's agenda, matching the House's own business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande des groupes S&D et Renew - Agenda of Wednesday - Request from the S&D and Renew groups - Tagesordnung für Mittwoch - Antrag der S&D- und der Renew-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda, which is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande des groupes Verts/ALE et S&D - Wednesday’s Agenda - Request from the Verts/ALE and S&D groups - Tagesordnung für Mittwoch - Antrag der Fraktionen Verts/ALE und S&D": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request to modify Wednesday's agenda, which is House business per the conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande des groupes Verts/ALE, S&D, PPE et Renew": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by political groups regarding Wednesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns setting Wednesday's agenda at the request of a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR (Sécurité publique) - Wednesday’s Agenda - Request from the ECR group (Public security) - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion (Öffentliche Sicherheit)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Wednesday's agenda, which is House procedural business regardless of the topic mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR (Extrémisme violent de gauche) - Wednesday’s Agenda - Request from the ECR group (Violent left-wing extremism) - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion (Gewalttätiger Linksextremismus)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by the ECR group, which is House procedural business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR - Agenda of Wednesday - Request from the ECR group - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the ECR group about the Wednesday agenda, a procedural matter of the House's own business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR - Ajout déclaration de la Commission - Wednesday’s Agenda - Request from the ECR group - Adding Commission statement - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion - Hinzufügung einer Erklärung der Kommission": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify Wednesday's agenda by the ECR group is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR - Changement de titre - Wednesday’s Agenda - Request from the ECR group - Change of title - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion - Änderung des Titels": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly is about a change to Wednesday's agenda requested by a political group, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ECR - Wednesday’s Agenda - Request from the ECR group - Tagesordnung für Mittwoch - Antrag der ECR-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about Wednesday's agenda by the ECR group, which is House procedural business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID (L'utilisation par la Commission de consultants extérieurs) - Agenda of Wednesday - Request from the ID group (Commission's use of external consultants) - Tagesordnung für Mittwoch - Antrag der ID-Fraktion (Inanspruchnahme externer Berater durch die Kommission)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is an agenda request by the ID group regarding Wednesday's session, a procedural matter about the House's own business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID (Surmonter les déficiences structurelles actuelles dans le secteur de l'aviation civile) - Agenda of Wednesday (Overcoming current structural deficiencies of passengers aviation sector) - Request from the ID group - Tagesordnung für Mittwoch - Antrag der ID-Fraktion (Überwindung derzeitiger struktureller Mängel der Flugreisebranche)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by the ID group, which is House procedural business regardless of the topic mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID - Agenda of Wednesday - Request from the ID Group - Tagesordnung für Mittwoch - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group for Wednesday's sitting is House business, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe ID - Agenda of Wednesday - Request from the ID group - Tagesordnung für Mittwoch - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda of Wednesday's session by the ID group, matching the House-business convention for Parliamentary Procedure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe PPE (Préparation de la réunion extraordinaire du Conseil européen du mois de février, en particulier la nécessité de mettre en place des solutions durables dans le domaine de l'asile et de la migration) - Wednesday’s Agenda - Request from the PPE Group (Preparation of the Special European Council meeting of February, in particular the need to develop sustainable solutions in the area of asylum and migration) - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion (Vorbereitung der außerordentlichen Tagung des Europäischen Rates im Februar, insbesondere das Erfordernis, dauerhafte Lösungen im Bereich Asyl und Migration zu entwickeln)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a 'Wednesday's agenda' request by a political group, which per convention is House business regardless of the topic mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe PPE - Agenda of Wednesday - Request from the PPE Group - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by the PPE Group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe PPE (Transparence) - Wednesday’s Agenda - Request from the PPE Group (Transparency) - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion (Transparenz)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about Wednesday's agenda, matching the explicit convention for House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe Renew - Wednesday’s Agenda - Request from the Renew Group - Tagesordnung für Mittwoch - Antrag der Renew-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request about Wednesday's agenda from a political group is House business, not policy content",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe PPE 03/04/2019 14:11:56.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to Wednesday's agenda and a group's request, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe The Left (Julian Assange)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe The Left (Mercosur)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request regarding Wednesday's agenda by a political group, which is House business per the stated conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe The Left - Agenda of Wednesday - Request from The Left group - Tagesordnung für Mittwoch - Antrag der The Left - Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe The Left - Agenda of Wednesday - Request from The Left group - Tagesordnung für Mittwoch - Antrag der The Left-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is about setting Wednesday's agenda upon a political group's request, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe Verts/ALE (Mercosur)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly refers to a request to modify Wednesday's agenda by a political group, which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - Demande du groupe Verts/ALE - Agenda of Wednesday - Request from the Verts/ALE group - Tagesordnung für Mittwoch - Antrag der Verts/ALE -Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, a House procedural matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande des groupes S&D et GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by political groups for Wednesday's sitting - House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe ID - la situation au Cachemire": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda, which is House procedural business per the given conventions despite mentioning Kashmir.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe ID - les violences à l’encontre des femmes et la situation des femmes refugiées": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda of Wednesday's session by a political group, matching the agenda-setting procedural convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe ID - le secteur de l’acier dans l’UE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, which is House procedural business regardless of the topic mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is a request from the PPE group regarding Wednesday's agenda, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe S&D 30/01/2019 16:08:47.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by the S&D Group regarding Wednesday's agenda is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - demande du groupe Verts/ALE 01/10/2018 17:46:28.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly is a request to modify Wednesday's agenda by a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - Demande du groupe GUE/NGL 10/12/2018 17:39:39.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the GUE/NGL group regarding Thursday's agenda, which is House business rather than a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - demande du groupe GUE/NGL (déclaration de la Commission) 15/01/2018 17:30:19.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group to modify Thursday's agenda, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour de mercredi - titre de compromis": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title explicitly refers to Wednesday's agenda and a compromise title, which is procedural House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - demande du groupe S&D": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group to change Thursday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - demande du groupe S&D 22/10/2018 17:42:14.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by the S&D Group regarding Thursday's agenda is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - Demande du groupe ENF 10/12/2018 17:14:55.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by ENF group concerning Monday's agenda is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du jeudi - demande du groupe S&D 28/11/2018 15:25:31.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is a request by the S&D group to change Thursday's agenda, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe ECR 10/09/2018 17:39:11.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda scheduling request by a political group, matching the Parliamentary Procedure convention for 'Wednesday's agenda - Request by the X Group' type items.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe ECR": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda modification request by a political group is House business under 'Ordre du jour', matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe ECR 15/04/2019 17:20:21.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda scheduling request by the ECR group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify Monday's agenda by a political group is House business, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe ECR 11/03/2019 17:19:57.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group to change the Monday agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe GUE/NGL 10/09/2018 17:40:05.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group ('Ordre du jour du lundi - demande du groupe GUE/NGL') is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe GUE/NGL 15/04/2019 17:23:41.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group regarding Monday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by a political group regarding the Monday agenda is House business, not a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi – demande du groupe ECR 12/11/2018 17:29:44.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda modification request by a political group, which is House business rather than policy substance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi - demande du groupe Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group, i.e. House business, not a policy topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi: demande du groupe S&D": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request from S&D group regarding Monday's agenda is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi: demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the GUE/NGL group about Monday's agenda, i.e. House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - Demande du groupe GUE/NGL 10/12/2018 17:18:16.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda modification request by GUE/NGL group, purely procedural House business",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande des groupes ID et GUE/NGL 16/09/2019 17:32:45.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by political groups to modify Tuesday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande des groupes S&D et Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Tuesday's agenda by political groups is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande des groupes Verts/ALE et GUE/NGL 16/09/2019 17:26:03.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Vote about setting Tuesday's agenda at request of political groups is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe ECR": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group, a procedural matter about the order of business, not policy substance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe EFDD (Refus d'accès aux tribunaux des droits de l'homme pour les employés des organisations internationals) 13/11/2017 17:34:41.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to modify Tuesday's agenda by the EFDD group, a procedural matter about the House's own business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe ENF 25/03/2019 17:21:09.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by ENF group to change Tuesday's agenda is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du lundi: demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by the PPE Group concerning Monday's agenda is House business, matching the Parliamentary Procedure convention explicitly.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe ENF": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group is House business, matching the 'Wednesday's agenda' convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe EFDD (Situation en Catalogne) 13/11/2017 17:28:14.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a vote on the Tuesday agenda requested by the EFDD group, which is procedural House business rather than substantive policy despite mentioning Catalonia.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group about Tuesday's agenda, matching the House's own procedural business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL (Déclaration du Conseil et de la Commission) 28/05/2018 17:35:54.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Tuesday's agenda by a political group, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL (Question orale au Conseil) 28/05/2018 17:38:13.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request regarding Tuesday's agenda by the GUE/NGL group, which is House business, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL 11/06/2018 17:12:58.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by GUE/NGL group about Tuesday's agenda is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe ID": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title concerns a request to modify Tuesday's agenda by a political group, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL (question avec demande de réponse orale au Conseil/ O-000097/2017 ) 15/01/2018 17:26:00.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Tuesday's agenda by a political group, a procedural matter about the order of business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL 15/04/2019 17:28:48.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Tuesday's agenda by a political group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe GUE/NGL 22/10/2018 17:28:07.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group regarding the agenda ('Ordre du jour du mardi - demande du groupe GUE/NGL'), which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title 'Ordre du jour du mardi - demande du groupe PPE' concerns a request to modify the agenda, which is House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe PPE 15/04/2019 17:26:40.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is about setting Tuesday's agenda per PPE group request, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe S&D 11/03/2019 17:25:30.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by the S&D group is House business, matching the 'Ordre du jour' procedural pattern",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is a request by the Greens/EFA group about Tuesday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi: demande du groupe GUE/NGL": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request by GUE/NGL group regarding Tuesday's agenda is House business, not policy substance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe S&D 22/10/2018 17:35:02.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title is a request by the S&D group about the Tuesday agenda, house business rather than policy substance",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe Verts/ALE 02/07/2018 17:28:18.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from the Greens/EFA group about Tuesday's agenda, which is House business rather than a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - Demande du groupe ID - Agenda of Wednesday - request from the ID Group - Tagesordnung für Mittwoch - Antrag der ID-Fraktion": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning the agenda for Wednesday's session, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - Demande du groupe The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from a political group to modify Wednesday's agenda, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - Demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request from the PPE Group regarding Wednesday's agenda, which is House business per the stated convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mardi - demande du groupe Verts/ALE (Déclaration de la Commission) 28/05/2018 17:32:27.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns the Tuesday agenda request by the Verts/ALE group, which is House business per the guidance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande des groupes ECR, EFDD et 38+ députés": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to change Wednesday's agenda by political groups is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - Demande du groupe The Left - Agenda of Wednesday - request from The Left Group - Tagesordnung für Mittwoch - Antrag der Fraktion The Left": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request from a political group is House business, matching the 'Wednesday's agenda' convention for Parliamentary Procedure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande des groupes ECR, EFDD et 38+ députés 25/03/2019 17:29:52.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by political groups to change Wednesday's agenda, a procedural matter about House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - Demande du groupe verts/ALE 10/12/2018 17:32:36.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from the Greens/EFA group about Wednesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe EFDD": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from the EFDD group about Wednesday's agenda, a House procedural matter, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe GUE/NGL (Déclaration du Conseil et de la Commission) 28/05/2018 17:42:37.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from the GUE/NGL group about Wednesday's agenda, which is House business per the given conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe EFDD 15/04/2019 17:42:04.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by a political group about Wednesday's agenda, matching the House's own procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe GUE/NGL 28/02/2018 15:29:04.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Vote on agenda request by GUE/NGL group, a procedural matter about the day's agenda.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe PPE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title is a request by the PPE group regarding Wednesday's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe ID": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request from a political group about Wednesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe GUE/NGL 02/05/2018 13:32:58.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by GUE/NGL group for Wednesday's session, matching the House's own procedural business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande des groupes GUE/NGL et Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns the Wednesday agenda request by GUE/NGL and Verts/ALE groups, which is House business per the guidelines.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe PPE 16/09/2019 17:40:06.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda scheduling request by a political group ('Ordre du jour... demande du groupe PPE') is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe S&D": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request by the S&D group about Wednesday's agenda, which is House procedural business, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe S&D (Question orale à la Commission) 28/05/2018 17:44:52.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about Wednesday's agenda by the S&D Group, which is House business under the schema's explicit example.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe S&D 15/04/2019 17:39:18.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by S&D group for Wednesday's session - House business, not a policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly requests a change to Wednesday's agenda by the Verts/ALE group, a procedural matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi: demande du groupe ID": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns the setting of Wednesday's agenda following a request by the ID group, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Proposal for rejection": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond a procedural 'proposal for rejection', giving no substantive clue to policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Ordre du jour du mercredi - demande du groupe Verts/ALE 02/05/2018 13:36:29.000": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns a request from the Verts/ALE group about Wednesday's agenda, matching the House's own procedural business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC - Situation en Géorgie RC6-0402/2008": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for resolution on the situation in Georgia, a third country, which falls under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Question préalable (article 167) sur l'homophobie": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "The motion concerns homophobia, a civil liberties/fundamental rights topic despite being a procedural motion (article 167 question préalable) about that substantive matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Proposition de demander l’avis de la Cour de justice sur le deuxième protocole additionnel à la convention sur la cybercriminalité - Proposal to seek an opinion from the Court of Justice on the Second Additional Protocol to the Cybercrime Convention - Vorschlag, ein Gutachten des Gerichtshofs zum Zweiten Zusatzprotokoll zum Übereinkommen über Computerkriminalität einzuholen - Proposition de la Commission LIBE": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Proposal concerning the Cybercrime Convention protocol, explicitly from the LIBE committee, dealing with justice/home affairs matters like cross-border access to data",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0133/2008 - Situation au Tibet - ams. 9+16": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion on 'Situation au Tibet' concerns the situation in a non-EU region and human rights, a Foreign Affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0133/2008 - Situation au Tibet - ams. 13+20": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "The title concerns 'Situation au Tibet' (Situation in Tibet), a resolution on a non-EU region's human rights situation.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0133/2008 - Situation au Tibet - ams. 14+21": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion on 'Situation au Tibet' concerns the situation in a third region/country, a Foreign Affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0241/2008 - Burundi": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Burundi, a non-EU country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0219/2008 - Uranium": {
+  "subject": "Security and Defence",
+  "confidence": "low",
+  "reason": "Joint motion RC6-0219/2008 on Uranium concerns nuclear/radioactive substance safety, typically linked to environmental and health risks addressed by human rights/security context, but most likely relates to depleted uranium weapons - a security and disarmament issue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0278/2008 - Géorgie": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Georgia, a non-EU country, falling under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0271/2008 - Liban": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for resolution on the situation in Lebanon, a non-EU country, falls under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0350/2008 - Peine de mort, cas de Troy Davis": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "The title concerns the death penalty and the case of Troy Davis, a human rights issue involving a foreign country (USA), fitting Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0326/2008 - Exécution de délinquants mineurs": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "The title concerns the execution of juvenile offenders (in a third country, e.g. Iran), a human rights resolution typical of Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0343/2008 - Prisonniers en Israël": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion on prisoners in Israel concerns human rights/relations with a third country, fitting Foreign Affairs",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0387/2008 - Tanzanie": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for resolution on the situation in Tanzania, a non-EU country, indicating Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0420/20058 - Programme de travail de la Commission 2009 am. 28": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "This concerns the Commission's Work Programme for 2009, a general institutional/legislative planning document not tied to a specific policy committee, best fitting Constitutional Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0426/2008 - Sommet UE-Inde": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion on the EU-India Summit, concerning relations with a third country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0428/2008 - Maîtrise des prix de l'énergie": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "The title concerns controlling energy prices, which falls under energy policy handled by Industry, Research and Energy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0521/2008 - Suspension du cycle de Doha de l'OMC": {
+  "subject": "International Trade",
+  "confidence": "high",
+  "reason": "Concerns suspension of the WTO Doha Round, a trade policy matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0527/2008 - Belarus": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Belarus, a non-EU country, falls under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0523/2008 - Gouvernance de l' Arctique": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Joint motion on Arctic governance, an international/environmental governance topic concerning relations with third countries and international policy, best fitting Foreign Affairs",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0518/2007 - Convention d'Ottawa": {
+  "subject": "Foreign Affairs",
+  "confidence": "medium",
+  "reason": "Resolution on the Ottawa Convention concerns landmines and international disarmament, a foreign affairs/security matter typical of joint motions on international treaties",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0549/2008 - Venezuela": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Venezuela, a non-EU country, falling under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:RC6-0554/2008 - Birmanie": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Joint motion for a resolution on the situation in Burma (Birmanie), a non-EU country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The request concerns the plenary agenda by a political group, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Règlement modifiant le cadre financier pluriannuel 2014-2020 - Approbation": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Concerns amending the multiannual financial framework regulation, which is core budget legislation",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Request by the PfE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Titled 'Request by the PfE Group' with no policy content, indicating a procedural request such as agenda modification.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Request by The Left Group – Motion for adjournment of the vote": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a procedural motion by a political group to adjourn a vote, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Règles relatives au Fonds européen pour les affaires maritimes et la pêche à la suite du retrait du Royaume-Uni de l'Union - Vote: proposition de la Commission 13/03/2019 12:49:06.000": {
+  "subject": "Fisheries",
+  "confidence": "high",
+  "reason": "Concerns the European Maritime and Fisheries Fund rules following UK withdrawal, a Fisheries policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:S 03 01 27": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A bare numeric budget line format ('S 03 01 27') indicating a Union budget item, not a policy area title.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Resolutions: Schengen - After § 10 - am: 9": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "The case concerns a resolution on Schengen, which relates to border-free travel and internal security matters within the EU, falling under justice and home affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Resolutions: Schengen - After § 10 - am: 8": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "The resolution addresses Schengen, the EU's border-free area, a core Civil Liberties, Justice and Home Affairs topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday's agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group is House business, not a policy topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "The title concerns scheduling of Thursday's agenda upon a political group's request, which is House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday's agenda – Request by the Verts/ALE Group – Request for withdrawal from voting time": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request by a political group about the Thursday agenda and voting time, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request by the ECR Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda by a political group, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday's agenda – Request by the Verts/ALE, Renew, The Left and S&D groups (resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Thursday's agenda by political groups is the House's own business, matching the 'Wednesday's agenda - Request by the X Group' convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request by the ID Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the day's agenda by a political group, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request by the PPE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about scheduling Thursday's plenary agenda by a political group, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request by the Renew, The Left and S&D groups (debate)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the plenary agenda by political groups, which is the House's own procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request from the Renew Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday's agenda – Request by the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda order for Tuesday's plenary session, a House business matter, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday's agenda – Request by the PfE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda by a political group, which is House business rather than policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s Agenda – Request by the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the day's agenda by a political group, which is House business, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Thursday’s agenda – Request from the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about scheduling agenda items for Thursday, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s Agenda – Request by The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda change request by a political group is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Demande des groupes S&D, Renew, The Left et Verts/ALE": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the day's agenda by political groups, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Renew Group request": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request by a political group to change the day's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (Israel Defence Forces in the Gaza Strip)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the agenda, which falls under House business rather than substantive policy despite the Gaza reference.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (Ecuador and Mexico)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the day's agenda by a political group, a procedural matter about scheduling rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (Council and Commission statements)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the day's agenda, which is House procedural business rather than a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (Statement by the Vice-President of the Commission / High Representative of the Union for Foreign Affairs and Security Policy)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to alter the agenda, which is House business regardless of the topic mentioned in the statement title.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (tabling of motions for resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda by a political group, which is House business rather than a policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (change of title)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning the plenary agenda by a political group, a House business matter rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left Group (tanker)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, which falls under House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by The Left and S&D groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Tuesday's agenda by political groups, which is a procedural House matter, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the ECR Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the day's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the ID Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, which is House business rather than a policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the PPE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda order, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the PPE and Renew groups (debate)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning the order of Tuesday's agenda by political groups is House business, not a policy topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the PPE, S&D and Renew groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request concerning Tuesday's agenda by political groups is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the ESN Group (Australia and Bavaria)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the day's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Renew Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda order, matching the Parliamentary Procedure convention explicitly ('Tuesday's agenda – Request by the Renew Group').",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Renew Group (resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda scheduling request by a political group, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Renew and S&D groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request to modify the agenda by political groups is House business, not a policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Renew Group – Ukraine": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the agenda by a political group, which falls under House business rather than substantive policy despite mentioning Ukraine.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Verts/ALE Group (Simplification of certain CAP rules)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, which is House procedural business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the S&D Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is an agenda change request by a political group, matching the House's own procedural business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Verts/ALE Group (The responsibilities of fossil fuel companies in the cost-of-living crisis)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the day's agenda, which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request by the Verts/ALE and S&D groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is an agenda-setting request by political groups, matching the Parliamentary Procedure convention for agenda modifications.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request from The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request title indicates House business over agenda order, not policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request from the ECR Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Request regarding the day's agenda from a political group is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – Request from the S&D Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request regarding the plenary agenda from a political group, a House business matter not tied to any policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – S&D Group request (Tabling of motions for resolutions)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns changing the agenda based on a political group's request, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – The Left Group request": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This concerns a request to alter the agenda by a political group, which is House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Tuesday’s agenda – S&D Group request": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the plenary agenda by a political group, matching the House's own business convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Vérification présences": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "'Vérification présences' refers to checking attendance/quorum, a procedural House matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Title explicitly concerns arranging Wednesday's agenda, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday's agenda – Request by the The Left Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda request by a political group, a House business matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group (Palestine)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the agenda, which is procedural House business rather than substantive policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Renew Group request": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about scheduling Wednesday's agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group – Australia": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, which falls under House business rather than a policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group (Iran’s unprecedented attack against Israel)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda, which per convention is House business, though it concerns Iran's attack on Israel",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – ID Group request": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda scheduling request by a political group is House business, matching the Parliamentary Procedure convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group – Freedom Flotilla": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to amend the plenary agenda, a procedural matter under 'Wednesday's agenda – Request by...' convention.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group – Gaza": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, matching the 'Wednesday's agenda - Request by the X Group' pattern classified as House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left Group – Israel": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about agenda scheduling, per the House's own business convention, despite mentioning Israel it's a procedural agenda vote.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left and Renew groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about scheduling Wednesday's agenda by political groups, which is House business rather than a policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the ECR Group – Cyprus (resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by the ECR Group, which is House procedural business per the stated conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by The Left and Verts/ALE Groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify Wednesday's agenda by political groups, which is House business, not policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the ECR Group (addition of Council and Commission statements)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda by a political group, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "Agenda change request by a political group is House business, not a policy topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE Group (addition of Council and Commission statements)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the plenary agenda by the PPE Group, matching the explicit convention for House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE Group (preventing sexual harassment)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the agenda by the PPE Group, which is House procedural business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE Group – Iran": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to modify Wednesday's agenda by a political group, which is House procedural business rather than substantive policy despite mentioning Iran.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE, S&D, Renew and Verts/ALE groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to modify the day's agenda, which is House procedural business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE Group (tabling of motions for resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda for tabling motions, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE, S&D, Renew, Verts/ALE and ECR groups – Ukraine (debate)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to alter the agenda for a debate, which is House business per the given conventions, despite the Ukraine topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the PPE, S&D, Renew and Verts/ALE groups – Ukraine (resolution)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the agenda by political groups, which is procedural House business rather than substantive policy despite mentioning Ukraine.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Renew Group – TikTok": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request to change the agenda by a political group, which is House business rather than substantive policy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the S&D Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request regarding the agenda scheduling, matching the convention that agenda modifications are House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Renew and PPE groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the day's agenda by political groups, which is House business rather than policy substance.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Verts/ALE Group (Hungary)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request regarding the agenda order, matching the convention that agenda-setting requests are House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the S&D Group – Cyprus (debate)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to alter the plenary agenda, matching the 'Wednesday's agenda - Request by the X Group' convention for House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Verts/ALE Group (Russia)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda scheduling for Wednesday, which is House procedural business rather than substantive policy content.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the Verts/ALE Group – Gaza": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "This is a request about the agenda order for Wednesday, which is House procedural business rather than substantive policy despite the subject matter mentioned.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request from the Verts/ALE Group": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, which is House business per the given conventions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request by the S&D, Renew, Verts/ALE, The Left groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change Wednesday's agenda by political groups, a matter of House business.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request from the Verts/ALE Group (CSAM)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request to change the agenda by a political group, matching the House's own business convention for Parliamentary Procedure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Request from the Verts/ALE Group (Hamas)": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "medium",
+  "reason": "This is a request to change Wednesday's agenda, a House procedural matter, even though it references Hamas as the topic requested.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ },
+ "title:Wednesday’s agenda – Requests from the PPE, S&D and Renew groups": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "reason": "This is a request about the agenda order, matching the House's own business convention for Parliamentary Procedure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:12:33+00:00"
+ }
+}

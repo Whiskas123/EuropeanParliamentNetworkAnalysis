@@ -1,0 +1,69 @@
+{
+  "run": "layouts",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T10:26:11.439022+00:00",
+    "seconds": 273.1,
+    "git_commit": "2d37ce16a5d60780b2cc33c49ad0d60da016db9d",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 3,
+    "passed": 3,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 5: precompute layouts",
+      "facts": {
+        "mandates to lay out": [
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+        ],
+        "country x subject combinations": "only"
+      },
+      "seconds": 273.0
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "layout script succeeded",
+      "ok": true,
+      "detail": "node exited with 0",
+      "fatal": true,
+      "step": "Step 5: precompute layouts"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "run": "publish",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T10:07:30.108272+00:00",
+    "seconds": 3.8,
+    "git_commit": "2d37ce16a5d60780b2cc33c49ad0d60da016db9d",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 4,
+    "passed": 4,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 4: publish to the website",
+      "facts": {
+        "mandate 6: published": "294 MB",
+        "mandate 7: published": "329 MB",
+        "mandate 8: published": "313 MB",
+        "mandate 9: published": "330 MB",
+        "mandate 10: published": "305 MB",
+        "voting-session counts written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/voting_sessions.json (4 KB)"
+      },
+      "seconds": 2.7
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "something to work with",
+      "ok": true,
+      "detail": "no built networks found - run the 'networks' step first",
+      "fatal": true,
+      "step": null
+    },
+    {
+      "name": "counts file covers every mandate",
+      "ok": true,
+      "detail": "missing []",
+      "fatal": true,
+      "step": "Step 4: publish to the website"
+    }
+  ]
+}

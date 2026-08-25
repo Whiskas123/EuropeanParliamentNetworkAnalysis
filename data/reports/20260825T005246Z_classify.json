@@ -1,0 +1,45 @@
+{
+  "run": "classify",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T00:52:46.556275+00:00",
+    "seconds": 574.7,
+    "git_commit": "32aaf412fec82a5add0265645925a603ba607a74",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 1,
+    "passed": 0,
+    "warnings": 0,
+    "failures": 1
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 7: classify the residual with a model",
+      "facts": {
+        "prompt version": "2026-08-24.2",
+        "model": "claude-sonnet-5",
+        "effort": "medium",
+        "cases already cached": 0,
+        "cases to send": 200,
+        "cases classified": 198
+      },
+      "seconds": 574.6
+    }
+  ],
+  "checks": [
+    {
+      "name": "every case sent got an answer",
+      "ok": false,
+      "detail": "2 case(s) failed and were left unlabelled",
+      "fatal": true,
+      "step": "Step 7: classify the residual with a model"
+    }
+  ]
+}

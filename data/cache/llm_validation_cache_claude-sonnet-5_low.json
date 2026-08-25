@@ -1,0 +1,1602 @@
+{
+ "epref:2020/0108": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "InvestEU Programme concerns investment financing, falling under Budgets/Economic affairs; given rapporteurs from Budgets and Econ committees, closest fit is Budgets as it's an investment fund programme tied to EU budget guarantees.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2169": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "The Lamassoure/Severin report dealt with the composition of the European Parliament, a constitutional matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2899": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on Hamas attacks against Israel and the humanitarian situation in Gaza is clearly a foreign policy matter concerning a non-EU country/region.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/0121": {
+  "subject": "Transport and Tourism",
+  "confidence": "high",
+  "reason": "A8-0206/2018 Kyllönen report concerns posting of drivers in the road transport sector, a transport policy matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2007": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Report by Alejandro Cercas on EU social and employment matters (A7-0135/2014 concerns the implementation of the Youth Guarantee/employment policy), falling under Employment and Social Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2091": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "high",
+  "reason": "Report on implementation of the Ambient Air Quality Directives, clearly an environmental policy topic",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2691": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Document coded RC-B9-0216/2020 titled 'Visa 5' with no other content specified, giving minimal but suggestive evidence of a visa-related resolution likely tied to civil liberties/justice matters.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0002/2026": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Johan Van Overtveldt is chair of the Budgets Committee and this report code pattern (A10-0002) reflects a budgetary guidelines resolution typical of his committee's work",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/2048": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Annual report on implementation of Common Foreign and Security Policy, A9-0292/2022 David McAllister",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2764": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code alone gives no topical content, but B-numbered resolutions like this session were commonly foreign affairs related; without further title text, this is a guess",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0209": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "high",
+  "reason": "A8-0397/2018 by Gerben-Jan Gerbrandy concerns the LIFE Programme, an environment and climate funding instrument handled by the ENVI committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/2089": {
+  "subject": "Women’s Rights and Gender Equality",
+  "confidence": "low",
+  "reason": "Edite Estrela's A7-0032/2011 report is the well-known maternity leave directive report, a women's rights and gender equality matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/0017": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "Jutta Paulus is a Greens MEP typically rapporteur on environmental/shipping emissions files (A9-0144/2020), placing this under environmental policy jurisdiction.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0443": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "Julie Girling report A8-0249/2015 concerns national emission ceilings for atmospheric pollutants, an environmental legislative resolution.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2004": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Jens Geier report A8-0036/2016 concerns the general guidelines for the 2017 EU budget, a Budgets committee matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/0210": {
+  "subject": "Transport and Tourism",
+  "confidence": "high",
+  "reason": "FuelEU Maritime Initiative concerns sustainable maritime fuels, a shipping/transport regulation",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:B9-0425/2020": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond the plenary document code B9-0425/2020, giving no substantive clue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2126": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Report on EU-US relations by Tonino Picula, a foreign relations recommendation.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/2840": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "high",
+  "reason": "Resolution on adequate minimum income and active inclusion is a social policy matter under Employment and Social Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2216": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "high",
+  "reason": "Report on digital single market and AI use for consumers, rapporteur Deirdre Clune, falls under Internal Market and Consumer Protection committee's remit.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:C9-0093/2020": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Bare document code with no substantive title content to infer subject from",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2019": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "The report concerns the Geo-blocking Regulation in the digital single market, a consumer/internal market issue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2042": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Report on EU-Russia political relations is clearly Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2146": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "Report Duff/Voggenhuber A6-0414/2005 concerns the period of reflection on the European Union (constitutional treaty), a Constitutional Affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2082": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Report A6-0131/2006 by rapporteur Mann on the international patent system/trade-related IP matters falls under International Trade committee jurisdiction typically, but given the title alone with no further detail, this is a low-evidence guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2156": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Ernest Urtasun's report A8-0057/2015 relates to discharge of an institution's accounts (executive agency discharge), a Budgetary Control matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2060": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Décharge report by Tomáš Zdechovský, a discharge (Décision) procedure typical of Budgetary Control",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2128": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "No further title text given, but the report reference A8-0026/2016 with rapporteur Jávor is known to be on access to justice/environmental matters (Aarhus Convention), suggesting environmental policy focus.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2234": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Report on protection of the EU's financial interests and combating fraud, annual report 2020",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2774": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "RC-B9-0260/2020 is a joint resolution known as 'Situation in Belarus', concerning EU relations with a third country and human rights, falling under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2965": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "epref:2018/2965 refers to the report on situation after protests and their violent repression in Sudan, a third-country resolution typical of Foreign Affairs",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/3018": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "No topical content beyond the plenary document code B8-0235/2017, giving no substantive clue to the policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:RC-B10-0324/2025": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "This is a joint motion for resolution (RC) with generic paragraph votes and no substantive topic in the title, but such RC motions are typically on international situations; evidence is too thin to be certain.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2717": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Bare joint resolution code with no topical text provided, giving minimal evidence for classification.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2009/2236": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "George Lyon's report A7-0204/2010 concerns the future of the Common Agricultural Policy after 2013 (procedure 2009/2236, INI on CAP reform)",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0196": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Recommendation Mussa concerns the internal market in natural gas (Third Energy Package directive), an Industry/Energy dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2976": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code B8-0352/2014 with no further context suggests a motion for resolution; without topical text, best guess based on typical numbering is limited evidence.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2042": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Report A8-0331/2015 by Sven Schulze concerns European standardisation, an internal market topic under the responsible committee IMCO.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2219": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Report A8-0355/2016 by Josef Weidenholzer concerns the annual report on human rights and democracy in the world and EU policy, a Foreign Affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2583": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code alone with no topical context; guessing based on typical B8 resolution format without further evidence.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0236/2025": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Document code A10-0236/2025 is a report/resolution without explicit topic in title; lacking further content clues, but committee report format suggests substantive policy; insufficient information to determine specific area with confidence.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/0105": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "high",
+  "reason": "Report by Capoulas Santos on CAP reform (health check), an agricultural policy report",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2012": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Report A6-0389/2008 by Edit Bauer concerns the European Qualifications Framework/lifelong learning topics, but Bauer's reports in this period predominantly relate to employment and social affairs matters.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2019": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Report by Virrankoski relates to the EU annual budget procedure, characteristic of Budgets committee reports",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2004/2169": {
+  "subject": "Foreign Affairs",
+  "confidence": "medium",
+  "reason": "Menéndez Del Valle report A6-0256/2005 concerns the Euro-Mediterranean partnership (Barcelona Process), a foreign relations matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2009/2619": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "medium",
+  "reason": "Resolution on the outcomes of the Copenhagen climate summit, a foreign/environmental policy topic best matched to climate policy under Environment",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0246": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "A7-0124/2014 rapporteur Hans-Peter Mayer's report concerns package travel and linked travel arrangements, a consumer protection/internal market file.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2006/2251": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Gruber's A6-0322/2007 report concerned organisation of working time for mobile road transport workers, an employment/social affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/2962": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the human rights situation in Egypt, a third country matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/0094": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "high",
+  "reason": "Title explicitly refers to the 'Nouveau règlement sur les produits de construction' (Construction Products Regulation), which falls under Internal Market and Consumer Protection.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0230/2025": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Only the document code and rapporteur name are given with no topical text, providing minimal evidence for classification",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0175/2025": {
+  "subject": "Security and Defence",
+  "confidence": "medium",
+  "reason": "Pekka Toveri is a defence-focused MEP and this report with a Commission proposal and articles fits a defence/security industry programme co-rapporteured with Wiesner, indicating Security and Defence subject matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:RC-B9-0244/2024": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Joint motion for resolution (RC-B9) format typically used for urgent foreign policy/human rights topics debated in plenary, though the specific country/topic is not stated in the title fragments.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2122": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "This concerns Parliament's resolution on the appointment of Markus Pieper as SME Envoy, a controversy about Commission staffing/appointment procedure, best fitting Constitutional Affairs given its institutional nature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0097": {
+  "subject": "Transport and Tourism",
+  "confidence": "high",
+  "reason": "The Grosch report concerns market access for road transport services, a Transport and Tourism dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2006/0130": {
+  "subject": "Transport and Tourism",
+  "confidence": "low",
+  "reason": "Report code A6-0178/2007 by Degutis relates to passenger rights/coach and bus transport, falling under Transport and Tourism committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0070": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "Rapporteur Julie Girling's report A8-0336/2018 concerns CO2 emission performance standards, falling under environment/climate policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/0101": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "medium",
+  "reason": "A9-0139/2020 by Esther de Lange corresponds to the CAP transitional rules proposal (2019/0101), placing it under Agriculture and Rural Development.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2187": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Discharge of the Fuel Cells and Hydrogen 2 Joint Undertaking's 2019 accounts is a discharge procedure, hence Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2080": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Rapporteur Pittella's A6-0223/2005 in 2005 concerned the situation of trapped savers in Italy (Parmalat/financial services), falling under Economic and Monetary Affairs oversight.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2196": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Marinescu's report A8-0097/2016 relates to the mobilisation of the European Globalisation Adjustment Fund/EU Solidarity Fund type decision, which are budgetary decisions handled under Budgets committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2899": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Document code B8-0212/2019 with no further topical clue, low information",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2153": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Discharge for the European Monitoring Centre for Drugs and Drug Addiction is a discharge/accounts matter, i.e. Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2006/2137": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Only the rapporteur and document code are given, with no topical text; Christian Ehler often reported on economic/industrial matters, but this is a weak inference.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2115": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Discharge 2020 for the European External Action Service budget is a discharge procedure, i.e. Budgetary Control",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2004/0168": {
+  "subject": "Regional Development",
+  "confidence": "low",
+  "reason": "Report by Olbrycht (2004/0168) concerns European Regional Development Fund/Cohesion Fund regulation, falling under Regional Development.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2004/2556": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "European Council meeting resolution likely covers general EU affairs and foreign policy priorities, best fitting Foreign Affairs given typical European Council resolutions of this era.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:B10-0152/2024": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Motion for resolution B10-0152/2024, though the topic isn't fully specified, the code and lack of other context provide minimal clues; treated as a general resolution likely on foreign affairs given typical B-code usage for external situations",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/0240": {
+  "subject": "Transport and Tourism",
+  "confidence": "medium",
+  "reason": "Kohlíček reports concerning maritime/port safety and transport regulation (railway/maritime transport policy) fall under Transport and Tourism committee jurisdiction.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2006/0009": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "No topical text is given beyond a report code (A6-0286/2006), providing insufficient evidence beyond the document number.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/3010": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code alone without topical text; no substantive clue provided, so classification is a low-confidence guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2209": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Report A8-0135/2015 by Philippe De Backer relates to an EU institution's budget discharge report structure",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2235": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Report on control of financial activities of the European Investment Bank annual report, clearly Budgetary Control",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0072": {
+  "subject": "Transport and Tourism",
+  "confidence": "medium",
+  "reason": "Report by Georges Bach, a Transport Committee rapporteur, indicating a Transport and Tourism legislative matter under A7-0020/2014.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/0067": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Seppänen report A6-0317/2008 concerns autonomous Common Customs Tariff duties on imports of certain industrial products, a trade policy measure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0243/2025": {
+  "subject": "Security and Defence",
+  "confidence": "low",
+  "reason": "Christophe Gomart is rapporteur for security/defence-related files at the EP; lacking more specific text, this is likely a Security and Defence report",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/0238": {
+  "subject": "Transport and Tourism",
+  "confidence": "high",
+  "reason": "Vlasto reports concerned the maritime safety legislative package under the Transport committee's remit",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2118": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "A6-0104/2006 by Guidoni concerns European space policy, falling under Industry, Research and Energy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2553": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the human rights situation in the Philippines, a third country issue",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2043": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Report by Böge on budgetary matters, A6-0083/2008, decision-type vote consistent with budget procedure reports",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2103": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A8-0091/2015 by Ryszard Czarnecki relates to a discharge decision, indicated by 'Décision (ensemble du texte)' typical of discharge reports which fall under Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2011/2219": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A7-0125/2012 by Monica Luisa Macovei with 'Décision' suggests a discharge decision, typical Budgetary Control report format.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2009/0141": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "A7-0167/2010 by Tremosa i Balcells concerns statistical data quality in the excessive deficit procedure, an Economic and Monetary Affairs file.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/2729": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Only a joint resolution document code is given with no topical text, forcing a low-confidence guess; such early-2014 joint resolutions often addressed foreign situations, but lacking content this is a guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2243": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Report by Hammerstein Mintz A6-0056/2006, without further detail the code alone suggests a specific policy area but limited context is available; historically this report concerned mobile satellite services, falling under Industry, Research and Energy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2257": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Rapporteur José Manuel Fernandes typically handles budget-related reports, and A8-0350/2016 corresponds to the mobilisation of EU budget flexibility instruments, a Budgets matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2755": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "No topical content beyond an RC joint motion document code without further indication; likely a resolution but too little evidence to name a specific policy area confidently.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0171": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Jonás Fernández report, likely on economic/financial legislation under Economic and Monetary Affairs committee",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2187": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "A8-0131/2019 by Petri Sarvamaa is a discharge resolution report, typical of Budgetary Control committee work.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2205": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A8-0113/2019 by Petri Sarvamaa is a discharge-related report, typical of Budgetary Control committee resolutions.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0202": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "A8-0445/2018 by Maria Arena concerns the European Globalisation Adjustment Fund regulation, an employment/social affairs matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2100": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "This is a decision related to a named MEP (Brudziński), likely a discharge or waiver of immunity report typically handled by Legal Affairs (JURI)",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2095": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A9-0054/2020 by rapporteur Legutko is a 'Décision' - typical of discharge reports, indicating Budgetary Control",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2915": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code B9-0094/2020 alone gives little content, but such resolutions in this period commonly concern foreign policy/human rights matters; without further title text this is a guess",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/0417": {
+  "subject": "Public Health",
+  "confidence": "high",
+  "reason": "Fees payable to the European Medicines Agency directly concerns pharmaceutical regulation and public health matters",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/0048": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "high",
+  "reason": "Joint Undertakings under Horizon Europe relates to EU research programme governance, clearly Industry, Research and Energy.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/0349": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Concerns Europol regulation on personal data processing and criminal investigations, a LIBE committee matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2031": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Report on EU development policy and extractive industries in developing countries, clearly a Foreign Affairs/development topic.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0031/2026": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Report code and rapporteur name only, no substantive title text given to determine policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2180": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Report on the Commission's Rule of Law Report concerns rule of law/fundamental rights, falling under Civil Liberties, Justice and Home Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0105/2025": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Report by rapporteur Nacho Sánchez Amor described as a Council decision without further topical detail; without more context, best guess given rapporteur's typical foreign affairs portfolio work",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A8-0034/2019": {
+  "subject": "Fisheries",
+  "confidence": "low",
+  "reason": "João Ferreira was a rapporteur commonly on Fisheries Committee reports",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A10-0248/2025": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Only bare code and rapporteur name with no topical content, giving very little to go on; treated as procedural House business by default.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:A9-0202/2020": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Rapporteur Iuliu Winkler typically handles international trade files; without further title text, best inference is International Trade committee report.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "code:C9-0126/2022": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Concerns gas storage regulation, an energy security/industry matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2004/2141": {
+  "subject": "Public Health",
+  "confidence": "low",
+  "reason": "Bowis report A6-0044/2005 concerned combating HIV/AIDS, a public health resolution.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/0185": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Report code A6-0379/2006 by Riera Madurell relates to statistical/energy legislation typically under Industry, Research and Energy, but with insufficient title context this is largely a guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2086": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Ferber report A6-0390/2005 concerns EU financial/budget guidelines, a topic typically handled by the Budgets committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2005/2502": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the situation in Ukraine, a non-EU country, falls under Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2004/0156": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "A6-0144/2008 by rapporteur Barsi-Pataky concerned the energy performance of buildings directive, an Industry/Energy dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0012": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "Report by Salinas García, a Spanish MEP typically on agricultural committee matters, code A6-0183/2007 suggests agriculture-related report",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2006/0250": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Document code 2006/0250 with rapporteur Mayer corresponds to a Community guarantee/financial instrument report, falling under economic policy oversight.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0050": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Rapporteur Saryusz-Wolski's report A6-0320/2008 concerns third-country nationals and visa/border matters, but given known context this was on EU's external relations financial instrument, best fitting Foreign Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2633": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the situation in Myanmar/Birmanie, a third country human rights issue",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2104": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Report code A6-0400/2007 by Elizabeth Lynne, known to concern 'Age and disability discrimination' or similar employment/social issue - context suggests Employment and Social Affairs committee report.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0112": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Report by Rapporteur Roure on a matter related to civil liberties/justice topic; limited context but the code A6-0148/2008 typically relates to trafficking/immigration issues handled by LIBE committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/0020": {
+  "subject": "Fisheries",
+  "confidence": "medium",
+  "reason": "A6-0164/2008 Berlato report concerns statistics on aquaculture, a fisheries policy matter handled by the Fisheries committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/0092": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "A6-0243/2007 is Langen's report on consumer credit agreements, an internal market/consumer protection dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2007/2152": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "No topical content beyond report code; Weber is a common rapporteur name and the docket A6-0390/2007 gives no committee clue, but Weber authored reports on immigration/asylum policy in this period suggesting Civil Liberties.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/0263": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Jensen report A6-0226/2009 concerns EU public procurement rules on defence and security equipment, which falls under Internal Market and Consumer Protection legislative procedure",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2011": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Report A6-0263/2008 by Resetarits concerns immigration/integration policy typical of Civil Liberties matters, though evidence is thin beyond code and name.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2151": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A6-0427/2008 (Staes report) concerns discharge for budget implementation, a typical Budgetary Control committee report",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2009/2014": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "Report by Lehne, likely on company law/legal affairs matter (A6-0190/2009, 'décision')",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2009/2599": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Resolution on non-state actors in development cooperation, addressing EU external assistance policy",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2102": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Report A6-0455/2008 by rapporteur Novak concerned the consumer credit agreements directive, an Internal Market file.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/0095": {
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "reason": "Report titled with rapporteur only, but code A7-0247/2014 relates to statute for European political parties funding (Speroni), which falls under Constitutional Affairs; low detail otherwise.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/0359": {
+  "subject": "Fisheries",
+  "confidence": "medium",
+  "reason": "Elie Hoarau reports typically concern fisheries agreements/protocols, consistent with the outermost regions fisheries context of this rapporteur's work",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2008/2273": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Fjellner report A6-0164/2009 concerned proprietary medicinal products and consumer protection, but the Fjellner rapporteur handled Community-wide guarantees for medicinal products (Internal Market context) - given ambiguity, best fit is Internal Market and Consumer Protection based on document code pattern typical of IMCO reports.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/0361": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "Report by Pavel Svoboda under document code A8-0071/2015 on approbation, likely a legal affairs procedural approval matter typical of Legal Affairs committee reports.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/0374": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Report by Sharon Bowles, ECON committee chair, on a legislative resolution likely concerning economic/monetary regulation",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/2188": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "A7-0124/2011 by Georgios Stavrakakis is likely a budget-related report given his role as budget rapporteur, but without more context the specific policy area is unclear beyond budgets.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2010/2204": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Report title only names rapporteur without content, likely an industry/energy or internal market report by Chatzimarkakis, but insufficient evidence to determine subject precisely.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2012/0180": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "Marielle Gallo report A7-0281/2013 concerns collective rights management of copyright, a Legal Affairs committee matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2011/0416": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "Document A7-0179/2012 by rapporteur Giancarlo Scottà, without further title context but referring to a legislative resolution likely on agricultural support measures, based on known rapporteur focus on agriculture policy",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2011/0350": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Report by Zuzana Roithová on consumer product safety, falling under Internal Market and Consumer Protection",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0438": {
+  "subject": "Public Health",
+  "confidence": "low",
+  "reason": "Rapporteur Dagmar Roth-Behrendt led work on medical devices/public health legislation typical of this policy area",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0164": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "Vittorio Prodi's report A7-0027/2014 concerned surveillance requirements for ships, an environmental/maritime monitoring matter under his committee assignment (ENVI, MRV of CO2 emissions from ships)",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/2217": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "Report by Petri Sarvamaa follows the discharge report naming pattern (A7-0182/2014), typical of Budgetary Control reports.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/0159": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Rapporteur name-only title with no topical content, though document reference and context suggest a trade-related legislative report; without further evidence this is a low-confidence guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2013/0427": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Document A7-0257/2014 by Roberta Metsola, whose reports typically concern civil liberties matters and 'Approbation' suggests approval of an agreement in that domain.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2014/0808": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "A8-0027/2014 by rapporteur Roberto Gualtieri concerns the ECB/monetary affairs area typical of Economic and Monetary Affairs committee reports.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/0070": {
+  "subject": "Agriculture and Rural Development",
+  "confidence": "low",
+  "reason": "Rapporteur Siekierski chairs AGRI and the report code A8-0174/2015 corresponds to an agriculture-related measure he steered.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/0094": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Ulrike Lunacek's report titled 'approbation' relates to approval, likely of an EU association/cooperation agreement with a third country, fitting Foreign Affairs; without more context this is a guess based on the rapporteur's known portfolio.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/0808": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "No topical detail beyond the document code and rapporteur name, giving no basis to identify the subject matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/0277": {
+  "subject": "Transport and Tourism",
+  "confidence": "medium",
+  "reason": "A8-0364/2016 by Marian-Jean Marinescu concerns the EASA regulation on common rules in civil aviation, a Transport and Tourism dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2179": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Document A8-0106/2016 by rapporteur Derek Vaughan corresponds to a discharge report on budget implementation, typical of Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/0811": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "Document code A8-0353/2015 with no further topical text; the rapporteur name alone is insufficient to identify subject, but such 2015/0811 procedure code and rapporteur Chrysogonos relates to a consultation on judicial cooperation matters, though evidence is thin.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2088": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "A8-0366/2015 by rapporteur Marek Plura concerns a report on EU strategy for equality and inclusion of persons with disabilities, an employment/social affairs matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2187": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Report by Derek Vaughan under A8 code, typical of a discharge report format, indicating Budgetary Control subject.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2182": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Report by Derek Vaughan under A8 code typically concerns EU budget discharge matters, consistent with his role as rapporteur for budgetary control reports.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2269": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Document code A8-0337/2015 by Eider Gardiazabal Rubial, a rapporteur known for budget reports, with no other subject content indicated",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2189": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "A8-0091/2016 by Derek Vaughan corresponds to a budget discharge report, a topic he regularly rapporteurs for Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2193": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "A8-0117/2016 by Derek Vaughan is a discharge report, typical of Budgetary Control committee work.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2758": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "No topical text is given beyond the RC document code, which alone gives no substantive clue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2772": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code alone with no substantive title text is insufficient to identify a clear policy area, so this is a low-confidence guess based on typical resolution patterns.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2599": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Only a joint motion document code (RC-B8-0240/2015) is given with no descriptive title, and such joint resolutions are typically Foreign Affairs topics, but this is a guess from the document type alone.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2969": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "No topical content beyond the joint resolution document code RC-B8-1263/2015, giving no clue to subject matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2015/2988": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Document code alone with no title content, providing minimal evidence for classification.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/0067": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Approval of a report by Godelieve Quisthoudt-Rowohl, likely trade-related agreement (Bosnia/textile trade EU-Bosnia agreement), fitting International Trade committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2043": {
+  "subject": "Petitions",
+  "confidence": "low",
+  "reason": "Report by Anneli Jäätteenmäki, known to concern the annual report on European Ombudsman activities, relating to petitions/citizens' rights, though this could also be seen as Constitutional Affairs; the report title itself gives no topical detail.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/0075": {
+  "subject": "Fisheries",
+  "confidence": "medium",
+  "reason": "A8-0260/2016 by Mariya Gabriel corresponds to the regulation on sustainable management of external fishing fleets, a Fisheries dossier.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2175": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Report by Inés Ayala Sender under document A8-0082/2017 is typical of discharge reports concerning EU budget implementation, indicating Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2267": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "Report by Monika Hohlmeier, A8-0352/2016, without further detail but consistent with her role handling EU budget/discharge matters; likely budgetary in nature.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/3029": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code alone with no title content given, offering no topical clue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2032": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "medium",
+  "reason": "A8-0222/2016 by Othmar Karas corresponds to the annual report on the European Central Bank, falling under Economic and Monetary Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2016/2919": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Document code alone with no descriptive text available, giving very little evidence to determine subject.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/0190": {
+  "subject": "Fisheries",
+  "confidence": "medium",
+  "reason": "Rapporteur Alain Cadec, known for fisheries reports, and the procedure suggests a Commission proposal in maritime/fisheries policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/0219": {
+  "subject": "Constitutional Affairs",
+  "confidence": "medium",
+  "reason": "Bresso/Wieland report is on the revision of the Framework Agreement on relations between Parliament and Commission, a constitutional/institutional matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/0348": {
+  "subject": "Fisheries",
+  "confidence": "medium",
+  "reason": "Alain Cadec is the Fisheries committee rapporteur and chair, indicating this report falls under Fisheries policy area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/2109": {
+  "subject": "Budgets",
+  "confidence": "low",
+  "reason": "Report by Jens Geier without further context, likely relates to budget guidelines given typical A8-0281/2017 codes on budget reports; low evidence available.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/2153": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "Report by Bart Staes on an EU institution's accounts/discharge context, indicated by resolution accompanying discharge report code style",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/2161": {
+  "subject": "Budgetary Control",
+  "confidence": "low",
+  "reason": "A8-0114/2018 by Bart Staes is a discharge report, indicating Budgetary Control matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0044": {
+  "subject": "Legal Affairs",
+  "confidence": "low",
+  "reason": "A8-0261/2018 by rapporteur Pavel Svoboda concerns the directive on preventive restructuring frameworks and insolvency, a matter handled by the Legal Affairs committee.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0166": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Report on approval procedure related to the EU financial regulation/MFF-Own Resources reference (2018/0166), tied to budget-related procedure by Olbrycht/Marques, budget committee members",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2017/0340": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Report by Pagazaurtundúa relates to Prüm decisions/police cooperation, a Civil Liberties, Justice and Home Affairs matter typical of LIBE committee reports on this rapporteur's dossiers",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0809": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Document code A8-0343/2018 with rapporteur name only, no topical content given, requiring a guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2078": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "Document A8-0272/2018 by Janusz Lewandowski relates to own resources of the EU budget, a budgetary matter typically handled by the Budgets committee",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/0412": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Report number A9-0048/2019 with rapporteur Lídia Pereira, lacking further detail but consistent with typical Economic and Monetary Affairs committee reports on financial regulation matters, though evidence is thin.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2018/2086": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "A8-0378/2018 by rapporteur Brian Hayes concerns pan-European personal pension products, an EU financial services matter under Economic and Monetary Affairs.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2023": {
+  "subject": "Budgets",
+  "confidence": "medium",
+  "reason": "A9-0002/2019 by Siegfried Mureşan corresponds to a budget report he typically handles as budget rapporteur",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/0001": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "reason": "Concerns the ETIAS system's police and judicial cooperation amendments, a Civil Liberties, Justice and Home Affairs matter",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2521": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Document code B8-0073/2019 with no substantive title text provided, giving very little to go on beyond a generic resolution reference",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/0037": {
+  "subject": "Fisheries",
+  "confidence": "high",
+  "reason": "Title explicitly concerns a Sustainable Fisheries Partnership Agreement between EU, Greenland and Denmark, a fisheries agreement approval procedure.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2019/2168": {
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "reason": "Report by rapporteur Maria da Graça Carvalho, document code A9-0232/2020, likely relates to a resolution without further context, but Carvalho typically handles Industry/Research topics such as EU adaptation to climate change or research.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/0011": {
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "reason": "Rapporteurs Franssen and Peter-Hansen with a draft Council decision under epref 2020/0011 relates to statistics on business, likely concerning economic/employment topics; without more detail, the closest fit is Employment and Social Affairs given Franssen's committee background.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2020/2735": {
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "reason": "Document code alone with no title text; no substantive content available to identify subject area.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/0105": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "low",
+  "reason": "Report on machinery/equipment regulation (A9-0141/2022), an internal market product safety measure",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2138": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "The vote concerns discharge 2020 for the European Securities and Markets Authority, a discharge procedure typical of Budgetary Control.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/2153": {
+  "subject": "Budgetary Control",
+  "confidence": "high",
+  "reason": "Discharge (Décharge) for a joint undertaking's 2020 accounts is a Budgetary Control matter.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2021/0219": {
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "low",
+  "reason": "Concerns UCITS management companies and key information documents, a financial regulation topic (A9-0301/2021, Jonás Fernández)",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2022/0142": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Voluntary Partnership Agreement on trade in timber products, an international trade agreement with a third country",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/0259": {
+  "subject": "International Trade",
+  "confidence": "low",
+  "reason": "Draft Council decision reported by Samira Rafaela under A9-0011/2024 concerns consent to an international agreement, typical of International Trade committee work.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/0352": {
+  "subject": "Budgets",
+  "confidence": "high",
+  "reason": "Concerns mobilisation of the European Globalisation Adjustment Fund, which is a budgetary instrument decision handled under Budgets.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2149": {
+  "subject": "Budgetary Control",
+  "confidence": "medium",
+  "reason": "Document code A9-0130/2024 by Petri Sarvamaa suggests a discharge report, typically Budgetary Control committee work.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/0355": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "Report by López Aguilar under a proposal number 2023/0355, matching a Civil Liberties committee file (LIBE rapporteur), without further topical detail but consistent with his portfolio",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2174": {
+  "subject": "Environment, Climate and Food Safety",
+  "confidence": "low",
+  "reason": "A9-0088/2024 by Michal Wiezik relates to a nature restoration/environmental report, consistent with Environment committee resolutions",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2833": {
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "reason": "Resolution on the human rights situation in Bangladesh, a third-country human rights case",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2043": {
+  "subject": "Internal Market and Consumer Protection",
+  "confidence": "high",
+  "reason": "Concerns consumer protection related to addictive design of online services in the single market, matching Internal Market and Consumer Protection committee jurisdiction.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/2840": {
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "low",
+  "reason": "The resolution concerns discrimination against Roma children in education, a civil liberties/fundamental rights and anti-discrimination issue.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ },
+ "epref:2023/3021": {
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "reason": "Insufficient title text, but document code B9-0062/2024 for a motion likely relates to a general topic; lack of subject content requires a guess.",
+  "model": "claude-sonnet-5",
+  "prompt_version": "2026-08-24.2",
+  "classified_at": "2026-08-25T01:06:04+00:00"
+ }
+}

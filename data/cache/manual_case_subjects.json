@@ -1,0 +1,19 @@
+{
+  "_comment": [
+    "Hand-verified subjects for cases the model got wrong, keyed by case key.",
+    "Highest precedence: these overwrite the model's answer in `classify` and",
+    "are written with via='hand:verified' rather than via='llm:...', so the",
+    "provenance on the site never claims a model produced them.",
+    "Every entry must cite the document it was verified against."
+  ],
+  "epref:2018/2573": {
+    "subject": "Foreign Affairs",
+    "source": "TA-8-2018-0069, 'Guidelines on the framework of future EU-UK relations', 14 Mar 2018 (B8-0134/2018, B8-0135/2018). Model said 'Budgets'.",
+    "note": "OEIL files the Brexit resolutions under Secretariat-General because the Conference of Presidents tabled them, which is why the evidence chain breaks here."
+  },
+  "epref:2017/2847": {
+    "subject": "Foreign Affairs",
+    "source": "TA-8-2017-0361, 'State of play of negotiations with the United Kingdom', 3 Oct 2017 (B8-0538/2017). Model said 'Parliamentary Procedure'.",
+    "note": "Same Brexit cluster as epref:2018/2573 and epref:2017/2964."
+  }
+}

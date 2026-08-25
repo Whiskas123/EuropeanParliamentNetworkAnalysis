@@ -1,0 +1,402 @@
+[
+ {
+  "n": 1,
+  "key": "title:RC6-0377/2008 - Santé maternelle",
+  "votes": 11,
+  "subject": "Public Health",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "RC6-0377/2008 - Santé maternelle"
+ },
+ {
+  "n": 2,
+  "key": "epref:2018/2573",
+  "votes": 45,
+  "subject": "Budgets",
+  "confidence": "low",
+  "verdict": "wrong",
+  "note": "B8-0134/2018 is the 14 Mar 2018 resolution on the framework of future EU-UK relations, not a budget text",
+  "title": "B8-0134/2018 - Résolution 14/03/2018 12:16:23.000"
+ },
+ {
+  "n": 3,
+  "key": "title:Ordre du jour de jeudi - Demande des groupes The Left, S&D et Verts/ALE - Thursday’s Agenda - Request from The Left, S&D and Verts/ALE groups - Tagesordnung für Donnerstag - Antrag der Fraktionen The Left, S&D und Verts/ALE",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour de jeudi - Demande des groupes The Left, S&D et Verts/ALE - Thursday’s Agenda - Request from The Left, S&D and Verts/ALE groups - Tagesordnung für Donnerstag - Antrag der Fraktionen The Left, S&D und Verts/ALE"
+ },
+ {
+  "n": 4,
+  "key": "title:Thursday’s agenda – Request by The Left Group",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Thursday’s agenda – Request by The Left Group"
+ },
+ {
+  "n": 5,
+  "key": "epref:2017/2964",
+  "votes": 31,
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "verdict": "unsure",
+  "note": "B8-0676/2017 not identifiable from the title alone",
+  "title": "B8-0676/2017 - Résolution 13/12/2017 13:06:38.000"
+ },
+ {
+  "n": 6,
+  "key": "title:Mardi - demande du groupe GUE/NGL 15/07/2019 17:09:37.000",
+  "votes": 2,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Mardi - demande du groupe GUE/NGL 15/07/2019 17:09:37.000"
+ },
+ {
+  "n": 7,
+  "key": "title:Wednesday’s agenda – Request by The Left Group – Freedom Flotilla",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Wednesday’s agenda – Request by The Left Group – Freedom Flotilla"
+ },
+ {
+  "n": 8,
+  "key": "title:11 10 01",
+  "votes": 2,
+  "subject": "Budgets",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "11 10 01"
+ },
+ {
+  "n": 9,
+  "key": "title:10-11 November",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "10-11 November"
+ },
+ {
+  "n": 10,
+  "key": "title:Modification de l'ordre du jour",
+  "votes": 15,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Modification de l'ordre du jour"
+ },
+ {
+  "n": 11,
+  "key": "title:Ordre du jour du mardi - demande du groupe EFDD (Refus d'accès aux tribunaux des droits de l'homme pour les employés des organisations internationals) 13/11/2017 17:34:41.000",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour du mardi - demande du groupe EFDD (Refus d'accès aux tribunaux des droits de l'homme pour les employés des organisations internationals) 13/11/2017 17:34:41.000"
+ },
+ {
+  "n": 12,
+  "key": "code:B9-0664/2022",
+  "votes": 21,
+  "subject": "Civil Liberties, Justice and Home Affairs",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Enquête sur l'utilisation de Pegasus et de logiciels espions de surveillance équivalents (recommandation) - Investigation of the use of Pegasus and equivalent surveillance spyware (Recommendation) - Prüfung des Einsatzes von Pegasus und ähnlicher Überwachungs- und Spähsoftware (Empfehlung) - B9-0664/2022"
+ },
+ {
+  "n": 13,
+  "key": "title:Autorisations de pêche pour les navires de pêche de l'Union dans les eaux du Royaume-Uni et opérations de pêche des navires de pêche du Royaume-Uni dans les eaux de l'Union - Vote: proposition de la Commission 13/03/2019 12:49:46.000",
+  "votes": 1,
+  "subject": "Fisheries",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Autorisations de pêche pour les navires de pêche de l'Union dans les eaux du Royaume-Uni et opérations de pêche des navires de pêche du Royaume-Uni dans les eaux de l'Union - Vote: proposition de la Commission 13/03/2019 12:49:46.000"
+ },
+ {
+  "n": 14,
+  "key": "title:RC6-0326/2008 - Exécution de délinquants mineurs",
+  "votes": 1,
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "RC6-0326/2008 - Exécution de délinquants mineurs"
+ },
+ {
+  "n": 15,
+  "key": "code:B6-0043/2007",
+  "votes": 5,
+  "subject": "Economic and Monetary Affairs",
+  "confidence": "medium",
+  "verdict": "correct",
+  "note": "",
+  "title": "B6-0043/2007 - Stratégie de Lisbonne"
+ },
+ {
+  "n": 16,
+  "key": "title:Ordre du jour du mardi: demande du groupe GUE/NGL",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour du mardi: demande du groupe GUE/NGL"
+ },
+ {
+  "n": 17,
+  "key": "epref:2017/2847",
+  "votes": 32,
+  "subject": "Parliamentary Procedure",
+  "confidence": "low",
+  "verdict": "wrong",
+  "note": "B8-0538/2017 is a substantive B-series resolution; a tabled motion is never House business, so 'Parliamentary Procedure' is the escape hatch firing on a bare title",
+  "title": "B8-0538/2017 - Résolution 03/10/2017 12:25:27.000"
+ },
+ {
+  "n": 18,
+  "key": "code:RC-B9-0144/2024",
+  "votes": 17,
+  "subject": "Foreign Affairs",
+  "confidence": "low",
+  "verdict": "unsure",
+  "note": "RC-B9-0144/2024 not identifiable from the title alone",
+  "title": "RC-B9-0144/2024 – Motion for a resolution (text as a whole)"
+ },
+ {
+  "n": 19,
+  "key": "title:Ordre du jour du mardi - demande du groupe ECR",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour du mardi - demande du groupe ECR"
+ },
+ {
+  "n": 20,
+  "key": "title:20 02 05",
+  "votes": 2,
+  "subject": "Budgets",
+  "confidence": "medium",
+  "verdict": "correct",
+  "note": "",
+  "title": "20 02 05"
+ },
+ {
+  "n": 21,
+  "key": "title:Demande du groupe ENF - rapport Rübig",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Demande du groupe ENF - rapport Rübig"
+ },
+ {
+  "n": 22,
+  "key": "title:Ordre du jour de mercredi - Demande du groupe PPE (Préparation de la réunion extraordinaire du Conseil européen du mois de février, en particulier la nécessité de mettre en place des solutions durables dans le domaine de l'asile et de la migration) - Wednesday’s Agenda - Request from the PPE Group (Preparation of the Special European Council meeting of February, in particular the need to develop sustainable solutions in the area of asylum and migration) - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion (Vorbereitung der außerordentlichen Tagung des Europäischen Rates im Februar, insbesondere das Erfordernis, dauerhafte Lösungen im Bereich Asyl und Migration zu entwickeln)",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour de mercredi - Demande du groupe PPE (Préparation de la réunion extraordinaire du Conseil européen du mois de février, en particulier la nécessité de mettre en place des solutions durables dans le domaine de l'asile et de la migration) - Wednesday’s Agenda - Request from the PPE Group (Preparation of the Special European Council meeting of February, in particular the need to develop sustainable solutions in the area of asylum and migration) - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion (Vorbereitung der außerordentlichen Tagung des Europäischen Rates im Februar, insbesondere das Erfordernis, dauerhafte Lösungen im Bereich Asyl und Migration zu entwickeln)"
+ },
+ {
+  "n": 23,
+  "key": "title:Wednesday’s agenda – Request by The Left Group",
+  "votes": 6,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Wednesday’s agenda – Request by The Left Group"
+ },
+ {
+  "n": 24,
+  "key": "title:RC6-0420/2008 - Programme de travail de la Commission 2009",
+  "votes": 11,
+  "subject": "Constitutional Affairs",
+  "confidence": "low",
+  "verdict": "unsure",
+  "note": "Commission work programme sits between Constitutional Affairs and House business",
+  "title": "RC6-0420/2008 - Programme de travail de la Commission 2009"
+ },
+ {
+  "n": 25,
+  "key": "title:13 02 01",
+  "votes": 1,
+  "subject": "Budgets",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "13 02 01"
+ },
+ {
+  "n": 26,
+  "key": "title:RC6-0281/2008 - Processus de Barcelone",
+  "votes": 3,
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "RC6-0281/2008 - Processus de Barcelone"
+ },
+ {
+  "n": 27,
+  "key": "title:Ordre du jour de mercredi - Demande du groupe PPE - Wednesday’s Agenda - Request from the PPE Group - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion",
+  "votes": 3,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour de mercredi - Demande du groupe PPE - Wednesday’s Agenda - Request from the PPE Group - Tagesordnung für Mittwoch - Antrag der PPE-Fraktion"
+ },
+ {
+  "n": 28,
+  "key": "epref:2022/2830",
+  "votes": 60,
+  "subject": "Industry, Research and Energy",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "Réponse de l'Union à la hausse des prix de l'énergie en Europe - The EU’s response to the increase in energy prices in Europe - Reaktion der EU auf die steigenden Energiepreise in Europa - RC-B9-0416/2022"
+ },
+ {
+  "n": 29,
+  "key": "code:A9-0280/2019",
+  "votes": 38,
+  "subject": "Industry, Research and Energy",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Une stratégie européenne pour les matières premières critiques - A European strategy for critical raw materials - Europäische Strategie für kritische Rohstoffe - A9-0280/2019 - Hildegard Bentele - Proposition de résolution (ensemble du texte)"
+ },
+ {
+  "n": 30,
+  "key": "title:Wednesday’s agenda – Request by The Left and Verts/ALE Groups",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Wednesday’s agenda – Request by The Left and Verts/ALE Groups"
+ },
+ {
+  "n": 31,
+  "key": "title:Ordre du jour de jeudi- Demande du groupe S&D 03/04/2019 14:22:30.000",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Ordre du jour de jeudi- Demande du groupe S&D 03/04/2019 14:22:30.000"
+ },
+ {
+  "n": 32,
+  "key": "title:RC6-0133/2008 - Situation au Tibet - ams. 13+20",
+  "votes": 1,
+  "subject": "Foreign Affairs",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "RC6-0133/2008 - Situation au Tibet - ams. 13+20"
+ },
+ {
+  "n": 33,
+  "key": "title:1 0 0 4",
+  "votes": 1,
+  "subject": "Budgets",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "1 0 0 4"
+ },
+ {
+  "n": 34,
+  "key": "title:Bloc 5",
+  "votes": 1,
+  "subject": "Budgets",
+  "confidence": "low",
+  "verdict": "unsure",
+  "note": "'Bloc 5' is a voting block; Budgets is plausible only in a budget sitting",
+  "title": "Bloc 5"
+ },
+ {
+  "n": 35,
+  "key": "title:Demande de report de vote - Pedrero Silva Pereira - Recommandation et rapport",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Demande de report de vote - Pedrero Silva Pereira - Recommandation et rapport"
+ },
+ {
+  "n": 36,
+  "key": "title:Thursday's agenda – Request by the Verts/ALE Group – Request for withdrawal from voting time",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Thursday's agenda – Request by the Verts/ALE Group – Request for withdrawal from voting time"
+ },
+ {
+  "n": 37,
+  "key": "epref:2006/2592",
+  "votes": 6,
+  "subject": "Employment and Social Affairs",
+  "confidence": "low",
+  "verdict": "correct",
+  "note": "",
+  "title": "RC B6-387/2006 - Restructuration d'entreprises"
+ },
+ {
+  "n": 38,
+  "key": "title:Thursday’s agenda – Request from The Left Group",
+  "votes": 2,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Thursday’s agenda – Request from The Left Group"
+ },
+ {
+  "n": 39,
+  "key": "title:Tuesday’s agenda – Request by the Renew Group (resolution)",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "high",
+  "verdict": "correct",
+  "note": "",
+  "title": "Tuesday’s agenda – Request by the Renew Group (resolution)"
+ },
+ {
+  "n": 40,
+  "key": "code:B6-0318/2005",
+  "votes": 1,
+  "subject": "Parliamentary Procedure",
+  "confidence": "medium",
+  "verdict": "correct",
+  "note": "",
+  "title": "B6-0318/2005- motion de censure"
+ }
+]
