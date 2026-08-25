@@ -1,0 +1,327 @@
+{
+  "run": "verify",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T14:31:03.627220+00:00",
+    "seconds": 29.3,
+    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 40,
+    "passed": 40,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 6: verify the published site data",
+      "facts": {
+        "mandates with baselines": 5,
+        "mandate 6: networks expected": 532,
+        "mandate 7: networks expected": 493,
+        "mandate 8: networks expected": 638,
+        "mandate 9: networks expected": 616,
+        "mandate 10: networks expected": 504,
+        "precomputed files checked": 2783
+      },
+      "seconds": 29.2
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "voting-session counts file exists",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/voting_sessions.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "baselines published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/baselines.json — run `npm run baselines` in 2025/web",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "every mandate has a whole-Parliament baseline",
+      "ok": true,
+      "detail": "missing or empty for mandates []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_6/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 5838, 'bySubject': {'Parliamentary Procedure': 18, 'Budgets': 552, 'Agriculture and Rural Development': 295, 'Economic and Monetary Affairs': 374, 'Foreign Affairs': 983, 'Civil Liberties, Justice and Home Affairs': 326, 'Constitutional Affairs': 366, 'Environment, Climate and Food Safety': 736, 'Fisheries': 127, 'Petitions': 23, 'Legal Affairs': 152, 'Transport and Tourism': 298, 'International Trade': 164, 'Industry, Research and Energy': 273, 'Internal Market and Consumer Protection': 108, 'Regional Development': 145, 'Employment and Social Affairs': 392, 'Culture and Education': 153, 'Women’s Rights and Gender Equality': 56, 'Budgetary Control': 254, 'Security and Defence': 43}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_6.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 6: every country has a baseline",
+      "ok": true,
+      "detail": "0 without one, e.g. []. Those views compare against the whole Parliament instead.",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_7/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 4360, 'bySubject': {'Budgets': 517, 'Constitutional Affairs': 216, 'Foreign Affairs': 417, 'Culture and Education': 47, 'Budgetary Control': 416, 'Legal Affairs': 143, 'Environment, Climate and Food Safety': 556, 'Civil Liberties, Justice and Home Affairs': 140, 'Economic and Monetary Affairs': 322, 'Regional Development': 46, 'Transport and Tourism': 80, 'Agriculture and Rural Development': 363, 'Internal Market and Consumer Protection': 104, 'Fisheries': 131, 'Women’s Rights and Gender Equality': 148, 'International Trade': 187, 'Employment and Social Affairs': 296, 'Industry, Research and Energy': 179, 'Parliamentary Procedure': 1, 'Petitions': 3, 'Security and Defence': 48}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_7.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 7: every country has a baseline",
+      "ok": true,
+      "detail": "0 without one, e.g. []. Those views compare against the whole Parliament instead.",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_8/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 11286, 'bySubject': {'Foreign Affairs': 1620, 'Environment, Climate and Food Safety': 934, 'International Trade': 528, 'Budgets': 1202, 'Industry, Research and Energy': 685, 'Regional Development': 317, 'Economic and Monetary Affairs': 934, 'Constitutional Affairs': 597, 'Legal Affairs': 290, 'Transport and Tourism': 435, 'Fisheries': 178, 'Internal Market and Consumer Protection': 275, 'Employment and Social Affairs': 536, 'Parliamentary Procedure': 85, 'Civil Liberties, Justice and Home Affairs': 770, 'Budgetary Control': 779, 'Agriculture and Rural Development': 330, 'Petitions': 149, 'Culture and Education': 143, 'Women’s Rights and Gender Equality': 361, 'Security and Defence': 138}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_8.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 8: every country has a baseline",
+      "ok": true,
+      "detail": "0 without one, e.g. []. Those views compare against the whole Parliament instead.",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_9/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 18827, 'bySubject': {'Parliamentary Procedure': 179, 'Civil Liberties, Justice and Home Affairs': 1400, 'Foreign Affairs': 3598, 'Budgets': 1155, 'Constitutional Affairs': 1399, 'Regional Development': 1052, 'Environment, Climate and Food Safety': 2806, 'Industry, Research and Energy': 629, 'Employment and Social Affairs': 1026, 'Fisheries': 289, 'Transport and Tourism': 467, 'Budgetary Control': 1201, 'Economic and Monetary Affairs': 841, 'Petitions': 118, 'International Trade': 217, 'Agriculture and Rural Development': 1068, 'Legal Affairs': 353, 'Internal Market and Consumer Protection': 462, 'Culture and Education': 126, 'Women’s Rights and Gender Equality': 385, 'Security and Defence': 56}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_9.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 9: every country has a baseline",
+      "ok": true,
+      "detail": "0 without one, e.g. []. Those views compare against the whole Parliament instead.",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: data.json published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/mandate_10/data.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: counts file has an entry",
+      "ok": true,
+      "detail": "entry: {'total': 4245, 'bySubject': {'Parliamentary Procedure': 57, 'Foreign Affairs': 1049, 'Environment, Climate and Food Safety': 297, 'Transport and Tourism': 12, 'Industry, Research and Energy': 313, 'International Trade': 199, 'Economic and Monetary Affairs': 202, 'Budgets': 527, 'Legal Affairs': 190, 'Budgetary Control': 169, 'Employment and Social Affairs': 311, 'Public Health': 38, 'Constitutional Affairs': 84, 'Civil Liberties, Justice and Home Affairs': 170, 'Regional Development': 72, 'Agriculture and Rural Development': 75, 'Petitions': 40, 'Women’s Rights and Gender Equality': 176, 'Fisheries': 29, 'Internal Market and Consumer Protection': 174, 'Culture and Education': 2, 'Security and Defence': 59}}",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: no precomputed file is missing",
+      "ok": true,
+      "detail": "0 missing, e.g. []",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: every precomputed file parses",
+      "ok": true,
+      "detail": "0 corrupt, e.g. []. A truncated file usually means the layout run was killed part-way.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: every node has a position",
+      "ok": true,
+      "detail": "0 networks contain nodes without x/y, e.g. []. These render at undefined coordinates.",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: MEP info published",
+      "ok": true,
+      "detail": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/precomputed/mep_info_10.json",
+      "fatal": true,
+      "step": "Step 6: verify the published site data"
+    },
+    {
+      "name": "mandate 10: every country has a baseline",
+      "ok": true,
+      "detail": "0 without one, e.g. []. Those views compare against the whole Parliament instead.",
+      "fatal": false,
+      "step": "Step 6: verify the published site data"
+    }
+  ]
+}

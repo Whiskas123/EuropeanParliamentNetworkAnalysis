@@ -1,0 +1,85 @@
+{
+  "run": "participation",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T16:11:30.906115+00:00",
+    "seconds": 15.4,
+    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 4b: per-MEP vote counts",
+      "facts": {
+        "mandate 10: voting sessions": 4245,
+        "mandate 10: MEPs casting any vote": 732,
+        "mandate 10: written": "mep_votes_10.json (85 KB)"
+      },
+      "seconds": 15.1
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "mandate 10: votes were counted",
+      "ok": true,
+      "detail": "4245 sessions, 732 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "run": "participation",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T16:12:03.534999+00:00",
+    "seconds": 94.8,
+    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 22,
+    "passed": 22,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
+      "name": "Step 4b: per-MEP vote counts",
+      "facts": {
+        "mandate 6: voting sessions": 5838,
+        "mandate 6: MEPs casting any vote": 941,
+        "mandate 6: written": "mep_votes_6.json (104 KB)",
+        "mandate 7: voting sessions": 4360,
+        "mandate 7: MEPs casting any vote": 850,
+        "mandate 7: written": "mep_votes_7.json (93 KB)",
+        "mandate 8: voting sessions": 11286,
+        "mandate 8: MEPs casting any vote": 855,
+        "mandate 8: written": "mep_votes_8.json (102 KB)",
+        "mandate 9: voting sessions": 18827,
+        "mandate 9: MEPs casting any vote": 867,
+        "mandate 9: written": "mep_votes_9.json (106 KB)",
+        "mandate 10: voting sessions": 4245,
+        "mandate 10: MEPs casting any vote": 732,
+        "mandate 10: written": "mep_votes_10.json (85 KB)"
+      },
+      "seconds": 94.6
+    }
+  ],
+  "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "mandate 6: votes were counted",
+      "ok": true,
+      "detail": "5838 sessions, 941 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 6: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 6: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 6: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 7: votes were counted",
+      "ok": true,
+      "detail": "4360 sessions, 850 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 7: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 7: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 7: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 8: votes were counted",
+      "ok": true,
+      "detail": "11286 sessions, 855 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 8: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 8: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 8: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 9: votes were counted",
+      "ok": true,
+      "detail": "18827 sessions, 867 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 9: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 9: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 9: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: votes were counted",
+      "ok": true,
+      "detail": "4245 sessions, 732 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    }
+  ]
+}
