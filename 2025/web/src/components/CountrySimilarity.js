@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CountryFlag } from "../lib/utils.js";
-import DeltaBadge from "./DeltaBadge";
+import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+
+// Countries have no colour of their own the way political groups do, so every
+// dial takes one slate hue and the arc alone carries the magnitude. Borrowing
+// the group palette here would imply a party each delegation does not have.
+const COUNTRY_HUE = "#6B7C93";
 
 export default function CountrySimilarity({
   countrySimilarity,
@@ -11,8 +16,8 @@ export default function CountrySimilarity({
   selectedSubject,
   baseline,
 }) {
-  const [showTooltip, setShowTooltip] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+
   // In a country view this panel lists that one country, and its figure comes
   // from exactly the same pairs as the whole-Parliament figure for it, so the
   // delta is zero by construction. Showing "±0.0" there would imply something
@@ -20,19 +25,28 @@ export default function CountrySimilarity({
   // comparison, which is kept.
   const comparable = Boolean(baseline) && baseline.comparing !== "country";
 
-  if (!countrySimilarity || countrySimilarity.length === 0) return null;
-  if (!graphData) return null;
+  const rows = useMemo(() => {
+    if (!countrySimilarity || !graphData) return [];
 
-  // Count MEPs per country
-  const countryMEPCounts = new Map();
-  graphData.nodes.forEach((node) => {
-    if (node.country) {
-      countryMEPCounts.set(
-        node.country,
-        (countryMEPCounts.get(node.country) || 0) + 1
-      );
+    const counts = new Map();
+    for (const node of graphData.nodes || []) {
+      if (!node.country) continue;
+      counts.set(node.country, (counts.get(node.country) || 0) + 1);
     }
-  });
+
+    return countrySimilarity
+      .filter(Boolean)
+      .map((item) => ({ ...item, mepCount: counts.get(item.country) || 0 }))
+      // The grid is read left to right, so rank has to live in the layout.
+      .sort((a, b) => b.score - a.score);
+  }, [countrySimilarity, graphData]);
+
+  if (!graphData) return null;
+  if (rows.length === 0) return null;
+
+  // Clicking a country sets the country filter, which cannot be combined with
+  // a policy area from here — the same rule the bar list enforced.
+  const navigable = !selectedSubject && Boolean(onCountryClick);
 
   return (
     <div>
@@ -56,7 +70,8 @@ export default function CountrySimilarity({
         </svg>
       </h3>
       <div className="country-similarity-description">
-        Average voting agreement among MEPs from the same country
+        Average voting agreement among MEPs from the same country, counting only
+        those who took part in more than half the votes
         {comparable && (
           <span className="baseline-note">
             Change shown against {baseline.label}.
@@ -64,75 +79,34 @@ export default function CountrySimilarity({
         )}
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
-        <div className="country-similarity-list">
-          {countrySimilarity.map((item) => {
-            const widthPercent = item.score * 100;
-            const mepCount = countryMEPCounts.get(item.country) || 0;
-
-            const handleCountryClick = () => {
-              if (!selectedSubject && onCountryClick) {
-                onCountryClick(item.country);
+        <RadialScaleNote hasBaseline={comparable} />
+        <RadialGrid min={76}>
+          {rows.map((item) => (
+            <RadialGauge
+              key={item.country}
+              value={item.score}
+              baseline={
+                comparable
+                  ? baseline.scores?.country?.[item.country] ?? null
+                  : null
               }
-            };
-
-            const isDisabled = !!selectedSubject;
-
-            return (
-              <div
-                key={item.country}
-                className={`country-similarity-item ${
-                  !isDisabled ? "clickable" : "disabled"
-                }`}
-                onClick={handleCountryClick}
-              >
-                <div className="country-similarity-header">
-                  <span className="country-similarity-name">
-                    <span className="country-similarity-flag">
-                      <CountryFlag country={item.country} />
-                    </span>
-                    {item.country}
-                  </span>
-                  <span className="country-similarity-value">
-                    <span
-                      className="country-similarity-mep-count"
-                      onMouseEnter={() => setShowTooltip(item.country)}
-                      onMouseLeave={() => setShowTooltip(null)}
-                    >
-                      {mepCount} MEP{mepCount !== 1 ? "s" : ""}
-                      {showTooltip === item.country && (
-                        <span className="country-similarity-tooltip">
-                          Considering only MEPs that participated in &gt;50% of
-                          the votes
-                        </span>
-                      )}
-                    </span>
-                    {" · "}
-                    {(item.score * 100).toFixed(1)}%
-                    <DeltaBadge
-                      score={item.score}
-                      baseline={
-                        comparable
-                          ? baseline.scores?.country?.[item.country]
-                          : null
-                      }
-                      label={baseline?.label}
-                      what={`${item.country} cohesion`}
-                    />
-                  </span>
-                </div>
-                <div className="country-similarity-bar-container">
-                  <div
-                    className="country-similarity-bar"
-                    style={{
-                      width: `${widthPercent}%`,
-                      backgroundColor: "#6B7C93",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              color={COUNTRY_HUE}
+              label={item.country}
+              flag={<CountryFlag country={item.country} />}
+              title={`${item.country} — ${(item.score * 100).toFixed(
+                1
+              )}% internal agreement across ${item.mepCount} MEP${
+                item.mepCount === 1 ? "" : "s"
+              }${navigable ? ". Click to open this delegation." : ""}`}
+              what={`${item.country} cohesion`}
+              baselineLabel={baseline?.label}
+              sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
+              onClick={
+                navigable ? () => onCountryClick(item.country) : undefined
+              }
+            />
+          ))}
+        </RadialGrid>
       </div>
     </div>
   );

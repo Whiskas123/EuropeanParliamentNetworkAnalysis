@@ -114,9 +114,10 @@ export default function FindingsPanel({
   onSelectGroup,
   onCountryClick,
   onSelectSubject,
+  defaultCollapsed = true,
 }) {
   const [findings, setFindings] = useState(null);
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [showAll, setShowAll] = useState(false);
   const tabsRef = useRef(null);

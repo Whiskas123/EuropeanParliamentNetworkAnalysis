@@ -486,6 +486,86 @@ a {
   border-left: 1px solid #e0e0e0;
 }
 
+// The network view's three tiers. Outside .sidebar-content so the strip stays
+// put while a tab three thousand pixels tall scrolls underneath it.
+.sidebar-tabs {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2px;
+  padding: 6px 8px 0;
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sidebar-tab {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: #6b7280;
+  padding: 9px 4px 8px;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  // The active tab is marked by a rule that sits on the container's own
+  // bottom border, so nothing shifts by a pixel when the selection moves.
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: #1a1a1a;
+    background-color: #f4f6f9;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #003399;
+    outline-offset: -2px;
+  }
+}
+
+.sidebar-tab--active {
+  color: #003399;
+  font-weight: 600;
+  border-bottom-color: #003399;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.sidebar-tabpanel {
+  // A tabpanel is focusable so the keyboard can reach the content behind the
+  // strip, but it is not itself an interactive control and should not be ringed.
+  outline: none;
+
+  // Every panel carries a rule and 50px of space to separate it from whatever
+  // came before it. First in a tab there is nothing before it, so that is a
+  // stray line hanging under the strip over an empty gap.
+  > *:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+// Why a tab has nothing to show, in the tab rather than in a tooltip.
+.sidebar-tab-note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6b7280;
+  background-color: #f7f8fa;
+  border-left: 3px solid #d7dbe0;
+  padding: 12px 14px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 4px;
+}
+
 .sidebar-loading-text {
   color: #999;
   font-style: italic;
@@ -1814,137 +1894,6 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   z-index: 10;
   border-radius: 4px;
 }
-
-.similarity-scores-agreement-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.similarity-scores-agreement-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 11px;
-}
-
-.similarity-scores-agreement-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.similarity-scores-agreement-color {
-  width: 10px;
-  height: 10px;
-  background-color: #cccccc;
-  border-radius: 2px;
-  border: 1px solid #ddd;
-}
-
-.similarity-scores-agreement-name {
-  font-weight: 499;
-}
-
-.similarity-scores-agreement-value {
-  color: #003399;
-  font-weight: 600;
-  min-width: 50px;
-  text-align: right;
-}
-
-.similarity-scores-agreement-bar-container {
-  width: 100%;
-  height: 18px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.similarity-scores-agreement-bar {
-  height: 100%;
-  background-color: #cccccc;
-  transition: width 0.3s ease;
-}
-
-// Intragroup Cohesion
-.intragroup-cohesion-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.intragroup-cohesion-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 11px;
-}
-
-.intragroup-cohesion-name {
-  font-weight: 500;
-  color: #1a1a1a;
-}
-
-.intragroup-cohesion-value {
-  color: #666;
-}
-
-.intragroup-cohesion-mep-count {
-  position: relative;
-  cursor: help;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 2px;
-}
-
-.intragroup-cohesion-tooltip {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 5px;
-  padding: 6px 10px;
-  background-color: #333;
-  color: #fff;
-  font-size: 11px;
-  white-space: normal;
-  max-width: 200px;
-  text-align: center;
-  border-radius: 4px;
-  z-index: 1000;
-  pointer-events: none;
-  line-height: 1.4;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: #333;
-  }
-}
-
-.intragroup-cohesion-bar-container {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.intragroup-cohesion-bar {
-  height: 100%;
-  background-color: #cccccc;
-  transition: width 0.3s ease;
-}
-
 // Country Similarity
 // Ensure country title matches intragroup title exactly
 .country-similarity-title,
@@ -1975,104 +1924,6 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     border-radius: 2px;
   }
 }
-
-.country-similarity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.country-similarity-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.country-similarity-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 11px;
-}
-
-.country-similarity-name {
-  font-weight: 500;
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.country-similarity-flag {
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-  margin-right: 4px;
-
-  svg {
-    width: 1em;
-    height: 1em;
-    display: block;
-    flex-shrink: 0;
-  }
-}
-
-.country-similarity-value {
-  color: #666;
-}
-
-.country-similarity-mep-count {
-  position: relative;
-  cursor: help;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 2px;
-}
-
-.country-similarity-tooltip {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 5px;
-  padding: 6px 10px;
-  background-color: #333;
-  color: #fff;
-  font-size: 11px;
-  white-space: normal;
-  max-width: 200px;
-  text-align: center;
-  border-radius: 4px;
-  z-index: 1000;
-  pointer-events: none;
-  line-height: 1.4;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: #333;
-  }
-}
-
-.country-similarity-bar-container {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.country-similarity-bar {
-  height: 100%;
-  background-color: #cccccc;
-  transition: width 0.3s ease;
-}
-
 // Cohesion Heatmap
 .cohesion-heatmap {
   margin-bottom: 30px;
@@ -2699,57 +2550,12 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 250px;
+  // Taller than the bar list it replaced: a grid loses less to a cut-off row
+  // than a bar list does, and 340px shows three full rows of dials before the
+  // fade gradient asks for a scroll.
+  max-height: 340px;
   overflow-y: auto;
 }
-
-.group-subject-score-item {
-  margin-bottom: 8px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.group-subject-score-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 11px;
-}
-
-.group-subject-score-name {
-  font-weight: 500;
-  color: #333;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.group-subject-score-value {
-  color: #003399;
-  font-weight: 600;
-  min-width: 50px;
-  text-align: right;
-  margin-left: 8px;
-}
-
-.group-subject-score-bar-container {
-  width: 100%;
-  height: 18px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.group-subject-score-bar {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-
 .group-subject-scores-empty {
   padding: 20px;
   text-align: center;
@@ -3301,6 +3107,17 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     padding: 12px 16px;
     min-height: auto;
     height: auto;
+  }
+
+  // The sidebar is half the screen here, so the strip gives back what it can.
+  .sidebar-tabs {
+    padding: 4px 6px 0;
+  }
+
+  .sidebar-tab {
+    font-size: 12px;
+    padding: 7px 2px 6px;
+    min-width: 0;
   }
 
   .sidebar-header h2 {

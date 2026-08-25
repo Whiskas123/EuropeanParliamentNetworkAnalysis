@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   getGroupAcronym,
   getGroupColor,
@@ -156,23 +156,28 @@ export default function StructurePanel({
   mandate,
   onSelectNode,
   onSelectGroup,
+  defaultCollapsed = true,
 }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [ready, setReady] = useState(false);
   const [showAllMismatches, setShowAllMismatches] = useState(false);
   const [showAllBridges, setShowAllBridges] = useState(false);
   const [includeNonAttached, setIncludeNonAttached] = useState(false);
 
-  // Computed from the toggle, not an effect: this is roughly 150 ms of
-  // synchronous work on the full 696-MEP network and there is no reason to
-  // spend it on a panel nobody opened. The setTimeout lets the panel paint
-  // before the work starts, so the click does not look like a hang.
-  const toggle = () => {
-    const opening = isCollapsed;
-    setIsCollapsed(!isCollapsed);
-    if (!opening || ready) return;
-    setTimeout(() => setReady(true), 0);
-  };
+  // Roughly 150 ms of synchronous work on the full 696-MEP network, so it is
+  // not spent on a panel nobody opened. Deferring by a tick lets the panel
+  // paint its heading first, so opening it does not look like a hang.
+  //
+  // Driven by an effect rather than the click handler because the panel can
+  // also start open — inside the Explore tab, where opening the tab is the
+  // deliberate act that pays for the work.
+  useEffect(() => {
+    if (isCollapsed || ready) return undefined;
+    const id = setTimeout(() => setReady(true), 0);
+    return () => clearTimeout(id);
+  }, [isCollapsed, ready]);
+
+  const toggle = () => setIsCollapsed((collapsed) => !collapsed);
 
   // Memoised twice over: by useMemo here and by a WeakMap keyed on graphData in
   // the library, so switching away and back is free.

@@ -6,6 +6,7 @@ import {
   getGroupDisplayName,
   getSubjectEmoji,
 } from "../lib/utils.js";
+import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
 
 export default function SimilarityScores({
   selectedCountry,
@@ -150,6 +151,19 @@ export default function SimilarityScores({
     if (n) return `${acronym} members${where} (${n} MEPs)`;
     return `${acronym} members${where}`;
   })();
+
+  // One pass over the nodes instead of a find() per group inside the render.
+  // Above the guard below, because a hook after an early return runs on some
+  // renders and not others.
+  const groupColors = useMemo(() => {
+    const colors = new Map();
+    for (const node of graphData?.nodes || []) {
+      if (node.groupId && !colors.has(node.groupId)) {
+        colors.set(node.groupId, node.color);
+      }
+    }
+    return colors;
+  }, [graphData]);
 
   if (
     groupSimilarityScore === null &&
@@ -344,54 +358,36 @@ export default function SimilarityScores({
                 }`}
               >
                 <div className="similarity-scores-agreement-list-wrapper">
-                  <div className="similarity-scores-agreement-list">
-                    {(() => {
-                      // Filter out NonAttached
-                      const filteredScores = displayAgreementScores.filter(
-                        (item) => item.groupId !== "NonAttached"
-                      );
-
-                      return filteredScores.map((item) => {
-                        // Get group color
-                        const groupNode = graphData?.nodes.find(
-                          (n) => n.groupId === item.groupId
-                        );
-                        const groupColor = groupNode?.color || "#CCCCCC";
-                        const widthPercent = item.score * 100;
-
-                        return (
-                          <div
-                            key={item.groupId}
-                            className="similarity-scores-agreement-item"
-                          >
-                            <div className="similarity-scores-agreement-header">
-                              <div className="similarity-scores-agreement-group">
-                                <div
-                                  className="similarity-scores-agreement-color"
-                                  style={{ backgroundColor: groupColor }}
-                                />
-                                <span className="similarity-scores-agreement-name">
-                                  {getGroupDisplayName(item.groupId, mandate)}
-                                </span>
-                              </div>
-                              <span className="similarity-scores-agreement-value">
-                                {(item.score * 100).toFixed(1)}%
-                              </span>
-                            </div>
-                            <div className="similarity-scores-agreement-bar-container">
-                              <div
-                                className="similarity-scores-agreement-bar"
-                                style={{
-                                  width: `${widthPercent}%`,
-                                  backgroundColor: groupColor,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
+                  {/* Full scale here, unlike the cohesion grids. This measures
+                      one MEP against groups that are not theirs, which runs
+                      from 16% to 98% — 28% of these figures in the dataset are
+                      under 50%, so a 50% floor would blank a quarter of the
+                      dials. */}
+                  <RadialScaleNote floor={0} />
+                  <RadialGrid min={82}>
+                    {displayAgreementScores
+                      // The non-attached are not a group, so agreement "with"
+                      // them is not agreement with anything.
+                      .filter((item) => item.groupId !== "NonAttached")
+                      // Ranked, because a grid carries its order in the layout.
+                      .slice()
+                      .sort((a, b) => b.score - a.score)
+                      .map((item) => (
+                        <RadialGauge
+                          key={item.groupId}
+                          value={item.score}
+                          floor={0}
+                          color={groupColors.get(item.groupId) || "#CCCCCC"}
+                          label={getGroupAcronym(item.groupId, mandate)}
+                          title={`${selectedNode?.label ?? "This MEP"} votes with ${getGroupDisplayName(
+                            item.groupId,
+                            mandate
+                          )} ${(item.score * 100).toFixed(1)}% of the time${
+                            agreementSubject ? ` on ${agreementSubject}` : ""
+                          }`}
+                        />
+                      ))}
+                  </RadialGrid>
                 </div>
               </div>
             </div>

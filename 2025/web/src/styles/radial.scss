@@ -1,0 +1,204 @@
+// Radial cohesion dials — see RadialGauge.js for why the ring starts at 50%.
+
+.radial-grid {
+  display: grid;
+  // --radial-min is set per grid by RadialGrid: it is the narrowest a cell may
+  // get before a column is dropped, so each caller picks its own density.
+  grid-template-columns: repeat(auto-fill, minmax(var(--radial-min, 76px), 1fr));
+  gap: 14px 4px;
+  align-items: start;
+}
+
+.radial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 2px 5px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-family: inherit;
+  text-align: center;
+  min-width: 0;
+}
+
+.radial--clickable {
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background-color: #f4f6f9;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #003399;
+    outline-offset: 1px;
+  }
+}
+
+.radial-dial {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 56px;
+  aspect-ratio: 1;
+}
+
+.radial-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.radial-track {
+  fill: none;
+  stroke: #e4e7eb;
+}
+
+// A figure under its own floor has no arc to draw. A dotted track says the ring
+// is off its scale; an empty one would say the figure is missing.
+.radial-dial--underfloor {
+  .radial-track {
+    stroke-dasharray: 1 3;
+    stroke-linecap: round;
+    stroke: #c3c9d0;
+  }
+
+  .radial-figure-inner {
+    color: #7c848d;
+    font-weight: 600;
+  }
+}
+
+.radial-arc {
+  fill: none;
+  transition: stroke-dasharray 0.35s ease;
+}
+
+// Two lines at the same coordinates: the pale one widens the mark so it stays
+// legible where it crosses the coloured arc, the dark one is the mark itself.
+.radial-tick-halo {
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.radial-tick {
+  stroke: #46506080;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.radial-figure {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.radial-figure-inner {
+  display: flex;
+  align-items: baseline;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.4px;
+}
+
+.radial-figure-unit {
+  font-size: 7.5px;
+  font-weight: 500;
+  color: #9aa1a9;
+  margin-left: 0.5px;
+  letter-spacing: 0;
+}
+
+.radial-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  max-width: 100%;
+  min-width: 0;
+  font-size: 10.5px;
+  line-height: 1.25;
+  font-weight: 500;
+  color: #33383d;
+}
+
+.radial-label-text {
+  min-width: 0;
+  // Two lines, then ellipsis. One line would cut "Netherlands" in half at the
+  // narrowest column and the policy-area grid has nothing under four words.
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.radial-flag {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 10px;
+
+  svg {
+    width: 1.1em;
+    height: 1.1em;
+    display: block;
+  }
+}
+
+.radial-delta {
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+
+  // The badge is sized for a sidebar row; in a 76px cell it needs to be smaller
+  // than the label it sits under, not larger.
+  .delta-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+    gap: 1px;
+  }
+
+  .delta-badge-unit {
+    font-size: 7.5px;
+  }
+}
+
+.radial-sub {
+  font-size: 9px;
+  color: #8a9199;
+  line-height: 1.2;
+}
+
+.radial-scale-note {
+  font-size: 10px;
+  color: #8a9199;
+  line-height: 1.4;
+  margin: 0 0 10px 0;
+}
+
+// An empty grid still needs to say why it is empty.
+.radial-empty {
+  font-size: 11px;
+  color: #8a9199;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+@media (max-width: 768px) {
+  .radial-grid {
+    gap: 12px 4px;
+  }
+}

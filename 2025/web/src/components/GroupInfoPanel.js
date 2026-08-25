@@ -9,6 +9,7 @@ import {
   getGroupFamily,
   getSubjectEmoji,
 } from "../lib/utils.js";
+import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
 
 export default function GroupInfoPanel({
   groupId,
@@ -497,33 +498,23 @@ export default function GroupInfoPanel({
                 className="group-subject-scores-list"
                 ref={subjectScoresListRef}
               >
-                {sortedSubjectScores.map((item) => {
-                  const widthPercent = item.score * 100;
-                  return (
-                    <div
+                <RadialScaleNote />
+                {/* Policy-area names run to forty characters, so these cells
+                    are twice the width of the country grid's — three to a row
+                    rather than five, with the name over two lines. */}
+                <RadialGrid min={124}>
+                  {sortedSubjectScores.map((item) => (
+                    <RadialGauge
                       key={item.subject}
-                      className="group-subject-score-item"
-                    >
-                      <div className="group-subject-score-header">
-                        <span className="group-subject-score-name">
-                          {getSubjectEmoji(item.subject)} {item.subject}
-                        </span>
-                        <span className="group-subject-score-value">
-                          {(item.score * 100).toFixed(1)}%
-                        </span>
-                      </div>
-                      <div className="group-subject-score-bar-container">
-                        <div
-                          className="group-subject-score-bar"
-                          style={{
-                            width: `${widthPercent}%`,
-                            backgroundColor: groupColor,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                      value={item.score}
+                      color={groupColor}
+                      label={`${getSubjectEmoji(item.subject)} ${item.subject}`}
+                      title={`${item.subject} — ${(item.score * 100).toFixed(
+                        1
+                      )}% internal agreement`}
+                    />
+                  ))}
+                </RadialGrid>
               </div>
             ) : (
               <div className="group-subject-scores-empty">
