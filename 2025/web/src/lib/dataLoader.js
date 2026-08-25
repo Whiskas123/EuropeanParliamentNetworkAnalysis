@@ -559,7 +559,57 @@ export async function loadMandateData(mandate, country = null, subject = null) {
 
       // If subject is selected, also load all-subjects agreement scores (for "All Subjects" dropdown option)
       // Always prefer all-subjects agreement scores to ensure they're calculated from all edges
-      let agreementScores = precomputed.agreementScores || null;
+      // Drop MEPs who are not actually in this network.
+      //
+      // A per-subject network re-applies the participation rule to that
+      // subject's votes alone, so an MEP who sat out most of the 75 agriculture
+      // votes is not part of the agriculture network. The precomputed files
+      // nonetheless list every MEP of the mandate (or of the country) as a
+      // node, leaving those people present with no edges and no scores. They
+      // then show in the drawing and drag every count down: with Ciaran
+      // Mullooly still listed, Ireland x Agriculture reported 14 MEPs while
+      // every compatriot count said 12.
+      //
+      // Membership is decided by whether this view holds any agreement data for
+      // the MEP, not by whether they have edges in the file. Those edges are
+      // cut at weight 0.6 for legibility, and three networks in a sample of
+      // thirty contain a genuine member all of whose ties fall below that line
+      // — Kartheiser in Luxembourg x Fisheries among them. Filtering on edges
+      // would delete them.
+      //
+      // `precomputed.agreementScores` is this view's own. The substitution
+      // below deliberately swaps in the all-subjects figures for the sidebar,
+      // and those would say everyone belongs everywhere.
+      const ownScores = precomputed.agreementScores;
+      let nodes = precomputed.nodes;
+      let similarityScores = precomputed.similarityScores || null;
+      let viewScores = ownScores || null;
+
+      if (ownScores && (country || subject)) {
+        const belongs = (id) => {
+          const entry = ownScores[id];
+          if (!entry) return false;
+          return Object.values(entry).some((item) => (item?.count || 0) > 0);
+        };
+        const kept = nodes.filter((node) => belongs(node.id));
+        // Never empty a network on a surprise: if the rule would remove
+        // everyone, the assumption behind it does not hold for this file and
+        // showing it unfiltered is the honest failure.
+        if (kept.length > 0 && kept.length < nodes.length) {
+          const keptIds = new Set(kept.map((node) => node.id));
+          nodes = kept;
+          const pick = (source) =>
+            source
+              ? Object.fromEntries(
+                  Object.entries(source).filter(([id]) => keptIds.has(id))
+                )
+              : source;
+          similarityScores = pick(similarityScores);
+          viewScores = pick(viewScores);
+        }
+      }
+
+      let agreementScores = viewScores;
       if (subject && !country) {
         const allSubjectsPrecomputed = await loadPrecomputedLayout(
           mandate,
@@ -573,10 +623,10 @@ export async function loadMandateData(mandate, country = null, subject = null) {
       }
 
       return {
-        nodes: precomputed.nodes,
+        nodes,
         edges: precomputed.edges,
         agreementScores: agreementScores,
-        similarityScores: precomputed.similarityScores || null,
+        similarityScores,
         cohesionData: cohesionData, // Precomputed cohesion data
         // The only statistic with no correct source in this file; see
         // loadCountrySimilarity above.
