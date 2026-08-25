@@ -29,6 +29,11 @@ import {
 } from "./edgeStyle.js";
 import { listParties } from "./parties.js";
 import {
+  buildCommunityShapes,
+  communityLabel,
+  stackLabels,
+} from "./communityShapes.js";
+import {
   getGroupDisplayName,
   getGroupAcronym,
   getDelta,
@@ -74,6 +79,7 @@ const DEFAULT_RENDER = {
   edgeWidth: 1,
   colorMode: "group",
   dim: null,
+  communities: false,
 };
 
 /** Parties below this many MEPs never reach the legend; there is a long tail. */
@@ -190,6 +196,22 @@ function svgRule(x, y, width, color = RULE, thickness = 1) {
 function nodeRadius(count) {
   const total = Number(count) > 0 ? Number(count) : 1;
   return Math.max(3, Math.min(15, 15 * Math.pow(total / 700, 0.4)));
+}
+
+/**
+ * Community outlines, or nothing.
+ *
+ * An export is usually the last step before a print deadline, and a partition
+ * that throws on some unusual network must not be the reason the file never
+ * arrives — the picture without its outlines is still the picture.
+ */
+function tryCommunityShapes(graphData) {
+  try {
+    return buildCommunityShapes(graphData);
+  } catch (error) {
+    console.warn("exportNetworkSVG: community outlines unavailable:", error);
+    return null;
+  }
 }
 
 /** d3 sometimes swaps an endpoint id for the node object it resolved to. */
@@ -807,6 +829,88 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
       );
     });
 
+  // --- communities --------------------------------------------------------
+  // Only when the screen is showing them, and drawn to the same multiples of
+  // the node radius, so the print is the picture the reader was looking at.
+  // Each community is its own <g> with its name on it: these files are opened
+  // in a vector editor to be annotated by hand, and a layer called "PPE" is
+  // the difference between that being possible and not.
+  let communityParts = [];
+  let communityLabelParts = [];
+  let communityNote = "no community outlines";
+  if (view.communities) {
+    const communities = tryCommunityShapes(graphData);
+    if (communities && communities.shapes.length > 0) {
+      // In design units, like the caption: the outline and its name are the
+      // same fraction of the picture whether the layout spans 400 units or
+      // 12,000, which is also what the canvas does with them on screen.
+      const outlineWidth = Math.max(radius * 0.3, du(1.1));
+      const dashOn = outlineWidth * 5;
+      const dashOff = outlineWidth * 3.6;
+      const titleSize = Math.max(radius * 2.2, du(13));
+      const countSize = titleSize * 0.68;
+      communityParts = communities.shapes.map((shape) => {
+        const d = shape.rings
+          .map(
+            (ring) =>
+              `M${ring
+                .map((point) => `${c(point[0])} ${c(point[1])}`)
+                .join("L")}Z`
+          )
+          .join("");
+        const name = communityLabel(shape, info.mandate);
+        return (
+          `<g data-community="${esc(name)}" data-size="${shape.size}">` +
+          `<title>${esc(`${name} — ${shape.size} MEPs`)}</title>` +
+          `<path fill="none" stroke="${esc(shape.color)}" stroke-width="${n2(
+            outlineWidth
+          )}" stroke-opacity="0.9" stroke-linejoin="round" ` +
+          `stroke-dasharray="${n2(dashOn)} ${n2(dashOff)}" d="${d}"/>` +
+          `</g>`
+        );
+      });
+      // Same stacking rule as the canvas, on an estimate of the text width
+      // rather than a measurement of it — half a character of slack in a
+      // collision test that only ever moves a label upwards.
+      const blockHeight = titleSize + countSize * 1.15;
+      const labelBaselines = stackLabels(
+        communities.shapes.map((shape) => ({
+          x: shape.anchor.x,
+          y: shape.anchor.y - titleSize * 0.75,
+          width: Math.max(
+            estimateWidth(communityLabel(shape, info.mandate), titleSize),
+            estimateWidth(`${shape.size} MEPs`, countSize)
+          ),
+          height: blockHeight,
+        })),
+        titleSize * 0.4
+      );
+      communityLabelParts = communities.shapes.flatMap((shape, index) => {
+        const countY = labelBaselines[index];
+        const titleY = countY - countSize * 1.15;
+        return [
+          svgText(shape.anchor.x, titleY, communityLabel(shape, info.mandate), {
+            size: titleSize,
+            weight: 600,
+            fill: shape.color,
+            anchor: "middle",
+          }),
+          svgText(shape.anchor.x, countY, `${shape.size} MEPs`, {
+            size: countSize,
+            weight: 500,
+            fill: SECONDARY,
+            anchor: "middle",
+          }),
+        ];
+      });
+      communityNote =
+        `${communities.count} communities detected, ` +
+        `${communities.shapes.length} outlined`;
+    } else {
+      communityNote = "community outlines requested, none could be drawn";
+    }
+  }
+
   // --- document -----------------------------------------------------------
   const pixelWidth = 1600;
   const pixelHeight = Math.round((pixelWidth * height) / width);
@@ -818,6 +922,7 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     `width x${round(view.edgeWidth, 2)}`,
     `colour by ${view.colorMode}`,
     dim ? `dimmed to ${dim.type} ${dim.value}` : "no dim",
+    communityNote,
     `${invisible.toLocaleString("en-US")} selected edges fall at or below the neutral weight and carry no width`,
   ].join(", ");
 
@@ -832,8 +937,14 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     )}</desc>` +
     svgRect(left, top, width, height, PAPER, 'id="background"') +
     `<g id="edges">${edgeParts.join("")}</g>` +
+    (communityParts.length > 0
+      ? `<g id="communities">${communityParts.join("")}</g>`
+      : "") +
     `<g id="nodes" stroke="${NODE_BORDER}" stroke-opacity="${NODE_BORDER_OPACITY}" ` +
     `stroke-width="${n2(NODE_BORDER_WIDTH)}">${nodeGroups.join("")}</g>` +
+    (communityLabelParts.length > 0
+      ? `<g id="community-labels">${communityLabelParts.join("")}</g>`
+      : "") +
     `<g id="caption">` +
     `<g id="caption-header" transform="translate(${n1(left)}, ${n1(top)})">${headerParts.join(
       ""

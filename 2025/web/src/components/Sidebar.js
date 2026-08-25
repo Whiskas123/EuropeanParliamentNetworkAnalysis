@@ -12,7 +12,6 @@ import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
 import CohesionInsights from "./CohesionInsights";
 import TrendsPanel from "./TrendsPanel";
-import StructurePanel from "./StructurePanel";
 import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
 
 /**
@@ -29,12 +28,19 @@ import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
  * of the open network, a shortlist of *other* networks worth opening, and
  * twenty years of history — grouped only by having been built last.
  *
- * The order is an argument, and the scope is the argument. Every tab describes
- * the network on screen. The first two do it in increasing depth: how tightly
- * its blocs hold, and what it looks like to something that has never heard of a
- * political group. History keeps the network and lets go of the term instead,
- * following the open view back to 2004 with the whole Parliament drawn faintly
- * behind it for scale.
+ * The order is an argument, and the scope is the argument. Both tabs describe
+ * the network on screen: Agreement says how tightly its blocs hold, and
+ * History keeps the network and lets go of the term instead, following the
+ * open view back to 2004 with the whole Parliament drawn faintly behind it for
+ * scale.
+ *
+ * A Structure tab used to sit between them, holding what the votes look like
+ * to an algorithm that has never heard of a political group. Two of its three
+ * sections were the Leads screen's Mavericks ranking under other names, and
+ * the third — the communities themselves — was a stack of bars describing
+ * something the reader was already looking at. A community is a *place* on
+ * this canvas, so it is now drawn there: the display panel over the network
+ * outlines them. See lib/communityShapes.js.
  *
  * A Findings tab used to sit between them, holding term-wide rankings of the
  * views worth opening next. It was the one tab that let go of the network — and
@@ -55,7 +61,6 @@ import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
  */
 const TABS = [
   { id: "cohesion", label: "Agreement" },
-  { id: "structure", label: "Structure" },
   { id: "history", label: "History" },
 ];
 
@@ -386,20 +391,9 @@ export default function Sidebar({
       );
     }
 
-    // One panel per tab from here on, so none of them wears a collapse chevron:
-    // opening the tab is the act that asks for the content, and a control that
-    // hides everything under it would leave the tab looking broken.
-    if (activeTab === "structure") {
-      return (
-        <StructurePanel
-          graphData={graphData}
-          mandate={mandate}
-          onSelectNode={onSelectNode}
-          onSelectGroup={onSelectGroup}
-        />
-      );
-    }
-
+    // History is one panel, so it wears no collapse chevron: opening the tab is
+    // the act that asks for the content, and a control that hides everything
+    // under it would leave the tab looking broken.
     return (
       <TrendsPanel
         mandate={mandate}

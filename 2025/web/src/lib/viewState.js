@@ -21,6 +21,8 @@ export const DEFAULT_VIEW = {
   colorMode: "group",
   /** {type: "group"|"country", value: string} | null */
   dim: null,
+  /** Draw the detected communities as outlines over the network. */
+  communities: false,
   /** MEP id to select, if any. */
   mep: null,
   /** Political group to open the group panel on, if any. */
@@ -37,6 +39,7 @@ const KEYS = {
   edgeWidth: "w",
   colorMode: "k",
   dim: "d",
+  communities: "u",
   mep: "n",
   group: "g",
 };
@@ -67,6 +70,7 @@ export function encodeView(view) {
   put("edgePercentile", view.edgePercentile, DEFAULT_VIEW.edgePercentile);
   put("edgeWidth", view.edgeWidth, DEFAULT_VIEW.edgeWidth);
   put("colorMode", view.colorMode, DEFAULT_VIEW.colorMode);
+  if (view.communities) params.set(KEYS.communities, "1");
   put("mep", view.mep, null);
   put("group", view.group, null);
   if (view.dim && view.dim.value) {
@@ -125,6 +129,8 @@ export function decodeView(query) {
       view.dim = { type, value };
     }
   }
+
+  view.communities = params.get(KEYS.communities) === "1";
 
   const mep = params.get(KEYS.mep);
   if (mep) view.mep = mep;

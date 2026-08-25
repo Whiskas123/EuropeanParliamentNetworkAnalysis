@@ -3,11 +3,13 @@ import { NEUTRAL_WEIGHT } from "./edgeStyle.js";
 /**
  * Structure of the network, computed without any knowledge of politics.
  *
- * Two questions, both awkward on this particular graph:
+ * One question, awkward on this particular graph: if you hand a
+ * community-detection algorithm the votes and nothing else, does it rediscover
+ * the political groups?
  *
- *   1. If you hand a community-detection algorithm the votes and nothing else,
- *      does it rediscover the political groups?
- *   2. Which MEPs sit between blocs rather than inside one?
+ * The answer is drawn rather than tabulated — lib/communityShapes.js turns each
+ * community into an outline over the network, which is where a community
+ * actually is. This file only finds them.
  *
  * ---------------------------------------------------------------------------
  * WHY THE OBVIOUS APPROACH DOES NOT WORK HERE
@@ -32,9 +34,9 @@ import { NEUTRAL_WEIGHT } from "./edgeStyle.js";
  * null model expects roughly what it sees. On term 10 it returns three blocs at
  * modularity 0.24, the largest holding 63% of Parliament — and it is not even
  * a stable answer, because fed the complete edge list instead of the trimmed
- * one the same run gives modularity 0.11 and a 45% largest bloc. That figure is
- * printed by the verification script and reported in the UI, because it changes
- * what the result means.
+ * one the same run gives modularity 0.11 and a 45% largest bloc. Those figures
+ * are recorded here rather than on screen, and can be recomputed by passing
+ * {includeNaive: true}, because they change what the result means.
  *
  * ---------------------------------------------------------------------------
  * THE PREPROCESSING, AND WHY
@@ -73,25 +75,18 @@ import { NEUTRAL_WEIGHT } from "./edgeStyle.js";
  * can answer.
  *
  * ---------------------------------------------------------------------------
- * THE BRIDGE MEASURE
+ * WHAT THIS FILE DELIBERATELY DOES NOT ANSWER
  * ---------------------------------------------------------------------------
  *
- * Betweenness centrality is the textbook answer and it is meaningless here. In
- * a complete graph every shortest path is one hop, so no node is ever on
- * anyone's path and every score is zero; run it on the sparsified graph instead
- * and you measure an artefact of k rather than a fact about Parliament.
- *
- * So we ask the question directly, using the exact agreement scores computed
- * over the complete edge set: how far is an MEP from their own group compared
- * with the nearest other group? An MEP whose own group is barely closer than
- * the group next door sits between blocs by any reasonable reading, and one
- * whose nearest group is not their own has crossed over. That is a claim about
- * every one of the 241,860 pairs, not about a sparsification parameter, and it
- * can be checked by hand from the numbers already on the MEP's own panel.
- *
- * We report the structural cross-check alongside it — the share of an MEP's k
- * closest colleagues who landed in a different detected community — but the
- * ranking is the agreement gap.
+ * "Which MEPs sit between blocs?" was computed here once, and is not any more.
+ * Betweenness centrality is the textbook answer and it is meaningless on this
+ * graph: every shortest path is one hop, so every score is zero, and running it
+ * on the sparsified graph measures the choice of k rather than a fact about
+ * Parliament. Asking the question directly instead — how far is an MEP from
+ * their own group compared with the nearest other group — is what the Mavericks
+ * ranking on the Leads screen does, over every term at once and from the
+ * agreement scores rather than from a partition. Two implementations of one
+ * measure is one too many, so this one went.
  */
 
 /**
@@ -566,75 +561,6 @@ export function comparePartitions(labelsA, labelsB) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* bridges                                                                    */
-/* -------------------------------------------------------------------------- */
-
-/** Groups that are not really a political group and should not count as "own". */
-const NON_GROUP = new Set(["NonAttached", "NI", "Non-attached", "Unknown", ""]);
-
-/**
- * Every MEP's distance from their own group compared with the nearest other
- * group, from the precomputed agreement scores — which are averaged over the
- * complete edge set, so this is a statement about all 241,860 pairs.
- */
-function computeBridges(nodes, agreementScores, membership, csr) {
-  if (!agreementScores) return null;
-  const rows = [];
-
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    const scores = agreementScores[node.id];
-    if (!scores) continue;
-    const ownGroup = node.groupId;
-    const own = scores[ownGroup];
-    const ownScore = own && typeof own.score === "number" ? own.score : null;
-
-    let bestOtherGroup = null;
-    let bestOtherScore = -Infinity;
-    const groupIds = Object.keys(scores);
-    for (let g = 0; g < groupIds.length; g++) {
-      const gid = groupIds[g];
-      if (gid === ownGroup) continue;
-      const entry = scores[gid];
-      if (!entry || typeof entry.score !== "number" || !entry.count) continue;
-      if (entry.score > bestOtherScore) {
-        bestOtherScore = entry.score;
-        bestOtherGroup = gid;
-      }
-    }
-    if (bestOtherGroup === null || ownScore === null) continue;
-
-    // Structural cross-check: how many of this MEP's closest colleagues ended
-    // up in a different detected community.
-    let neighbours = 0;
-    let across = 0;
-    for (let s = csr.offset[i]; s < csr.offset[i + 1]; s++) {
-      const j = csr.neighbour[s];
-      if (j === i) continue;
-      neighbours++;
-      if (membership[j] !== membership[i]) across++;
-    }
-
-    rows.push({
-      id: node.id,
-      label: node.label,
-      country: node.country,
-      groupId: ownGroup,
-      isNonAttached: NON_GROUP.has(ownGroup),
-      ownScore,
-      bestOtherGroup,
-      bestOtherScore,
-      gap: ownScore - bestOtherScore,
-      crossCommunityShare: neighbours > 0 ? across / neighbours : 0,
-      community: membership[i],
-    });
-  }
-
-  rows.sort((a, b) => a.gap - b.gap);
-  return rows;
-}
-
-/* -------------------------------------------------------------------------- */
 /* entry point                                                                */
 /* -------------------------------------------------------------------------- */
 
@@ -642,9 +568,9 @@ const cache = new WeakMap();
 
 /**
  * Run the whole analysis. Expensive enough to be worth memoising per graphData
- * and worth deferring until the panel is actually opened.
+ * and worth deferring until the reader asks for the outlines.
  *
- * @param {object} graphData - {nodes, allLinks, nodeMap, agreementScores}
+ * @param {object} graphData - {nodes, allLinks, nodeMap}
  * @param {object} [options] - {k, resolution, seed, includeNaive}
  * @returns {object|null} null when the network is too small to partition
  */
@@ -658,7 +584,11 @@ export function analyzeStructure(graphData, options = {}) {
   const resolution = options.resolution ?? DEFAULT_RESOLUTION;
   const seed = options.seed ?? SEED;
   const restarts = options.restarts ?? RESTARTS;
-  const includeNaive = options.includeNaive !== false;
+  // The comparison run — same algorithm, raw weights, every edge — is off by
+  // default. It doubles the cost of the analysis and nothing on screen shows
+  // it any more; the numbers it produces on term 10 are in the note at the top
+  // of this file, and scripts that want to re-check them can ask for it.
+  const includeNaive = options.includeNaive === true;
 
   const base = indexGraph(graphData);
   const { nodes } = base;
@@ -700,7 +630,6 @@ export function analyzeStructure(graphData, options = {}) {
   const sparse = sparsify(n, base.eu, base.ev, base.ew, k);
   const result = bestOf(sparse.eu, sparse.ev, sparse.ew);
   const membership = result.membership;
-  const csr = buildCsr(n, sparse.eu, sparse.ev, sparse.ew);
 
   // Community composition by political group, and by country — the country
   // breakdown is what tells you whether a community that looks like a clean
@@ -765,30 +694,17 @@ export function analyzeStructure(graphData, options = {}) {
   const rank = new Map();
   for (let i = 0; i < shaped.length; i++) rank.set(shaped[i].id, i);
 
-  // MEPs the algorithm filed under a community another group owns.
-  const mismatched = [];
+  // How many MEPs the algorithm filed under a community another group owns.
+  // Only the count: who they are, and by how much they agree with the group
+  // they landed in, is the Mavericks ranking on the Leads screen, computed
+  // from the same agreement scores over every term at once.
+  let mismatchedCount = 0;
   for (let i = 0; i < n; i++) {
     const community = shaped[rank.get(membership[i])];
     const groupId = nodes[i].groupId || "Unknown";
     if (!community.dominantGroup || community.dominantGroup === groupId) continue;
-    const scores = graphData.agreementScores?.[nodes[i].id] || null;
-    const ownScore = scores?.[groupId]?.score ?? null;
-    const hostScore = scores?.[community.dominantGroup]?.score ?? null;
-    mismatched.push({
-      id: nodes[i].id,
-      label: nodes[i].label,
-      country: nodes[i].country,
-      groupId,
-      community: community.id,
-      communityRank: rank.get(membership[i]),
-      hostGroup: community.dominantGroup,
-      ownScore,
-      hostScore,
-      delta: ownScore !== null && hostScore !== null ? hostScore - ownScore : null,
-    });
+    mismatchedCount++;
   }
-  // Strongest evidence first: the ones who also agree more with the host group.
-  mismatched.sort((a, b) => (b.delta ?? -Infinity) - (a.delta ?? -Infinity));
 
   const groupLabels = new Array(n);
   const communityLabels = new Array(n);
@@ -797,13 +713,6 @@ export function analyzeStructure(graphData, options = {}) {
     communityLabels[i] = String(membership[i]);
   }
   const agreement = comparePartitions(communityLabels, groupLabels);
-
-  const bridges = computeBridges(
-    nodes,
-    graphData.agreementScores,
-    membership,
-    csr
-  );
 
   const totalMs =
     (typeof performance !== "undefined" ? performance.now() : Date.now()) -
@@ -826,15 +735,9 @@ export function analyzeStructure(graphData, options = {}) {
     communityCount: result.communityCount,
     modularity: result.modularity,
     membership,
-    memberCommunityRank: (mepId) => {
-      const i = base.index.get(mepId);
-      return i === undefined ? null : rank.get(membership[i]);
-    },
-    mismatched,
     // Share of MEPs sitting in a community their own group dominates.
-    concordantShare: n === 0 ? 0 : (n - mismatched.length) / n,
+    concordantShare: n === 0 ? 0 : (n - mismatchedCount) / n,
     agreement,
-    bridges,
     ms: totalMs,
   };
 }

@@ -20,6 +20,11 @@ import {
   buildLegend,
 } from "../lib/networkExport";
 import { getGroupAcronym, getGroupColor } from "../lib/utils";
+import {
+  buildCommunityShapes,
+  communityLabel,
+  stackLabels,
+} from "../lib/communityShapes";
 import "../styles/canvas-controls.scss";
 
 const NODE_BORDER_BASE_LINE_WIDTH = 0.5;
@@ -41,6 +46,28 @@ const COLOR_MODES = [
   { id: "party", label: "Party" },
   { id: "loyalty", label: "Loyalty" },
 ];
+
+/**
+ * Type for anything drawn into the canvas. There is no stylesheet in here, so
+ * the stack is spelled out; it is the one the rest of the app resolves to.
+ */
+function canvasFont(size, weight = 600) {
+  return `${weight} ${size}px Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif`;
+}
+
+/**
+ * Community outlines and their labels are measured in screen pixels, not in
+ * layout units.
+ *
+ * Everything else on the canvas — node radius, edge width — is in layout units
+ * and scales with the zoom, which is right for the picture and wrong for type.
+ * At the zoom a 696-MEP network opens at, a node's radius is under two pixels,
+ * so type set as a multiple of it would be four pixels tall. These are floors
+ * in screen pixels: the outline never comes out thinner than a hairline and the
+ * name is always readable, whatever the network's own scale happens to be.
+ */
+const OUTLINE_MIN_PX = 1.1;
+const COMMUNITY_LABEL_PX = 13;
 
 /** Parties smaller than this are folded into "others" in the legend. */
 const LEGEND_MIN_PARTY_MEMBERS = 2;
@@ -73,6 +100,106 @@ function tryExportCall(label, fn, fallback = null) {
 }
 
 /**
+ * The detected communities, as dashed outlines beneath the nodes.
+ *
+ * Dashed rather than solid on purpose. These are density contours, not
+ * borders: the line marks where a community thins out, and a solid stroke
+ * would claim a precision the method does not have. See lib/communityShapes.js
+ * for what the shape is and lib/networkAnalysis.js for what the partition is.
+ *
+ * Every measurement here is a multiple of the node radius, which is in layout
+ * units, so the overlay scales with the picture and a print matches the screen
+ * without a second set of numbers.
+ */
+function drawCommunityOutlines(ctx, communities, nodeSize, viewScale) {
+  if (!communities || communities.length === 0) return;
+  ctx.save();
+  ctx.lineJoin = "round";
+  ctx.lineCap = "butt";
+  const stroke = Math.max(nodeSize * 0.3, OUTLINE_MIN_PX / viewScale);
+  ctx.lineWidth = stroke;
+  ctx.setLineDash([stroke * 5, stroke * 3.6]);
+  ctx.globalAlpha = 0.9;
+
+  for (let i = 0; i < communities.length; i += 1) {
+    const community = communities[i];
+    ctx.strokeStyle = community.color;
+    for (let r = 0; r < community.rings.length; r += 1) {
+      const ring = community.rings[r];
+      if (ring.length < 3) continue;
+      ctx.beginPath();
+      ctx.moveTo(ring[0][0], ring[0][1]);
+      for (let p = 1; p < ring.length; p += 1) ctx.lineTo(ring[p][0], ring[p][1]);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+/**
+ * The community names, over the nodes.
+ *
+ * Drawn after the nodes rather than with the outlines: an outline is texture
+ * and can sit under a node, a name cannot. Each one gets a white halo for the
+ * same reason — the anchor is the top of the shape, which is the emptiest edge
+ * of it, but "emptiest" is not "empty" on a canvas holding seven hundred MEPs.
+ */
+function drawCommunityLabels(ctx, communities, nodeSize, viewScale) {
+  if (!communities || communities.length === 0) return;
+  ctx.save();
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+  ctx.lineJoin = "round";
+  ctx.setLineDash([]);
+  ctx.globalAlpha = 1;
+
+  const titleSize = Math.max(nodeSize * 2.2, COMMUNITY_LABEL_PX / viewScale);
+  const countSize = titleSize * 0.68;
+  const blockHeight = titleSize + countSize * 1.15;
+
+  // Shapes overlap, so their names would too. Measured here and stacked in
+  // lib/communityShapes.js, on the rule the SVG export also follows.
+  const baselines = stackLabels(
+    communities.map((community) => {
+      ctx.font = canvasFont(titleSize);
+      const titleWidth = ctx.measureText(community.label).width;
+      ctx.font = canvasFont(countSize, 500);
+      const countWidth = ctx.measureText(community.countLabel).width;
+      return {
+        x: community.anchor.x,
+        y: community.anchor.y - titleSize * 0.75,
+        width: Math.max(titleWidth, countWidth),
+        height: blockHeight,
+      };
+    }),
+    titleSize * 0.4
+  );
+
+  for (let i = 0; i < communities.length; i += 1) {
+    const community = communities[i];
+    const x = community.anchor.x;
+    const countY = baselines[i];
+    const titleY = countY - countSize * 1.15;
+
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+
+    ctx.font = canvasFont(titleSize);
+    ctx.lineWidth = titleSize * 0.3;
+    ctx.strokeText(community.label, x, titleY);
+    ctx.fillStyle = community.color;
+    ctx.fillText(community.label, x, titleY);
+
+    ctx.font = canvasFont(countSize, 500);
+    ctx.lineWidth = countSize * 0.34;
+    ctx.strokeText(community.countLabel, x, countY);
+    ctx.fillStyle = "rgba(60, 60, 66, 0.85)";
+    ctx.fillText(community.countLabel, x, countY);
+  }
+  ctx.restore();
+}
+
+/**
  * Draw the whole scene into an already-transformed context.
  *
  * The screen canvas and the PNG export both come through here, so an export
@@ -92,6 +219,8 @@ function drawScene(ctx, params) {
     dim,
     lineWidthDivisor,
     baseEdgeAlpha,
+    communities,
+    viewScale,
   } = params;
 
   const dimActive = Boolean(dim && dim.value);
@@ -130,6 +259,11 @@ function drawScene(ctx, params) {
 
   const nodes = graphData.nodes;
   const nodeSize = nodeRadiusFor(nodes.length);
+
+  // Between the edges and the nodes: an outline is a region, so it belongs
+  // behind the MEPs standing in it and in front of the wash of ties.
+  drawCommunityOutlines(ctx, communities, nodeSize, viewScale);
+
   const selectedNodeSize = nodeSize * 1.2;
   const haloSize1 = selectedNodeSize * 1.9;
   const haloSize2 = selectedNodeSize * 1.6;
@@ -187,6 +321,7 @@ function drawScene(ctx, params) {
   }
 
   ctx.globalAlpha = 1;
+  drawCommunityLabels(ctx, communities, nodeSize, viewScale);
 }
 
 /**
@@ -289,6 +424,11 @@ export default function NetworkCanvas({
   // work is worse than not offering it.
   const [svgExportBroken, setSvgExportBroken] = useState(false);
   const [statsExportBroken, setStatsExportBroken] = useState(false);
+  // The community outlines, once they have been computed. Held here rather
+  // than derived in a useMemo because computing them blocks for a fifth of a
+  // second on the full network, which has to happen off the click.
+  const [communityData, setCommunityData] = useState(null);
+  const [communitiesPending, setCommunitiesPending] = useState(false);
 
   // Defaults keep this component usable on its own if a caller ever drops the
   // prop; page.js always passes a complete object.
@@ -296,6 +436,7 @@ export default function NetworkCanvas({
   const widthMultiplier = renderSettings?.edgeWidth ?? 1;
   const colorMode = renderSettings?.colorMode ?? "group";
   const dim = renderSettings?.dim ?? null;
+  const showCommunities = renderSettings?.communities ?? false;
   const activeDimKind = dim?.type || dimKind;
 
   const updateSettings = (patch) => {
@@ -305,6 +446,7 @@ export default function NetworkCanvas({
       edgeWidth: widthMultiplier,
       colorMode,
       dim,
+      communities: showCommunities,
       ...patch,
     });
   };
@@ -419,6 +561,89 @@ export default function NetworkCanvas({
     return [];
   }, [graphData, colorMode, nodeColorFn, presentGroups, presentCountries]);
 
+  /**
+   * Find the communities, once the reader has asked for them.
+   *
+   * Roughly 200 ms of synchronous work on the full 696-MEP network — Louvain
+   * over the sparsified graph, then a density contour per community — so it is
+   * not spent unless the overlay is switched on, and it is deferred by a tick
+   * so the button paints as pressed before the main thread goes away. The
+   * result is memoised on graphData inside the library, so switching the
+   * overlay off and on again, or leaving and returning to a network, is free.
+   */
+  useEffect(() => {
+    if (!showCommunities || !graphData) {
+      setCommunityData(null);
+      setCommunitiesPending(false);
+      return undefined;
+    }
+    let cancelled = false;
+    setCommunitiesPending(true);
+    const id = setTimeout(() => {
+      let shapes = null;
+      try {
+        shapes = buildCommunityShapes(graphData);
+      } catch (error) {
+        // A network that cannot be partitioned is a normal outcome, not a
+        // reason to take the canvas down with it.
+        console.warn("Community detection failed:", error);
+      }
+      if (cancelled) return;
+      setCommunityData(shapes);
+      setCommunitiesPending(false);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+  }, [showCommunities, graphData]);
+
+  // Names and colours for the outlines. Separate from the geometry because the
+  // geometry does not depend on the term and the acronyms do.
+  const communityOverlay = useMemo(() => {
+    if (!communityData || communityData.shapes.length === 0) return null;
+    return communityData.shapes.map((shape) => ({
+      ...shape,
+      label: communityLabel(shape, mandate),
+      countLabel: `${shape.size} MEP${shape.size === 1 ? "" : "s"}`,
+    }));
+  }, [communityData, mandate]);
+
+  /**
+   * The figures under the switch, and the exception if there is one.
+   *
+   * Both matter more than they look: a community that is counted and not
+   * drawn has to be accounted for somewhere, or the overlay quietly reports a
+   * smaller Parliament than the algorithm found.
+   */
+  const communityReadout = communitiesPending
+    ? "Finding communities…"
+    : !communityData
+    ? "This network is too small to partition."
+    : [
+        `${communityData.count} communit${
+          communityData.count === 1 ? "y" : "ies"
+        }`,
+        communityData.shapes.length < communityData.count
+          ? `${communityData.shapes.length} outlined`
+          : null,
+        `${Math.round(
+          communityData.concordantShare * 100
+        )}% land with their own group`,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
+  const scatteredNote = useMemo(() => {
+    if (!communityData || communityData.scattered.length === 0) return "";
+    const names = communityData.scattered
+      .map((shape) => `${communityLabel(shape, mandate)} (${shape.size})`)
+      .join(", ");
+    return communityData.scattered.length === 1
+      ? `${names} is spread through another community rather than standing in a place of its own, so it is counted here and not outlined.`
+      : `${names} are spread through other communities rather than standing in places of their own, so they are counted here and not outlined.`;
+  }, [communityData, mandate]);
+
   // Only needed to label the loyalty gradient's ends.
   const loyaltyRange = useMemo(() => {
     if (!graphData || colorMode !== "loyalty") return null;
@@ -488,6 +713,8 @@ export default function NetworkCanvas({
       selectedNode,
       widthMultiplier,
       dim,
+      communities: communityOverlay,
+      viewScale: t.k,
       lineWidthDivisor: effectivePixelRatio,
       baseEdgeAlpha: isSafari ? 0.05 : 0.3,
     });
@@ -502,6 +729,7 @@ export default function NetworkCanvas({
     colorFor,
     widthMultiplier,
     dim,
+    communityOverlay,
   ]);
 
   // Setup canvas (only once)
@@ -1051,6 +1279,8 @@ export default function NetworkCanvas({
       selectedNode,
       widthMultiplier,
       dim,
+      communities: communityOverlay,
+      viewScale: t.k,
       lineWidthDivisor: 1,
       baseEdgeAlpha: 0.3,
     });
@@ -1448,6 +1678,45 @@ export default function NetworkCanvas({
                 </ul>
               )
             )}
+          </div>
+
+          <div className="canvas-display-section">
+            <span className="canvas-display-label" id="canvas-communities-label">
+              Communities
+            </span>
+            <div
+              className="canvas-display-modes"
+              role="group"
+              aria-labelledby="canvas-communities-label"
+            >
+              <button
+                type="button"
+                className="canvas-display-mode"
+                aria-pressed={!showCommunities}
+                onClick={() => updateSettings({ communities: false })}
+              >
+                Off
+              </button>
+              <button
+                type="button"
+                className="canvas-display-mode"
+                aria-pressed={showCommunities}
+                onClick={() => updateSettings({ communities: true })}
+              >
+                Outline
+              </button>
+            </div>
+            {showCommunities && (
+              <div className="canvas-display-readout">{communityReadout}</div>
+            )}
+            <p className="canvas-display-note">
+              Louvain community detection over the votes alone — the seating
+              plan is not an input. Every MEP has voted with every other, so the
+              graph is complete and has nothing to separate until each MEP is
+              cut back to their{communityData ? ` ${communityData.k}` : ""}{" "}
+              strongest partners; these outlines are what survives that.
+              {scatteredNote ? ` ${scatteredNote}` : ""}
+            </p>
           </div>
 
           <div className="canvas-display-section">
