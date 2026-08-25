@@ -5,39 +5,18 @@
 // note sits directly under the section it qualifies rather than at the top.
 // Figures are tabular-nums throughout because these are columns to compare down,
 // not sentences to read across.
+//
+// Type and colour come from the sidebar scale in globals.scss, which also
+// declares .structure-title, .structure-description, .structure-section-label,
+// .structure-section-lede and .structure-status.
 
 .structure-panel {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-
-  // The shared .collapsible-content caps expanded height at 5000px, which two
-  // fully expanded 40-row lists plus the community cards can exceed. Raising
-  // the cap only for this panel; the transition still works, it just has more
-  // room to travel.
-  .collapsible-content.expanded {
-    max-height: 20000px;
-  }
-}
-
-.structure-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 4px;
-}
-
-.structure-description {
-  font-size: 11px;
-  line-height: 1.45;
-  color: #666;
-  margin: 0 0 10px;
+  border-top: 1px solid var(--sb-rule);
 }
 
 .structure-status {
-  font-size: 11px;
-  color: #888;
-  font-style: italic;
   padding: 8px 0;
 }
 
@@ -47,44 +26,30 @@
   & + & {
     margin-top: 22px;
     padding-top: 16px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--sb-rule);
   }
-}
-
-.structure-section-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: #1a1a1a;
-  margin: 0 0 6px;
-}
-
-.structure-section-lede {
-  font-size: 11px;
-  line-height: 1.45;
-  color: #666;
-  margin: 0 0 10px;
 }
 
 // The one line that says what was done to the data before the algorithm ran.
 // It qualifies every number below it, so it is set apart rather than inlined.
 .structure-method {
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.5;
-  color: #666;
-  background: #f7f7f7;
-  border-left: 2px solid #d0d0d0;
+  color: var(--sb-body);
+  background: var(--sb-wash);
+  border-left: 2px solid #d7dbe0;
   padding: 6px 8px;
   margin: 0 0 10px;
 
   strong {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--sb-ink);
   }
 
   .structure-method-figure {
     font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--sb-ink);
   }
 }
 
@@ -104,15 +69,15 @@
 .structure-headline-value {
   font-size: 17px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--sb-ink);
   line-height: 1.15;
   font-variant-numeric: tabular-nums;
 }
 
 .structure-headline-label {
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.3;
-  color: #666;
+  color: var(--sb-muted);
   margin-top: 2px;
 }
 
@@ -126,9 +91,9 @@
 
 .structure-community {
   padding: 7px 8px;
-  border: 1px solid #ececec;
+  border: 1px solid var(--sb-rule);
   border-radius: 3px;
-  background: #fcfcfc;
+  background: #fcfcfd;
 }
 
 .structure-community-head {
@@ -140,9 +105,9 @@
 }
 
 .structure-community-name {
-  font-size: 11px;
+  font-size: var(--sb-fs-row);
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--sb-ink);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -150,8 +115,8 @@
 }
 
 .structure-community-size {
-  font-size: 10px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -162,7 +127,7 @@
   height: 7px;
   border-radius: 2px;
   overflow: hidden;
-  background: #ececec;
+  background: var(--sb-rule);
 }
 
 .structure-bar-segment {
@@ -181,8 +146,8 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
   background: none;
   border: 0;
   padding: 0;
@@ -203,7 +168,7 @@
 }
 
 .structure-part-name {
-  color: #1a1a1a;
+  color: var(--sb-ink);
 }
 
 .structure-part-count {
@@ -211,16 +176,16 @@
 }
 
 .structure-community-note {
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.4;
-  color: #666;
+  color: var(--sb-muted);
   margin-top: 5px;
   padding-top: 5px;
-  border-top: 1px dotted #e0e0e0;
+  border-top: 1px dotted var(--sb-rule);
 
   strong {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--sb-ink);
   }
 }
 
@@ -236,9 +201,9 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 6px 2px;
+  padding: 7px 4px;
   border: 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--sb-rule-soft);
   background: none;
   font-family: inherit;
   text-align: left;
@@ -249,14 +214,19 @@
   }
 
   &:hover {
-    background: #f7f7f7;
+    background: var(--sb-wash);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
   }
 }
 
 .structure-row-rank {
-  font-size: 10px;
-  color: #999;
-  width: 15px;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
+  width: 2ch;
   flex-shrink: 0;
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -268,16 +238,17 @@
 }
 
 .structure-row-name {
-  font-size: 11px;
-  color: #1a1a1a;
+  font-size: var(--sb-fs-row);
+  font-weight: 500;
+  color: var(--sb-ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .structure-row-sub {
-  font-size: 10px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
   margin-top: 2px;
   display: flex;
   align-items: center;
@@ -303,18 +274,18 @@
 .structure-row-figure {
   flex-shrink: 0;
   text-align: right;
-  font-size: 11px;
+  font-size: var(--sb-fs-row);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: #1a1a1a;
+  color: var(--sb-ink);
   min-width: 52px;
 }
 
 .structure-row-figure-sub {
   display: block;
-  font-size: 9px;
+  font-size: var(--sb-fs-micro);
   font-weight: 400;
-  color: #666;
+  color: var(--sb-faint);
   margin-top: 2px;
 }
 
@@ -324,28 +295,31 @@
 }
 
 .structure-figure-positive {
-  color: #1a1a1a;
+  color: var(--sb-ink);
 }
 
 // --- footer ----------------------------------------------------------------
 
 .structure-more {
-  font-size: 10px;
-  color: #888;
-  padding: 6px 2px 0;
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
+  padding: 6px 4px 0;
 }
 
 .structure-toggle {
-  font-size: 10px;
-  color: #666;
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
   background: none;
   border: 0;
-  padding: 6px 2px 0;
+  padding: 6px 4px 0;
   font-family: inherit;
   cursor: pointer;
   text-decoration: underline;
+  text-underline-offset: 2px;
 
   &:hover {
-    color: #1a1a1a;
+    color: var(--sb-ink);
   }
 }

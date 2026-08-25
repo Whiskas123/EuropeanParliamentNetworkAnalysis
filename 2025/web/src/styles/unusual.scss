@@ -9,40 +9,14 @@
 // figures so the eye can run down the numbers, a kind tag on every row because
 // three different kinds of thing share one ranking, and the delta carrying all
 // the colour. Sized for the 380px sidebar.
+//
+// Type and colour come from the sidebar scale in globals.scss, which also
+// declares .unusual-title, .unusual-lede and .unusual-section-label.
 
 .unusual-panel {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
-.unusual-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 4px;
-}
-
-// The lead sentence. These rows end up as printed captions, so the comparison
-// has to be stated in words before any number appears.
-.unusual-lede {
-  font-size: 11px;
-  line-height: 1.45;
-  color: #666;
-  margin-bottom: 4px;
-
-  strong {
-    font-weight: 600;
-    color: #1a1a1a;
-  }
-}
-
-.unusual-sample {
-  font-size: 10px;
-  line-height: 1.45;
-  color: #999;
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 10px;
+  border-top: 1px solid var(--sb-rule);
 }
 
 // --- sections -------------------------------------------------------------
@@ -55,17 +29,16 @@
   }
 }
 
+// Both align with the 4px inset the rows below them carry.
 .unusual-section-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 2px;
+  margin-bottom: 2px;
   padding: 0 4px;
 }
 
 .unusual-section-hint {
-  font-size: 10px;
-  color: #999;
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
   margin: 0 0 4px;
   padding: 0 4px;
 }
@@ -86,7 +59,7 @@
   width: 100%;
   padding: 7px 4px;
   border: none;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--sb-rule-soft);
   background: none;
   font-family: inherit;
   text-align: left;
@@ -101,11 +74,11 @@
   transition: background-color 0.12s;
 
   &:hover {
-    background-color: #f7f7f7;
+    background-color: var(--sb-wash);
   }
 
   &:focus-visible {
-    outline: 2px solid #4a4a4a;
+    outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
 }
@@ -117,8 +90,8 @@
 .unusual-rank {
   flex-shrink: 0;
   width: 2ch;
-  font-size: 10px;
-  color: #bbb;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
 }
 
@@ -135,9 +108,9 @@
   align-items: center;
   gap: 4px;
   min-width: 0;
-  font-size: 11.5px;
+  font-size: var(--sb-fs-row);
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sb-ink);
 }
 
 .unusual-row-name {
@@ -147,8 +120,8 @@
 }
 
 .unusual-row-sub {
-  font-size: 10px;
-  color: #999;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
   font-variant-numeric: tabular-nums;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -175,7 +148,7 @@
 }
 
 .unusual-vs {
-  color: #aaa;
+  color: var(--sb-faint);
   margin: 0 1px;
   font-weight: 400;
 }
@@ -186,12 +159,12 @@
   flex-shrink: 0;
   display: inline-block;
   padding: 0 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   border-radius: 2px;
-  font-size: 8.5px;
+  font-size: var(--sb-fs-micro);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #999;
+  color: var(--sb-muted);
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -204,19 +177,12 @@
   align-items: flex-end;
   gap: 2px;
   font-variant-numeric: tabular-nums;
-  font-size: 11px;
-  color: #444;
+  font-size: var(--sb-fs-row);
+  color: var(--sb-ink-soft);
 
   .delta-badge {
     margin-left: 0;
   }
-}
-
-.unusual-row-baseline {
-  font-size: 9.5px;
-  color: #999;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
 }
 
 // --- footer ---------------------------------------------------------------
@@ -228,31 +194,31 @@
   border: none;
   background: none;
   font-family: inherit;
-  font-size: 10px;
-  color: #666;
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
 
   &:hover {
-    color: #1a1a1a;
+    color: var(--sb-ink);
   }
 
   &:focus-visible {
-    outline: 2px solid #4a4a4a;
+    outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
 }
 
 .unusual-note,
 .unusual-empty {
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.45;
-  color: #999;
+  color: var(--sb-muted);
   padding: 8px 4px 0;
 }
 
 .unusual-empty {
-  color: #888;
   font-style: italic;
 }

@@ -80,7 +80,7 @@ export default function CountrySimilarity({
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <RadialScaleNote hasBaseline={comparable} />
-        <RadialGrid min={76}>
+        <RadialGrid>
           {rows.map((item) => (
             <RadialGauge
               key={item.country}

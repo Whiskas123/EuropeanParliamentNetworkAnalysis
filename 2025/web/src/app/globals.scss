@@ -26,6 +26,34 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  // ---- sidebar type and colour scale -------------------------------------
+  // One vocabulary for the whole sidebar. It had four heading styles, six
+  // greys for "muted" and three sizes of body copy, because each panel was
+  // written on its own and matched whichever neighbour it was written next to.
+  // Everything in the sidebar now takes its type and its colour from here.
+  --sb-ink: #1a1a1a; // headings, row names, figures
+  --sb-ink-soft: #3f4753; // labels beside a figure
+  --sb-body: #5f6672; // descriptions and ledes
+  --sb-muted: #808893; // row sub-lines, notes
+  --sb-faint: #a6adb7; // ranks, units, axis ticks
+  --sb-rule: #e4e7eb; // between panels and sections
+  --sb-rule-soft: #f0f2f4; // between rows
+  --sb-wash: #f6f7f9; // hover, inset blocks
+  --sb-wash-2: #e9edf2; // hover on something already washed
+  --eu-blue: #003399; // the institutional blue: active tab, focus rings, figures
+
+  --sb-fs-profile: 18px; // the MEP or group name a profile view is about
+  --sb-fs-title: 14px; // panel heading
+  --sb-fs-figure: 14px; // a headline number in a stat row
+  --sb-fs-lead: 13px; // a stat row's label, a profile list row's name
+  --sb-fs-control: 12px; // selects, toggles and buttons
+  --sb-fs-section: 11px; // section label inside a panel
+  --sb-fs-body: 11.5px; // description under a heading
+  --sb-fs-row: 11.5px; // a row's primary line
+  --sb-fs-sub: 10px; // a row's secondary line
+  --sb-fs-note: 10px; // footnotes and captions
+  --sb-fs-micro: 9px; // ranks, tags, units
 }
 
 @media (prefers-color-scheme: dark) {
@@ -223,7 +251,7 @@ a {
 
   &.active {
     background-color: #e3f2fd;
-    color: #003399;
+    color: var(--eu-blue);
     font-weight: 500;
   }
 
@@ -261,7 +289,7 @@ a {
 
 .visualization-header {
   padding: 20px;
-  background-color: #003399;
+  background-color: var(--eu-blue);
   color: white;
   display: flex;
   align-items: center;
@@ -371,7 +399,7 @@ a {
 
 .visualization-error-retry {
   padding: 10px 24px;
-  background-color: #003399;
+  background-color: var(--eu-blue);
   color: white;
   border: none;
   border-radius: 6px;
@@ -389,6 +417,131 @@ a {
   &:active {
     transform: translateY(0);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Sidebar type scale
+//
+// Every heading, description, section label and footnote in the sidebar
+// resolves to one of the six classes below. It used to resolve to whichever
+// neighbour a panel happened to be written next to: four heading styles (18px
+// with a blue gradient rule under the title, the same 18px with the rule moved
+// down onto the description, 18px in a different grey with no rule, and 13px
+// flat in the four newest panels), three sizes of body copy, and six greys all
+// meaning "muted".
+//
+// The gradient rule is gone. The tab strip carries the navigation now, so a
+// heading only has to name its panel, and four 18px headings stacked in one tab
+// read as four pages rather than one.
+//
+// Panels keep their own margins — spacing is layout and belongs with the panel.
+// What lives here is type: size, weight, line-height, tracking and colour.
+// ---------------------------------------------------------------------------
+
+.sb-panel-title {
+  font-size: var(--sb-fs-title);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.1px;
+  color: var(--sb-ink);
+  margin: 0 0 4px;
+}
+
+.sb-panel-desc {
+  font-size: var(--sb-fs-body);
+  line-height: 1.5;
+  color: var(--sb-body);
+  margin: 0 0 10px;
+
+  strong {
+    font-weight: 600;
+    color: var(--sb-ink);
+  }
+}
+
+// A division inside a panel. Small caps rather than a second heading size, so
+// the hierarchy is carried by case and tracking and no panel ends up with two
+// things that both look like titles.
+.sb-section-label {
+  font-size: var(--sb-fs-section);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--sb-ink);
+  margin: 0 0 6px;
+}
+
+.sb-section-lede {
+  font-size: var(--sb-fs-body);
+  line-height: 1.5;
+  color: var(--sb-body);
+  margin: 0 0 10px;
+}
+
+// Footnotes, captions, empty states and the sample sizes under a figure.
+.sb-note {
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
+}
+
+// "Analysing the network…" — a panel saying it is working.
+.sb-status {
+  font-size: var(--sb-fs-body);
+  line-height: 1.45;
+  color: var(--sb-muted);
+  font-style: italic;
+}
+
+// The names the panels already carry, aliased onto the scale so there is
+// exactly one rule per style rather than one per panel.
+.similarity-scores-title,
+.similarity-scores-agreement-title,
+.country-similarity-title,
+.intragroup-cohesion-title,
+.cohesion-heatmap-title,
+.closest-meps-title,
+.group-info-section-title,
+.findings-title,
+.structure-title,
+.trends-title,
+.unusual-title {
+  @extend .sb-panel-title;
+}
+
+.country-similarity-description,
+.intragroup-cohesion-description,
+.cohesion-heatmap-description,
+.findings-description,
+.structure-description,
+.trends-description,
+.unusual-lede {
+  @extend .sb-panel-desc;
+}
+
+.structure-section-label,
+.unusual-section-label,
+.trends-spark-title {
+  @extend .sb-section-label;
+}
+
+.structure-section-lede {
+  @extend .sb-section-lede;
+}
+
+.structure-status,
+.trends-status {
+  @extend .sb-status;
+}
+
+// The two profile headers are a tier above a panel title: they name the MEP or
+// the group the whole sidebar is about, not a section of it. They keep their
+// size and take the shared colour.
+.mep-info-title,
+.group-info-title {
+  color: var(--sb-ink);
+  letter-spacing: -0.2px;
 }
 
 // Sidebar
@@ -486,29 +639,68 @@ a {
   border-left: 1px solid #e0e0e0;
 }
 
-// The network view's three tiers. Outside .sidebar-content so the strip stays
-// put while a tab three thousand pixels tall scrolls underneath it.
+// The sample every figure in the sidebar rests on. Above the tabs, because it
+// qualifies all five of them equally — a policy area can rest on twelve votes,
+// and that has to be visible from whichever tab is reading it.
+.sidebar-facts {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 7px 20px;
+  background-color: var(--sb-wash);
+  border-left: 1px solid var(--sb-rule);
+  border-bottom: 1px solid var(--sb-rule);
+  font-size: var(--sb-fs-note);
+  line-height: 1.3;
+  color: var(--sb-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar-fact {
+  white-space: nowrap;
+  cursor: help;
+
+  strong {
+    font-weight: 700;
+    color: var(--sb-ink);
+  }
+}
+
+.sidebar-fact-sep {
+  width: 1px;
+  height: 9px;
+  background-color: #cfd5dd;
+  flex-shrink: 0;
+}
+
+// The five tabs. Outside .sidebar-content so the strip stays put while a tab
+// three thousand pixels tall scrolls underneath it.
 .sidebar-tabs {
   display: flex;
   flex-shrink: 0;
-  gap: 2px;
-  padding: 6px 8px 0;
+  gap: 1px;
+  padding: 5px 6px 0;
   background-color: #ffffff;
-  border-left: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid var(--sb-rule);
+  border-bottom: 1px solid var(--sb-rule);
 }
 
 .sidebar-tab {
-  flex: 1;
+  // Five labels share a 380px strip, so each has to be able to give ground:
+  // flex-basis 0 with min-width 0 makes the columns equal and lets a long
+  // label ellipsis rather than push the strip wider than the sidebar.
+  flex: 1 1 0;
+  min-width: 0;
   appearance: none;
   border: none;
   background: none;
   font-family: inherit;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.1px;
-  color: #6b7280;
-  padding: 9px 4px 8px;
+  letter-spacing: 0;
+  color: var(--sb-muted);
+  padding: 9px 2px 8px;
   cursor: pointer;
   border-radius: 5px 5px 0 0;
   // The active tab is marked by a rule that sits on the container's own
@@ -517,22 +709,24 @@ a {
   margin-bottom: -1px;
   transition: color 0.15s ease, background-color 0.15s ease;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
-    color: #1a1a1a;
-    background-color: #f4f6f9;
+    color: var(--sb-ink);
+    background-color: var(--sb-wash);
   }
 
   &:focus-visible {
-    outline: 2px solid #003399;
+    outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
 }
 
 .sidebar-tab--active {
-  color: #003399;
+  color: var(--eu-blue);
   font-weight: 600;
-  border-bottom-color: #003399;
+  border-bottom-color: var(--eu-blue);
 
   &:hover {
     background-color: transparent;
@@ -556,10 +750,10 @@ a {
 
 // Why a tab has nothing to show, in the tab rather than in a tooltip.
 .sidebar-tab-note {
-  font-size: 12px;
+  font-size: var(--sb-fs-body);
   line-height: 1.6;
-  color: #6b7280;
-  background-color: #f7f8fa;
+  color: var(--sb-body);
+  background-color: var(--sb-wash);
   border-left: 3px solid #d7dbe0;
   padding: 12px 14px;
   border-radius: 0 4px 4px 0;
@@ -588,50 +782,11 @@ a {
 }
 
 .sidebar-empty-text {
-  font-size: 14px;
+  font-size: var(--sb-fs-body);
   line-height: 1.6;
+  color: var(--sb-body);
   margin: 0;
   max-width: 300px;
-}
-
-// Network Statistics
-.network-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.network-stats-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.network-stats-title {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
 }
 
 // Collapsible title styles
@@ -678,50 +833,6 @@ a {
     opacity: 1;
     margin-bottom: 0;
   }
-}
-
-.network-stats-hint {
-  font-size: 12px;
-  color: #666;
-  padding: 4px 8px;
-  background-color: #f0f7ff;
-  border-radius: 4px;
-  cursor: help;
-  white-space: nowrap;
-}
-
-.network-stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 8px 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-}
-
-.network-stat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.network-stat-label {
-  font-size: 13px;
-  color: #333;
-  font-weight: 500;
-}
-
-.network-stat-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #003399;
-}
-
-.network-stat-description {
-  font-size: 11px;
-  color: #666;
 }
 
 // Node Info Panel
@@ -844,7 +955,7 @@ a {
   width: 60px;
   height: 60px;
   border: 4px solid rgba(0, 51, 153, 0.1);
-  border-top: 4px solid #003399;
+  border-top: 4px solid var(--eu-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -856,7 +967,7 @@ a {
   width: 40px;
   height: 40px;
   border: 4px solid rgba(0, 51, 153, 0.1);
-  border-right: 4px solid #003399;
+  border-right: 4px solid var(--eu-blue);
   border-radius: 50%;
   animation: spin 0.8s linear infinite reverse;
 }
@@ -1435,7 +1546,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   &:hover {
     background: #f5f5f5;
-    color: #003399;
+    color: var(--eu-blue);
     transform: scale(1.05);
 
     svg {
@@ -1449,7 +1560,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   &:focus {
-    outline: 2px solid #003399;
+    outline: 2px solid var(--eu-blue);
     outline-offset: 2px;
   }
 
@@ -1481,7 +1592,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   height: 80px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   flex-shrink: 0;
 }
 
@@ -1492,8 +1603,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .mep-info-title {
   margin: 0 0 10px 0;
-  font-size: 20px;
-  color: #1a1a1a;
+  font-size: var(--sb-fs-profile);
+  font-weight: 600;
 }
 
 .mep-info-country {
@@ -1516,13 +1627,13 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .mep-info-country-name {
-  font-size: 14px;
-  color: #666;
+  font-size: var(--sb-fs-lead);
+  color: var(--sb-body);
 }
 
 .mep-info-group-label {
-  font-size: 12px;
-  color: #666;
+  font-size: var(--sb-fs-body);
+  color: var(--sb-body);
   margin-bottom: 5px;
 }
 
@@ -1537,7 +1648,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   height: 20px;
   background-color: #cccccc;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
 
   &.mep-info-group-color-clickable {
     cursor: pointer;
@@ -1557,7 +1668,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .mep-info-group-name {
   font-size: 16px;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sb-ink);
 
   &.mep-info-group-name-clickable {
     cursor: pointer;
@@ -1583,7 +1694,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .mep-info-group-tooltip-icon {
   font-size: 14px;
-  color: #666;
+  color: var(--sb-body);
   cursor: help;
   display: inline-flex;
   align-items: center;
@@ -1591,8 +1702,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  background-color: var(--sb-wash);
+  border: 1px solid var(--sb-rule);
 }
 
 .mep-info-group-tooltip {
@@ -1600,13 +1711,13 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   left: 25px;
   top: 0;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
   border-radius: 6px;
   padding: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   width: max-content;
-  font-size: 12px;
+  font-size: var(--sb-fs-body);
 
   &.mep-info-group-tooltip-left {
     left: auto;
@@ -1620,7 +1731,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   gap: 6px;
   margin-bottom: 6px;
   padding-bottom: 6px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--sb-rule-soft);
 
   &:last-child {
     border-bottom: none;
@@ -1634,7 +1745,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   height: 12px;
   background-color: #cccccc;
   border-radius: 3px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
   flex-shrink: 0;
 }
 
@@ -1644,14 +1755,14 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .mep-info-group-tooltip-name {
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
   margin-bottom: 2px;
-  font-size: 12px;
+  font-size: var(--sb-fs-body);
 }
 
 .mep-info-group-tooltip-years {
-  font-size: 11px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-body);
   white-space: nowrap;
 }
 
@@ -1659,7 +1770,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .similarity-scores {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--sb-rule);
 }
 
 .similarity-scores-header {
@@ -1669,31 +1780,10 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   margin-bottom: 16x;
 }
 
-.similarity-scores-title {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
-}
-
 .similarity-scores-mode-toggle {
   display: flex;
   gap: 4px;
-  background: #f0f0f0;
+  background: var(--sb-wash);
   border-radius: 4px;
   padding: 2px;
 }
@@ -1702,8 +1792,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   padding: 4px 12px;
   border: none;
   background: transparent;
-  color: #666;
-  font-size: 12px;
+  color: var(--sb-body);
+  font-size: var(--sb-fs-control);
   cursor: pointer;
   border-radius: 3px;
   transition: all 0.2s ease;
@@ -1714,7 +1804,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   &.active {
     background: white;
-    color: #333;
+    color: var(--sb-ink-soft);
     font-weight: 500;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
@@ -1738,25 +1828,25 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .similarity-score-label {
-  font-size: 13px;
+  font-size: var(--sb-fs-lead);
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
 }
 
 .similarity-score-value {
-  font-size: 14px;
+  font-size: var(--sb-fs-figure);
   font-weight: 600;
-  color: #003399;
+  color: var(--eu-blue);
 }
 
 .similarity-score-description {
-  font-size: 11px;
-  color: #666;
+  font-size: var(--sb-fs-body);
+  color: var(--sb-body);
 }
 
 .group-subject-breakdown {
   margin-top: 12px;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--sb-rule);
   padding-bottom: 12px;
 }
 
@@ -1769,9 +1859,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .group-subject-label {
-  font-size: 11px;
+  font-size: var(--sb-fs-sub);
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
   margin-bottom: 6px;
 }
 
@@ -1785,7 +1875,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: var(--sb-fs-row);
 }
 
 .group-subject-name {
@@ -1802,7 +1892,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .group-subject-score {
-  color: #666;
+  color: var(--sb-body);
   font-weight: 500;
   margin-left: 8px;
 }
@@ -1810,7 +1900,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .similarity-scores-agreement {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--sb-rule);
 }
 
 .similarity-scores-agreement-header-section {
@@ -1823,34 +1913,18 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .similarity-scores-agreement-title {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-  position: relative;
-  padding-bottom: 12px;
+  // Type comes from the shared scale; this one also has to fill the header row
+  // it shares with the policy-area selector beside it.
   flex: 1;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
 }
 
 .agreement-subject-selector {
   padding: 6px 12px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   border-radius: 4px;
   background: white;
-  font-size: 14px;
-  color: #333;
+  font-size: var(--sb-fs-control);
+  color: var(--sb-ink-soft);
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s;
@@ -1859,8 +1933,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   flex-shrink: 0;
 
   &:hover {
-    background: #f5f5f5;
-    border-color: #ccc;
+    background: var(--sb-wash);
+    border-color: var(--sb-rule);
   }
 
   &:focus {
@@ -1872,7 +1946,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background: #f5f5f5;
+    background: var(--sb-wash);
   }
 }
 
@@ -1896,64 +1970,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 // Country Similarity
 // Ensure country title matches intragroup title exactly
-.country-similarity-title,
-.intragroup-cohesion-title {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-}
-
-.country-similarity-description,
-.intragroup-cohesion-description {
-  font-size: 11px;
-  color: #666;
-  margin: 0 0 12px 0;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
-}
 // Cohesion Heatmap
 .cohesion-heatmap {
   margin-bottom: 30px;
-}
-
-.cohesion-heatmap-title {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-}
-
-.cohesion-heatmap-description {
-  font-size: 11px;
-  color: #666;
-  margin: 0 0 12px 0;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
 }
 
 .cohesion-heatmap-container {
@@ -1964,7 +1983,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   width: 100%;
   border-collapse: separate;
   border-spacing: 1px;
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   table-layout: auto;
 }
 
@@ -1975,8 +1994,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   border: none;
   text-align: right;
   font-weight: 600;
-  font-size: 10px;
-  color: #333;
+  font-size: var(--sb-fs-note);
+  color: var(--sb-ink-soft);
   z-index: 10;
   width: auto;
   white-space: nowrap;
@@ -1987,8 +2006,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   border: none;
   text-align: center;
   font-weight: 600;
-  font-size: 9px;
-  color: #333;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-ink-soft);
   min-width: 40px;
   max-width: 50px;
 }
@@ -2017,9 +2036,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   padding: 6px 4px 6px 0;
   border: none;
   font-weight: 600;
-  font-size: 9px;
+  font-size: var(--sb-fs-micro);
   text-align: right;
-  color: #333;
+  color: var(--sb-ink-soft);
   z-index: 10;
   display: flex;
   align-items: center;
@@ -2051,11 +2070,11 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .cohesion-heatmap-td-no-data {
   padding: 6px 4px;
   border: none;
-  background-color: #f0f0f0;
+  background-color: var(--sb-wash);
   text-align: center;
-  font-size: 9px;
+  font-size: var(--sb-fs-micro);
   font-weight: 500;
-  color: #999;
+  color: var(--sb-muted);
   border-radius: 3px;
   cursor: pointer;
 }
@@ -2065,7 +2084,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   border: none;
   background-color: #cccccc;
   text-align: center;
-  font-size: 9px;
+  font-size: var(--sb-fs-micro);
   font-weight: 500;
   color: #000;
   border-radius: 3px;
@@ -2081,28 +2100,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .closest-meps {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
-.closest-meps-title {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
+  border-top: 1px solid var(--sb-rule);
 }
 
 .closest-meps-list {
@@ -2113,15 +2111,15 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
 .closest-meps-item {
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--sb-wash);
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background-color: #f0f0f0;
-    border-color: #003399;
+    background-color: var(--sb-wash-2);
+    border-color: var(--eu-blue);
     transform: translateX(4px);
     box-shadow: 0 2px 4px rgba(0, 51, 153, 0.1);
   }
@@ -2131,7 +2129,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   &:focus {
-    outline: 2px solid #003399;
+    outline: 2px solid var(--eu-blue);
     outline-offset: 2px;
   }
 }
@@ -2150,16 +2148,16 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .closest-meps-item-rank {
-  font-size: 12px;
+  font-size: var(--sb-fs-sub);
   font-weight: 600;
-  color: #666;
+  color: var(--sb-body);
   min-width: 20px;
 }
 
 .closest-meps-item-name {
-  font-size: 14px;
+  font-size: var(--sb-fs-lead);
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sb-ink);
 }
 
 .closest-meps-item-flag {
@@ -2178,8 +2176,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-body);
 }
 
 .closest-meps-item-color {
@@ -2187,27 +2185,27 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   height: 12px;
   background-color: #cccccc;
   border-radius: 2px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
 }
 
 .closest-meps-item-weight {
   margin-left: auto;
   font-weight: 500;
-  color: #003399;
+  color: var(--eu-blue);
 }
 
 .closest-meps-empty {
   padding: 30px 20px;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: var(--sb-wash);
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
 }
 
 .closest-meps-empty p {
   margin: 0;
-  color: #666;
-  font-size: 14px;
+  color: var(--sb-body);
+  font-size: var(--sb-fs-body);
   line-height: 1.6;
 }
 
@@ -2236,7 +2234,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   &:focus {
     outline: none;
-    border-color: #003399;
+    border-color: var(--eu-blue);
     background-color: white;
     box-shadow: 0 0 0 3px rgba(0, 51, 153, 0.1);
   }
@@ -2367,15 +2365,14 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   width: 16px;
   height: 16px;
   border-radius: 3px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
   flex-shrink: 0;
 }
 
 .group-info-title {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--sb-fs-profile);
   font-weight: 600;
-  color: #333;
 }
 
 .group-info-section {
@@ -2394,27 +2391,6 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 }
 
-.group-info-section-title {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: -0.3px;
-  position: relative;
-  padding-bottom: 12px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #003399 0%, #0055ff 100%);
-    border-radius: 2px;
-  }
-}
-
 .group-info-sort-button {
   display: flex;
   align-items: center;
@@ -2422,9 +2398,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   padding: 4px 8px;
   background: transparent;
   border: none;
-  font-size: 12px;
+  font-size: var(--sb-fs-control);
   font-weight: 400;
-  color: #666;
+  color: var(--sb-body);
   cursor: pointer;
   transition: color 0.2s;
   white-space: nowrap;
@@ -2438,12 +2414,12 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   &:hover {
-    color: #003399;
+    color: var(--eu-blue);
   }
 
   &:focus {
     outline: none;
-    color: #003399;
+    color: var(--eu-blue);
   }
 }
 
@@ -2452,7 +2428,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--sb-rule-soft);
 
   &:last-child {
     border-bottom: none;
@@ -2460,14 +2436,14 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .group-info-stat-label {
-  font-size: 13px;
-  color: #666;
+  font-size: var(--sb-fs-lead);
+  color: var(--sb-body);
 }
 
 .group-info-stat-value {
-  font-size: 14px;
+  font-size: var(--sb-fs-figure);
   font-weight: 600;
-  color: #003399;
+  color: var(--eu-blue);
 }
 
 .group-subject-scores-wrapper {
@@ -2550,17 +2526,19 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  // Taller than the bar list it replaced: a grid loses less to a cut-off row
-  // than a bar list does, and 340px shows three full rows of dials before the
-  // fade gradient asks for a scroll.
-  max-height: 340px;
+  // Three full rows of dials, then the fade gradient asks for a scroll. The
+  // figure is measured, not chosen: a policy-area cell is at most 106px (dial,
+  // plus a name over three lines) and the grid's row gap is 14, so three rows
+  // and the scale note above them come to 369. Cutting a row mid-label reads as
+  // a rendering fault rather than as an invitation to scroll.
+  max-height: 372px;
   overflow-y: auto;
 }
 .group-subject-scores-empty {
   padding: 20px;
   text-align: center;
-  color: #666;
-  font-size: 12px;
+  color: var(--sb-body);
+  font-size: var(--sb-fs-body);
 }
 
 .group-info-events-wrapper {
@@ -2635,24 +2613,24 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   align-items: flex-start;
   gap: 10px;
   padding: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--sb-wash);
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   transition: all 0.2s;
 
   &.clickable {
     cursor: pointer;
 
     &:hover {
-      background-color: #f0f0f0;
-      border-color: #003399;
+      background-color: var(--sb-wash-2);
+      border-color: var(--eu-blue);
     }
   }
 }
 
 .group-info-event-type {
   font-size: 16px;
-  color: #666;
+  color: var(--sb-body);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -2663,9 +2641,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .group-info-event-name {
-  font-size: 13px;
+  font-size: var(--sb-fs-lead);
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
   margin-bottom: 4px;
 }
 
@@ -2673,8 +2651,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-body);
 }
 
 .group-info-event-country {
@@ -2700,7 +2678,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   width: 10px;
   height: 10px;
   border-radius: 2px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--sb-rule);
   flex-shrink: 0;
 }
 
@@ -2779,21 +2757,21 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   align-items: flex-start;
   gap: 10px;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--sb-wash);
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   transition: all 0.2s;
 
   &.clickable:hover {
-    background-color: #f0f0f0;
-    border-color: #003399;
+    background-color: var(--sb-wash-2);
+    border-color: var(--eu-blue);
   }
 }
 
 .group-info-mep-rank {
-  font-size: 12px;
+  font-size: var(--sb-fs-sub);
   font-weight: 600;
-  color: #666;
+  color: var(--sb-body);
   min-width: 24px;
   padding-top: 2px;
 }
@@ -2804,9 +2782,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .group-info-mep-name {
-  font-size: 13px;
+  font-size: var(--sb-fs-lead);
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
   margin-bottom: 4px;
 }
 
@@ -2814,8 +2792,8 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
-  color: #666;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-body);
 }
 
 .group-info-mep-country {
@@ -2833,18 +2811,18 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .group-info-mep-score {
   margin-left: auto;
   font-weight: 600;
-  color: #003399;
+  color: var(--eu-blue);
 }
 
 .group-info-back-button {
   margin-bottom: 20px;
   padding: 10px 16px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  background-color: var(--sb-wash);
+  border: 1px solid var(--sb-rule);
   border-radius: 6px;
-  font-size: 13px;
+  font-size: var(--sb-fs-control);
   font-weight: 500;
-  color: #333;
+  color: var(--sb-ink-soft);
   cursor: pointer;
   transition: all 0.2s;
   width: 100%;
@@ -2854,9 +2832,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   gap: 8px;
 
   &:hover {
-    background-color: #e0e0e0;
-    border-color: #003399;
-    color: #003399;
+    background-color: var(--sb-wash-2);
+    border-color: var(--eu-blue);
+    color: var(--eu-blue);
     transform: translateX(-2px);
   }
 
@@ -2865,7 +2843,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   &:focus {
-    outline: 2px solid #003399;
+    outline: 2px solid var(--eu-blue);
     outline-offset: 2px;
   }
 }
@@ -3111,13 +3089,16 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   // The sidebar is half the screen here, so the strip gives back what it can.
   .sidebar-tabs {
-    padding: 4px 6px 0;
+    padding: 4px 4px 0;
   }
 
   .sidebar-tab {
-    font-size: 12px;
-    padding: 7px 2px 6px;
-    min-width: 0;
+    font-size: 11px;
+    padding: 7px 1px 6px;
+  }
+
+  .sidebar-facts {
+    padding: 6px 16px;
   }
 
   .sidebar-header h2 {
@@ -3368,9 +3349,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .baseline-note {
   display: block;
   margin-top: 4px;
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.4;
-  color: #8a8a8a;
+  color: var(--sb-muted);
   font-style: italic;
 }
 
@@ -3381,7 +3362,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   margin-left: 6px;
   padding: 1px 5px;
   border-radius: 3px;
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -3403,7 +3384,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   &--flat {
     background-color: #efefef;
-    color: #777;
+    color: var(--sb-muted);
   }
 }
 

@@ -4,34 +4,28 @@
 // the outside which are worth opening. This panel ranks them, so the list is a
 // scanning surface first: dense rows, figures in a fixed column, and the delta
 // carrying the colour. Four rankings share the space through tabs.
+//
+// Type and colour come from the sidebar scale in globals.scss; what is here is
+// layout. .findings-title and .findings-description are declared there too.
 
 .findings-panel {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
-.findings-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 4px;
-}
-
-.findings-description {
-  font-size: 11px;
-  line-height: 1.45;
-  color: #666;
-  margin-bottom: 10px;
+  border-top: 1px solid var(--sb-rule);
 }
 
 // --- tabs -----------------------------------------------------------------
+//
+// A second level of tabs under the sidebar's own strip, so they are smaller and
+// squarer than it — but the selected one is marked in the same EU blue, because
+// "this is the one you are looking at" should not mean two different things in
+// two strips six pixels apart.
 
 .findings-tabs {
   display: flex;
   gap: 2px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--sb-rule);
 }
 
 .findings-tab {
@@ -42,9 +36,9 @@
   border-bottom: 2px solid transparent;
   background: none;
   font-family: inherit;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 500;
-  color: #888;
+  color: var(--sb-muted);
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -52,16 +46,17 @@
   transition: color 0.15s, border-color 0.15s;
 
   &:hover {
-    color: #1a1a1a;
+    color: var(--sb-ink);
   }
 
   &.active {
-    color: #1a1a1a;
-    border-bottom-color: #1a1a1a;
+    color: var(--eu-blue);
+    font-weight: 600;
+    border-bottom-color: var(--eu-blue);
   }
 
   &:focus-visible {
-    outline: 2px solid #4a4a4a;
+    outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
 }
@@ -84,7 +79,7 @@
   width: 100%;
   padding: 7px 4px;
   border: none;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--sb-rule-soft);
   background: none;
   font-family: inherit;
   text-align: left;
@@ -92,11 +87,11 @@
   transition: background-color 0.12s;
 
   &:hover {
-    background-color: #f7f7f7;
+    background-color: var(--sb-wash);
   }
 
   &:focus-visible {
-    outline: 2px solid #4a4a4a;
+    outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
 
@@ -108,8 +103,8 @@
 .findings-rank {
   flex-shrink: 0;
   width: 2ch;
-  font-size: 10px;
-  color: #bbb;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
 }
 
@@ -122,9 +117,9 @@
 }
 
 .findings-row-what {
-  font-size: 11.5px;
+  font-size: var(--sb-fs-row);
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--sb-ink);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -133,8 +128,8 @@
 
 .findings-row-where,
 .findings-row-sub {
-  font-size: 10px;
-  color: #888;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -153,13 +148,19 @@
 }
 
 .findings-pair-join {
-  color: #aaa;
+  color: var(--sb-faint);
   margin: 0 2px;
 }
 
+// The group's own colour, as a square. It had no dimensions at all, so every
+// dot on this leaderboard was an empty inline span; same swatch as the one the
+// Unusual panel next door draws.
 .findings-dot {
-  color: #ccc;
-  margin: 0 4px;
+  flex-shrink: 0;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
 }
 
 // Figure column. Fixed width and tabular figures so the numbers form a column
@@ -171,15 +172,15 @@
   align-items: flex-end;
   gap: 2px;
   font-variant-numeric: tabular-nums;
-  font-size: 11px;
-  color: #444;
+  font-size: var(--sb-fs-row);
+  color: var(--sb-ink-soft);
 }
 
 // The sample behind a figure. A policy area can rest on twelve votes and
 // produce the largest delta in the table; that has to be visible next to it.
 .findings-row-sample {
-  font-size: 9.5px;
-  color: #999;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -187,30 +188,42 @@
 .findings-tag {
   display: inline-block;
   padding: 0 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--sb-rule);
   border-radius: 2px;
-  font-size: 8.5px;
+  font-size: var(--sb-fs-micro);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #999;
+  color: var(--sb-muted);
   vertical-align: middle;
 }
 
 .findings-arrow {
-  color: #aaa;
+  color: var(--sb-faint);
   margin: 0 3px;
 }
 
 .findings-note,
 .findings-more,
 .findings-empty {
-  font-size: 10px;
+  font-size: var(--sb-fs-note);
   line-height: 1.45;
-  color: #999;
+  color: var(--sb-muted);
   padding: 8px 4px 0;
 }
 
+.findings-more {
+  background: none;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--sb-ink);
+  }
+}
+
 .findings-empty {
-  color: #888;
   font-style: italic;
 }

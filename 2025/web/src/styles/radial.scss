@@ -2,9 +2,10 @@
 
 .radial-grid {
   display: grid;
-  // --radial-min is set per grid by RadialGrid: it is the narrowest a cell may
-  // get before a column is dropped, so each caller picks its own density.
-  grid-template-columns: repeat(auto-fill, minmax(var(--radial-min, 76px), 1fr));
+  // Four to a row, always. Sized-to-fit columns gave every grid a different
+  // rhythm and left the last row of each with a ragged gap; RadialGrid sets
+  // --radial-columns if a caller ever needs another count.
+  grid-template-columns: repeat(var(--radial-columns, 4), minmax(0, 1fr));
   gap: 14px 4px;
   align-items: start;
 }
@@ -28,12 +29,12 @@
   transition: background-color 0.15s ease, transform 0.15s ease;
 
   &:hover {
-    background-color: #f4f6f9;
+    background-color: var(--sb-wash);
     transform: translateY(-1px);
   }
 
   &:focus-visible {
-    outline: 2px solid #003399;
+    outline: 2px solid var(--eu-blue);
     outline-offset: 1px;
   }
 }
@@ -55,7 +56,7 @@
 
 .radial-track {
   fill: none;
-  stroke: #e4e7eb;
+  stroke: var(--sb-rule);
 }
 
 // A figure under its own floor has no arc to draw. A dotted track says the ring
@@ -68,7 +69,7 @@
   }
 
   .radial-figure-inner {
-    color: #7c848d;
+    color: var(--sb-muted);
     font-weight: 600;
   }
 }
@@ -107,7 +108,7 @@
   font-size: 12.5px;
   font-weight: 700;
   line-height: 1;
-  color: #1a1a1a;
+  color: var(--sb-ink);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.4px;
 }
@@ -115,7 +116,7 @@
 .radial-figure-unit {
   font-size: 7.5px;
   font-weight: 500;
-  color: #9aa1a9;
+  color: var(--sb-faint);
   margin-left: 0.5px;
   letter-spacing: 0;
 }
@@ -127,19 +128,19 @@
   gap: 3px;
   max-width: 100%;
   min-width: 0;
-  font-size: 10.5px;
+  font-size: var(--sb-fs-sub);
   line-height: 1.25;
   font-weight: 500;
-  color: #33383d;
+  color: var(--sb-ink-soft);
 }
 
 .radial-label-text {
   min-width: 0;
-  // Two lines, then ellipsis. One line would cut "Netherlands" in half at the
-  // narrowest column and the policy-area grid has nothing under four words.
+  // Three lines, then ellipsis. At a fixed four columns a cell is about 90px,
+  // which is two lines for a country and three for a policy area.
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   overflow-wrap: anywhere;
@@ -166,7 +167,7 @@
   // The badge is sized for a sidebar row; in a 76px cell it needs to be smaller
   // than the label it sits under, not larger.
   .delta-badge {
-    font-size: 9px;
+    font-size: var(--sb-fs-micro);
     padding: 1px 4px;
     gap: 1px;
   }
@@ -177,22 +178,22 @@
 }
 
 .radial-sub {
-  font-size: 9px;
-  color: #8a9199;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
   line-height: 1.2;
 }
 
 .radial-scale-note {
-  font-size: 10px;
-  color: #8a9199;
-  line-height: 1.4;
+  font-size: var(--sb-fs-note);
+  color: var(--sb-muted);
+  line-height: 1.45;
   margin: 0 0 10px 0;
 }
 
 // An empty grid still needs to say why it is empty.
 .radial-empty {
-  font-size: 11px;
-  color: #8a9199;
+  font-size: var(--sb-fs-note);
+  color: var(--sb-muted);
   font-style: italic;
   padding: 8px 0;
 }

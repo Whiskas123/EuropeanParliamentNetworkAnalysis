@@ -75,7 +75,7 @@ export default function IntragroupCohesion({
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <RadialScaleNote hasBaseline={Boolean(baseline)} />
-        <RadialGrid min={82}>
+        <RadialGrid>
           {rows.map((item) => (
             <RadialGauge
               key={item.group}

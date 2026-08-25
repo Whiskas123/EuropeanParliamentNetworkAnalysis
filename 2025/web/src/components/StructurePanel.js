@@ -156,28 +156,21 @@ export default function StructurePanel({
   mandate,
   onSelectNode,
   onSelectGroup,
-  defaultCollapsed = true,
 }) {
-  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [ready, setReady] = useState(false);
   const [showAllMismatches, setShowAllMismatches] = useState(false);
   const [showAllBridges, setShowAllBridges] = useState(false);
   const [includeNonAttached, setIncludeNonAttached] = useState(false);
 
   // Roughly 150 ms of synchronous work on the full 696-MEP network, so it is
-  // not spent on a panel nobody opened. Deferring by a tick lets the panel
-  // paint its heading first, so opening it does not look like a hang.
-  //
-  // Driven by an effect rather than the click handler because the panel can
-  // also start open — inside the Explore tab, where opening the tab is the
-  // deliberate act that pays for the work.
+  // not spent until the tab is opened. Deferring by a tick lets the panel paint
+  // its heading and its method note first, so opening the tab does not look
+  // like a hang.
   useEffect(() => {
-    if (isCollapsed || ready) return undefined;
+    if (ready) return undefined;
     const id = setTimeout(() => setReady(true), 0);
     return () => clearTimeout(id);
-  }, [isCollapsed, ready]);
-
-  const toggle = () => setIsCollapsed((collapsed) => !collapsed);
+  }, [ready]);
 
   // Memoised twice over: by useMemo here and by a WeakMap keyed on graphData in
   // the library, so switching away and back is free.
@@ -207,30 +200,17 @@ export default function StructurePanel({
   const mismatchLimit = showAllMismatches ? EXPANDED_ROWS : PREVIEW_ROWS;
   const bridgeLimit = showAllBridges ? EXPANDED_ROWS : PREVIEW_ROWS;
 
+  // The panel owns a whole tab, so there is no collapse control: opening the
+  // tab is the act that asks for the analysis.
   return (
     <div className="structure-panel">
-      <h3 className="structure-title collapsible-title" onClick={toggle}>
-        <span>Structure</span>
-        <svg
-          className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </h3>
+      <h3 className="structure-title">Structure</h3>
       <div className="structure-description">
         What the voting record looks like to an algorithm that has never heard of
         a political group.
       </div>
 
-      <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+      <div>
         {!ready && (
           <div className="structure-status">Analysing the network…</div>
         )}

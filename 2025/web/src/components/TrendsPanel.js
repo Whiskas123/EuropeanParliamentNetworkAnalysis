@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useId } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { loadTrendSeries } from "../lib/trends.js";
 import "../styles/trends.scss";
 
@@ -83,28 +83,31 @@ function Marker({ shape, x, y, color, size = 3.6, filled = true }) {
 }
 
 export default function TrendsPanel({ mandate, onMandateChange }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
   const [series, setSeries] = useState(null);
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("loading");
   const [hovered, setHovered] = useState(null);
   const [showTable, setShowTable] = useState(false);
   const titleId = useId();
 
-  // Fetched when the panel is first opened, from the toggle rather than an
-  // effect: the five precomputed networks are ~70 MB together, which is not a
-  // cost to pay for a panel nobody expanded.
-  const toggle = () => {
-    const opening = isCollapsed;
-    setIsCollapsed(!isCollapsed);
-    if (!opening || status !== "idle") return;
-    setStatus("loading");
+  // The five precomputed networks are ~70 MB together, so this used to wait for
+  // someone to expand the panel. The panel owns a tab now, and only the active
+  // tab is mounted — so mounting *is* the request, and the fetch belongs in an
+  // effect rather than in a toggle that no longer exists.
+  useEffect(() => {
+    let cancelled = false;
     loadTrendSeries()
       .then((rows) => {
+        if (cancelled) return;
         setSeries(rows);
         setStatus(rows && rows.length > 0 ? "ready" : "empty");
       })
-      .catch(() => setStatus("empty"));
-  };
+      .catch(() => {
+        if (!cancelled) setStatus("empty");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const geometry = useMemo(() => {
     if (!series || series.length === 0) return null;
@@ -189,27 +192,9 @@ export default function TrendsPanel({ mandate, onMandateChange }) {
 
   return (
     <div className="trends-panel">
-      <h3
-        className="trends-title collapsible-title"
-        onClick={toggle}
-      >
-        <span>Five terms compared</span>
-        <svg
-          className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </h3>
+      <h3 className="trends-title">Five terms compared</h3>
 
-      <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+      <div>
         {status === "loading" && (
           <div className="trends-status">Reading five parliamentary terms…</div>
         )}

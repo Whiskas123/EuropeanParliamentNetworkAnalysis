@@ -364,7 +364,7 @@ export default function SimilarityScores({
                       under 50%, so a 50% floor would blank a quarter of the
                       dials. */}
                   <RadialScaleNote floor={0} />
-                  <RadialGrid min={82}>
+                  <RadialGrid>
                     {displayAgreementScores
                       // The non-attached are not a group, so agreement "with"
                       // them is not agreement with anything.

@@ -114,24 +114,20 @@ export default function FindingsPanel({
   onSelectGroup,
   onCountryClick,
   onSelectSubject,
-  defaultCollapsed = true,
 }) {
   const [findings, setFindings] = useState(null);
-  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [showAll, setShowAll] = useState(false);
   const tabsRef = useRef(null);
 
   useEffect(() => {
     // Resolves to null when the file has not been generated; the panel then
-    // renders nothing at all rather than an empty section.
+    // says so, because it owns a whole tab and an empty one reads as broken.
     loadFindings().then(setFindings);
   }, []);
 
   const data = findings && findings[mandate];
-  if (!data) return null;
-
-  const rows = data[activeTab] || [];
+  const rows = (data && data[activeTab]) || [];
   const tab = TABS.find((item) => item.id === activeTab) || TABS[0];
   const visible = showAll ? rows : rows.slice(0, INITIAL_ROWS);
 
@@ -356,32 +352,23 @@ export default function FindingsPanel({
     );
   };
 
+  // The panel owns a whole tab, so there is no collapse control: opening the
+  // tab is the act that asks for the content, and a chevron that hides all of
+  // it would leave the tab looking broken.
   return (
     <div className="findings-panel">
-      <h3
-        className="findings-title collapsible-title"
-        onClick={() => setIsCollapsed(!isCollapsed)}
-      >
-        <span>Findings</span>
-        <svg
-          className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </h3>
+      <h3 className="findings-title">Findings</h3>
       <div className="findings-description">
         The views where a figure moves furthest from its usual level, across the
         whole term.
       </div>
-      <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
+      {!data ? (
+        <div className="sidebar-tab-note">
+          The rankings for this term have not been generated. Run{" "}
+          <code>npm run findings</code> to build them.
+        </div>
+      ) : (
+        <>
         <div
           className="findings-tabs"
           role="tablist"
@@ -436,7 +423,8 @@ export default function FindingsPanel({
             </>
           )}
         </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

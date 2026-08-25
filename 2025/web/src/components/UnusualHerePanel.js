@@ -103,10 +103,18 @@ export default function UnusualHerePanel({
     const collected = [];
 
     // --- groups ---------------------------------------------------------
+    // Only where the country filter is the same on both sides of the
+    // comparison. Measured against the whole Parliament, a group's cohesion
+    // inside one country is higher almost by definition — those MEPs share a
+    // group *and* a delegation, and the reader is looking at the national
+    // effect rather than anything about the group. The subject comparison is
+    // real, so it is kept.
+    //
     // NonAttached is dropped for the same reason the Group Cohesion panel
     // drops it: the non-attached are not a group, so their internal agreement
     // is not a property of anything.
-    for (const item of intragroupCohesion || []) {
+    const groupsComparable = baseline.comparing === "subject";
+    for (const item of groupsComparable ? intragroupCohesion || [] : []) {
       if (!item || item.group === "NonAttached") continue;
       const base = baseline.scores?.intragroup?.[item.group];
       const delta = getDelta(item.score, base);
@@ -256,15 +264,6 @@ export default function UnusualHerePanel({
   const hiddenCount =
     higher.length - shownHigher.length + (lower.length - shownLower.length);
 
-  const votingSessions =
-    typeof graphData.metadata?.votingSessions === "number"
-      ? graphData.metadata.votingSessions
-      : typeof graphData.votingSessions === "number"
-        ? graphData.votingSessions
-        : typeof graphData.votingSessions?.total === "number"
-          ? graphData.votingSessions.total
-          : null;
-
   const handleActivate = (row) => {
     if (row.kind === "group" && onSelectGroup) onSelectGroup(row.target);
     if (row.kind === "country" && onCountryClick) onCountryClick(row.target);
@@ -370,12 +369,6 @@ export default function UnusualHerePanel({
         <strong>{viewPhrase(selectedCountry, selectedSubject)}</strong>, compared
         with <strong>{baselinePhrase(baseline.label)}</strong>.
       </div>
-      {votingSessions !== null && (
-        <div className="unusual-sample">
-          {votingSessions} voting session{votingSessions === 1 ? "" : "s"} in
-          this view.
-        </div>
-      )}
 
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         {rows.length === 0 ? (
@@ -438,6 +431,8 @@ export default function UnusualHerePanel({
               the size of the change in percentage points.
               {baseline.comparing === "country" &&
                 " A country's own cohesion is the same figure on both sides of this comparison, so it is not listed."}
+              {baseline.comparing !== "subject" &&
+                " Group cohesion is not listed: inside one country a group's members share a delegation as well as a group, so it sits above the Parliament-wide figure by construction. The same national effect lifts the group pairs above — those are kept, because which two groups converge inside one delegation is still worth reading."}
             </div>
           </>
         )}

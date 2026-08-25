@@ -16,25 +16,40 @@ import TrendsPanel from "./TrendsPanel";
 import StructurePanel from "./StructurePanel";
 
 /**
- * The three tiers of the network view, in the order a reader needs them.
+ * The network view, split by what each panel is actually about.
  *
  * The sidebar grew eight stacked panels and no way to skip one, so the answer
  * to "is this network worth printing?" sat above four thousand pixels of
- * everything else. Splitting them into tabs is not decoration: only the active
- * tier is mounted, so each tier is about a screen and a half, and the tier
- * survives a change of country or policy area — which is what makes flipping
- * through views to hunt for one worth printing bearable.
+ * everything else. Tabs fixed the scrolling; only the active tab is mounted,
+ * and the tab survives a change of country or policy area, which is what makes
+ * flipping through views to hunt for one worth printing bearable.
  *
- * The order is an argument. What is this network and what is odd about it,
- * first; how tightly its blocs actually hold, second; everything that reaches
- * past the open view — the whole-term shortlist, the algorithm's own reading,
- * five terms of history — last.
+ * What they did not fix was the grouping. One tab held three panels that answer
+ * three different questions at three different scopes — an algorithmic reading
+ * of the open network, a shortlist of *other* networks worth opening, and
+ * twenty years of history that ignores the open view entirely — grouped only by
+ * having been built last.
+ *
+ * The order is an argument, and the scope is the argument. The first three tabs
+ * describe the network on screen, in increasing depth: what it is and what is
+ * odd about it, how tightly its blocs hold, and what it looks like to something
+ * that has never heard of a political group. The last two leave it: where else
+ * to look, and what the whole Parliament has been doing since 1999.
  */
 const TABS = [
   { id: "overview", label: "Overview" },
   { id: "cohesion", label: "Cohesion" },
-  { id: "explore", label: "Explore" },
+  { id: "structure", label: "Structure" },
+  { id: "findings", label: "Findings" },
+  { id: "history", label: "History" },
 ];
+
+// Deterministic thousands separator: toLocaleString would differ between the
+// server render and the browser and trip hydration.
+const thousands = (value) =>
+  typeof value === "number" && isFinite(value)
+    ? String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    : null;
 
 export default function Sidebar({
   mandate,
@@ -69,6 +84,7 @@ export default function Sidebar({
 
   // Get voting sessions from metadata
   const votingSessions = graphData?.metadata?.votingSessions ?? null;
+  const nodeCount = graphData?.nodes?.length ?? null;
 
   // Format mandate as ordinal (e.g., 10 -> "10th", 9 -> "9th")
   const formatMandateOrdinal = (mandateNum) => {
@@ -146,51 +162,54 @@ export default function Sidebar({
   // over it would be furniture with nothing to organise.
   const showTabs = Boolean(graphData) && !selectedNode && !selectedGroup;
 
-  const networkOverview = (
-    <>
-      <h3 className="network-stats-title">Network Overview</h3>
-      <div className="network-stats">
-        <div className="network-stat-item">
-          <div className="network-stat-header">
-            <span className="network-stat-label">MEPs in Network</span>
-            <span className="network-stat-value">{graphData?.nodes.length}</span>
-          </div>
-          <div className="network-stat-description">
-            Members of the European Parliament who participated in at least 50% of voting sessions
-            {baseline?.scores?.nodeCount ? (
-              <span className="baseline-note">
-                {graphData?.nodes.length} of the {baseline.scores.nodeCount} in{" "}
-                {baseline.label}.
-              </span>
-            ) : null}
-          </div>
-        </div>
-        {votingSessions !== null && (
-          <div className="network-stat-item">
-            <div className="network-stat-header">
-              <span className="network-stat-label">Voting Sessions</span>
-              <span className="network-stat-value">{votingSessions}</span>
-            </div>
-            <div className="network-stat-description">
-              {selectedSubject
-                ? `Roll-call votes analyzed for ${selectedSubject} in the ${formatMandateOrdinal(
+  /**
+   * The sample every figure in the sidebar rests on, above the tabs.
+   *
+   * These two numbers used to be the first panel of the Overview tab, which
+   * meant the cohesion figures, the community detection and the leaderboards
+   * were all read four tabs away from the count they are computed over. Sample
+   * size is the caveat this site is most careful about — a policy area can rest
+   * on twelve votes — so it is context for every tab, not content of one.
+   */
+  const factsStrip = graphData ? (
+    <div className="sidebar-facts">
+      <span
+        className="sidebar-fact"
+        title={`Members of the European Parliament who took part in at least half the voting sessions${
+          baseline?.scores?.nodeCount
+            ? `. ${nodeCount} of the ${baseline.scores.nodeCount} in ${baseline.label}.`
+            : ""
+        }`}
+      >
+        <strong>{thousands(nodeCount)}</strong> MEPs
+      </span>
+      {votingSessions !== null && (
+        <>
+          <span className="sidebar-fact-sep" aria-hidden="true" />
+          <span
+            className="sidebar-fact"
+            title={
+              selectedSubject
+                ? `Roll-call votes analysed for ${selectedSubject} in the ${formatMandateOrdinal(
                     mandate
                   )} parliamentary term`
-                : `Total roll-call votes analyzed in the ${formatMandateOrdinal(
+                : `Total roll-call votes analysed in the ${formatMandateOrdinal(
                     mandate
-                  )} parliamentary term`}
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
+                  )} parliamentary term`
+            }
+          >
+            <strong>{thousands(votingSessions)}</strong> voting session
+            {votingSessions === 1 ? "" : "s"}
+          </span>
+        </>
+      )}
+    </div>
+  ) : null;
 
   const renderTabPanel = () => {
     if (activeTab === "overview") {
       return (
         <>
-          {networkOverview}
           <UnusualHerePanel
             graphData={graphData}
             baseline={baseline}
@@ -261,11 +280,22 @@ export default function Sidebar({
       );
     }
 
-    // Explore. These panels each cost real work to build, and opening the tab
-    // is the deliberate act that pays for it, so they start open rather than
-    // asking for a second click.
-    return (
-      <>
+    // One panel per tab from here on, so none of them wears a collapse chevron:
+    // opening the tab is the act that asks for the content, and a control that
+    // hides everything under it would leave the tab looking broken.
+    if (activeTab === "structure") {
+      return (
+        <StructurePanel
+          graphData={graphData}
+          mandate={mandate}
+          onSelectNode={onSelectNode}
+          onSelectGroup={onSelectGroup}
+        />
+      );
+    }
+
+    if (activeTab === "findings") {
+      return (
         <FindingsPanel
           mandate={mandate}
           selectedCountry={selectedCountry}
@@ -275,17 +305,12 @@ export default function Sidebar({
           onSelectGroup={onSelectGroup}
           onCountryClick={onCountryClick}
           onSelectSubject={onSelectSubject}
-          defaultCollapsed={false}
         />
-        <StructurePanel
-          graphData={graphData}
-          mandate={mandate}
-          onSelectNode={onSelectNode}
-          onSelectGroup={onSelectGroup}
-          defaultCollapsed={false}
-        />
-        <TrendsPanel mandate={mandate} onMandateChange={onMandateChange} />
-      </>
+      );
+    }
+
+    return (
+      <TrendsPanel mandate={mandate} onMandateChange={onMandateChange} />
     );
   };
 
@@ -336,6 +361,8 @@ export default function Sidebar({
           onSelectNode={handleSearchSelect}
         />
       </div>
+
+      {factsStrip}
 
       {/* Outside the scrolling content on purpose: a sticky element inside it
           would have to fight the container's own 20px padding, and the strip

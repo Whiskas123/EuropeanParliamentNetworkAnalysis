@@ -237,15 +237,20 @@ export default function RadialGauge({
 /**
  * The grid the dials sit in.
  *
- * `min` is the narrowest a cell may get before the grid drops a column, which
- * is how each caller picks its own density: country names fit in 76px, policy
- * areas need twice that.
+ * Four to a row, fixed, rather than as many as fit. Sized-to-fit columns made
+ * every grid a different width — countries came out five to a row, policy areas
+ * three — and the last row of each was left with a ragged gap wherever the
+ * count did not divide. A fixed count is one rhythm down the whole sidebar and
+ * predictable rows to read across.
+ *
+ * `columns` is here for a caller that genuinely cannot live with four; nothing
+ * currently overrides it.
  */
-export function RadialGrid({ min = 76, children, className = "" }) {
+export function RadialGrid({ columns = 4, children, className = "" }) {
   return (
     <div
       className={`radial-grid ${className}`}
-      style={{ "--radial-min": `${min}px` }}
+      style={{ "--radial-columns": columns }}
     >
       {children}
     </div>

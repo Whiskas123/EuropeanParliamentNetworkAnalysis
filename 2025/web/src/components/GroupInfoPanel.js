@@ -499,10 +499,7 @@ export default function GroupInfoPanel({
                 ref={subjectScoresListRef}
               >
                 <RadialScaleNote />
-                {/* Policy-area names run to forty characters, so these cells
-                    are twice the width of the country grid's — three to a row
-                    rather than five, with the name over two lines. */}
-                <RadialGrid min={124}>
+                <RadialGrid>
                   {sortedSubjectScores.map((item) => (
                     <RadialGauge
                       key={item.subject}
