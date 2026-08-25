@@ -10,10 +10,10 @@ import IntragroupCohesion from "./IntragroupCohesion";
 import CountrySimilarity from "./CountrySimilarity";
 import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
-import UnusualHerePanel from "./UnusualHerePanel";
-import FindingsPanel from "./FindingsPanel";
+import CohesionInsights from "./CohesionInsights";
 import TrendsPanel from "./TrendsPanel";
 import StructurePanel from "./StructurePanel";
+import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
 
 /**
  * The network view, split by what each panel is actually about.
@@ -27,20 +27,35 @@ import StructurePanel from "./StructurePanel";
  * What they did not fix was the grouping. One tab held three panels that answer
  * three different questions at three different scopes — an algorithmic reading
  * of the open network, a shortlist of *other* networks worth opening, and
- * twenty years of history that ignores the open view entirely — grouped only by
- * having been built last.
+ * twenty years of history — grouped only by having been built last.
  *
- * The order is an argument, and the scope is the argument. The first three tabs
- * describe the network on screen, in increasing depth: what it is and what is
- * odd about it, how tightly its blocs hold, and what it looks like to something
- * that has never heard of a political group. The last two leave it: where else
- * to look, and what the whole Parliament has been doing since 1999.
+ * The order is an argument, and the scope is the argument. Every tab describes
+ * the network on screen. The first two do it in increasing depth: how tightly
+ * its blocs hold, and what it looks like to something that has never heard of a
+ * political group. History keeps the network and lets go of the term instead,
+ * following the open view back to 2004 with the whole Parliament drawn faintly
+ * behind it for scale.
+ *
+ * A Findings tab used to sit between them, holding term-wide rankings of the
+ * views worth opening next. It was the one tab that let go of the network — and
+ * because every row in it *was* a view, a list of places you could be standing
+ * shown beside the place you are standing, changing country or policy area
+ * moved every panel in the sidebar except the one whose rows looked most like
+ * views. That reads as a control that has stopped responding, not as a
+ * deliberate change of scope. It is now the Leads screen, opened from the
+ * header over the whole page, which is the scope it always had: see
+ * LeadsScreen.
+ *
+ * There used to be an Overview tab in front of these, holding a ranked list of
+ * the largest movers. It was a restatement of the Cohesion tab one screen
+ * higher up — the same groups, countries and pairs, the same deltas, sorted
+ * differently — and being a ranking it always found five things to say whether
+ * or not anything had happened. What it was reaching for now sits at the top of
+ * Cohesion as a sentence that is usually absent: see CohesionInsights.
  */
 const TABS = [
-  { id: "overview", label: "Overview" },
-  { id: "cohesion", label: "Cohesion" },
+  { id: "cohesion", label: "Agreement" },
   { id: "structure", label: "Structure" },
-  { id: "findings", label: "Findings" },
   { id: "history", label: "History" },
 ];
 
@@ -68,7 +83,6 @@ export default function Sidebar({
   baseline,
   renderSettings,
   onRenderSettingsChange,
-  onSelectSubject,
   onSelectNode,
   onSelectNodeFromGroup,
   onClearNodeKeepGroup,
@@ -86,6 +100,33 @@ export default function Sidebar({
   const votingSessions = graphData?.metadata?.votingSessions ?? null;
   const nodeCount = graphData?.nodes?.length ?? null;
 
+  // With an MEP open, how many of this view's votes are actually theirs.
+  //
+  // The strip says how large the sample is; for a profile that is only half
+  // the sentence. Someone who cast 51% of a term's votes is placed by half the
+  // evidence of someone who cast 99% of them, and the participation filter
+  // turns on exactly this number — it is why the MEPs in the tooltip above are
+  // not on screen. Read from the graph rather than from `selectedNode`, which
+  // can be a node object carried over from a previous view.
+  const selectedNodeData = selectedNode
+    ? graphData?.nodeMap?.get(selectedNode.id) || selectedNode
+    : null;
+  const votesCast =
+    typeof selectedNodeData?.votesCast === "number"
+      ? selectedNodeData.votesCast
+      : null;
+  const votesShare =
+    votesCast !== null && votingSessions
+      ? Math.round((votesCast / votingSessions) * 100)
+      : null;
+  // Sorted by group then name so the same delegation reads together, which is
+  // how the omission is usually noticed: "where are the Socialists?"
+  const excluded = [...(graphData?.excludedNodes ?? [])].sort(
+    (a, b) =>
+      String(a.groupId).localeCompare(String(b.groupId)) ||
+      String(a.label).localeCompare(String(b.label))
+  );
+
   // Format mandate as ordinal (e.g., 10 -> "10th", 9 -> "9th")
   const formatMandateOrdinal = (mandateNum) => {
     const num = mandateNum % 100;
@@ -100,6 +141,29 @@ export default function Sidebar({
         ? "rd"
         : "th";
     return `${mandateNum}${suffix}`;
+  };
+
+  // Backing out of a selection, one step at a time and in the order Escape
+  // already uses: an MEP opened from a group returns to the group, anything
+  // else returns to the network. Until now the only way back was clicking the
+  // empty canvas, which is not a control and reads as nothing at all.
+  const backTarget = selectedNode
+    ? selectedGroup
+      ? "group"
+      : "network"
+    : selectedGroup
+    ? "network"
+    : null;
+  const backLabel =
+    backTarget === "group" ? "Back to the group" : "Back to the whole network";
+
+  const handleBack = () => {
+    if (selectedNode && selectedGroup && onClearNodeKeepGroup) {
+      onClearNodeKeepGroup();
+      return;
+    }
+    if (selectedNode && onSelectNode) onSelectNode(null);
+    if (selectedGroup && onSelectGroup) onSelectGroup(null);
   };
 
   const handleSearchSelect = (node) => {
@@ -126,8 +190,7 @@ export default function Sidebar({
   };
 
   // Arrow keys move between tabs and take focus with them, which is what a
-  // tablist is expected to do; Home and End jump to the ends. Same behaviour
-  // as the tabs inside the Findings panel.
+  // tablist is expected to do; Home and End jump to the ends.
   const handleTabKeyDown = (event) => {
     const keys = [
       "ArrowRight",
@@ -173,66 +236,100 @@ export default function Sidebar({
    */
   const factsStrip = graphData ? (
     <div className="sidebar-facts">
-      <span
-        className="sidebar-fact"
-        title={`Members of the European Parliament who took part in at least half the voting sessions${
-          baseline?.scores?.nodeCount
-            ? `. ${nodeCount} of the ${baseline.scores.nodeCount} in ${baseline.label}.`
-            : ""
-        }`}
-      >
-        <strong>{thousands(nodeCount)}</strong> MEPs
+      <span className="sidebar-fact sidebar-fact-tip">
+        <span className="sidebar-fact-anchor" tabIndex={0}>
+          <strong>{thousands(nodeCount)}</strong> MEPs
+        </span>
+        <span className="sidebar-tip" role="tooltip">
+          <span className="sidebar-tip-line">
+            MEPs who voted enough here to be placed: more than half of this
+            view&rsquo;s votes, or at least 30 of them covering a quarter of the
+            policy area.
+          </span>
+          {baseline?.scores?.nodeCount ? (
+            <span className="sidebar-tip-line">
+              {nodeCount} of the {baseline.scores.nodeCount} in {baseline.label}.
+            </span>
+          ) : null}
+          {excluded.length > 0 && (
+            <>
+              <span className="sidebar-tip-line sidebar-tip-heading">
+                {excluded.length} not placed, and left out of every figure on
+                this page:
+              </span>
+              <span className="sidebar-tip-list">
+                {excluded.map((node) => (
+                  <span className="sidebar-tip-row" key={node.id}>
+                    <span
+                      className="sidebar-tip-dot"
+                      style={{ backgroundColor: getGroupColor(node.groupId) }}
+                      aria-hidden="true"
+                    />
+                    <span className="sidebar-tip-flag">
+                      <CountryFlag country={node.country} />
+                    </span>
+                    <span className="sidebar-tip-name">{node.label}</span>
+                    <span className="sidebar-tip-group">
+                      {getGroupAcronym(node.groupId, mandate)}
+                    </span>
+                  </span>
+                ))}
+              </span>
+            </>
+          )}
+        </span>
       </span>
       {votingSessions !== null && (
         <>
           <span className="sidebar-fact-sep" aria-hidden="true" />
-          <span
-            className="sidebar-fact"
-            title={
-              selectedSubject
-                ? `Roll-call votes analysed for ${selectedSubject} in the ${formatMandateOrdinal(
-                    mandate
-                  )} parliamentary term`
-                : `Total roll-call votes analysed in the ${formatMandateOrdinal(
-                    mandate
-                  )} parliamentary term`
-            }
-          >
-            <strong>{thousands(votingSessions)}</strong> voting session
-            {votingSessions === 1 ? "" : "s"}
-          </span>
+          {votesCast !== null ? (
+            <span className="sidebar-fact sidebar-fact-tip sidebar-fact-tip-strip">
+              <span className="sidebar-fact-anchor" tabIndex={0}>
+                <strong>{thousands(votesCast)}</strong> vote
+                {votesCast === 1 ? "" : "s"} in{" "}
+                <strong>{thousands(votingSessions)}</strong> voting session
+                {votingSessions === 1 ? "" : "s"}
+              </span>
+              <span className="sidebar-tip sidebar-tip-end" role="tooltip">
+                <span className="sidebar-tip-line">
+                  {selectedNodeData?.label} cast {thousands(votesCast)} of the{" "}
+                  {thousands(votingSessions)} votes
+                  {selectedSubject ? ` on ${selectedSubject}` : ""} in the{" "}
+                  {formatMandateOrdinal(mandate)} term
+                  {votesShare !== null ? `, ${votesShare}% of them` : ""}.
+                </span>
+                <span className="sidebar-tip-line">
+                  Abstentions are not among them: they say nothing about who
+                  agrees with whom, so they are left out of every figure on this
+                  page. A country or policy area changes which votes are
+                  counted, never who cast them.
+                </span>
+              </span>
+            </span>
+          ) : (
+            <span
+              className="sidebar-fact"
+              title={
+                selectedSubject
+                  ? `Roll-call votes analysed for ${selectedSubject} in the ${formatMandateOrdinal(
+                      mandate
+                    )} parliamentary term`
+                  : `Total roll-call votes analysed in the ${formatMandateOrdinal(
+                      mandate
+                    )} parliamentary term`
+              }
+            >
+              <strong>{thousands(votingSessions)}</strong> voting session
+              {votingSessions === 1 ? "" : "s"}
+            </span>
+          )}
         </>
       )}
     </div>
   ) : null;
 
-  const renderTabPanel = () => {
-    if (activeTab === "overview") {
-      return (
-        <>
-          <UnusualHerePanel
-            graphData={graphData}
-            baseline={baseline}
-            mandate={mandate}
-            selectedCountry={selectedCountry}
-            selectedSubject={selectedSubject}
-            intergroupCohesion={intergroupCohesion}
-            intragroupCohesion={intragroupCohesion}
-            countrySimilarity={countrySimilarity}
-            onSelectGroup={onSelectGroup}
-            onCountryClick={onCountryClick}
-          />
-          {!baseline && (
-            <div className="sidebar-tab-note">
-              This is the whole Parliament, which is what every other view is
-              measured against — so there is nothing to compare it with. Pick a
-              country or a policy area and this tab will rank what moved.
-            </div>
-          )}
-        </>
-      );
-    }
 
+  const renderTabPanel = () => {
     if (activeTab === "cohesion") {
       const nothingReady =
         !intergroupCohesion && !intragroupCohesion && !countrySimilarity;
@@ -241,15 +338,24 @@ export default function Sidebar({
           <div className="sidebar-empty-state">
             <div className="sidebar-empty-icon">📊</div>
             <p className="sidebar-empty-text">
-              Calculating group and country similarity metrics. This may take a moment...
+              Calculating group and country agreement metrics. This may take a moment...
             </p>
           </div>
         );
       }
-      // Within a group, then between groups, then the national dimension that
-      // cuts across both.
+      // Anything extraordinary first, in one sentence, then the figures it was
+      // drawn from: within a group, between groups, and the national dimension
+      // that cuts across both.
       return (
         <>
+          <CohesionInsights
+            graphData={graphData}
+            baseline={baseline}
+            mandate={mandate}
+            intergroupCohesion={intergroupCohesion}
+            intragroupCohesion={intragroupCohesion}
+            countrySimilarity={countrySimilarity}
+          />
           {intragroupCohesion && (
             <IntragroupCohesion
               intragroupCohesion={intragroupCohesion}
@@ -294,23 +400,13 @@ export default function Sidebar({
       );
     }
 
-    if (activeTab === "findings") {
-      return (
-        <FindingsPanel
-          mandate={mandate}
-          selectedCountry={selectedCountry}
-          selectedSubject={selectedSubject}
-          graphData={graphData}
-          onSelectNode={onSelectNode}
-          onSelectGroup={onSelectGroup}
-          onCountryClick={onCountryClick}
-          onSelectSubject={onSelectSubject}
-        />
-      );
-    }
-
     return (
-      <TrendsPanel mandate={mandate} onMandateChange={onMandateChange} />
+      <TrendsPanel
+        mandate={mandate}
+        onMandateChange={onMandateChange}
+        selectedCountry={selectedCountry}
+        selectedSubject={selectedSubject}
+      />
     );
   };
 
@@ -320,7 +416,32 @@ export default function Sidebar({
         <div
           className={`sidebar-header-top ${searchOpen ? "search-open" : ""}`}
         >
-          <h2>{selectedNode ? "MEP" : selectedGroup ? "Group" : "Network"}</h2>
+          <div className="sidebar-header-title">
+            {backTarget && (
+              <button
+                type="button"
+                className="sidebar-back-button"
+                onClick={handleBack}
+                title={backLabel}
+                aria-label={backLabel}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+            )}
+            <h2>{selectedNode ? "MEP" : selectedGroup ? "Group" : "Network"}</h2>
+          </div>
           <button
             onClick={() => {
               setSearchOpen(!searchOpen);
@@ -402,22 +523,9 @@ export default function Sidebar({
 
         {selectedNode ? (
           <>
-            {selectedGroup && (
-              <button
-                className="group-info-back-button"
-                onClick={() => {
-                  // Clear node selection but keep group selection
-                  if (onClearNodeKeepGroup) {
-                    onClearNodeKeepGroup();
-                  } else if (onSelectNode) {
-                    // Fallback: clear node (will also clear group, but better than nothing)
-                    onSelectNode(null);
-                  }
-                }}
-              >
-                ← Back to Group View
-              </button>
-            )}
+            {/* Backing out lives in the header, next to the title: it stays
+                put while a profile scrolls, and it is in the same place for an
+                MEP as for a group. */}
             <MEPInfoPanel
               node={selectedNode}
               graphData={graphData}
@@ -449,12 +557,6 @@ export default function Sidebar({
               mandate={mandate}
               onSelectMEP={handleMEPClick}
             />
-            <button
-              className="group-info-back-button"
-              onClick={() => onSelectGroup && onSelectGroup(null)}
-            >
-              ← Back to Network View
-            </button>
           </>
         ) : graphData ? (
           <div

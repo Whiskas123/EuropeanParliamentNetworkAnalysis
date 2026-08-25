@@ -1,0 +1,415 @@
+// The Leads screen.
+//
+// A term-wide directory of the views worth opening, over the whole page. It
+// used to be a sidebar tab, which is why it was built as a single narrow list
+// behind a second row of tabs — a 30% column has room for one ranking at a
+// time. A sheet has room for all four, so the tabs are gone and the four
+// rankings sit side by side in as many columns as the window affords.
+//
+// Colour comes from the shared scale in globals.scss; the sizes do not. That
+// scale is calibrated for the sidebar, where 9-11px is legible because the
+// column is narrow and dense — set on a 1,100px sheet the same type reads as
+// a mistake. The screen carries its own steps, one notch up, declared here so
+// the two scales cannot drift into each other.
+
+.leads-sheet {
+  --lead-fs-row: 12.5px; // a row's primary line, and its figure
+  --lead-fs-sub: 11px; // a row's secondary line
+  --lead-fs-micro: 10px; // ranks, samples, tags
+}
+
+// --- the sheet ------------------------------------------------------------
+
+.leads-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 24px 24px;
+  background: rgba(12, 16, 24, 0.5);
+  // The backdrop scrolls, not the sheet: opening all four rankings to their
+  // full sixty rows should extend the page, not trap the reader inside an
+  // inner scroll area with the page's own scrollbar sitting beside it.
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.leads-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  padding: 26px 32px 32px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  font-family: Arial, Helvetica, sans-serif;
+  outline: none;
+}
+
+// --- heading --------------------------------------------------------------
+
+.leads-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--sb-rule);
+}
+
+.leads-heading {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--sb-ink);
+}
+
+// Held to a reading measure. The sheet is wide enough that a full-width lede
+// would run past the line length anybody actually reads across.
+.leads-lede {
+  margin: 6px 0 0;
+  max-width: 64ch;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sb-body);
+}
+
+.leads-head-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.leads-count {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.leads-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--sb-rule);
+  border-radius: 6px;
+  background: none;
+  color: var(--sb-muted);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+
+  &:hover {
+    background: var(--sb-wash);
+    color: var(--sb-ink);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: 2px;
+  }
+}
+
+.leads-missing {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sb-body);
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.92em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--sb-wash);
+  }
+}
+
+// --- the four rankings ----------------------------------------------------
+//
+// As many columns as fit at 330px, which is one wide window at four, a laptop
+// at three and a tablet at two. Each ranking is a section rather than a tab
+// because scanning for a lead means reading across them, not choosing one.
+
+.leads-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 28px 36px;
+  align-items: start;
+}
+
+.leads-section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--sb-ink);
+}
+
+// Two lines' worth of height whether the note fills them or not, so the lists
+// in one row of the grid all start on the same line.
+.leads-section-note {
+  margin: 4px 0 10px;
+  min-height: 2.9em;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--sb-muted);
+}
+
+// --- rows -----------------------------------------------------------------
+
+.leads-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--sb-rule-soft);
+}
+
+.leads-row {
+  display: flex;
+  // Baseline alignment lines the rank and the figure up with the row's first
+  // line of text, which is what the eye reads across.
+  align-items: baseline;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 6px;
+  border: none;
+  border-bottom: 1px solid var(--sb-rule-soft);
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s;
+
+  &:hover {
+    background-color: var(--sb-wash);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// The rank column. min-width rather than width: past row 99 a fixed 2ch box
+// spills its digits over the flag beside it.
+.leads-rank {
+  flex-shrink: 0;
+  min-width: 2ch;
+  font-size: var(--lead-fs-micro);
+  color: var(--sb-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+// Everything between the rank and the figure: what moved, which view it moved
+// in, and the sample underneath both.
+.leads-row-line {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.leads-row-what {
+  font-size: var(--lead-fs-row);
+  font-weight: 500;
+  color: var(--sb-ink);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+// MEP names run past the column; the full one is on the row's hover title.
+.leads-row-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Left inline rather than flex so the ellipsis works — a flex container has
+// nothing to truncate.
+.leads-row-where {
+  font-size: var(--lead-fs-sub);
+  color: var(--sb-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leads-flag {
+  flex-shrink: 0;
+  display: inline-flex;
+  width: 1em;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
+}
+
+// A group's swatch and acronym, kept together on one line. Same construction
+// as .structure-chip and .unusual-row-what's swatches.
+.leads-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.leads-vs {
+  color: var(--sb-faint);
+  margin: 0 1px;
+  font-weight: 400;
+}
+
+.leads-dot {
+  flex-shrink: 0;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+// Figure column, pinned to the right edge with tabular figures, so the numbers
+// form a column the eye can run down without reading the rows.
+.leads-row-figure {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--lead-fs-row);
+  color: var(--sb-ink-soft);
+
+  .delta-badge {
+    margin-left: 0;
+  }
+}
+
+// The sample the figure rests on, on its own line. A policy area can rest on
+// twelve voting sessions and produce the largest delta in the table; that has
+// to be readable in full, which is why it does not share a line.
+.leads-row-sample {
+  font-size: var(--lead-fs-micro);
+  color: var(--sb-faint);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leads-tag {
+  display: inline-block;
+  padding: 0 4px;
+  border: 1px solid var(--sb-rule);
+  border-radius: 2px;
+  font-size: var(--lead-fs-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+  vertical-align: middle;
+}
+
+.leads-arrow {
+  color: var(--sb-faint);
+  margin: 0 3px;
+}
+
+// JSX strips the newline between the chip and the tag, so the gap is a margin.
+.leads-chip + .leads-tag {
+  margin-left: 4px;
+}
+
+.leads-more,
+.leads-empty {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--sb-muted);
+  padding: 8px 6px 0;
+}
+
+.leads-more {
+  background: none;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--sb-ink);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: 2px;
+  }
+}
+
+.leads-empty {
+  font-style: italic;
+}
+
+// --- narrow windows -------------------------------------------------------
+//
+// Below the two-column threshold the sheet stops being a sheet and becomes the
+// page: no margin to waste on a backdrop nobody can click accurately, and the
+// rankings run one after another.
+
+@media (max-width: 760px) {
+  .leads-backdrop {
+    padding: 0;
+  }
+
+  .leads-sheet {
+    min-height: 100vh;
+    border-radius: 0;
+    padding: 18px 16px 28px;
+  }
+
+  .leads-heading {
+    font-size: 19px;
+  }
+
+  .leads-lede {
+    font-size: 12.5px;
+  }
+
+  .leads-head {
+    gap: 12px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  // The count is the first thing to go: the reader is holding the list, not
+  // deciding whether to open it.
+  .leads-count {
+    display: none;
+  }
+
+  .leads-sections {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .leads-section-note {
+    min-height: 0;
+  }
+}

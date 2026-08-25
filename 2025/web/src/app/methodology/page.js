@@ -125,6 +125,19 @@ export default function Methodology() {
             <em>in that policy area</em>, so the set of MEPs shown changes
             between areas.
           </p>
+          <p>
+            A policy area&rsquo;s votes are not spread evenly through a term,
+            which makes that share a poor test on its own. The 176 women&rsquo;s
+            rights votes of term 10 fall on five sitting days, so missing one
+            day costs twenty to thirty points of share at once. A policy-area
+            network therefore has a second door: an MEP also enters by casting{" "}
+            <strong>at least 30 votes</strong> that cover{" "}
+            <strong>at least a quarter</strong> of the area. Both halves are
+            needed — thirty of Foreign Affairs&rsquo; 1 049 votes is 4%, a
+            position drawn from a single sitting. Whoever clears neither door is
+            named under the MEP count at the top of the sidebar rather than
+            quietly left out.
+          </p>
           <div className="cp-note">
             <b>This is a hard line, and some MEPs sit right on it.</b> Moving
             from 49% to 51% participation puts someone into the network who was
@@ -172,8 +185,8 @@ export default function Methodology() {
           <p>
             Only links above 0.6 agreement pull on the layout, otherwise the
             near-universal weak agreement between everyone would collapse the
-            picture into a single blob. Every link is still used for the cohesion
-            and similarity figures.
+            picture into a single blob. Every link is still used for the
+            agreement figures.
           </p>
           <p>
             <strong>Distance is not a quantity.</strong> A force-directed layout

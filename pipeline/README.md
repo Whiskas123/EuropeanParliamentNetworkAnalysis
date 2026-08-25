@@ -23,6 +23,7 @@ python3 -m pipeline.run votes      # split by mandate + assign subjects
 python3 -m pipeline.run networks   # similarity networks  -> data/networks/
 python3 -m pipeline.run compare    # diff against the previous published run
 python3 -m pipeline.run publish    # copy into 2025/web/public/data/
+python3 -m pipeline.run participation  # per-MEP vote counts -> the site
 python3 -m pipeline.run layouts    # ForceAtlas2 positions (node)
 python3 -m pipeline.run verify     # check what is on disk for the site
 
@@ -63,6 +64,8 @@ data/raw/ep_meps.json ──┤                   (each vote tagged with a subje
                                  │
                             [4 publish]  ─► 2025/web/public/data/
                                  │
+                       [4b participation] ─► .../precomputed/mep_votes_{m}.json
+                                 │
                             [5 layouts]  ─► 2025/web/public/data/precomputed/
                                  │
                             [6 verify]   ─► re-reads everything the browser
@@ -90,6 +93,23 @@ filter.
 **3. Compare** Diffs against the previous run's published output.
 
 **4. Publish** Copies into the site and writes `voting_sessions.json`.
+
+**4b. Participation** (`participation.py`)
+Counts, per MEP, how many votes they actually cast — for the term and for each
+policy area — and writes one ~90 KB file per mandate next to the layouts. The
+sidebar reads it to say *"2,873 votes in 4,245 voting sessions"* when an MEP is
+open, which is the denominator behind every figure on that panel and the number
+the participation filter turns on.
+
+Counted the way the network counts: abstentions excluded, a duplicate
+(MEP, vote) entry counted once. Verified against `network.py`'s own
+`raw_counts` — identical for all 732 MEPs of term 10.
+
+It runs after **publish** on purpose. It checks its session totals against the
+`voting_sessions.json` that publish has just written, so a file counted over
+votes the site does not draw fails the run instead of quietly putting a wrong
+number in the sidebar. A country filter never changes these counts: restricting
+a network to one delegation removes MEPs, not votes.
 
 **5. Layouts** Runs `2025/web/scripts/precompute-layouts.js` for the mandates
 whose networks actually changed. Four kinds of network are produced per mandate:

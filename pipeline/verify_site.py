@@ -160,6 +160,42 @@ def run(report, mandates=None, expect_combinations=None):
             f"mandate {mandate}: MEP info published", mep_info.exists(), str(mep_info)
         )
 
+        # Per-MEP vote counts. The sidebar prints these next to the number of
+        # voting sessions ("2,873 votes in 4,245 voting sessions"), so a file
+        # counted over a different set of votes than the published network is
+        # a wrong number rather than a missing one.
+        mep_votes = PRECOMPUTED / f"mep_votes_{mandate}.json"
+        if report.check(
+            f"mandate {mandate}: per-MEP vote counts published",
+            mep_votes.exists(),
+            f"{mep_votes} - run `python3 -m pipeline.run participation`",
+            fatal=False,
+        ):
+            try:
+                votes = json.loads(mep_votes.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                votes = None
+                report.check(
+                    f"mandate {mandate}: per-MEP vote counts parse", False, f"{exc}"
+                )
+            if votes:
+                entry = counts.get(str(mandate)) or {}
+                report.check(
+                    f"mandate {mandate}: vote counts cover the published votes",
+                    votes.get("sessions", {}).get("total") == entry.get("total")
+                    and votes.get("sessions", {}).get("bySubject") == entry.get("bySubject"),
+                    "counted over a different set of votes than the published "
+                    "network - re-run `participation` after `publish`",
+                )
+                absent = [n["Id"] for n in nodes if n["Id"] not in (votes.get("meps") or {})]
+                report.check(
+                    f"mandate {mandate}: every drawn MEP has a vote count",
+                    not absent,
+                    f"{len(absent)} without one, e.g. {absent[:4]}. "
+                    "The sidebar falls back to showing sessions alone for them.",
+                    fatal=False,
+                )
+
         if baselines is not None:
             entry = baselines.get(str(mandate)) or {}
             # A country the UI can select but the baselines file does not know

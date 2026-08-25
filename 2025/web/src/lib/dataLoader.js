@@ -137,6 +137,62 @@ export async function getCountrySimilarity(mandate, subject = null) {
   return (subject ? forMandate[subject] : forMandate._all) || null;
 }
 
+// mep_votes_<mandate>.json, fetched at most once per mandate per page load.
+const mepVotesPromises = {};
+
+/**
+ * How many of a term's votes each MEP actually cast.
+ *
+ * Published by `pipeline/participation.py` from the same vote dump the
+ * networks are built from. It is the number the participation filter turns on
+ * — who is in a network at all — and until now the site showed how many voting
+ * sessions a view rests on without ever saying how many of them the MEP on
+ * screen took part in.
+ *
+ * Abstentions are not in these counts, because they are not in the similarity
+ * measure either: an abstention moves nobody's position. Anything rendered
+ * from this has to say so.
+ */
+function loadMEPVotes(mandate) {
+  if (mepVotesPromises[mandate] === undefined) {
+    mepVotesPromises[mandate] = fetch(`/data/precomputed/mep_votes_${mandate}.json`)
+      .then((response) => (response.ok ? response.json() : null))
+      .catch((error) => {
+        console.warn(`MEP vote counts not available for mandate ${mandate}:`, error);
+        return null;
+      });
+  }
+  return mepVotesPromises[mandate];
+}
+
+/**
+ * Votes cast per MEP in one view, as {mepId: count}.
+ *
+ * The file stores each MEP as [total, ...one count per subject] against a
+ * shared `subjects` list, so a term's counts cost ~85 KB rather than repeating
+ * twenty subject names per MEP. A country filter does not change the number:
+ * restricting the network to one delegation removes MEPs, not votes.
+ *
+ * Returns null rather than zeros when the subject is absent from the file —
+ * a subject the term never voted on, or a file older than the subject list.
+ */
+async function getVotesCast(mandate, subject = null) {
+  const file = await loadMEPVotes(mandate);
+  if (!file || !file.meps) return null;
+  let column = 0;
+  if (subject) {
+    const index = (file.subjects || []).indexOf(subject);
+    if (index === -1) return null;
+    column = index + 1;
+  }
+  const counts = {};
+  Object.entries(file.meps).forEach(([id, row]) => {
+    const value = Array.isArray(row) ? row[column] : null;
+    if (typeof value === "number") counts[id] = value;
+  });
+  return counts;
+}
+
 /**
  * Load MEP info for a mandate
  * @param {number} mandate - Mandate number
@@ -185,20 +241,27 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
     }
     const precomputed = await response.json();
 
-    // Load and merge MEP info
-    const mepInfo = await loadMEPInfo(mandate);
-    if (mepInfo && precomputed.nodes) {
+    // Load and merge MEP info, and how many of this view's votes each cast
+    const [mepInfo, votesCast] = await Promise.all([
+      loadMEPInfo(mandate),
+      getVotesCast(mandate, subject),
+    ]);
+    if ((mepInfo || votesCast) && precomputed.nodes) {
       precomputed.nodes = precomputed.nodes.map((node) => {
-        const info = mepInfo[node.id];
-        if (info) {
-          return {
-            ...node,
-            photoURL: info.photoURL,
-            partyNames: info.partyNames,
-            groups: info.groups,
-          };
-        }
-        return node;
+        const info = mepInfo && mepInfo[node.id];
+        const merged = info
+          ? {
+              ...node,
+              photoURL: info.photoURL,
+              partyNames: info.partyNames,
+              groups: info.groups,
+            }
+          : node;
+        if (!votesCast) return merged;
+        return {
+          ...merged,
+          votesCast: votesCast[node.id] ?? null,
+        };
       });
     }
 
@@ -328,6 +391,9 @@ async function loadJsonData(mandate, country = null, subject = null) {
       };
     }
 
+    // Same counts the precomputed path merges in; see getVotesCast.
+    const votesCast = await getVotesCast(mandate, subject);
+
     // Convert JSON format to expected format
     let nodes = data.nodes.map((node) => {
       const nodeData = {
@@ -341,6 +407,10 @@ async function loadJsonData(mandate, country = null, subject = null) {
         photoURL: node.PhotoURL || null,
         groups: node.Groups || [], // Array of {groupid, start, end}
       };
+
+      if (votesCast) {
+        nodeData.votesCast = votesCast[node.Id] ?? null;
+      }
 
       // Add positions from precomputed layout if available
       const positions = positionMap.get(node.Id);
@@ -584,6 +654,11 @@ export async function loadMandateData(mandate, country = null, subject = null) {
       let nodes = precomputed.nodes;
       let similarityScores = precomputed.similarityScores || null;
       let viewScores = ownScores || null;
+      // Who this view drops, so the sidebar can say so. Silently deleting them
+      // is what made Hungary x Women's Rights read as eight Fidesz MEPs and one
+      // ESN agreeing 99.2% of the time: true of the nine left on screen, and
+      // not what a reader takes it to mean about Hungary.
+      let excludedNodes = [];
 
       if (ownScores && (country || subject)) {
         const belongs = (id) => {
@@ -597,6 +672,14 @@ export async function loadMandateData(mandate, country = null, subject = null) {
         // showing it unfiltered is the honest failure.
         if (kept.length > 0 && kept.length < nodes.length) {
           const keptIds = new Set(kept.map((node) => node.id));
+          excludedNodes = nodes
+            .filter((node) => !keptIds.has(node.id))
+            .map((node) => ({
+              id: node.id,
+              label: node.label,
+              groupId: node.groupId,
+              country: node.country,
+            }));
           nodes = kept;
           const pick = (source) =>
             source
@@ -624,6 +707,7 @@ export async function loadMandateData(mandate, country = null, subject = null) {
 
       return {
         nodes,
+        excludedNodes,
         edges: precomputed.edges,
         agreementScores: agreementScores,
         similarityScores,

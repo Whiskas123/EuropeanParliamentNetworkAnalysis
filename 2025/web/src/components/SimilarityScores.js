@@ -144,7 +144,7 @@ export default function SimilarityScores({
   // whole group.
   const groupPeerLabel = (() => {
     const acronym = getGroupAcronym(selectedNode?.groupId, mandate);
-    const counts = new Set(groupSubjectScores.map((i) => i.count));
+    const counts = new Set((groupSubjectScores || []).map((i) => i.count));
     const n = counts.size === 1 ? [...counts][0] : null;
     const where = selectedCountry ? ` in ${selectedCountry}` : "";
     if (n === 1) return `the other ${acronym} member${where}`;
@@ -165,8 +165,14 @@ export default function SimilarityScores({
     return colors;
   }, [graphData]);
 
+  // An MEP alone in their group has nobody to agree with, and the 0% that
+  // falls out of the arithmetic reads as disagreement rather than absence.
+  // Drop the row instead of publishing a number that means the opposite.
+  const hasGroupSimilarity =
+    groupSimilarityScore !== null && groupSimilarityScore.count > 0;
+
   if (
-    groupSimilarityScore === null &&
+    !hasGroupSimilarity &&
     countrySimilarityScore === null &&
     (!agreementScores || agreementScores.length === 0)
   ) {
@@ -187,7 +193,7 @@ export default function SimilarityScores({
           setIsSimilarityScoresCollapsed(!isSimilarityScoresCollapsed)
         }
       >
-        <span>Similarity Scores</span>
+        <span>Agreement Scores</span>
         <svg
           className={`collapse-icon ${
             isSimilarityScoresCollapsed ? "collapsed" : ""
@@ -210,10 +216,10 @@ export default function SimilarityScores({
         }`}
       >
         <div className="similarity-scores-list">
-          {groupSimilarityScore !== null && (
+          {hasGroupSimilarity && (
             <div className="similarity-score-item">
               <div className="similarity-score-header">
-                <span className="similarity-score-label">Group Similarity</span>
+                <span className="similarity-score-label">Group Agreement</span>
                 <span className="similarity-score-value">
                   {(groupSimilarityScore.score * 100).toFixed(1)}%
                 </span>
@@ -291,7 +297,7 @@ export default function SimilarityScores({
             <div className="similarity-score-item">
               <div className="similarity-score-header">
                 <span className="similarity-score-label">
-                  Country Similarity
+                  Country Agreement
                 </span>
                 <span className="similarity-score-value">
                   {(countrySimilarityScore.score * 100).toFixed(1)}%

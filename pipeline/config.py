@@ -201,6 +201,23 @@ SUBJECT_MERGES = {
 # published at all.
 MIN_SUBJECT_VOTES = 50
 
+# A per-subject network re-applies PARTICIPATION_THRESHOLD to that subject's
+# votes alone, and for a subject whose votes are lumpy that share is a poor
+# measure of whether someone took part. Term 10's 176 women's rights votes fall
+# on five sitting days, so missing one day costs 20-30 points of share at a
+# stroke: Klara Dobrev cast 75 of them, 43%, and was cut - as were both PPE and
+# both S&D Hungarians, leaving a "Hungary" network that was Fidesz plus one and
+# reported 99.2% agreement because the opposition had been deleted from it.
+#
+# So an MEP also enters a subject network by casting enough votes outright.
+# Both conditions are needed. The absolute floor alone is far too loose on a
+# large subject - 30 of Foreign Affairs' 1049 votes is 4%, a position drawn from
+# a single sitting - and the share floor alone is what fails on a lumpy one.
+# Together they mean: a sample big enough to measure agreement from, drawn from
+# enough of the policy area to be about the policy area.
+MIN_SUBJECT_PARTICIPATION_VOTES = 30
+MIN_SUBJECT_PARTICIPATION_SHARE = 0.25
+
 
 def subject_for_mandate(subject, mandate):
     """The subject as it should be recorded for this particular term."""

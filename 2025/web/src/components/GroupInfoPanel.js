@@ -418,7 +418,7 @@ export default function GroupInfoPanel({
           </span>
         </div>
         <div className="group-info-stat">
-          <span className="group-info-stat-label">Group Cohesion</span>
+          <span className="group-info-stat-label">Group Agreement</span>
           <span className="group-info-stat-value">
             {(groupInfo.avgSimilarity * 100).toFixed(1)}%
           </span>

@@ -166,3 +166,6 @@ data/archive/*
 # are what makes a past run reproducible and auditable.
 !data/cache/
 !data/reports/
+
+# Claude Code session state, including git worktrees (whole checkouts).
+.claude/

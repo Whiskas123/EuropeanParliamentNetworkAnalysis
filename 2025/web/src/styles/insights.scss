@@ -1,0 +1,262 @@
+// "Extraordinary here" — the one or two figures in this view that are out of
+// the ordinary for the whole dataset, not merely the largest in this view.
+//
+// A deviation strip, not a paragraph. One shared horizontal axis in units of
+// each row's own threshold: the bar runs from no change out to what the figure
+// did, and the notch it crosses is where its kind stops being ordinary. The
+// notch is at the same place on every row and on every view of the site, so
+// "how far past ordinary" is read off the strip rather than worked out from
+// three numbers in a sentence.
+//
+// The marks are the ones RadialGauge already uses, unrolled from a ring into a
+// line: a hairline rail for the scale, a coloured mark for the value, a dark
+// notch for the reference it is read against. An earlier version shaded the
+// ordinary range as a filled block instead, which was a second convention
+// nobody else on the tab used and read as a grey object parked in the middle
+// of the panel.
+//
+// Absent entirely on the two thirds of views where nothing qualifies, and on
+// the unfiltered Parliament, which has no comparison of its own — that silence
+// is the point of the component.
+
+.insights {
+  margin: 0 0 20px;
+}
+
+// The same title and description the cohesion panels below it wear, so the
+// strip reads as one of them rather than as an annotation floating above them.
+// .insights-title and .insights-desc take the shared panel tokens, registered
+// with the sibling panels' own class names in globals.scss — @extend only
+// reaches selectors in its own file, and the alternative was a second copy of
+// values that must not drift from theirs.
+.insights-desc {
+  margin-bottom: 8px;
+}
+
+// One grid for the rows and the axis alike, so the direction labels under the
+// strip and the count at its right sit in the same columns as the tracks and
+// figures they describe. Fixed side columns rather than sized-to-fit: a
+// country name and a group acronym are wildly different widths, and every
+// track has to start at the same x or the notches stop forming a column down
+// the strip, which is the one alignment the whole graphic rests on.
+//
+// 78px is what a pair of acronyms needs. Countries top out at "Netherlands"
+// and single groups at "Greens/EFA", but a pair label is two of those joined,
+// and at 58px "Greens/EFA·EPP" truncated to "Greens/EF…" — which names one
+// group of the two and so says nothing about which pair moved. The widest
+// pairs still ellipsise; they keep both names, and the row's hover text
+// carries the full ones either way.
+.insights-strip {
+  --ins-label: 78px;
+  --ins-value: 42px;
+  --ins-gap: 6px;
+}
+
+.insights-row,
+.insights-axis {
+  display: grid;
+  grid-template-columns: var(--ins-label) 1fr var(--ins-value);
+  align-items: center;
+  column-gap: var(--ins-gap);
+}
+
+.insights-row {
+  height: 14px;
+}
+
+.insights-row + .insights-row {
+  margin-top: 4px;
+}
+
+.insights-row-label {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  color: var(--sb-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.insights-track {
+  position: relative;
+  height: 14px;
+}
+
+// The scale. A hairline rather than a band: the axis has to be visible without
+// becoming a shape, since the only shapes on this strip should be the values.
+.insights-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background-color: var(--sb-rule);
+}
+
+// No change — the origin every bar grows from. Full height and darker than the
+// rail, because a bar that begins at an invisible line begins in mid-air: the
+// first attempt drew this in --sb-rule and the eye took the threshold notches
+// for the origin instead, which inverts the whole reading.
+.insights-middle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  background-color: var(--sb-faint);
+}
+
+// The value, from no change out to what it did.
+.insights-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  min-width: 2px;
+  border-radius: 1px;
+}
+
+// Same direction as DeltaBadge and the heatmap ramp: green is more agreement.
+// Solid at full strength here, not the badge's tint — these are six pixels
+// tall and a tint at that size reads as a smudge on the rail.
+.insights-bar--up {
+  background-color: #1a6b3c;
+}
+
+.insights-bar--down {
+  background-color: #a32a1e;
+}
+
+// Where this kind of figure stops being ordinary. Same colour and weight as
+// the baseline notch on the dials below, and drawn a pixel past the bar top
+// and bottom for the same reason that one is drawn past the arc: it has to
+// stay legible where the value crosses it, which here is always.
+//
+// Shorter than the middle line, not taller. Both are hairlines, so height is
+// what separates them: a tick sitting on the rail reads as a mark measured off
+// the axis, a full-height rule reads as the axis itself.
+.insights-notch {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  width: 1px;
+  margin-left: -0.5px;
+  background-color: #465060cc;
+}
+
+.insights-axis {
+  margin-top: 5px;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
+}
+
+.insights-axis-scale {
+  display: flex;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+// The movement itself, in points. The bar shows how unusual it is; a reader
+// who wants the figure should not have to hover for it.
+.insights-value {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.insights-value--up {
+  color: #1a6b3c;
+}
+
+.insights-value--down {
+  color: #a32a1e;
+}
+
+.insights-value-unit {
+  margin-left: 1px;
+  font-size: 8px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+// How many more qualified than were drawn. A count, not a list — naming a
+// fourth and fifth is how the ranked list this replaced went wrong. Unsigned
+// and unbolded: it sits in the same column as "+33.2pp" and a "+10" there
+// would be read as another movement rather than as a tally of them.
+.insights-more {
+  text-align: right;
+  color: var(--sb-muted);
+  white-space: nowrap;
+  cursor: help;
+}
+
+// What the notches are. The line the dial grids carry to explain their own
+// scale, in the same size and grey — .radial-scale-note itself lives in
+// another file, and its margin would be wrong here in any case.
+.insights-note {
+  margin: 7px 0 0;
+  font-size: var(--sb-fs-note);
+  line-height: 1.45;
+  color: var(--sb-muted);
+}
+
+// The sample a thin view's figure rests on. Same block as the note, never a
+// line of its own — a caveat on its own line is a caveat that gets cropped out
+// of a printed panel.
+.insights-caveat {
+  color: var(--sb-faint);
+}
+
+// Ordering control above a grid of dials. Two words and a hairline box; the
+// dials are the content and this must not compete with them.
+.sb-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-size: var(--sb-fs-note);
+  color: var(--sb-muted);
+}
+
+.sb-sort-group {
+  display: inline-flex;
+  border: 1px solid var(--sb-rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.sb-sort-option {
+  appearance: none;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: var(--sb-fs-note);
+  line-height: 1.2;
+  color: var(--sb-muted);
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: background-color 0.12s, color 0.12s;
+
+  & + & {
+    border-left: 1px solid var(--sb-rule);
+  }
+
+  &:hover {
+    background-color: var(--sb-wash);
+    color: var(--sb-ink);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
+  }
+
+  &[aria-pressed="true"] {
+    background-color: var(--eu-blue);
+    color: #ffffff;
+    font-weight: 600;
+  }
+}

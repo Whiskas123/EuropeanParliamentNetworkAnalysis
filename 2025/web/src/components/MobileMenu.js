@@ -12,6 +12,8 @@ export default function MobileMenu({
   onCountryChange,
   selectedSubject,
   onSubjectChange,
+  onOpenLeads,
+  leadCount = 0,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState({});
@@ -114,6 +116,29 @@ export default function MobileMenu({
             }}
           />
         </div>
+
+        {/*
+          Below the three selectors and behind a rule, because it is not a
+          fourth filter: the others change the network on screen, this one
+          proposes a different one to open. Closes the menu on the way, so the
+          sheet does not come up underneath an open dropdown.
+        */}
+        {onOpenLeads && (
+          <button
+            type="button"
+            className="mobile-menu-leads"
+            aria-haspopup="dialog"
+            onClick={() => {
+              setIsOpen(false);
+              onOpenLeads();
+            }}
+          >
+            <span>Leads</span>
+            {leadCount > 0 && (
+              <span className="mobile-menu-leads-count">{leadCount}</span>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -4,12 +4,14 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { loadMandateData, getBaseline } from "../../lib/dataLoader.js";
 import { DEFAULT_VIEW, decodeView, encodeView } from "../../lib/viewState.js";
+import { loadLeads, countLeads } from "../../lib/leads.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
 import MobileMenu from "../../components/MobileMenu";
 import NetworkCanvas from "../../components/NetworkCanvas";
 import Sidebar from "../../components/Sidebar";
+import LeadsScreen from "../../components/LeadsScreen";
 import HoverTooltip from "../../components/HoverTooltip";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
@@ -70,6 +72,14 @@ export default function VisualizationPage() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [baseline, setBaseline] = useState(null);
+
+  // The Leads screen: a term-wide directory of the views worth opening, over
+  // the whole page rather than inside the sidebar, because it is the one thing
+  // here that is not about the network on screen. The rankings are loaded up
+  // front — not on open — because the button that opens them carries a count.
+  const [leadsOpen, setLeadsOpen] = useState(false);
+  const [leads, setLeads] = useState(null);
+  const leadsButtonRef = useRef(null);
 
   // How the network is drawn. Separate from which network is loaded: changing
   // any of these repaints without refetching. Threaded to both the canvas and
@@ -159,6 +169,7 @@ export default function VisualizationPage() {
         // Load data (may be precomputed with positions already)
         const {
           nodes,
+          excludedNodes,
           edges,
           agreementScores,
           similarityScores,
@@ -265,6 +276,12 @@ export default function VisualizationPage() {
               groups: node.groups || [],
               partyNames: node.partyNames || [],
               photoURL: node.photoURL || null,
+              // How many of this view's votes they cast; the sidebar prints it
+              // next to how many there were. Copied across explicitly because
+              // this is a whitelist, and a field left out here reaches the
+              // sidebar as undefined rather than as a missing file.
+              votesCast:
+                typeof node.votesCast === "number" ? node.votesCast : null,
             };
             nodeMap.set(node.id, nodeData);
             d3Nodes[i] = nodeData;
@@ -321,6 +338,12 @@ export default function VisualizationPage() {
               groups: node.groups || [],
               partyNames: node.partyNames || [],
               photoURL: node.photoURL || null,
+              // How many of this view's votes they cast; the sidebar prints it
+              // next to how many there were. Copied across explicitly because
+              // this is a whitelist, and a field left out here reaches the
+              // sidebar as undefined rather than as a missing file.
+              votesCast:
+                typeof node.votesCast === "number" ? node.votesCast : null,
             };
             nodeMap.set(node.id, nodeData);
             d3Nodes[i] = nodeData;
@@ -396,6 +419,9 @@ export default function VisualizationPage() {
 
         const newGraphData = {
           nodes: finalNodes,
+          // MEPs of this country or term who did not vote enough on this topic
+          // to be placed. Named in the sidebar rather than dropped in silence.
+          excludedNodes: excludedNodes || [],
           links: finalEdges,
           // Every edge this view was given, before the display cut — which is
           // not the same as every pair. See the note where this is built.
@@ -749,11 +775,35 @@ export default function VisualizationPage() {
     setTooltipPosition(position);
   }, []);
 
+  // The rankings, once per page load. Resolves to null when findings.json has
+  // not been generated, and the button then goes without its count rather than
+  // disappearing — the screen behind it explains how to build the file.
+  useEffect(() => {
+    loadLeads().then(setLeads);
+  }, []);
+
+  const closeLeads = useCallback(() => {
+    setLeadsOpen(false);
+    // Back to the control that opened it, rather than to the top of the page.
+    // offsetParent is the display:none test: on a narrow window the header
+    // button is hidden and the sheet was opened from the mobile menu, so there
+    // is nothing here to return focus to.
+    const button = leadsButtonRef.current;
+    if (button && button.offsetParent !== null) button.focus();
+  }, []);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (event) => {
-      // Escape key: Clear selection
+      // Escape key: Close the leads screen, or clear selection
       if (event.key === "Escape") {
+        // The sheet is the topmost thing on screen, so it is what Escape is
+        // aimed at; clearing the selection underneath it as well would empty
+        // the sidebar the reader is about to come back to.
+        if (leadsOpen) {
+          closeLeads();
+          return;
+        }
         if (selectedNode) {
           setSelectedNode(null);
         } else if (selectedGroup) {
@@ -772,7 +822,11 @@ export default function VisualizationPage() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedNode, selectedGroup]);
+  }, [selectedNode, selectedGroup, leadsOpen, closeLeads]);
+
+  // Zero until the file lands, and zero again for a term with no rankings
+  // built; the button drops its pill rather than showing a nought.
+  const leadCount = countLeads(leads, mandate);
 
   return (
     <div className="visualization-page">
@@ -863,6 +917,25 @@ export default function VisualizationPage() {
                 currentSubject={selectedSubject}
                 onSubjectChange={setSelectedSubject}
               />
+              {/*
+                Last on the bar, after the three controls that change which
+                network is drawn — because this one does not change it, it
+                proposes which one to draw next.
+              */}
+              <button
+                type="button"
+                ref={leadsButtonRef}
+                className="leads-open"
+                onClick={() => setLeadsOpen(true)}
+                aria-haspopup="dialog"
+                aria-expanded={leadsOpen}
+                title="The views in this term where a figure moves furthest from its usual level"
+              >
+                <span>Leads</span>
+                {leadCount > 0 && (
+                  <span className="leads-open-count">{leadCount}</span>
+                )}
+              </button>
             </div>
             {/* Mobile: Show hamburger menu */}
             <div className="visualization-header-controls-mobile">
@@ -873,6 +946,8 @@ export default function VisualizationPage() {
                 onCountryChange={setSelectedCountry}
                 selectedSubject={selectedSubject}
                 onSubjectChange={setSelectedSubject}
+                onOpenLeads={() => setLeadsOpen(true)}
+                leadCount={leadCount}
               />
             </div>
           </div>
@@ -951,7 +1026,6 @@ export default function VisualizationPage() {
           onSelectGroup={handleGroupClick}
           onCountryClick={handleCountryClick}
           onMandateChange={setMandate}
-          onSelectSubject={setSelectedSubject}
           renderSettings={renderSettings}
           onRenderSettingsChange={setRenderSettings}
           loading={loading}
@@ -963,6 +1037,24 @@ export default function VisualizationPage() {
         node={hoveredNode}
         position={tooltipPosition}
         mandate={mandate}
+      />
+
+      {/*
+        Over the whole page, sidebar included. It is a term-wide directory and
+        every row in it is a request to load a different network, so it has no
+        business sharing the frame with the network currently loaded.
+      */}
+      <LeadsScreen
+        open={leadsOpen}
+        onClose={closeLeads}
+        mandate={mandate}
+        selectedCountry={selectedCountry}
+        selectedSubject={selectedSubject}
+        graphData={graphData}
+        onSelectNode={handleNodeClick}
+        onSelectGroup={handleGroupClick}
+        onCountryClick={handleCountryClick}
+        onSelectSubject={setSelectedSubject}
       />
     </div>
   );

@@ -355,6 +355,51 @@ a {
   display: none;
 }
 
+// The Leads opener, at the end of the header controls.
+//
+// Built from the selectors' button so it reads as one more control on the same
+// bar, but bottom-aligned rather than centred: the selectors are two-row stacks
+// with a label above them, and a single button centred against those floats
+// half a line high. Reversed out of the blue like everything else up here; the
+// sheet it opens is the light surface.
+.leads-open {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+}
+
+// How many leads the term holds, in a pill on the button. Tabular figures so
+// the button does not resize by a pixel as the count changes between terms.
+.leads-open-count {
+  padding: 1px 6px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
 .visualization-content {
   position: relative;
   flex: 1;
@@ -503,25 +548,22 @@ a {
 .cohesion-heatmap-title,
 .closest-meps-title,
 .group-info-section-title,
-.findings-title,
 .structure-title,
 .trends-title,
-.unusual-title {
+.insights-title {
   @extend .sb-panel-title;
 }
 
 .country-similarity-description,
 .intragroup-cohesion-description,
 .cohesion-heatmap-description,
-.findings-description,
 .structure-description,
 .trends-description,
-.unusual-lede {
+.insights-desc {
   @extend .sb-panel-desc;
 }
 
 .structure-section-label,
-.unusual-section-label,
 .trends-spark-title {
   @extend .sb-section-label;
 }
@@ -575,6 +617,48 @@ a {
 
 .sidebar-header-top.search-open {
   margin-bottom: 0;
+}
+
+// The title and the way out of a selection travel together, so the button sits
+// where a back control is looked for: to the left of the thing it leaves. In
+// the header rather than in the scrolling panel because a profile is three
+// screens tall and the way out has to stay on screen.
+.sidebar-header-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sidebar-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  margin-left: -6px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateX(-2px);
+  }
+
+  &:active {
+    transform: translateX(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+  }
 }
 
 .sidebar-header h2 {
@@ -645,6 +729,9 @@ a {
 .sidebar-facts {
   display: flex;
   align-items: center;
+  // Positioned so the widest tooltip can hang from the strip rather than from
+  // the fact that opens it; see .sidebar-tip-end.
+  position: relative;
   gap: 8px;
   flex-shrink: 0;
   padding: 7px 20px;
@@ -671,6 +758,141 @@ a {
   width: 1px;
   height: 9px;
   background-color: #cfd5dd;
+  flex-shrink: 0;
+}
+
+// The MEP count explains itself on hover: what it counts, and who it leaves
+// out. A tooltip rather than a panel because the caveat is only wanted when
+// the number is being questioned, and the strip has to stay one line.
+.sidebar-fact-tip {
+  position: relative;
+  cursor: default;
+}
+
+.sidebar-fact-anchor {
+  border-bottom: 1px dashed #9aa4b0;
+  padding-bottom: 1px;
+  cursor: help;
+
+  &:focus-visible {
+    outline: 2px solid var(--sb-accent, #003399);
+    outline-offset: 2px;
+  }
+}
+
+.sidebar-fact-mark {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 1px;
+  color: var(--sb-muted);
+}
+
+.sidebar-tip {
+  // Anchored under the strip and clamped to the sidebar, which clips its
+  // overflow: a tooltip wider than the panel would simply be cut off.
+  position: absolute;
+  top: calc(100% + 7px);
+  left: -8px;
+  z-index: 30;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: max-content;
+  max-width: 300px;
+  padding: 9px 11px;
+  background-color: #1d2530;
+  color: #eef1f5;
+  border-radius: 5px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  font-size: var(--sb-fs-note);
+  line-height: 1.4;
+  white-space: normal;
+  text-align: left;
+  cursor: default;
+
+  strong {
+    color: inherit;
+  }
+}
+
+.sidebar-fact-tip:hover .sidebar-tip,
+.sidebar-fact-tip:focus-within .sidebar-tip {
+  display: flex;
+}
+
+// The second fact sits halfway along the strip, so a tooltip hung from its own
+// left edge overflows the sidebar to the right and one hung from its right edge
+// overflows to the left — the sidebar clips both. This one is measured from the
+// strip instead, which makes it as wide as the strip and correct at any sidebar
+// width. It needs .sidebar-fact-tip-strip on the fact so that the strip, not
+// the fact, is what it is positioned against.
+.sidebar-fact-tip-strip {
+  position: static;
+}
+
+.sidebar-tip-end {
+  left: 16px;
+  right: 16px;
+  width: auto;
+  max-width: none;
+}
+
+.sidebar-tip-line {
+  display: block;
+  color: #c3cbd6;
+}
+
+.sidebar-tip-heading {
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #eef1f5;
+}
+
+.sidebar-tip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-tip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sidebar-tip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sidebar-tip-flag {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    border-radius: 1px;
+  }
+}
+
+.sidebar-tip-name {
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-tip-group {
+  color: #9aa4b0;
   flex-shrink: 0;
 }
 
@@ -3004,6 +3226,45 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 }
 
+// The Leads opener inside the mobile menu. Full width and behind a rule,
+// below the three selectors: it is not a fourth filter, it opens a screen.
+.mobile-menu-leads {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 4px 4px;
+  background: white;
+  color: #333;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
+  }
+}
+
+.mobile-menu-leads-count {
+  padding: 1px 7px;
+  border-radius: 9px;
+  background: #eef0f3;
+  color: #5f6672;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
 // Responsive Design
 @media (max-width: 768px) {
   .cohesion-heatmap-container {
@@ -3394,39 +3655,3 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   opacity: 0.75;
 }
 
-.heatmap-mode-toggle {
-  display: inline-flex;
-  margin: 0 0 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-
-  button {
-    padding: 3px 10px;
-    border: none;
-    background: #fff;
-    font-size: 10px;
-    font-weight: 500;
-    color: #666;
-    cursor: pointer;
-    transition: background-color 0.15s, color 0.15s;
-
-    &:hover {
-      background: #f2f2f2;
-    }
-
-    &.is-active {
-      background: #4a4a4a;
-      color: #fff;
-    }
-
-    &:not(:first-child) {
-      border-left: 1px solid #ddd;
-    }
-
-    &:focus-visible {
-      outline: 2px solid #4a4a4a;
-      outline-offset: -2px;
-    }
-  }
-}

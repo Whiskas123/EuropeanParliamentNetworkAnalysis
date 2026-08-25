@@ -8,6 +8,7 @@ import {
   getDivergingColor,
 } from "../lib/utils.js";
 import { baselineForGroupPair } from "../lib/dataLoader.js";
+import SegmentedToggle from "./SegmentedToggle";
 
 // Special function for X-axis labels in heatmap - shows "Greens" instead of "Greens/EFA"
 function getHeatmapXAxisLabel(groupId, mandate) {
@@ -97,28 +98,23 @@ export default function CohesionHeatmap({
           : "Average voting agreement between members of different political groups"}
       </div>
       {change && (
-        <div
-          className="heatmap-mode-toggle"
-          role="group"
-          aria-label="Heatmap values"
-        >
-          <button
-            type="button"
-            className={!showChange ? "is-active" : ""}
-            onClick={() => setShowChange(false)}
-            aria-pressed={!showChange}
-          >
-            Agreement
-          </button>
-          <button
-            type="button"
-            className={showChange ? "is-active" : ""}
-            onClick={() => setShowChange(true)}
-            aria-pressed={showChange}
-          >
-            Change
-          </button>
-        </div>
+        <SegmentedToggle
+          value={showChange ? "change" : "agreement"}
+          onChange={(id) => setShowChange(id === "change")}
+          label="Values"
+          options={[
+            {
+              id: "agreement",
+              text: "Agreement",
+              title: "How much each pair of groups votes together",
+            },
+            {
+              id: "change",
+              text: "Change",
+              title: "How far each pair sits from its own baseline",
+            },
+          ]}
+        />
       )}
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <div className="cohesion-heatmap-container">

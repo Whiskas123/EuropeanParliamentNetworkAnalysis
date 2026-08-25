@@ -1,13 +1,27 @@
-// Five-term comparison.
+// Five terms compared, at whatever scope the sidebar is filtered to.
+//
+// The charts are drawn in real pixels — TrendsPanel measures the panel and
+// makes that the viewBox width — so every size below is the size on screen and
+// sits on the same scale as the rest of the sidebar. Under the old fixed
+// viewBox these were multiplied by the panel width over 336, which made chart
+// text the only text on the page that grew with the window.
 //
 // The chart is the point of this panel, so the chrome recedes: hairline grid,
 // no axis frame, ticks in the sidebar's secondary grey. Series identity is
 // carried three ways at once — colour, dash pattern and marker shape — because
-// these end up printed, sometimes in greyscale.
+// these end up printed, sometimes in greyscale. That is also what lets the
+// whole-Parliament reference be nothing but the same dash patterns in a lighter
+// grey: the pattern says which measure, the weight says which network.
+//
+// Two states the data forces in. A *thin* term — fewer than 60 votes — draws a
+// hollow marker, and an *absent* one draws no marker at all, keeps its tick in
+// the axis and greys it. Both are named in a caveat underneath; neither is
+// silently smoothed over.
 //
 // Type and colour come from the sidebar scale in globals.scss, which also
 // declares .trends-title, .trends-description, .trends-status and
-// .trends-spark-title.
+// .trends-spark-title. The view switch and the change badges are the shared
+// .sb-sort and .delta-badge, same as the dial grids two tabs over.
 
 .trends-panel {
   margin-top: 30px;
@@ -64,14 +78,25 @@
   stroke-dasharray: 2 2;
 }
 
+// The whole Parliament, behind the open network. Light enough to read as
+// background at a glance, dark enough to follow when looked for.
+.trends-reference {
+  stroke: #b9c0c9;
+  stroke-width: 1.25;
+  fill: none;
+}
+
+// Axis numbers, term ticks and the direct labels on the lines are the chart's
+// version of a rank or a unit, so they take the sidebar's smallest tier rather
+// than a size of their own.
 .trends-axis-label {
-  font-size: 8px;
+  font-size: var(--sb-fs-micro);
   fill: var(--sb-faint);
   font-variant-numeric: tabular-nums;
 }
 
 .trends-point-label {
-  font-size: 8.5px;
+  font-size: var(--sb-fs-micro);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -85,11 +110,23 @@
     fill: var(--sb-ink);
     font-weight: 700;
   }
+
+  // A term this view never reached. The tick stays — dropping it would slide
+  // the other four along the axis and quietly rewrite the x scale.
+  &.absent {
+    fill: var(--sb-faint);
+    font-weight: 400;
+  }
 }
 
+// A sub-line under a 9px label, so it sits one step below the scale's floor.
 .trends-tick-years {
-  font-size: 7.5px;
+  font-size: 8px;
   fill: var(--sb-faint);
+
+  &.absent {
+    opacity: 0.6;
+  }
 }
 
 // One hit target per term, wider than the marks it covers.
@@ -106,6 +143,12 @@
     outline: 2px solid var(--eu-blue);
     outline-offset: -2px;
   }
+
+  // Hoverable, because it has something to say; not clickable, because there
+  // is no network behind it to open.
+  &.absent {
+    cursor: default;
+  }
 }
 
 // --- readout --------------------------------------------------------------
@@ -121,16 +164,24 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: 8px;
   font-size: var(--sb-fs-sub);
   font-weight: 600;
   color: var(--sb-ink);
   margin-bottom: 4px;
 }
 
-.trends-readout-meps {
+.trends-readout-sample {
   font-weight: 400;
   color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.trends-readout-empty {
+  font-size: var(--sb-fs-sub);
+  line-height: 1.5;
+  color: var(--sb-muted);
 }
 
 .trends-readout-row {
@@ -138,7 +189,7 @@
   align-items: center;
   gap: 6px;
   font-size: var(--sb-fs-sub);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .trends-readout-swatch {
@@ -153,9 +204,19 @@
   color: var(--sb-muted);
 }
 
+// Figure and change form two columns to read down, not a sentence to read
+// across, so both are fixed-width and right-aligned.
 .trends-readout-value {
+  min-width: 42px;
+  text-align: right;
   color: var(--sb-ink);
   font-variant-numeric: tabular-nums;
+}
+
+.trends-readout-row .delta-badge {
+  min-width: 48px;
+  margin-left: 2px;
+  justify-content: center;
 }
 
 // --- the lowest pair, on its own scale ------------------------------------
@@ -164,6 +225,14 @@
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid var(--sb-rule);
+}
+
+// Near-black rather than a fourth hue: this is a different measure on a
+// different axis, and giving it a colour of its own would invite the reader to
+// look for it in the plot above.
+.trends-spark-line {
+  stroke: var(--sb-ink);
+  stroke-width: 2;
 }
 
 .trends-spark-title {
@@ -176,7 +245,7 @@
   color: var(--sb-muted);
 }
 
-// --- honesty about the axis ----------------------------------------------
+// --- honesty about the axis and the sample --------------------------------
 
 .trends-axis-note {
   font-size: var(--sb-fs-note);
@@ -186,32 +255,17 @@
   margin: 8px 0 0;
 }
 
-// --- table view -----------------------------------------------------------
-
-.trends-table-toggle {
-  margin-top: 8px;
-  padding: 3px 8px;
-  border: 1px solid var(--sb-rule);
-  border-radius: 3px;
-  background: #fff;
-  font-family: inherit;
-  font-size: var(--sb-fs-note);
-  color: var(--sb-muted);
-  cursor: pointer;
-
-  &:hover {
-    background: var(--sb-wash);
-    color: var(--sb-ink);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--eu-blue);
-    outline-offset: 1px;
-  }
+// Which points are thin and which terms are missing. Not a footnote in the
+// usual sense — nothing in the chart above is safe to quote without it — so it
+// takes the note colour rather than the faint one.
+.trends-caveat {
+  margin: 8px 0 0;
 }
 
+// --- numbers view ---------------------------------------------------------
+
 .trends-table-scroll {
-  margin-top: 8px;
+  margin-top: 2px;
   overflow-x: auto;
 }
 
@@ -256,6 +310,40 @@
       font-weight: 600;
     }
   }
+
+  // A term this view never reached: one cell saying so, spanning the figures
+  // it does not have.
+  tr.absent {
+    td {
+      text-align: left;
+      color: var(--sb-faint);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    th {
+      color: var(--sb-faint);
+      font-weight: 400;
+    }
+  }
+
+  // The vote count a thin term rests on, marked the way the chart marks it.
+  td.thin {
+    color: var(--sb-ink);
+    cursor: help;
+  }
+}
+
+// The table's version of a hollow marker — the same shape carrying the same
+// warning, so the two views of this panel do not each invent a convention.
+.trends-thin-mark {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 5px;
+  border: 1.5px solid var(--sb-ink-soft);
+  border-radius: 50%;
+  background: #ffffff;
 }
 
 .trends-table-caption {
@@ -264,11 +352,4 @@
   font-size: var(--sb-fs-note);
   color: var(--sb-muted);
   padding-bottom: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .trends-hit,
-  .trends-table-toggle {
-    transition: none;
-  }
 }

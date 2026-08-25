@@ -12,7 +12,7 @@ import { getDelta } from "../lib/utils.js";
  * @param {number} score - the figure shown next to this badge, on [0, 1]
  * @param {number} baseline - the same figure with one filter removed
  * @param {string} label - what the baseline is, for the tooltip ("Poland, all policy areas")
- * @param {string} what - what is being measured, for the tooltip ("Group cohesion")
+ * @param {string} what - what is being measured, for the tooltip ("Group agreement")
  */
 export default function DeltaBadge({ score, baseline, label, what = "" }) {
   const delta = getDelta(score, baseline);

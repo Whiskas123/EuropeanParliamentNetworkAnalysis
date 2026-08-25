@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CountryFlag } from "../lib/utils.js";
 import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import SegmentedToggle, { ORDER_OPTIONS } from "./SegmentedToggle";
 
 // Countries have no colour of their own the way political groups do, so every
 // dial takes one slate hue and the arc alone carries the magnitude. Borrowing
@@ -17,6 +18,7 @@ export default function CountrySimilarity({
   baseline,
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [sortBy, setSortBy] = useState("score");
 
   // In a country view this panel lists that one country, and its figure comes
   // from exactly the same pairs as the whole-Parliament figure for it, so the
@@ -36,10 +38,27 @@ export default function CountrySimilarity({
 
     return countrySimilarity
       .filter(Boolean)
-      .map((item) => ({ ...item, mepCount: counts.get(item.country) || 0 }))
+      .map((item) => {
+        const base = comparable
+          ? baseline.scores?.country?.[item.country] ?? null
+          : null;
+        return {
+          ...item,
+          mepCount: counts.get(item.country) || 0,
+          base,
+          delta: typeof base === "number" ? item.score - base : null,
+        };
+      })
       // The grid is read left to right, so rank has to live in the layout.
-      .sort((a, b) => b.score - a.score);
-  }, [countrySimilarity, graphData]);
+      // Change order is by distance travelled in either direction, so whatever
+      // moved furthest lands top-left; a country with no comparable baseline
+      // sorts last rather than as though it had not moved.
+      .sort((a, b) =>
+        sortBy === "change"
+          ? Math.abs(b.delta ?? -1) - Math.abs(a.delta ?? -1)
+          : b.score - a.score
+      );
+  }, [countrySimilarity, graphData, baseline, comparable, sortBy]);
 
   if (!graphData) return null;
   if (rows.length === 0) return null;
@@ -54,7 +73,7 @@ export default function CountrySimilarity({
         className="country-similarity-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Country Cohesion</span>
+        <span>Country Agreement</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"
@@ -71,7 +90,7 @@ export default function CountrySimilarity({
       </h3>
       <div className="country-similarity-description">
         Average voting agreement among MEPs from the same country, counting only
-        those who took part in more than half the votes
+        those who voted enough here to be placed
         {comparable && (
           <span className="baseline-note">
             Change shown against {baseline.label}.
@@ -80,16 +99,18 @@ export default function CountrySimilarity({
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
         <RadialScaleNote hasBaseline={comparable} />
+        {comparable && <SegmentedToggle
+            value={sortBy}
+            onChange={setSortBy}
+            options={ORDER_OPTIONS}
+            label="Order"
+          />}
         <RadialGrid>
           {rows.map((item) => (
             <RadialGauge
               key={item.country}
               value={item.score}
-              baseline={
-                comparable
-                  ? baseline.scores?.country?.[item.country] ?? null
-                  : null
-              }
+              baseline={item.base}
               color={COUNTRY_HUE}
               label={item.country}
               flag={<CountryFlag country={item.country} />}
@@ -98,7 +119,7 @@ export default function CountrySimilarity({
               )}% internal agreement across ${item.mepCount} MEP${
                 item.mepCount === 1 ? "" : "s"
               }${navigable ? ". Click to open this delegation." : ""}`}
-              what={`${item.country} cohesion`}
+              what={`${item.country} agreement`}
               baselineLabel={baseline?.label}
               sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
               onClick={
