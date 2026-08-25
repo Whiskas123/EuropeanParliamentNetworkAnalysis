@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
-import { getGroupAcronym, getGroupDisplayName } from "../lib/utils.js";
+import {
+  CountryFlag,
+  getGroupAcronym,
+  getGroupDisplayName,
+} from "../lib/utils.js";
 import { baselineForGroupPair } from "../lib/dataLoader.js";
 import "../styles/insights.scss";
 
@@ -117,6 +121,13 @@ const points = (delta) => Math.abs(delta * 100).toFixed(1);
 /** "+9.1" / "−26.2". A real minus, so both signs are the same width. */
 const signed = (delta) => `${delta > 0 ? "+" : "−"}${points(delta)}`;
 
+/** groupColors ships as a plain object from some callers and a Map from others. */
+function colorFor(groupColors, groupId) {
+  if (!groupColors) return null;
+  if (typeof groupColors.get === "function") return groupColors.get(groupId);
+  return groupColors[groupId];
+}
+
 /**
  * The baseline label as it reads after "Against".
  *
@@ -142,6 +153,22 @@ export default function CohesionInsights({
     const found = [];
     const against = baselinePhrase(baseline.label);
 
+    // A row has to be identifiable at a glance, and its name alone is not
+    // enough: the strip mixes groups, countries and pairs of groups, and the
+    // reader is scanning for one of them. Colours come from the nodes actually
+    // drawn, so a swatch matches the dots on the canvas rather than a second
+    // palette that only agrees with it by luck.
+    const groupColorMap = new Map();
+    for (const node of graphData.nodes || []) {
+      if (node.groupId && !groupColorMap.has(node.groupId)) {
+        groupColorMap.set(node.groupId, node.color);
+      }
+    }
+    const groupColor = (groupId) =>
+      groupColorMap.get(groupId) ||
+      colorFor(intergroupCohesion?.groupColors, groupId) ||
+      "#CCCCCC";
+
     // --- groups ---------------------------------------------------------
     // Only where the country filter is the same on both sides. Measured
     // against the whole Parliament, a group's cohesion inside one country is
@@ -163,6 +190,7 @@ export default function CohesionInsights({
           delta,
           excess: Math.abs(delta) / THRESHOLD.group,
           label: getGroupAcronym(item.group, mandate),
+          swatches: [groupColor(item.group)],
           sentence: `${getGroupDisplayName(item.group, mandate)} is ${points(
             delta
           )} points ${delta < 0 ? "less" : "more"} cohesive than ${against}`,
@@ -187,6 +215,8 @@ export default function CohesionInsights({
           delta,
           excess: Math.abs(delta) / THRESHOLD.country,
           label: item.country,
+          country: item.country,
+          swatches: [],
           sentence: `${item.country} agrees with itself ${points(delta)} points ${
             delta < 0 ? "less" : "more"
           } than ${against}`,
@@ -215,6 +245,7 @@ export default function CohesionInsights({
           delta,
           excess: Math.abs(delta) / THRESHOLD.pair,
           label: `${getGroupAcronym(a, mandate)}·${getGroupAcronym(b, mandate)}`,
+          swatches: [groupColor(a), groupColor(b)],
           sentence: `${getGroupDisplayName(a, mandate)} and ${getGroupDisplayName(
             b,
             mandate
@@ -314,7 +345,22 @@ export default function CohesionInsights({
           }, which is where the notch sits.`;
           return (
             <div className="insights-row" key={row.key} title={title}>
-              <span className="insights-row-label">{row.label}</span>
+              <span className="insights-row-label">
+                {row.kind === "country" ? (
+                  <span className="insights-flag">
+                    <CountryFlag country={row.country} />
+                  </span>
+                ) : (
+                  (row.swatches || []).map((color, k) => (
+                    <span
+                      key={`${row.key}-swatch-${k}`}
+                      className="insights-swatch"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))
+                )}
+                <span className="insights-row-name">{row.label}</span>
+              </span>
               <span className="insights-track">
                 <span className="insights-rail" />
                 <span

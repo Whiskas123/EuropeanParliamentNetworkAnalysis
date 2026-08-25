@@ -47,7 +47,7 @@
 // pairs still ellipsise; they keep both names, and the row's hover text
 // carries the full ones either way.
 .insights-strip {
-  --ins-label: 78px;
+  --ins-label: 96px;
   --ins-value: 42px;
   --ins-gap: 6px;
 }
@@ -69,12 +69,43 @@
 }
 
 .insights-row-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
   font-size: var(--sb-fs-micro);
   font-weight: 600;
   color: var(--sb-ink);
+}
+
+// The name gives ground, not the mark: a clipped flag or half a swatch reads as
+// a rendering fault, while a truncated acronym reads as a truncated acronym.
+.insights-row-name {
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+// Which group, in the colour it is drawn on the canvas. Two of them for a pair
+// row, in the order the pair is named.
+.insights-swatch {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.insights-flag {
+  flex-shrink: 0;
+  display: inline-flex;
+  width: 1em;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
 }
 
 .insights-track {
