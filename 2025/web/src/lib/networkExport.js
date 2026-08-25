@@ -855,8 +855,249 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
  *   intergroupCohesion, baseline, outliers}
  * @returns {string} a complete <svg> document
  */
-export function exportStatsSheetSVG() {
-  throw new Error("exportStatsSheetSVG not implemented yet");
+export function exportStatsSheetSVG({ graphData, meta, stats } = {}) {
+  const caption = buildCaption(meta || {});
+  const {
+    intragroupCohesion = [],
+    countrySimilarity = [],
+    intergroupCohesion = null,
+    baseline = null,
+  } = stats || {};
+
+  // A4 portrait at roughly 2 units per mm, so the sheet drops onto paper beside
+  // the network without rescaling.
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+
+  const parts = [];
+  let y = M + 14;
+
+  parts.push(svgText(M, y, caption.title, { size: 15, weight: 700 }));
+  y += 15;
+  parts.push(svgText(M, y, caption.subtitle, { size: 9.5, fill: SECONDARY }));
+  y += 11;
+  parts.push(
+    svgText(M, y, (caption.lines || []).slice(0, 2).join("  ·  "), {
+      size: 8.5,
+      fill: MUTED,
+    })
+  );
+  y += 8;
+  parts.push(svgRule(M, y, inner, INK, 1.2));
+  y += 16;
+
+  if (baseline && baseline.label) {
+    parts.push(
+      svgText(M, y, `Change measured against ${baseline.label}.`, {
+        size: 8,
+        fill: MUTED,
+        italic: true,
+      })
+    );
+    y += 12;
+  }
+
+  // One cohesion table. Each row carries a bar, so relative size reads without
+  // reading every figure, and a delta column whenever a baseline exists.
+  const table = (title, rows, lookup, limit) => {
+    if (!rows || rows.length === 0) return;
+    parts.push(svgText(M, y, title, { size: 9, weight: 700 }));
+    y += 4;
+    parts.push(svgRule(M, y, inner, RULE));
+    y += 11;
+
+    const barX = M + 150;
+    const barW = 90;
+    const scoreX = barX + barW + 34;
+    const deltaX = M + inner;
+
+    rows.slice(0, limit).forEach((row) => {
+      const label = row.label || "";
+      const score = row.score;
+      parts.push(
+        svgText(M, y, label.length > 30 ? `${label.slice(0, 29)}…` : label, {
+          size: 8.5,
+        })
+      );
+      if (Number.isFinite(score)) {
+        parts.push(svgRect(barX, y - 5, barW, 5, "#eeeeee"));
+        parts.push(
+          svgRect(
+            barX,
+            y - 5,
+            Math.max(0, Math.min(1, score)) * barW,
+            5,
+            row.color || "#9aa3ad"
+          )
+        );
+        parts.push(
+          svgText(scoreX, y, fmtPct(score), {
+            size: 8.5,
+            anchor: "end",
+            monospaceDigits: true,
+          })
+        );
+      }
+      const delta = getDelta(score, lookup ? lookup(row) : null);
+      if (delta) {
+        parts.push(
+          svgText(deltaX, y, `${delta.text} pp`, {
+            size: 8.5,
+            anchor: "end",
+            monospaceDigits: true,
+            // Same direction as the sidebar: green is more agreement.
+            fill:
+              delta.direction > 0
+                ? "#1a6b3c"
+                : delta.direction < 0
+                ? "#a32a1e"
+                : MUTED,
+          })
+        );
+      }
+      y += 12;
+    });
+    y += 10;
+  };
+
+  const groupRows = [...intragroupCohesion]
+    .filter((item) => item && item.group)
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .map((item) => ({
+      label: getGroupDisplayName(item.group, meta && meta.mandate),
+      score: item.score,
+      key: item.group,
+      color: groupColorFromNodes(graphData, item.group),
+    }));
+  table(
+    "Agreement within each political group",
+    groupRows,
+    (row) => baseline?.scores?.intragroup?.[row.key],
+    12
+  );
+
+  const countryRows = [...countrySimilarity]
+    .filter((item) => item && item.country)
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .map((item) => ({
+      label: item.country,
+      score: item.score,
+      key: item.country,
+    }));
+  table(
+    "Agreement within each national delegation",
+    countryRows,
+    // In a country view this figure comes from the same MEP pairs as the
+    // whole-Parliament one, so its delta is zero by construction; the sidebar
+    // omits it for the same reason.
+    (row) =>
+      baseline && baseline.comparing !== "country"
+        ? baseline.scores?.country?.[row.key]
+        : null,
+    countryRows.length > 14 ? 14 : countryRows.length
+  );
+
+  if (intergroupCohesion && Array.isArray(intergroupCohesion.groups)) {
+    const groups = intergroupCohesion.groups.filter((g) => g !== "NonAttached");
+    const matrix = intergroupCohesion.matrix || [];
+    const indexOf = new Map(intergroupCohesion.groups.map((g, i) => [g, i]));
+    const cell = Math.min(26, Math.floor((inner - 44) / Math.max(groups.length, 1)));
+
+    if (groups.length > 1 && y + cell * groups.length + 40 < H - M) {
+      parts.push(svgText(M, y, "Agreement between groups", { size: 9, weight: 700 }));
+      y += 4;
+      parts.push(svgRule(M, y, inner, RULE));
+      y += 14;
+
+      const gridX = M + 44;
+      groups.forEach((group, col) => {
+        parts.push(
+          svgText(
+            gridX + cell * col + cell / 2,
+            y,
+            getGroupAcronym(group, meta && meta.mandate).slice(0, 5),
+            { size: 6, anchor: "middle", fill: SECONDARY }
+          )
+        );
+      });
+      y += 5;
+
+      groups.forEach((rowGroup) => {
+        const rowIndex = indexOf.get(rowGroup);
+        parts.push(
+          svgText(
+            M + 40,
+            y + cell * 0.62,
+            getGroupAcronym(rowGroup, meta && meta.mandate).slice(0, 6),
+            { size: 6, anchor: "end", fill: SECONDARY }
+          )
+        );
+        groups.forEach((colGroup, col) => {
+          const colIndex = indexOf.get(colGroup);
+          const score = matrix[rowIndex] ? matrix[rowIndex][colIndex] : null;
+          const x = gridX + cell * col;
+          if (!Number.isFinite(score) || score === 0) {
+            parts.push(svgRect(x, y, cell - 1, cell - 1, "#f4f4f4"));
+            return;
+          }
+          const rgb = getRedGreenColor(score);
+          parts.push(svgRect(x, y, cell - 1, cell - 1, `rgb(${rgb.r},${rgb.g},${rgb.b})`));
+          const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+          parts.push(
+            svgText(x + (cell - 1) / 2, y + cell * 0.62, Math.round(score * 100), {
+              size: 6,
+              anchor: "middle",
+              fill: luminance > 0.5 ? "#000000" : "#ffffff",
+              monospaceDigits: true,
+            })
+          );
+        });
+        y += cell;
+      });
+      y += 14;
+    }
+  }
+
+  const footerY = H - M;
+  parts.push(svgRule(M, footerY - 22, inner, RULE));
+  wrapText(caption.caveat, 78).forEach((line, i) => {
+    parts.push(
+      svgText(M, footerY - 12 + i * 8, line, { size: 7, fill: MUTED, italic: true })
+    );
+  });
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="stats-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
+}
+
+/** Break a sentence at roughly `width` characters without splitting words. */
+function wrapText(text, width) {
+  const words = String(text || "").split(/\s+/);
+  return words.reduce((lines, word) => {
+    const last = lines[lines.length - 1];
+    if (last && `${last} ${word}`.length <= width) {
+      lines[lines.length - 1] = `${last} ${word}`;
+      return lines;
+    }
+    lines.push(word);
+    return lines;
+  }, []);
+}
+
+/** A group's colour, taken from a node that belongs to it. */
+function groupColorFromNodes(graphData, groupId) {
+  const node = ((graphData && graphData.nodes) || []).find(
+    (n) => n.groupId === groupId
+  );
+  return (node && node.color) || "#9aa3ad";
 }
 
 /**

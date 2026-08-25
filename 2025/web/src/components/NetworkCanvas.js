@@ -14,6 +14,7 @@ import {
 import { listParties } from "../lib/parties";
 import {
   exportNetworkSVG,
+  exportStatsSheetSVG,
   downloadSVG,
   buildCaption,
   buildLegend,
@@ -248,6 +249,12 @@ export default function NetworkCanvas({
   selectedSubject,
   renderSettings,
   onRenderSettingsChange,
+  // Only read by the stats-sheet export, which puts the sidebar's figures on
+  // a sheet to hang beside the printed network.
+  baseline,
+  intergroupCohesion,
+  intragroupCohesion,
+  countrySimilarity,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -281,6 +288,7 @@ export default function NetworkCanvas({
   // until lib/networkExport.js is implemented. Offering a button that cannot
   // work is worse than not offering it.
   const [svgExportBroken, setSvgExportBroken] = useState(false);
+  const [statsExportBroken, setStatsExportBroken] = useState(false);
 
   // Defaults keep this component usable on its own if a caller ever drops the
   // prop; page.js always passes a complete object.
@@ -867,6 +875,49 @@ export default function NetworkCanvas({
     if (!delivered) setSvgExportBroken(true);
   };
 
+  /**
+   * The figures behind the current view, as a sheet to hang beside the print.
+   *
+   * Separate from the network export because on a wall they are two objects:
+   * the shape, and the numbers that shape came from.
+   */
+  const handleExportStatsSheet = () => {
+    if (!graphData) return;
+    const svg = tryExportCall("exportStatsSheetSVG", () =>
+      exportStatsSheetSVG({
+        graphData,
+        renderSettings: {
+          edgePercentile,
+          edgeWidth: widthMultiplier,
+          colorMode,
+          dim,
+        },
+        meta: exportMeta,
+        stats: {
+          intragroupCohesion: intragroupCohesion || [],
+          countrySimilarity: countrySimilarity || [],
+          intergroupCohesion: intergroupCohesion || null,
+          baseline: baseline || null,
+        },
+      })
+    );
+
+    if (!svg) {
+      setStatsExportBroken(true);
+      return;
+    }
+
+    const delivered = tryExportCall(
+      "downloadSVG",
+      () => {
+        downloadSVG(svg, buildExportFilename("svg").replace(/\.svg$/, "-stats.svg"));
+        return true;
+      },
+      false
+    );
+    if (!delivered) setStatsExportBroken(true);
+  };
+
   const handleExportPNG = () => {
     if (!canvasRef.current || !graphData) return;
 
@@ -1298,6 +1349,31 @@ export default function NetworkCanvas({
               <polyline points="14 2 14 8 20 8"></polyline>
               <polyline points="10 12 8 14 10 16"></polyline>
               <polyline points="14 12 16 14 14 16"></polyline>
+            </svg>
+          </button>
+        )}
+        {!statsExportBroken && (
+          <button
+            className="network-zoom-button"
+            onClick={handleExportStatsSheet}
+            title="Export the figures as a sheet to hang beside the print"
+            aria-label="Export statistics sheet as SVG"
+            disabled={!graphData || !canvasReady}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="13" y2="17"></line>
             </svg>
           </button>
         )}

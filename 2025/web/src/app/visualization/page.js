@@ -91,8 +91,38 @@ export default function VisualizationPage() {
   // Cache the imported modules
   const modulesRef = useRef(null);
 
+  // Guards against a slow response for a view you have already navigated away
+  // from. Loads are not cancellable, and they finish out of order: the full
+  // network is 16 MB while a country x subject file is a few hundred KB, so a
+  // request started earlier routinely lands later and would overwrite the view
+  // you actually asked for.
+  const requestSeqRef = useRef(0);
+  const firstLoadRef = useRef(true);
+
   const loadAndPrepareGraph = useCallback(
     async (mandateNum, country = null, subject = null) => {
+      // On the very first run the URL is the authority, but the effect that
+      // mirrors it into state has not re-rendered yet — so this call still
+      // carries the defaults. Loading them would fetch a network nobody asked
+      // for and then race the real one.
+      if (firstLoadRef.current) {
+        firstLoadRef.current = false;
+        if (typeof window !== "undefined") {
+          const wanted = decodeView(window.location.search.replace(/^\?/, ""));
+          if (
+            wanted.mandate !== mandateNum ||
+            wanted.country !== country ||
+            wanted.subject !== subject
+          ) {
+            return;
+          }
+        }
+      }
+
+      const seq = requestSeqRef.current + 1;
+      requestSeqRef.current = seq;
+      const isStale = () => requestSeqRef.current !== seq;
+
       setLoading(true);
       setError(null);
       setSelectedNode(null);
@@ -100,7 +130,9 @@ export default function VisualizationPage() {
       // The reference figures every statistic is compared against. Resolved
       // before the network so the sidebar never renders a score for one view
       // beside a delta computed for the previous one.
-      setBaseline(await getBaseline(mandateNum, country, subject));
+      const nextBaseline = await getBaseline(mandateNum, country, subject);
+      if (isStale()) return;
+      setBaseline(nextBaseline);
 
       try {
         // Import libraries only once and cache them
@@ -135,6 +167,11 @@ export default function VisualizationPage() {
           votingSessions: precomputedVotingSessions,
           metadata,
         } = await loadMandateData(mandateNum, country, subject);
+
+        // A newer view was requested while this one was in flight. Dropping the
+        // result here is what stops a slow full-network response from replacing
+        // the filtered view the user actually asked for.
+        if (isStale()) return;
 
         // Check if nodes already have positions (precomputed)
         const hasPrecomputedPositions =
@@ -376,6 +413,7 @@ export default function VisualizationPage() {
           setCountrySimilarity(null);
         }
 
+        if (isStale()) return;
         setGraphData(newGraphData);
 
         // Clear previous data immediately
@@ -388,6 +426,7 @@ export default function VisualizationPage() {
           });
         });
       } catch (err) {
+        if (isStale()) return;
         console.error("Error loading graph:", err);
         setError(err.message);
         setLoading(false);
