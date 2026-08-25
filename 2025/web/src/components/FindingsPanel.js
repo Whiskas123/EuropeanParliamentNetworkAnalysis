@@ -105,6 +105,16 @@ function GroupDot({ groupId }) {
   );
 }
 
+/** A group's swatch and acronym, kept together on one line. */
+function GroupChip({ groupId, mandate }) {
+  return (
+    <span className="findings-chip">
+      <GroupDot groupId={groupId} />
+      {getGroupAcronym(groupId, mandate)}
+    </span>
+  );
+}
+
 export default function FindingsPanel({
   mandate,
   selectedCountry,
@@ -191,7 +201,25 @@ export default function FindingsPanel({
     if (onCountryClick && selectedCountry) onCountryClick(null);
   };
 
+  /**
+   * One ranked row: rank, what moved, the figure.
+   *
+   * The rank and the figure are the row's fixed columns and everything else is
+   * one text column between them, so the percentages line up down the right
+   * edge and can be read without reading the rows. Written the other way round
+   * — the figure stacked under the name inside a half-width column — the
+   * numbers landed wherever each name happened to end. Same shape as the
+   * Unusual panel's rows, which these sit one tab away from.
+   *
+   * Three lines rather than the Unusual panel's two, because a Findings row
+   * carries one thing an Unusual row does not: which view it points at. Folding
+   * the policy area in with the sample would truncate one of them, and the
+   * sample is the whole reason a twelve-session policy area at the top of the
+   * table is legible as noise rather than as a finding.
+   */
   const renderRow = (row, index) => {
+    const rank = <span className="findings-rank">{index + 1}</span>;
+
     if (activeTab === "delegations") {
       return (
         <button
@@ -201,25 +229,23 @@ export default function FindingsPanel({
           onClick={() => openDelegation(row)}
           title={`Open ${row.country} on ${row.subject}`}
         >
+          {rank}
           <span className="findings-row-line">
             <span className="findings-row-what">
-              <span className="findings-rank">{index + 1}</span>
               <CountryFlag country={row.country} className="findings-flag" />
-              {row.country}
+              <span className="findings-row-name">{row.country}</span>
             </span>
-            <span className="findings-row-figure">
-              {percent(row.score)}
-              <DeltaBadge
-                score={row.score}
-                baseline={row.baseline}
-                label={`${row.country}, all policy areas`}
-                what={`${row.country}'s internal agreement`}
-              />
-            </span>
-          </span>
-          <span className="findings-row-line findings-row-sub">
             <span className="findings-row-where">{row.subject}</span>
             <span className="findings-row-sample">{sampleText(row)}</span>
+          </span>
+          <span className="findings-row-figure">
+            <span>{percent(row.score)}</span>
+            <DeltaBadge
+              score={row.score}
+              baseline={row.baseline}
+              label={`${row.country}, all policy areas`}
+              what={`${row.country}'s internal agreement`}
+            />
           </span>
         </button>
       );
@@ -235,25 +261,23 @@ export default function FindingsPanel({
           onClick={() => openSubjectGroup(row, row.group)}
           title={`Open ${getGroupDisplayName(row.group, mandate)} on ${row.subject}`}
         >
+          {rank}
           <span className="findings-row-line">
             <span className="findings-row-what">
-              <span className="findings-rank">{index + 1}</span>
               <GroupDot groupId={row.group} />
-              {name}
+              <span className="findings-row-name">{name}</span>
             </span>
-            <span className="findings-row-figure">
-              {percent(row.score)}
-              <DeltaBadge
-                score={row.score}
-                baseline={row.baseline}
-                label={`${name}, all policy areas`}
-                what={`${name} cohesion`}
-              />
-            </span>
-          </span>
-          <span className="findings-row-line findings-row-sub">
             <span className="findings-row-where">{row.subject}</span>
             <span className="findings-row-sample">{sampleText(row)}</span>
+          </span>
+          <span className="findings-row-figure">
+            <span>{percent(row.score)}</span>
+            <DeltaBadge
+              score={row.score}
+              baseline={row.baseline}
+              label={`${name}, all policy areas`}
+              what={`${name} cohesion`}
+            />
           </span>
         </button>
       );
@@ -270,28 +294,24 @@ export default function FindingsPanel({
           onClick={() => openSubjectGroup(row, row.groupA)}
           title={`Open ${row.subject}, ${nameA} against ${nameB}`}
         >
+          {rank}
           <span className="findings-row-line">
             <span className="findings-row-what">
-              <span className="findings-rank">{index + 1}</span>
-              <GroupDot groupId={row.groupA} />
-              {nameA}
-              <span className="findings-pair-join">·</span>
-              <GroupDot groupId={row.groupB} />
-              {nameB}
+              <GroupChip groupId={row.groupA} mandate={mandate} />
+              <span className="findings-vs">vs</span>
+              <GroupChip groupId={row.groupB} mandate={mandate} />
             </span>
-            <span className="findings-row-figure">
-              {percent(row.score)}
-              <DeltaBadge
-                score={row.score}
-                baseline={row.baseline}
-                label={`${nameA} and ${nameB}, all policy areas`}
-                what={`Agreement between ${nameA} and ${nameB}`}
-              />
-            </span>
-          </span>
-          <span className="findings-row-line findings-row-sub">
             <span className="findings-row-where">{row.subject}</span>
             <span className="findings-row-sample">{sampleText(row)}</span>
+          </span>
+          <span className="findings-row-figure">
+            <span>{percent(row.score)}</span>
+            <DeltaBadge
+              score={row.score}
+              baseline={row.baseline}
+              label={`${nameA} and ${nameB}, all policy areas`}
+              what={`Agreement between ${nameA} and ${nameB}`}
+            />
           </span>
         </button>
       );
@@ -310,31 +330,18 @@ export default function FindingsPanel({
           mandate
         )} than with ${getGroupDisplayName(row.group, mandate)}`}
       >
+        {rank}
         <span className="findings-row-line">
           <span className="findings-row-what">
-            <span className="findings-rank">{index + 1}</span>
             <CountryFlag country={row.country} className="findings-flag" />
-            {row.mepName}
+            <span className="findings-row-name">{row.mepName}</span>
           </span>
-          <span className="findings-row-figure">
-            {percent(row.score)}
-            <DeltaBadge
-              score={row.score}
-              baseline={row.baseline}
-              label={`their own group, ${own}`}
-              what={`Agreement with ${closest}`}
-            />
-          </span>
-        </span>
-        <span className="findings-row-line findings-row-sub">
           <span className="findings-row-where">
-            <GroupDot groupId={row.group} />
-            {own}
+            <GroupChip groupId={row.group} mandate={mandate} />
             <span className="findings-arrow" aria-hidden="true">
               →
             </span>
-            <GroupDot groupId={row.closestGroup} />
-            {closest}
+            <GroupChip groupId={row.closestGroup} mandate={mandate} />
             {row.nonAttached && (
               <span
                 className="findings-tag"
@@ -347,6 +354,15 @@ export default function FindingsPanel({
           <span className="findings-row-sample">
             {sampleText(row, "colleagues")}
           </span>
+        </span>
+        <span className="findings-row-figure">
+          <span>{percent(row.score)}</span>
+          <DeltaBadge
+            score={row.score}
+            baseline={row.baseline}
+            label={`their own group, ${own}`}
+            what={`Agreement with ${closest}`}
+          />
         </span>
       </button>
     );

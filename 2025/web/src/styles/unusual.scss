@@ -89,7 +89,7 @@
 
 .unusual-rank {
   flex-shrink: 0;
-  width: 2ch;
+  min-width: 2ch;
   font-size: var(--sb-fs-micro);
   color: var(--sb-faint);
   font-variant-numeric: tabular-nums;

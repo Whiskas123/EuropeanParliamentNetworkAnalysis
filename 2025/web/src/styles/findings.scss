@@ -75,6 +75,8 @@
 .findings-row {
   display: flex;
   align-items: baseline;
+  // Baseline alignment lines the rank and the figure up with the row's first
+  // line of text, which is what the eye reads across.
   gap: 8px;
   width: 100%;
   padding: 7px 4px;
@@ -100,14 +102,18 @@
   }
 }
 
+// The rank column. min-width rather than width: past row 99 a fixed 2ch box
+// spills its digits over the flag beside it.
 .findings-rank {
   flex-shrink: 0;
-  width: 2ch;
+  min-width: 2ch;
   font-size: var(--sb-fs-micro);
   color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
 }
 
+// Everything between the rank and the figure: what moved, which view it moved
+// in, and the sample underneath both.
 .findings-row-line {
   flex: 1 1 auto;
   min-width: 0;
@@ -126,8 +132,17 @@
   min-width: 0;
 }
 
-.findings-row-where,
-.findings-row-sub {
+// MEP names run past the column; the full one is on the row's hover title.
+.findings-row-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Left inline rather than flex so the ellipsis works — a flex container has
+// nothing to truncate.
+.findings-row-where {
   font-size: var(--sb-fs-sub);
   color: var(--sb-muted);
   overflow: hidden;
@@ -147,9 +162,20 @@
   }
 }
 
-.findings-pair-join {
+// A group's swatch and acronym, kept together on one line. Same construction
+// as .structure-chip and .unusual-row-what's swatches.
+.findings-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.findings-vs {
   color: var(--sb-faint);
-  margin: 0 2px;
+  margin: 0 1px;
+  font-weight: 400;
 }
 
 // The group's own colour, as a square. It had no dimensions at all, so every
@@ -163,8 +189,8 @@
   border-radius: 2px;
 }
 
-// Figure column. Fixed width and tabular figures so the numbers form a column
-// the eye can run down without reading each one.
+// Figure column, pinned to the right edge with tabular figures, so the numbers
+// form a column the eye can run down without reading the rows.
 .findings-row-figure {
   flex-shrink: 0;
   display: flex;
@@ -174,14 +200,21 @@
   font-variant-numeric: tabular-nums;
   font-size: var(--sb-fs-row);
   color: var(--sb-ink-soft);
+
+  .delta-badge {
+    margin-left: 0;
+  }
 }
 
-// The sample behind a figure. A policy area can rest on twelve votes and
-// produce the largest delta in the table; that has to be visible next to it.
+// The sample the figure rests on, on its own line. A policy area can rest on
+// twelve voting sessions and produce the largest delta in the table; that has
+// to be readable in full, which is why it does not share a line.
 .findings-row-sample {
   font-size: var(--sb-fs-micro);
   color: var(--sb-faint);
   font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -200,6 +233,11 @@
 .findings-arrow {
   color: var(--sb-faint);
   margin: 0 3px;
+}
+
+// JSX strips the newline between the chip and the tag, so the gap is a margin.
+.findings-chip + .findings-tag {
+  margin-left: 4px;
 }
 
 .findings-note,
