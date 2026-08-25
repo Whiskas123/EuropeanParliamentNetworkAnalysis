@@ -1,0 +1,207 @@
+{
+  "run": "deviations",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-25T21:27:44.050499+00:00",
+    "seconds": 80.4,
+    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 20,
+    "passed": 18,
+    "warnings": 2,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 4c: deviation from own group",
+      "facts": {
+        "mandate 6: voting sessions": 5838,
+        "mandate 6: debates": 1608,
+        "mandate 6: political groups": "ALDE, GUE/NGL, IND/DEM, ITS, PPE-DE, PSE, UEN, Verts/ALE",
+        "mandate 6: MEPs with a term deviation": 653,
+        "mandate 6: MEPs with any deviation": 883,
+        "mandate 6: median |deviation|": "2.17 pp",
+        "mandate 6: written": "mep_deviations_6.json (1210 KB)",
+        "mandate 7: voting sessions": 4360,
+        "mandate 7: debates": 920,
+        "mandate 7: political groups": "ALDE, ECR, EFD, GUE/NGL, PPE, S&D, Verts/ALE",
+        "mandate 7: MEPs with a term deviation": 693,
+        "mandate 7: MEPs with any deviation": 809,
+        "mandate 7: median |deviation|": "1.67 pp",
+        "mandate 7: written": "mep_deviations_7.json (1023 KB)",
+        "mandate 8: voting sessions": 11286,
+        "mandate 8: debates": 2261,
+        "mandate 8: political groups": "ALDE, ECR, EFDD, ENF, GUE/NGL, PPE, S&D, Verts/ALE",
+        "mandate 8: MEPs with a term deviation": 685,
+        "mandate 8: MEPs with any deviation": 805,
+        "mandate 8: median |deviation|": "1.70 pp",
+        "mandate 8: written": "mep_deviations_8.json (1493 KB)",
+        "mandate 9: voting sessions": 18827,
+        "mandate 9: debates": 2223,
+        "mandate 9: political groups": "ECR, GUE/NGL, ID, PPE, RE, S&D, Verts/ALE",
+        "mandate 9: MEPs with a term deviation": 682,
+        "mandate 9: MEPs with any deviation": 740,
+        "mandate 9: median |deviation|": "1.69 pp",
+        "mandate 9: written": "mep_deviations_9.json (1328 KB)",
+        "mandate 10: voting sessions": 4245,
+        "mandate 10: debates": 504,
+        "mandate 10: political groups": "ECR, ESN, GUE/NGL, PPE, PfE, RE, S&D, Verts/ALE",
+        "mandate 10: MEPs with a term deviation": 674,
+        "mandate 10: MEPs with any deviation": 700,
+        "mandate 10: median |deviation|": "1.97 pp",
+        "mandate 10: written": "mep_deviations_10.json (1045 KB)"
+      },
+      "seconds": 74.7
+    }
+  ],
+  "checks": [
+    {
+      "name": "mandate 6: most (MEP, vote) pairs resolve to a group",
+      "ok": false,
+      "detail": "only 82.2% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: deviations were produced",
+      "ok": true,
+      "detail": "only 883 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 2.17 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 89.0% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: deviations were produced",
+      "ok": true,
+      "detail": "only 809 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.67 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 87.6% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: deviations were produced",
+      "ok": true,
+      "detail": "only 805 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.70 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: most (MEP, vote) pairs resolve to a group",
+      "ok": false,
+      "detail": "only 81.4% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: deviations were produced",
+      "ok": true,
+      "detail": "only 740 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.69 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 98.0% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: deviations were produced",
+      "ok": true,
+      "detail": "only 700 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.97 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    }
+  ]
+}

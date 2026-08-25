@@ -559,7 +559,9 @@ a {
 .cohesion-heatmap-description,
 .structure-description,
 .trends-description,
-.insights-desc {
+.insights-desc,
+.deviation-lede,
+.deviation-empty {
   @extend .sb-panel-desc;
 }
 
@@ -575,6 +577,11 @@ a {
 .structure-status,
 .trends-status {
   @extend .sb-status;
+}
+
+.deviation-note,
+.deviation-scale-note {
+  @extend .sb-note;
 }
 
 // The two profile headers are a tier above a panel title: they name the MEP or

@@ -82,10 +82,15 @@ class VoteMatrix:
         return matrix
 
 
-def edges_from_matrix(matrix, mep_ids, raw_counts=None):
+def edges_from_matrix(matrix, mep_ids, raw_counts=None, is_subject=False):
     """Agreement index for every MEP pair that shares at least one vote.
 
     Returns (edges, kept_mep_ids, stats). Edge weights are still in [-1, 1].
+
+    `is_subject` opens the second door described in `config`: a policy area's
+    votes are lumpy, so the share test alone deletes people who plainly took
+    part. Term 10's 176 women's rights votes fall on five sitting days, and
+    missing one costs 20-30 points of share at a stroke.
     """
     active_rows = np.flatnonzero((matrix != 0).any(axis=1))
     total_votes = int(active_rows.size)
@@ -93,7 +98,13 @@ def edges_from_matrix(matrix, mep_ids, raw_counts=None):
         return [], [], {"total_votes": 0, "meps_considered": 0, "meps_kept": 0}
 
     counts = raw_counts if raw_counts is not None else (matrix != 0).sum(axis=0)
-    keep = np.flatnonzero(counts > total_votes * config.PARTICIPATION_THRESHOLD)
+    admitted = counts > total_votes * config.PARTICIPATION_THRESHOLD
+    if is_subject:
+        admitted = admitted | (
+            (counts >= config.MIN_SUBJECT_PARTICIPATION_VOTES)
+            & (counts >= total_votes * config.MIN_SUBJECT_PARTICIPATION_SHARE)
+        )
+    keep = np.flatnonzero(admitted)
     stats = {
         "total_votes": total_votes,
         "meps_considered": int((counts > 0).sum()),
@@ -336,7 +347,9 @@ def build_mandate_payload(mandate, report, meps):
             thin[subject] = int(rows.size)
             continue
         sub_matrix = matrix[rows]
-        sub_edges, _, sub_stats = edges_from_matrix(sub_matrix, builder.mep_ids)
+        sub_edges, _, sub_stats = edges_from_matrix(
+            sub_matrix, builder.mep_ids, is_subject=True
+        )
         if not sub_edges:
             report.note(f"mandate {mandate}: subject '{subject}' produced no edges")
             continue

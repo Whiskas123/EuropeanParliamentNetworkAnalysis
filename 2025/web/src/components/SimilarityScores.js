@@ -7,6 +7,7 @@ import {
   getSubjectEmoji,
 } from "../lib/utils.js";
 import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import GroupDeviation, { useDeviationFile } from "./GroupDeviation";
 
 export default function SimilarityScores({
   selectedCountry,
@@ -151,6 +152,10 @@ export default function SimilarityScores({
     if (n) return `${acronym} members${where} (${n} MEPs)`;
     return `${acronym} members${where}`;
   })();
+
+  // Whether this term has deviation figures published. Above the guard below
+  // for the same reason as the memo that follows it.
+  const deviationFile = useDeviationFile(mandate);
 
   // One pass over the nodes instead of a find() per group inside the render.
   // Above the guard below, because a hook after an early return runs on some
@@ -319,7 +324,12 @@ export default function SimilarityScores({
                   onClick={() => setIsAgreementCollapsed(!isAgreementCollapsed)}
                 >
                   <span>
-                    Voting Agreement with Political Groups
+                    {/* The two blocks below measure different things and must
+                        not share a heading: the dials are agreement with each
+                        group, the deviation is distance from the MEP's own. */}
+                    {deviationFile
+                      ? "Difference from Own Group"
+                      : "Voting Agreement with Political Groups"}
                     {agreementSubject &&
                       ` (${getSubjectEmoji(
                         agreementSubject
@@ -364,6 +374,21 @@ export default function SimilarityScores({
                 }`}
               >
                 <div className="similarity-scores-agreement-list-wrapper">
+                  {/* These dials are the fallback. An absolute agreement figure
+                      is not comparable between two MEPs unless they sat the
+                      same votes, and on a lumpy policy area they routinely did
+                      not — see GroupDeviation.js. Where the deviation file is
+                      published it replaces them; where it is not, a deployment
+                      behaves exactly as it did before. */}
+                  {deviationFile ? (
+                    <GroupDeviation
+                      mandate={mandate}
+                      selectedNode={selectedNode}
+                      subject={agreementSubject}
+                      groupColors={groupColors}
+                    />
+                  ) : (
+                  <>
                   {/* Full scale here, unlike the cohesion grids. This measures
                       one MEP against groups that are not theirs, which runs
                       from 16% to 98% — 28% of these figures in the dataset are
@@ -394,6 +419,8 @@ export default function SimilarityScores({
                         />
                       ))}
                   </RadialGrid>
+                  </>
+                  )}
                 </div>
               </div>
             </div>

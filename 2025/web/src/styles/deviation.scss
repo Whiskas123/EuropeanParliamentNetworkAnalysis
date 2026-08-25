@@ -1,0 +1,117 @@
+// Deviation-from-own-group bars — see GroupDeviation.js for why this replaces
+// the absolute agreement dials, and pipeline/deviations.py for the measure.
+//
+// The marks are RadialGauge's, unrolled from a ring into a line: a hairline
+// rule for the scale, solid colour for the value, a dark short tick for the
+// reference. Nothing here is a convention invented for this panel. An earlier
+// draft drew the scale as a filled grey block, which at panel size reads as an
+// object sitting in the panel rather than as an axis.
+//
+// Type for .deviation-lede, -note and -empty is registered against the shared
+// panel classes in globals.scss; what lives here is layout.
+
+.deviation {
+  margin-top: 12px;
+}
+
+// The one line that stops this panel from silently contradicting the canvas,
+// where the same MEP is coloured by the group they ended the term in.
+.deviation-note {
+  padding: 6px 8px;
+  border-left: 2px solid var(--eu-blue);
+  background: var(--sb-wash);
+}
+
+.deviation-empty {
+  padding: 8px;
+  background: var(--sb-wash);
+  border-radius: 4px;
+}
+
+.deviation-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.deviation-row {
+  display: grid;
+  // Fixed label and figure columns so every rail starts and ends on the same
+  // vertical, which is what makes the origin read as one axis down the whole
+  // panel rather than eight unrelated ones.
+  grid-template-columns: 58px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 6px;
+}
+
+.deviation-group {
+  font-size: var(--sb-fs-row);
+  color: var(--sb-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deviation-track {
+  position: relative;
+  display: block;
+  height: 12px;
+}
+
+// The scale: one hairline, the same weight as every other rule in the sidebar.
+.deviation-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--sb-rule);
+}
+
+// Zero, and the mark every bar grows from — so it is the darkest thing in the
+// row. Drawing the origin faint and the bars dark inverts the hierarchy, and
+// the eye then takes a bar's end for the axis.
+.deviation-origin {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #465060cc;
+  z-index: 2;
+}
+
+.deviation-bar {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 1px;
+  min-width: 1px;
+  z-index: 1;
+}
+
+// A clipped bar must not read as one that happens to end at the edge, so the
+// far end is hatched. Same reasoning as the off-scale ring in RadialGauge.
+.deviation-bar--offscale {
+  mask-image: repeating-linear-gradient(
+    -45deg,
+    #000 0 3px,
+    transparent 3px 5px
+  );
+  mask-mode: luminance;
+}
+
+// Neutral, like the figure inside a dial. Red and green are the sidebar's
+// marks for a change getting better or worse; leaning toward one group rather
+// than another is not that, and colouring it so would be an opinion.
+.deviation-value {
+  font-size: var(--sb-fs-sub);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--sb-ink);
+}
+
+.deviation-scale-note {
+  margin: 8px 0 0;
+}
