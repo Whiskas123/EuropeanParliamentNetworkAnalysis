@@ -1,51 +1,45 @@
 // Deviation-from-own-group bars — see GroupDeviation.js for why this replaces
 // the absolute agreement dials, and pipeline/deviations.py for the measure.
+//
+// The marks are RadialGauge's, unrolled from a ring into a line: a hairline
+// rule for the scale, solid colour for the value, a dark short tick for the
+// reference. Nothing here is a convention invented for this panel. An earlier
+// draft drew the scale as a filled grey block, which at panel size reads as an
+// object sitting in the panel rather than as an axis.
+//
+// Type for .deviation-lede, -note and -empty is registered against the shared
+// panel classes in globals.scss; what lives here is layout.
 
 .deviation {
-  margin-top: 14px;
-}
-
-.deviation-lede {
-  margin: 0 0 9px;
-  font-size: var(--sb-fs-body);
-  line-height: 1.45;
-  color: var(--sb-body);
+  margin-top: 12px;
 }
 
 // The one line that stops this panel from silently contradicting the canvas,
 // where the same MEP is coloured by the group they ended the term in.
 .deviation-note {
-  margin: 0 0 8px;
   padding: 6px 8px;
   border-left: 2px solid var(--eu-blue);
   background: var(--sb-wash);
-  font-size: var(--sb-fs-note);
-  line-height: 1.45;
-  color: var(--sb-ink-soft);
 }
 
 .deviation-empty {
-  margin: 0;
   padding: 8px;
   background: var(--sb-wash);
   border-radius: 4px;
-  font-size: var(--sb-fs-body);
-  line-height: 1.45;
-  color: var(--sb-body);
 }
 
 .deviation-rows {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .deviation-row {
   display: grid;
-  // Fixed label and figure columns so every bar starts and ends on the same
-  // vertical, which is what makes the centre line read as one axis down the
-  // whole panel rather than eight unrelated ones.
-  grid-template-columns: 58px minmax(0, 1fr) 42px;
+  // Fixed label and figure columns so every rail starts and ends on the same
+  // vertical, which is what makes the origin read as one axis down the whole
+  // panel rather than eight unrelated ones.
+  grid-template-columns: 58px minmax(0, 1fr) 40px;
   align-items: center;
   gap: 6px;
 }
@@ -61,31 +55,43 @@
 .deviation-track {
   position: relative;
   display: block;
-  height: 13px;
-  border-radius: 2px;
-  background: var(--sb-rule-soft);
+  height: 12px;
 }
 
-// Zero sits at the middle, and it is drawn rather than implied: without it a
-// short bar and an absent one look identical.
-.deviation-axis {
+// The scale: one hairline, the same weight as every other rule in the sidebar.
+.deviation-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--sb-rule);
+}
+
+// Zero, and the mark every bar grows from — so it is the darkest thing in the
+// row. Drawing the origin faint and the bars dark inverts the hierarchy, and
+// the eye then takes a bar's end for the axis.
+.deviation-origin {
   position: absolute;
   left: 50%;
-  top: -1px;
-  bottom: -1px;
+  top: 0;
+  bottom: 0;
   width: 1px;
-  background: var(--sb-faint);
+  background: #465060cc;
+  z-index: 2;
 }
 
 .deviation-bar {
   position: absolute;
-  top: 2px;
-  bottom: 2px;
+  top: 3px;
+  bottom: 3px;
   border-radius: 1px;
   min-width: 1px;
+  z-index: 1;
 }
 
-// A clipped bar must not read as a bar that happens to end at the edge, so the
+// A clipped bar must not read as one that happens to end at the edge, so the
 // far end is hatched. Same reasoning as the off-scale ring in RadialGauge.
 .deviation-bar--offscale {
   mask-image: repeating-linear-gradient(
@@ -96,31 +102,16 @@
   mask-mode: luminance;
 }
 
+// Neutral, like the figure inside a dial. Red and green are the sidebar's
+// marks for a change getting better or worse; leaning toward one group rather
+// than another is not that, and colouring it so would be an opinion.
 .deviation-value {
   font-size: var(--sb-fs-sub);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  color: var(--sb-muted);
-}
-
-.deviation-value--up {
-  color: var(--sb-ink);
-}
-
-.deviation-value--down {
   color: var(--sb-ink);
 }
 
 .deviation-scale-note {
-  margin: 7px 0 0;
-  font-size: var(--sb-fs-note);
-  line-height: 1.4;
-  color: var(--sb-faint);
-}
-
-// The MEP's name is the one thing a reader scans this panel for; the rest of
-// the lede is method.
-.deviation-lede strong {
-  font-weight: 600;
-  color: var(--sb-ink);
+  margin: 8px 0 0;
 }

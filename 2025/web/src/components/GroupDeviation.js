@@ -182,7 +182,7 @@ export default function GroupDeviation({
                   mandate
                 )} was, over the same ${block.debates} debates`}
               >
-                <span className="deviation-axis" />
+                <span className="deviation-origin" />
                 <span
                   className={`deviation-bar ${
                     offScale ? "deviation-bar--offscale" : ""
@@ -194,11 +194,7 @@ export default function GroupDeviation({
                   }}
                 />
               </span>
-              <span
-                className={`deviation-value ${
-                  value >= 0 ? "deviation-value--up" : "deviation-value--down"
-                }`}
-              >
+              <span className="deviation-value">
                 {/* A figure that rounds to nothing gets no sign: "−0.0" reads
                     as a direction the measurement does not support. */}
                 {Math.abs(value) < 0.05 ? "" : value > 0 ? "+" : "−"}

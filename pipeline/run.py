@@ -5,6 +5,7 @@
     python -m pipeline.run networks         # rebuild networks from data/final
     python -m pipeline.run compare          # diff against the 2025 output
     python -m pipeline.run publish          # copy into the site
+    python -m pipeline.run deviations       # distance from own group -> the site
     python -m pipeline.run layouts          # ForceAtlas2 positions (node)
     python -m pipeline.run verify           # check what is on disk for the site
     python -m pipeline.run classify         # label the "Others" residual with a model
@@ -16,11 +17,13 @@ import argparse
 import subprocess
 import sys
 
-from . import build_networks, build_votes, config, llm_subjects, verify_site
+from . import (build_networks, build_votes, config, deviations, llm_subjects,
+               verify_site)
 from .network import load_meps
 from .report import PipelineError, Report, atomic_write_json
 
-STEPS = ["votes", "networks", "compare", "publish", "layouts", "verify"]
+STEPS = ["votes", "networks", "compare", "publish", "deviations", "layouts",
+         "verify"]
 
 # Deliberately outside `all`: it costs money, calls a model rather than an
 # authority, and its output should be reviewed before it becomes a published
@@ -197,6 +200,10 @@ def main(argv=None):
                     + ". Review them, then re-run with --force-publish to accept.",
                 )
             build_networks.publish(report, built)
+        if "deviations" in steps:
+            # After publish, because it reproduces the participation filter the
+            # published networks use and should describe the same membership.
+            deviations.run(report, mandates, meps=load_meps())
         if "layouts" in steps:
             if args.layout_mandates is not None:
                 layout_targets = [m for m in args.layout_mandates.split(",") if m]
