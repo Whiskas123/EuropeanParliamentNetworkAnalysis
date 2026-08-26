@@ -173,18 +173,17 @@ export function readAgreement(file, mepId, subject) {
           }
         : null,
     // The same MEP against each political group *of their own country* - the
-    // German EPP, the German Greens - rather than against those groups whole.
+    // Italian ECR, the Italian PD - rather than against those groups whole.
     //
-    // The notch is not the country's own level. It is what a member of this
-    // MEP's group typically manages with that same national cell, which is
-    // what makes the gap readable as a national pull: a German S&D member
-    // sitting above the notch on every German dial at once is being pulled by
-    // their nationality, and the same member sitting above only the German
-    // Greens is a politics finding about them.
+    // The notch is national too: what a typical member of this MEP's *own
+    // national party* manages with that same cell. Open the Italy map and
+    // every figure on screen is about Italians, which is what a reader who
+    // narrowed to one country is asking for. It also means a shared national
+    // pull cancels rather than showing, so what is left on a dial is this MEP
+    // against their own party-mates and nobody else.
     //
-    // Empty where the cell was too small to have a balance worth measuring
-    // against - a delegation's group of two or three - which is why a country
-    // view usually carries fewer dials than the chamber view does.
+    // Empty for the Non-Attached, and for the sole member of a national party:
+    // their own party is their reference and there is no average of one.
     nationalGroups: nationalGroups(file, key, entry, group, block),
   };
 }
@@ -193,7 +192,13 @@ export function readAgreement(file, mepId, subject) {
 function nationalGroups(file, key, entry, group, block) {
   const country = entry.country ?? null;
   if (!country || !Array.isArray(block.natgrp)) return [];
-  const levels = file.nationalGroupLevels?.[key]?.[country]?.[group] ?? null;
+  // The block names its own reference row. It is usually the MEP's term-wide
+  // group, and for a member who crossed the floor it is not: in one policy
+  // area they may have sat mostly with a different national party, and that is
+  // the party the figures were measured against. Taking `group` here instead
+  // silently dropped the notch for 144 figures across terms 7 to 9.
+  const reference = block.natgrpRef ?? group;
+  const levels = file.nationalGroupLevels?.[key]?.[country]?.[reference] ?? null;
   return (file.groups || [])
     .map((groupId, index) => ({
       groupId,

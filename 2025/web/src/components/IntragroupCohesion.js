@@ -124,7 +124,6 @@ export default function IntragroupCohesion({
               ).toFixed(1)}% internal agreement across ${item.mepCount} MEP${
                 item.mepCount === 1 ? "" : "s"
               }`}
-              what={`${getGroupDisplayName(item.group, mandate)} agreement`}
               baselineLabel={comparable ? baseline.label : ""}
               sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
               onClick={

@@ -365,8 +365,14 @@ export default function TrendsPanel({
     if (pairValues.length > 1) {
       const plo = pairValues.reduce((min, v) => Math.min(min, v), Infinity);
       const phi = pairValues.reduce((max, v) => Math.max(max, v), -Infinity);
+      // This axis starts at zero. The plot above is cropped because every
+      // figure on it sits between 56% and 97% and a 0-100 scale would flatten
+      // all three lines into one; the lowest-agreeing pair is the opposite
+      // case — it runs from the high forties down to eighteen, and where it
+      // sits relative to *never voting together* is the reading. A cropped
+      // floor here would make an 18% pair look like a modest dip.
       const ppad = Math.max((phi - plo) * 0.16, 0.02);
-      const pdomain = [Math.max(0, plo - ppad), Math.min(1, phi + ppad)];
+      const pdomain = [0, Math.min(1, phi + ppad)];
       const sw = SPARK.width - SPARK.left - SPARK.right;
       const sh = SPARK.height - SPARK.top - SPARK.bottom;
       const sstep = TERMS.length > 1 ? sw / (TERMS.length - 1) : 0;

@@ -99,11 +99,13 @@ export default function AgreementByGroup({
   // once, so reversing them shows the same eight dials in the other direction -
   // a control that costs a heading row and answers a question the grid already
   // answers by being read from the other end.
-  // Every political group of this MEP's own country that is large enough to
-  // have a balance worth measuring against. Empty for the Non-Attached, and
-  // for anyone whose delegation has no cell of four - which is most of Malta,
-  // Cyprus and Luxembourg, and is why the toggle is only offered where there
-  // is something on the other side of it.
+  // Every political group that has anyone at all from this MEP's own country.
+  // No size floor: one Italian Green is still a person you can ask about. The
+  // arithmetic needs one *other* member to have a balance, so the sole member
+  // of a national party gets no dial for their own party - and no country view
+  // at all, since that party is also their reference. Empty likewise for the
+  // Non-Attached, which is why the toggle is offered only where there is
+  // something on the other side of it.
   const nationalRows = useMemo(
     () => (usingRaw ? [] : reading?.nationalGroups ?? []),
     [usingRaw, reading]
@@ -122,15 +124,6 @@ export default function AgreementByGroup({
       : reading?.groups ?? [];
     return [...source].sort((a, b) => b.value - a.value);
   }, [showing, nationalRows, usingRaw, raw, reading]);
-
-  // Groups on screen in the chamber view that the country view cannot draw,
-  // which is the only thing the floor is worth explaining for. A note that
-  // appears every time explains nothing; one that appears beside a gap says
-  // what the gap is.
-  const missingCells =
-    showing === "country"
-      ? Math.max(0, (reading?.groups?.length ?? 0) - nationalRows.length)
-      : 0;
 
   // The thinnest dial on screen, which is the one a caveat has to be written
   // for. A national cell is a handful of colleagues over a handful of votes.
@@ -267,13 +260,13 @@ export default function AgreementByGroup({
                 </>
               ) : showing === "country" ? (
                 <>
-                  Where <strong>{name}</strong> sits beside each group&rsquo;s
-                  members from <strong>{reading.country}</strong>
+                  Where <strong>{name}</strong> sits beside each party of{" "}
+                  <strong>{reading.country}</strong>
                   {subject ? ` on ${subject}` : ""}. The notch marks what a
-                  typical {ownAcronym} member manages with those same
-                  colleagues &mdash; so an arc past its notch on every dial at
-                  once is {name} being pulled by nationality, and an arc past
-                  one notch alone is about that one party.
+                  typical {ownAcronym} member <em>from {reading.country}</em>{" "}
+                  manages with those same colleagues &mdash; so the gap is{" "}
+                  {name}&rsquo;s own doing rather than their party&rsquo;s, and
+                  the whole reading stays inside {reading.country}.
                 </>
               ) : (
                 <>
@@ -318,10 +311,12 @@ export default function AgreementByGroup({
                   // MEP's own group manages toward the same target.
                   baselineLabel={
                     showing === "country"
-                      ? `the average ${ownAcronym} member's agreement with the ${getGroupAcronym(
+                      ? `what a typical ${ownAcronym} member from ${
+                          reading.country
+                        } manages with ${reading.country}'s ${getGroupAcronym(
                           row.groupId,
                           mandate
-                        )} members from ${reading.country}`
+                        )}`
                       : `the average ${ownAcronym} member's agreement with ${getGroupAcronym(
                           row.groupId,
                           mandate
@@ -336,14 +331,14 @@ export default function AgreementByGroup({
                     showing === "country"
                       ? `${name} sits at ${(row.value * 100).toFixed(
                           1
-                        )}% with the ${getGroupDisplayName(
+                        )}% with ${reading.country}'s ${getGroupDisplayName(
                           row.groupId,
                           mandate
-                        )} members from ${
+                        )}; a typical ${ownAcronym} member from ${
                           reading.country
-                        }; a typical ${ownAcronym} member sits at ${(
-                          row.level * 100
-                        ).toFixed(1)}% with them, over ${row.votes?.toLocaleString()} votes`
+                        } sits at ${(row.level * 100).toFixed(
+                          1
+                        )}% with them, over ${row.votes?.toLocaleString()} votes`
                       : row.level === null
                       ? `${name} voted with ${getGroupDisplayName(
                           row.groupId,
@@ -370,16 +365,6 @@ export default function AgreementByGroup({
                 votes, so read the ranking rather than the size of a gap &mdash;
                 a national party is a handful of colleagues and a few of them
                 being away moves the figure several points.
-              </p>
-            )}
-
-            {showing === "country" && missingCells > 0 && (
-              <p className="sb-note">
-                {missingCells === 1 ? "One group is" : `${missingCells} groups are`}{" "}
-                missing here: they have fewer than four members from{" "}
-                {reading.country}, and below that a national party has no
-                balance to be measured against &mdash; the dial would be a
-                reading of one or two people rather than of a party.
               </p>
             )}
 

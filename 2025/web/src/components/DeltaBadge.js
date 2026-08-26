@@ -9,24 +9,28 @@ import { getDelta } from "../lib/utils.js";
  * missing comparison should leave the layout exactly as it was, not leave a
  * gap or an em dash behind.
  *
+ * The badge sits against the figure it belongs to, so the tooltip does not
+ * name that figure again: it only has to say what the badge is measured
+ * against, and where that baseline sits.
+ *
  * @param {number} score - the figure shown next to this badge, on [0, 1]
  * @param {number} baseline - the same figure with one filter removed
- * @param {string} label - what the baseline is, for the tooltip ("Poland, all policy areas")
- * @param {string} what - what is being measured, for the tooltip ("Group agreement")
+ * @param {string} label - what the baseline is ("the average EPP member's agreement with EPP")
  */
-export default function DeltaBadge({ score, baseline, label, what = "" }) {
+export default function DeltaBadge({ score, baseline, label }) {
   const delta = getDelta(score, baseline);
   if (!delta) return null;
 
   const direction =
     delta.direction > 0 ? "up" : delta.direction < 0 ? "down" : "flat";
 
+  const against = `${label} (${(baseline * 100).toFixed(1)}%)`;
   const title =
     delta.direction === 0
-      ? `${what} is unchanged from ${label} (${(baseline * 100).toFixed(1)}%)`
-      : `${what} is ${Math.abs(delta.points).toFixed(1)} points ${
-          delta.direction > 0 ? "higher" : "lower"
-        } than ${label} (${(baseline * 100).toFixed(1)}%)`;
+      ? `Same as ${against}`
+      : `${Math.abs(delta.points).toFixed(1)} pp ${
+          delta.direction > 0 ? "above" : "below"
+        } ${against}`;
 
   return (
     <span className={`delta-badge delta-badge--${direction}`} title={title}>
