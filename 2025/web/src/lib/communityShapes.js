@@ -993,6 +993,58 @@ export function describeGeography(shape) {
 }
 
 /**
+ * National delegations that sit inside this community in their entirety.
+ *
+ * The share-of-community figures cannot say this. Malta sends six MEPs, so
+ * Malta is never more than a rounding error in a community of a hundred and
+ * thirty — but all six of them landing in the same one is a fact about Malta,
+ * and it is the kind of fact this overlay exists to surface. Read the other
+ * way round: what share of that country is here, not what share of here is
+ * that country.
+ *
+ * Three quarters of a delegation is the bar for "most", and every last member
+ * is its own sentence, because the two are different claims: one is a country
+ * leaning somewhere, the other is a country that did not split at all. Said
+ * only in a network holding more than one country; below that it is true of
+ * everything and says nothing.
+ */
+export function describeDelegations(shape) {
+  if (!shape || shape.oneCountry) return "";
+  const entries = (shape.countries || []).filter(
+    (entry) => entry.countryTotal >= 2
+  );
+  const all = entries.filter((entry) => entry.shareOfCountry >= 0.999);
+  const most = entries.filter(
+    (entry) => entry.shareOfCountry >= 0.75 && entry.shareOfCountry < 0.999
+  );
+
+  const list = (items) => {
+    const shown = items.slice(0, 3);
+    const rest = items.length > 3 ? `, and ${items.length - 3} more` : "";
+    return `${shown.join(", ")}${rest}`;
+  };
+
+  const sentences = [];
+  if (all.length > 0) {
+    sentences.push(
+      `Holds every MEP from ${list(
+        all.map((entry) => `${entry.country} (${entry.countryTotal})`)
+      )}.`
+    );
+  }
+  if (most.length > 0) {
+    sentences.push(
+      `Holds most of ${list(
+        most.map(
+          (entry) => `${entry.country} (${entry.count} of ${entry.countryTotal})`
+        )
+      )}.`
+    );
+  }
+  return sentences.join(" ");
+}
+
+/**
  * What to write on a community: the groups inside it, largest first.
  *
  * Acronyms only, and at most two of them. The label sits on a canvas already
@@ -1020,19 +1072,44 @@ export function labelCommunities(shapes, mandate) {
 
 export function communityLabel(shape, mandate) {
   if (!shape) return "";
-  if (shape.nationalSplinter) {
-    return `${getGroupAcronym(shape.dominantGroup, mandate)} · ${
-      shape.nationalSplinter
-    }`;
-  }
-  const parts = (shape.composition || [])
+
+  const named = (shape.composition || [])
     .filter((part) => part.share >= 0.2)
-    .slice(0, 2)
-    .map((part) => getGroupAcronym(part.groupId, mandate));
-  if (parts.length === 0) {
-    return shape.dominantGroup
-      ? getGroupAcronym(shape.dominantGroup, mandate)
-      : "Mixed";
-  }
-  return parts.join(" + ");
+    .slice(0, 2);
+  const country = shape.nationalSplinter;
+  const head = country
+    ? `${getGroupAcronym(shape.dominantGroup, mandate)} · ${country}`
+    : named.length > 0
+    ? named.map((part) => getGroupAcronym(part.groupId, mandate)).join(" + ")
+    : shape.dominantGroup
+    ? getGroupAcronym(shape.dominantGroup, mandate)
+    : "Mixed";
+
+  return `${head}${offTitleCount(shape, country, named)}`;
+}
+
+/**
+ * The "+ 4 others" on the end of a name, or nothing.
+ *
+ * A community called EPP is nearly always not only the EPP — four Renew
+ * members and a non-attached MEP who vote with it are exactly the finding
+ * worth having, and a title that hides them is the wrong kind of tidy. So the
+ * name says how many members it does not describe: the ones outside the groups
+ * it names, or outside the country it names, whichever is the larger miss.
+ *
+ * Larger rather than the sum, because the two overlap and no honest count of
+ * "people this title does not cover" can be worked out from the two summaries
+ * alone. It is a floor, and a floor is the safe direction to be wrong in for a
+ * number whose whole job is to stop the title overclaiming.
+ */
+function offTitleCount(shape, country, named) {
+  const inNamedGroups = named.reduce((sum, part) => sum + part.count, 0);
+  const outsideGroups = named.length > 0 ? shape.size - inNamedGroups : 0;
+  const countryEntry = country
+    ? (shape.countries || []).find((entry) => entry.country === country)
+    : null;
+  const outsideCountry = countryEntry ? shape.size - countryEntry.count : 0;
+  const off = Math.max(outsideGroups, outsideCountry);
+  if (off <= 0) return "";
+  return ` + ${off} other${off === 1 ? "" : "s"}`;
 }

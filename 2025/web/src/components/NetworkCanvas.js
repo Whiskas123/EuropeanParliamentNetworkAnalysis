@@ -19,10 +19,11 @@ import {
   buildCaption,
   buildLegend,
 } from "../lib/networkExport";
-import { getGroupAcronym, getGroupColor } from "../lib/utils";
+import { CountryFlag, getGroupAcronym, getGroupColor } from "../lib/utils";
 import {
   buildCommunityShapes,
   describeCommunity,
+  describeDelegations,
   describeGeography,
   labelCommunities,
   stackLabels,
@@ -438,7 +439,23 @@ function CommunityTooltip({ shape, position, mandate }) {
   const top = Math.min(Math.max(12, position.y - 24), viewportHeight - 340);
 
   const geography = describeGeography(shape);
+  const delegations = describeDelegations(shape);
   const countries = shape.countries || [];
+
+  // The country list is ordered by how much of the community each one is, and
+  // that ordering buries the interesting case: Croatia is six MEPs in a
+  // community of 156 and it is half of Croatia. So after the four largest,
+  // pull in any country that has most of itself in here.
+  const largest = countries.slice(0, 4);
+  const alreadyShown = new Set(largest.map((entry) => entry.country));
+  const concentrated = countries
+    .filter(
+      (entry) =>
+        !alreadyShown.has(entry.country) && entry.shareOfCountry >= 0.5
+    )
+    .slice(0, 3);
+  const countryRows = [...largest, ...concentrated];
+  const remainingCountries = countries.length - countryRows.length;
 
   return (
     <div className="community-tip" style={{ left: `${left}px`, top: `${top}px` }}>
@@ -454,6 +471,7 @@ function CommunityTooltip({ shape, position, mandate }) {
 
       <p className="community-tip-lede">{describeCommunity(shape, mandate)}</p>
       {geography && <p className="community-tip-lede">{geography}</p>}
+      {delegations && <p className="community-tip-lede">{delegations}</p>}
 
       <div className="community-tip-label">Groups inside</div>
       <ul className="community-tip-rows">
@@ -475,7 +493,9 @@ function CommunityTooltip({ shape, position, mandate }) {
         ))}
       </ul>
 
-      {countries.length > 0 && (
+      {/* A country view has one country, and a table of it is a table of the
+          size that is already in the header. */}
+      {countries.length > 0 && !shape.oneCountry && (
         <>
           <div className="community-tip-label">
             {countries.length === 1
@@ -483,21 +503,27 @@ function CommunityTooltip({ shape, position, mandate }) {
               : `Countries · ${countries.length}`}
           </div>
           <ul className="community-tip-rows">
-            {countries.slice(0, 4).map((entry) => (
+            {countryRows.map((entry) => (
               <li className="community-tip-row" key={entry.country}>
+                <span className="community-tip-flag" aria-hidden="true">
+                  <CountryFlag country={entry.country} />
+                </span>
                 <span className="community-tip-row-name community-tip-row-wide">
                   {entry.country}
                 </span>
                 <span className="community-tip-row-count">{entry.count}</span>
                 <span className="community-tip-row-note">
-                  {Math.round(entry.share * 100)}%
+                  {/* Of the country, not of the community: a delegation of six
+                      is never a large share of a community and can still be
+                      entirely inside one. */}
+                  {Math.round(entry.shareOfCountry * 100)}% of the country
                 </span>
               </li>
             ))}
           </ul>
-          {countries.length > 4 && (
+          {remainingCountries > 0 && (
             <p className="community-tip-foot community-tip-foot-tight">
-              and {countries.length - 4} more
+              and {remainingCountries} more
             </p>
           )}
         </>

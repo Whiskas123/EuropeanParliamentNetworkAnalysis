@@ -645,6 +645,7 @@ export function analyzeStructure(graphData, options = {}) {
     });
   }
   const groupSizes = new Map();
+  const countrySizes = new Map();
   for (let i = 0; i < n; i++) {
     const community = communities[membership[i]];
     const groupId = nodes[i].groupId || "Unknown";
@@ -654,6 +655,7 @@ export function analyzeStructure(graphData, options = {}) {
     community.countries.set(country, (community.countries.get(country) || 0) + 1);
     community.members.push(nodes[i].id);
     groupSizes.set(groupId, (groupSizes.get(groupId) || 0) + 1);
+    countrySizes.set(country, (countrySizes.get(country) || 0) + 1);
   }
 
   const shaped = communities.map((community) => {
@@ -670,7 +672,17 @@ export function analyzeStructure(graphData, options = {}) {
       }))
       .sort((a, b) => b.count - a.count);
     const countries = Array.from(community.countries.entries())
-      .map(([country, count]) => ({ country, count, share: count / community.size }))
+      .map(([country, count]) => ({
+        country,
+        count,
+        share: count / community.size,
+        // And the other direction: what share of that country's whole
+        // delegation is in here. A country of six can never be a large part of
+        // a community of a hundred, but all six of them sitting in one
+        // community is a fact about that country worth stating.
+        countryTotal: countrySizes.get(country) || count,
+        shareOfCountry: count / (countrySizes.get(country) || 1),
+      }))
       .sort((a, b) => b.count - a.count);
     return {
       id: community.id,
