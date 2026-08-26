@@ -314,7 +314,7 @@ export function getSubjectEmoji(subjectName) {
     // Lookup is by subjectName.toLowerCase(), so the key has to be lowercase
     // too - and has to carry the same curly apostrophe the data uses, or it
     // silently falls through to the default icon.
-    "women’s rights and gender equality": "♀️",
+    "women’s rights and gender equality": "✊",
     "security and defence": "🛡️",
     "parliamentary procedure": "🗳️",
   };
