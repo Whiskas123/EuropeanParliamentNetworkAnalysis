@@ -521,21 +521,15 @@ function drawScene(ctx, params) {
  * group does not" — and the answer is usually a country or a corner of
  * Europe, which is why the geography is here and not buried.
  *
- * Positioned in viewport coordinates like the MEP tooltip, and flipped to the
- * other side of the cursor near the right edge, where a card this wide would
- * otherwise be cut in half by the sidebar.
+ * Parked in the top-right corner of the canvas rather than carried on the
+ * cursor. A card this tall following the pointer covers the network it is
+ * describing, and the reader is looking at both at once: the outline that
+ * lit up is on the left of their attention, the account of it is always in
+ * the same place on the right. It also gives the card somewhere to stay once
+ * a click has held it open.
  */
-function CommunityTooltip({ shape, position, mandate }) {
-  if (!shape || !position) return null;
-
-  const viewportWidth =
-    typeof window === "undefined" ? 1200 : window.innerWidth;
-  const viewportHeight =
-    typeof window === "undefined" ? 800 : window.innerHeight;
-  const width = 290;
-  const flip = position.x + width + 28 > viewportWidth;
-  const left = flip ? position.x - width - 16 : position.x + 16;
-  const top = Math.min(Math.max(12, position.y - 24), viewportHeight - 340);
+function CommunityTooltip({ shape, pinned, mandate }) {
+  if (!shape) return null;
 
   const geography = describeGeography(shape);
   const delegations = describeDelegations(shape);
@@ -557,7 +551,9 @@ function CommunityTooltip({ shape, position, mandate }) {
   const remainingCountries = countries.length - countryRows.length;
 
   return (
-    <div className="community-tip" style={{ left: `${left}px`, top: `${top}px` }}>
+    <div
+      className={`community-tip${pinned ? " community-tip-held" : ""}`}
+    >
       <div className="community-tip-head">
         <span
           className="community-tip-swatch"
@@ -648,6 +644,16 @@ function CommunityTooltip({ shape, position, mandate }) {
         <p className="community-tip-foot">
           Drawn as {shape.islands} islands: its members sit in that many pockets
           of the layout rather than in one.
+        </p>
+      )}
+
+      {/* Without this the card that stays looks exactly like the card that
+          follows the cursor, and there is nothing to say why it has not gone
+          away or how to send it away. */}
+      {pinned && (
+        <p className="community-tip-foot community-tip-held-note">
+          Held open. Click another community to swap, or the canvas away from
+          them all to clear.
         </p>
       )}
     </div>
@@ -760,10 +766,18 @@ export default function NetworkCanvas({
   // second on the full network, which has to happen off the click.
   const [communityData, setCommunityData] = useState(null);
   const [communitiesPending, setCommunitiesPending] = useState(false);
-  // {id, x, y} while the cursor is inside a community's outline. The mouse
-  // handler is installed once and never re-installed, so the outlines it
-  // hit-tests against have to reach it through a ref.
+  // {id} while the cursor is inside a community's outline — which one, and
+  // nothing about where, because the card is parked in the corner and does
+  // not travel with the cursor. The mouse handler is installed once and never
+  // re-installed, so the outlines it hit-tests against have to reach it
+  // through a ref.
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  // The community a click has held open, if any. Hovering is a glance and
+  // ends when the cursor moves on; clicking is a decision, and the card and
+  // the dim stay until the reader takes them back — by clicking a different
+  // community, by clicking the canvas away from all of them, or by putting
+  // the overlay away.
+  const [pinnedCommunityId, setPinnedCommunityId] = useState(null);
   // What the k and coverage sliders read while they are being dragged. The
   // committed values live in renderSettings; these exist so the handle and the
   // readout keep up with the finger without asking for a partition per pixel.
@@ -1032,15 +1046,34 @@ export default function NetworkCanvas({
       ? [...communityOverlay].sort((a, b) => a.size - b.size)
       : null;
     if (!communityOverlay) setHoveredCommunity(null);
+    // Every arrival here is a fresh partition — the overlay is memoised on the
+    // network, k and coverage, so it only changes when one of those does — and
+    // a fresh partition renumbers everything. An id held from the old one
+    // points at nothing, or at a community that is now somebody else.
+    setPinnedCommunityId(null);
   }, [communityOverlay]);
 
+  /**
+   * The community the canvas is currently answering about.
+   *
+   * A pin wins outright: once one is held, moving the cursor across the other
+   * outlines leaves it alone. That is the point of holding it — the reader is
+   * reading the card, and a card that changed under the cursor on the way to
+   * it would never be readable. Another click is what replaces it.
+   */
   const focusedCommunity = useMemo(() => {
-    if (!hoveredCommunity || !communityOverlay) return null;
+    if (!communityOverlay) return null;
+    const id =
+      pinnedCommunityId !== null
+        ? pinnedCommunityId
+        : hoveredCommunity
+        ? hoveredCommunity.id
+        : null;
+    if (id === null) return null;
     return (
-      communityOverlay.find((community) => community.id === hoveredCommunity.id) ||
-      null
+      communityOverlay.find((community) => community.id === id) || null
     );
-  }, [hoveredCommunity, communityOverlay]);
+  }, [pinnedCommunityId, hoveredCommunity, communityOverlay]);
 
   /**
    * Hovering a community asks "who is in this one?", so everyone else steps
@@ -1305,6 +1338,16 @@ export default function NetworkCanvas({
       zoomSelection.call(zoom);
     }
 
+    // Same community as last time means the same state: a mousemove fires
+    // dozens of times a second and a fresh object on each one would re-render
+    // the canvas for an answer that has not changed.
+    const hoverCommunity = (id) =>
+      setHoveredCommunity((previous) => {
+        const current = previous ? previous.id : null;
+        if (current === id) return previous;
+        return id === null ? null : { id };
+      });
+
     // Create handlers that use graphDataRef to access current data
     const handleMouseMove = (event) => {
       const graphData = graphDataRef.current;
@@ -1345,12 +1388,8 @@ export default function NetworkCanvas({
         : null;
       if (labelled) {
         onNodeHover(null);
-        canvas.style.cursor = "grab";
-        setHoveredCommunity({
-          id: labelled.id,
-          x: event.clientX,
-          y: event.clientY,
-        });
+        canvas.style.cursor = "pointer";
+        hoverCommunity(labelled.id);
         return;
       }
 
@@ -1369,7 +1408,7 @@ export default function NetworkCanvas({
         onNodeHover(hovered);
         onHoverPositionChange({ x: event.clientX, y: event.clientY });
         canvas.style.cursor = "pointer";
-        setHoveredCommunity(null);
+        hoverCommunity(null);
         return;
       }
 
@@ -1380,7 +1419,7 @@ export default function NetworkCanvas({
       // community's interior, because the outline covers hundreds of them and
       // the specific answer beats the general one.
       if (!overlay) {
-        setHoveredCommunity(null);
+        hoverCommunity(null);
         return;
       }
       // Smallest first, so a community sitting inside another one is reachable
@@ -1388,16 +1427,17 @@ export default function NetworkCanvas({
       const found = overlay.find((community) =>
         pointInRings(x, y, community.rings)
       );
-      setHoveredCommunity(
-        found
-          ? { id: found.id, x: event.clientX, y: event.clientY }
-          : null
-      );
+      canvas.style.cursor = found ? "pointer" : "grab";
+      hoverCommunity(found ? found.id : null);
     };
 
     const handleMouseLeave = () => {
       onNodeHover(null);
-      setHoveredCommunity(null);
+      // Only the glance ends here. A community held open by a click is meant
+      // to survive the cursor leaving the canvas — that is the whole of what
+      // holding it means, and the card it belongs to is one of the places the
+      // cursor leaves towards.
+      hoverCommunity(null);
       canvas.style.cursor = "grab";
     };
 
@@ -1407,15 +1447,39 @@ export default function NetworkCanvas({
 
       const rect = canvas.getBoundingClientRect();
       const currentTransform = transformRef.current;
-      // Back through the turn as well as the pan and zoom, so a click lands on
-      // the MEP that is under the cursor rather than the one that was there
-      // before the network was rotated.
+      // Two frames, as in the hover handler: the name plates are placed after
+      // the pan and zoom but before the turn, everything else after both. Back
+      // through the turn as well, so a click lands on the MEP that is under
+      // the cursor rather than the one that was there before the rotation.
+      const viewX =
+        (event.clientX - rect.left - currentTransform.x) / currentTransform.k;
+      const viewY =
+        (event.clientY - rect.top - currentTransform.y) / currentTransform.k;
       const { x, y } = rotatePoint(
-        (event.clientX - rect.left - currentTransform.x) / currentTransform.k,
-        (event.clientY - rect.top - currentTransform.y) / currentTransform.k,
+        viewX,
+        viewY,
         layoutCenterRef.current,
         -rotationRef.current
       );
+
+      // Clicking follows the same order of precedence as hovering, so what a
+      // click lands on is whatever the cursor was already answering about: the
+      // name plate first, then the MEPs, then the interior of an outline.
+      const overlay = communityOverlayRef.current;
+      const labelled = overlay
+        ? communityLabelBoxesRef.current.find(
+            (box) =>
+              viewX >= box.left &&
+              viewX <= box.right &&
+              viewY >= box.top &&
+              viewY <= box.bottom
+          )
+        : null;
+      if (labelled) {
+        onNodeClick(null);
+        setPinnedCommunityId(labelled.id);
+        return;
+      }
 
       const nodeSize = nodeRadiusFor(graphData.nodes.length);
 
@@ -1431,15 +1495,29 @@ export default function NetworkCanvas({
       });
 
       if (clickedNode) {
+        // A held community survives this: the MEP is usually one of its
+        // members, and looking one of them up is not a reason to close the
+        // account of where they sit.
         onNodeClick({
           id: clickedNode.id,
           label: clickedNode.label,
           country: clickedNode.country,
           groupId: clickedNode.groupId,
         });
-      } else {
-        onNodeClick(null);
+        return;
       }
+
+      onNodeClick(null);
+      if (!overlay) {
+        setPinnedCommunityId(null);
+        return;
+      }
+      // Smallest first, as in the hover test, so a community nested inside
+      // another one can be reached at all.
+      const found = overlay.find((community) =>
+        pointInRings(x, y, community.rings)
+      );
+      setPinnedCommunityId(found ? found.id : null);
     };
 
     // Store handlers in ref
@@ -2340,7 +2418,7 @@ export default function NetworkCanvas({
               graph is complete and has nothing to separate until each MEP is
               cut back to their{communityData ? ` ${communityData.k}` : ""}{" "}
               strongest partners; these outlines are what survives that. Hover
-              one to see who is inside it.
+              one to see who is inside it, or click it to hold the card open.
             </p>
           </div>
 
@@ -2469,7 +2547,7 @@ export default function NetworkCanvas({
       )}
       <CommunityTooltip
         shape={focusedCommunity}
-        position={hoveredCommunity}
+        pinned={pinnedCommunityId !== null && focusedCommunity !== null}
         mandate={mandate}
       />
       <div
