@@ -2154,7 +2154,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleZoomIn}
-          title="Zoom In (or use mouse wheel)"
+          data-tooltip="Zoom in (or use the mouse wheel)"
           aria-label="Zoom In"
         >
           <svg
@@ -2175,7 +2175,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleZoomOut}
-          title="Zoom Out"
+          data-tooltip="Zoom out"
           aria-label="Zoom Out"
           disabled={isAtMinZoom}
         >
@@ -2196,7 +2196,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleRotate}
-          title={`Rotate 45° — now ${Math.round(
+          data-tooltip={`Rotate 45° — now ${Math.round(
             (rotation * 180) / Math.PI
           )}° from the layout`}
           aria-label="Rotate the network 45 degrees"
@@ -2219,10 +2219,10 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={() => updateSettings({ communities: !showCommunities })}
-          title={
+          data-tooltip={
             showCommunities
-              ? "Hide the community outlines"
-              : "Outline the communities the votes fall into"
+              ? "Community outlines — hide them"
+              : "Community outlines — draw them"
           }
           aria-label="Community outlines"
           aria-pressed={showCommunities}
@@ -2249,7 +2249,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={() => setShowDisplayPanel((open) => !open)}
-          title="Display settings (colour, edge cutoff, width, dim)"
+          data-tooltip="Display settings — colour, edge cutoff, width, dim"
           aria-label="Display settings"
           aria-expanded={showDisplayPanel}
           aria-pressed={showDisplayPanel}
@@ -2278,7 +2278,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleExportPNG}
-          title="Export Network as PNG"
+          data-tooltip="Export as PNG"
           aria-label="Export Network as PNG"
           disabled={!graphData || !canvasReady}
         >
@@ -2301,7 +2301,7 @@ export default function NetworkCanvas({
           <button
             className="network-zoom-button"
             onClick={handleExportSVG}
-            title="Export Network as SVG (vector, for print)"
+            data-tooltip="Export as SVG — vector, for print"
             aria-label="Export Network as SVG"
             disabled={!graphData || !canvasReady}
           >

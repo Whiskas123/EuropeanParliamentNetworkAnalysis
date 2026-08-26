@@ -1728,7 +1728,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  z-index: 10;
+  // Above the display panel (11) and the community card (12): the rail sits
+  // clear of both, but its hover labels reach right across where they open.
+  z-index: 13;
   background: white;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -1757,6 +1759,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   width: 32px;
   height: 32px;
   background: white;
@@ -1815,6 +1818,45 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       background: white;
       color: #333;
     }
+
+    // A disabled button does not grow, so its label has nothing to cancel.
+    &[data-tooltip]::after {
+      transform: translateY(-50%);
+    }
+  }
+
+  // Every icon in this rail says its own name on hover. Seven unlabelled
+  // glyphs is too many to recognise cold, and the native `title` tooltip is
+  // useless here: it waits a second, lands under the cursor and cannot be
+  // styled. Same dark card as the MEP tooltip — this is also just a label —
+  // set to the right of the rail so it never covers the button it names.
+  &[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    // The 0.952 cancels the 1.05 the button grows to on hover, so the text
+    // stays at its true size instead of being scaled up and blurred.
+    transform: translateY(-50%) scale(0.952);
+    transform-origin: left center;
+    padding: 5px 9px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.12s;
+    z-index: 1000;
+  }
+
+  &[data-tooltip]:hover::after,
+  &[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
