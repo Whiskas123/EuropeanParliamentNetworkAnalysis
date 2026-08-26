@@ -107,6 +107,29 @@ export function defaultK(nodeCount) {
   return Math.max(6, Math.min(40, Math.round(Math.sqrt(nodeCount))));
 }
 
+/**
+ * The range a reader may move k over by hand.
+ *
+ * Wider at the bottom than the rule ever chooses — the rule floors at 6, this
+ * goes to 4 — because the point of exposing k is to watch the partition come
+ * apart at one end and fuse at the other, and a control that only offers the
+ * answers already agreed with is not worth having. The floor in defaultK is
+ * left alone: the automatic value has to keep giving the same answer it gave
+ * before this control existed.
+ *
+ * Capped below the node count, because "keep your 40 strongest partners" says
+ * nothing in a network of twenty.
+ */
+export const K_MIN = 4;
+export const K_MAX = 40;
+
+export function kBounds(nodeCount) {
+  return {
+    min: K_MIN,
+    max: Math.max(K_MIN, Math.min(K_MAX, (nodeCount || 0) - 1)),
+  };
+}
+
 /** Louvain resolution. 1 is the standard Newman-Girvan modularity. */
 export const DEFAULT_RESOLUTION = 1;
 
@@ -778,15 +801,32 @@ export function analyzeStructure(graphData, options = {}) {
 }
 
 /**
- * Memoised wrapper: the analysis is deterministic for a given graphData, and
- * graphData is replaced wholesale on every network load, so a WeakMap keyed on
- * it is exactly the right lifetime.
+ * Memoised wrapper: the analysis is deterministic for a given graphData and a
+ * given set of options, and graphData is replaced wholesale on every network
+ * load, so a WeakMap keyed on it is exactly the right lifetime.
+ *
+ * The inner key exists because k is now a control. Dragging a slider walks
+ * back and forth over the same handful of values, and each of them costs the
+ * best part of a fifth of a second to compute; keeping every k a reader has
+ * visited for this network makes the second pass over the range free.
  */
-export function getStructureAnalysis(graphData, options) {
+export function getStructureAnalysis(graphData, options = {}) {
   if (!graphData) return null;
-  const hit = cache.get(graphData);
+  let perOptions = cache.get(graphData);
+  if (perOptions === undefined) {
+    perOptions = new Map();
+    cache.set(graphData, perOptions);
+  }
+  const key = [
+    options.k ?? "auto",
+    options.resolution ?? DEFAULT_RESOLUTION,
+    options.seed ?? SEED,
+    options.restarts ?? RESTARTS,
+    options.includeNaive === true ? "naive" : "",
+  ].join("|");
+  const hit = perOptions.get(key);
   if (hit !== undefined) return hit;
   const value = analyzeStructure(graphData, options);
-  cache.set(graphData, value);
+  perOptions.set(key, value);
   return value;
 }

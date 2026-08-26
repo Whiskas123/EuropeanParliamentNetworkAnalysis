@@ -72,7 +72,18 @@ const THRESHOLD_COUNT = 16;
  * outside the line — which is the useful reading, since an MEP drawn outside
  * their own community's outline is exactly the MEP worth clicking.
  */
-const COVERAGE = 0.85;
+export const DEFAULT_COVERAGE = 0.85;
+
+/**
+ * How far a reader may move it.
+ *
+ * Not to 1.0: at total coverage the shape has to reach every straggler and is
+ * a convex hull in all but name, which is the thing the density contour exists
+ * to avoid. Not below half either — an outline holding a minority of its own
+ * community has stopped being that community's outline.
+ */
+export const COVERAGE_MIN = 0.5;
+export const COVERAGE_MAX = 0.98;
 
 /** Chaikin passes. Two turns a cell-aligned staircase into a smooth blob. */
 const SMOOTH_PASSES = 2;
@@ -322,7 +333,7 @@ function countInside(points, bounded) {
 /**
  * Trace one community, in grid coordinates.
  *
- * The default is the tightest density level that still encloses COVERAGE of
+ * The default is the tightest density level that still encloses `coverage` of
  * the members, because tighter is more informative: every level below it is
  * the same shape with more slack. That is the whole rule for a community that
  * occupies a place of its own, which is most of them.
@@ -340,7 +351,7 @@ function countInside(points, bounded) {
  * @param {Array} others - every other node in the network, same coordinates
  * @returns {{rings, coverage, purity, islands}}
  */
-function outlineFor(members, others, grid, bandwidth) {
+function outlineFor(members, others, grid, bandwidth, coverage) {
   const empty = { rings: [], coverage: 0, purity: 0 };
   if (members.length === 0) return empty;
 
@@ -403,7 +414,7 @@ function outlineFor(members, others, grid, bandwidth) {
   // whole rule, and the search below never runs.
   let chosen = null;
   for (let i = levels.length - 1; i >= 0; i--) {
-    if (countInside(members, levels[i]) / members.length >= COVERAGE) {
+    if (countInside(members, levels[i]) / members.length >= coverage) {
       chosen = score(levels[i]);
       break;
     }
@@ -456,20 +467,39 @@ function outlineFor(members, others, grid, bandwidth) {
  * @returns {?Object} {shapes, count, concordantShare, ari, k, nodeCount} or
  *   null when the network is too small to partition.
  */
-export function buildCommunityShapes(graphData) {
+export function buildCommunityShapes(graphData, options = {}) {
   if (!graphData || !graphData.nodes || graphData.nodes.length === 0) {
     return null;
   }
-  const hit = cache.get(graphData);
+  const k = options.k ?? null;
+  const coverage = Math.min(
+    COVERAGE_MAX,
+    Math.max(COVERAGE_MIN, options.coverage ?? DEFAULT_COVERAGE)
+  );
+
+  // Keyed on both settings, not just the network: these are controls now, and
+  // a reader dragging a slider walks back over values they have already paid
+  // for. Coverage is rounded into the key at the resolution the control moves
+  // in, so 0.85 and 0.850000001 are not two different answers.
+  let perOptions = cache.get(graphData);
+  if (perOptions === undefined) {
+    perOptions = new Map();
+    cache.set(graphData, perOptions);
+  }
+  const key = `${k ?? "auto"}|${coverage.toFixed(2)}`;
+  const hit = perOptions.get(key);
   if (hit !== undefined) return hit;
 
-  const value = computeCommunityShapes(graphData);
-  cache.set(graphData, value);
+  const value = computeCommunityShapes(graphData, { k, coverage });
+  perOptions.set(key, value);
   return value;
 }
 
-function computeCommunityShapes(graphData) {
-  const analysis = getStructureAnalysis(graphData);
+function computeCommunityShapes(graphData, settings) {
+  const analysis = getStructureAnalysis(
+    graphData,
+    settings.k === null ? {} : { k: settings.k }
+  );
   if (!analysis || analysis.communities.length === 0) return null;
 
   const nodeMap =
@@ -556,7 +586,13 @@ function computeCommunityShapes(graphData) {
       if (!memberSet.has(node.id)) others.push(gridOf.get(node.id));
     });
 
-    const traced = outlineFor(members, others, grid, bandwidthFor(members));
+    const traced = outlineFor(
+      members,
+      others,
+      grid,
+      bandwidthFor(members),
+      settings.coverage
+    );
     if (traced.rings.length === 0) return;
 
     const laidOut = traced.rings
@@ -610,6 +646,8 @@ function computeCommunityShapes(graphData) {
     concordantShare: analysis.concordantShare,
     ari: analysis.agreement ? analysis.agreement.ari : null,
     k: analysis.preprocessing.k,
+    kIsAutomatic: settings.k === null,
+    coverage: settings.coverage,
     nodeCount: analysis.preprocessing.nodeCount,
     singletons,
     oneCountry,
