@@ -97,9 +97,12 @@
 // Identity, with the two figures that place this MEP beside it
 // ---------------------------------------------------------------------------
 
+// Bottom-aligned, so the pair of dials ends level with the political group
+// row. Aligned to the top instead, the second dial hung below the last line of
+// text and opened a band the width of the panel with nothing on its left.
 .mep-info-identity {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
 }
@@ -107,29 +110,62 @@
 .mep-info-identity-facts {
   flex: 1 1 auto;
   min-width: 0;
+
+  // The last section's trailing margin is what the dials would be levelled
+  // against, so the pair would sit that far below the group row it is supposed
+  // to line up with. The panel below supplies its own top spacing.
+  > .mep-info-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 }
 
-// Two dials, stacked, sized down from the grid's. They sit against two rows of
-// text rather than in a grid of their own, so they take the height of that text
-// and not the height a grid cell would give them.
+// Two dials against two rows of text, so each one is laid on its side: the ring
+// on the left, its name and its delta stacked beside it. Kept in the grid's
+// vertical arrangement - ring, then name, then delta - a pair of these stands
+// about 170px tall against roughly 120px of identity text, and no amount of
+// aligning hides the difference. Turned, a dial is as tall as its ring and the
+// pair fits the text exactly.
+//
+// Grid rather than flex because the component renders the three parts as
+// siblings with no wrapper to make a column of the last two.
 .mep-headline-dials {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 2px;
+  gap: 8px;
 
   .radial {
-    width: 62px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "dial label"
+      "dial delta";
+    align-items: center;
+    justify-items: start;
+    gap: 1px 7px;
+    padding: 0;
+    width: auto;
+    text-align: left;
   }
 
   .radial-dial {
-    width: 46px;
-    height: 46px;
+    grid-area: dial;
+    width: 42px;
+    max-width: 42px;
+    height: 42px;
   }
 
   .radial-label {
+    grid-area: label;
+    justify-content: flex-start;
     font-size: var(--sb-fs-micro);
+    white-space: nowrap;
+  }
+
+  .radial-delta {
+    grid-area: delta;
+    justify-content: flex-start;
   }
 }
 
