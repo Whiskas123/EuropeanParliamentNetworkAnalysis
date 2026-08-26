@@ -149,11 +149,15 @@
     text-align: left;
   }
 
+  // The figure inside the ring is fixed-size HTML over an SVG that scales, so
+  // shrinking the ring does not shrink the number with it: at 42px "89.4%" was
+  // wider than the 31px of clear space inside the arc. 54px leaves about 40px,
+  // which fits the widest figure the dial can hold with room to spare.
   .radial-dial {
     grid-area: dial;
-    width: 42px;
-    max-width: 42px;
-    height: 42px;
+    width: 54px;
+    max-width: 54px;
+    height: 54px;
   }
 
   .radial-label {
