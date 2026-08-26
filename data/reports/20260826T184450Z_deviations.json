@@ -1,0 +1,75 @@
+{
+  "run": "deviations",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-26T18:44:50.688867+00:00",
+    "seconds": 34.8,
+    "git_commit": "5982200e0962c11dc3aa4d0efa22339a9268b16f",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 5,
+    "passed": 5,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "Step 4c: deviation from own group",
+      "facts": {
+        "mandate 10: voting sessions": 4245,
+        "mandate 10: political groups": "ECR, ESN, GUE/NGL, PPE, PfE, RE, S&D, Verts/ALE",
+        "mandate 10: MEPs with a term deviation": 669,
+        "mandate 10: MEPs with any deviation": 697,
+        "mandate 10: median |deviation|": "1.68 pp",
+        "mandate 10: figures dropped as unmatched": "0 of 94776 (0.00%)",
+        "mandate 10: worst kept excess past [0, 1]": "1.4 pp",
+        "mandate 10: written": "mep_deviations_10.json (1482 KB)"
+      },
+      "seconds": 27.1
+    }
+  ],
+  "checks": [
+    {
+      "name": "mandate 10: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 98.0% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: deviations were produced",
+      "ok": true,
+      "detail": "only 697 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.68 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 10: the level and the deviation share a footing",
+      "ok": true,
+      "detail": "0.0% of figures had to be dropped, so the level and the deviation are not describing the same votes",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    }
+  ]
+}
