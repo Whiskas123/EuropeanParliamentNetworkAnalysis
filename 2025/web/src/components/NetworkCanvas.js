@@ -23,6 +23,9 @@ import {
 import { CountryFlag, getGroupAcronym, getGroupColor } from "../lib/utils";
 import {
   buildCommunityShapes,
+  COVERAGE_MAX,
+  COVERAGE_MIN,
+  DEFAULT_COVERAGE,
   describeCommunity,
   describeDelegations,
   describeGeography,
@@ -30,6 +33,7 @@ import {
   labelCommunities,
   stackLabels,
 } from "../lib/communityShapes";
+import { defaultK, kBounds } from "../lib/networkAnalysis";
 import "../styles/canvas-controls.scss";
 
 const NODE_BORDER_BASE_LINE_WIDTH = 0.5;
@@ -73,6 +77,23 @@ function canvasFont(size, weight = 600) {
  */
 const OUTLINE_MIN_PX = 1.1;
 const COMMUNITY_LABEL_PX = 17;
+
+/**
+ * How far a name may be pushed off its own shape before it is not drawn.
+ *
+ * In multiples of the name's own height. Overlapping names are stacked
+ * upwards, which is fine for the seven or eight communities the automatic k
+ * produces — the worst push there is about three line-blocks. It stops being
+ * fine once k is a control: at k=4 term 10 gives thirty-four communities whose
+ * plates stack into a band 519 pixels tall over a network 310 pixels tall, and
+ * the name furthest from home ends up 416 pixels above the shape it belongs
+ * to, which is no longer a label but a caption for the wrong thing.
+ *
+ * Names are placed largest community first, so the ones that overflow are the
+ * small ones, and they lose only the plate: the outline, the colour and the
+ * hover card are all still there.
+ */
+const MAX_LABEL_PUSH_BLOCKS = 5;
 
 /** Parties smaller than this are folded into "others" in the legend. */
 const LEGEND_MIN_PARTY_MEMBERS = 2;
@@ -299,9 +320,15 @@ function drawCommunityLabels(
     };
   });
   const baselines = stackLabels(measured, titleSize * 0.55);
+  const maxPush = blockHeight * MAX_LABEL_PUSH_BLOCKS;
 
   for (let i = 0; i < communities.length; i += 1) {
     const community = communities[i];
+    // Measured against where this community actually ended up on screen, not
+    // against shape.anchor: at any rotation but zero the two are different
+    // points, and it is the on-screen distance that decides whether a reader
+    // can still tell what the name is pointing at.
+    if (measured[i].y - baselines[i] > maxPush) continue;
     const x = anchors[i].x;
     const countY = baselines[i];
     const titleY = countY - countSize * 1.15;
@@ -737,6 +764,17 @@ export default function NetworkCanvas({
   // handler is installed once and never re-installed, so the outlines it
   // hit-tests against have to reach it through a ref.
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  // What the k and coverage sliders read while they are being dragged. The
+  // committed values live in renderSettings; these exist so the handle and the
+  // readout keep up with the finger without asking for a partition per pixel.
+  const [settingDraft, setSettingDraft] = useState(null);
+  const draftTimerRef = useRef(null);
+  // The same draft, reachable from the timer without going through a state
+  // updater. React may run an updater during a later render, and committing
+  // from inside one means calling the page's setState while this component is
+  // rendering — which React reports as updating a component while rendering a
+  // different one, and which schedules work in the middle of a paint.
+  const draftRef = useRef(null);
   const communityOverlayRef = useRef(null);
   // Where each community's name was drawn, in layout coordinates, refreshed on
   // every paint. Hovering the name is how you reach a community that is buried
@@ -750,19 +788,80 @@ export default function NetworkCanvas({
   const colorMode = renderSettings?.colorMode ?? "group";
   const dim = renderSettings?.dim ?? null;
   const showCommunities = renderSettings?.communities ?? false;
+  // null means "the rule decides" — see defaultK. Held as null rather than as
+  // the computed number so that changing network keeps it automatic instead of
+  // pinning whatever the last network happened to work out to.
+  const communityK = renderSettings?.communityK ?? null;
+  const communityCoverage =
+    renderSettings?.communityCoverage ?? DEFAULT_COVERAGE;
   const activeDimKind = dim?.type || dimKind;
+
+  const currentSettings = {
+    edgePercentile,
+    edgeWidth: widthMultiplier,
+    colorMode,
+    dim,
+    communities: showCommunities,
+    communityK,
+    communityCoverage,
+  };
+  // Read by the debounced commit below, which fires a quarter of a second
+  // after the last drag and must not write back the settings as they were when
+  // the drag started.
+  const settingsRef = useRef(currentSettings);
+  settingsRef.current = currentSettings;
+  const onSettingsChangeRef = useRef(onRenderSettingsChange);
+  onSettingsChangeRef.current = onRenderSettingsChange;
 
   const updateSettings = (patch) => {
     if (typeof onRenderSettingsChange !== "function") return;
-    onRenderSettingsChange({
-      edgePercentile,
-      edgeWidth: widthMultiplier,
-      colorMode,
-      dim,
-      communities: showCommunities,
-      ...patch,
-    });
+    onRenderSettingsChange({ ...settingsRef.current, ...patch });
   };
+
+  /**
+   * Take a slider value now, act on it when the dragging stops.
+   *
+   * Recomputing the partition is between a fifth of a second and, at k = 4 on
+   * the full network, most of one; a range input fires on every pixel of a
+   * drag. So the draft moves the handle and the readout immediately and the
+   * settings — and with them the analysis, the URL and the export — are
+   * written once, a quarter of a second after the last movement.
+   */
+  const scheduleSetting = (patch) => {
+    draftRef.current = { ...(draftRef.current || {}), ...patch };
+    setSettingDraft(draftRef.current);
+    if (draftTimerRef.current) clearTimeout(draftTimerRef.current);
+    draftTimerRef.current = setTimeout(() => {
+      draftTimerRef.current = null;
+      const pending = draftRef.current;
+      draftRef.current = null;
+      setSettingDraft(null);
+      const commit = onSettingsChangeRef.current;
+      if (pending && typeof commit === "function") {
+        commit({ ...settingsRef.current, ...pending });
+      }
+    }, 250);
+  };
+
+  useEffect(
+    () => () => {
+      if (draftTimerRef.current) clearTimeout(draftTimerRef.current);
+    },
+    []
+  );
+
+  // What the sliders show: the draft while dragging, the committed value
+  // otherwise. k falls back to the rule, which needs the network's size.
+  const nodeCount = graphData?.nodes?.length || 0;
+  const kRange = kBounds(nodeCount);
+  const automaticK = defaultK(nodeCount);
+  const draftK = settingDraft?.communityK;
+  const shownK =
+    draftK !== undefined ? draftK : communityK !== null ? communityK : automaticK;
+  const kIsAutomatic = draftK !== undefined ? false : communityK === null;
+  const draftCoverage = settingDraft?.communityCoverage;
+  const shownCoverage =
+    draftCoverage !== undefined ? draftCoverage : communityCoverage;
 
   // The colour lookup is called twice per edge per frame — up to ~270k times
   // on the full network — so it is built once per (graphData, mode) and the
@@ -895,7 +994,10 @@ export default function NetworkCanvas({
     const id = setTimeout(() => {
       let shapes = null;
       try {
-        shapes = buildCommunityShapes(graphData);
+        shapes = buildCommunityShapes(graphData, {
+          k: communityK,
+          coverage: communityCoverage,
+        });
       } catch (error) {
         // A network that cannot be partitioned is a normal outcome, not a
         // reason to take the canvas down with it.
@@ -909,7 +1011,7 @@ export default function NetworkCanvas({
       cancelled = true;
       clearTimeout(id);
     };
-  }, [showCommunities, graphData]);
+  }, [showCommunities, graphData, communityK, communityCoverage]);
 
   // Names and colours for the outlines. Separate from the geometry because the
   // geometry does not depend on the term and the acronyms do.
@@ -2137,6 +2239,101 @@ export default function NetworkCanvas({
                 ? communityReadout
                 : "Off — the dashed-ring button in the toolbar draws them."}
             </div>
+
+            {showCommunities && (
+              <div
+                className="canvas-display-subsection"
+                role="group"
+                aria-label="Community detection settings"
+              >
+                <label
+                  className="canvas-display-sublabel"
+                  htmlFor="canvas-community-k"
+                >
+                  Partners kept per MEP
+                </label>
+                <input
+                  id="canvas-community-k"
+                  className="canvas-display-slider"
+                  type="range"
+                  min={kRange.min}
+                  max={kRange.max}
+                  step="1"
+                  value={Math.min(kRange.max, Math.max(kRange.min, shownK))}
+                  aria-describedby="canvas-community-k-readout"
+                  onChange={(event) =>
+                    scheduleSetting({ communityK: Number(event.target.value) })
+                  }
+                />
+                <div
+                  className="canvas-display-readout"
+                  id="canvas-community-k-readout"
+                >
+                  {shownK} strongest
+                  {kIsAutomatic ? " · the rule's own value" : ""}
+                  {!kIsAutomatic && shownK !== automaticK ? (
+                    <>
+                      {" · "}
+                      <button
+                        type="button"
+                        className="canvas-display-inline-reset"
+                        onClick={() => {
+                          if (draftTimerRef.current) {
+                            clearTimeout(draftTimerRef.current);
+                            draftTimerRef.current = null;
+                          }
+                          draftRef.current = null;
+                          setSettingDraft(null);
+                          updateSettings({ communityK: null });
+                        }}
+                      >
+                        back to {automaticK}
+                      </button>
+                    </>
+                  ) : null}
+                </div>
+
+                <label
+                  className="canvas-display-sublabel"
+                  htmlFor="canvas-community-coverage"
+                  style={{ marginTop: "10px" }}
+                >
+                  Outline tightness
+                </label>
+                <input
+                  id="canvas-community-coverage"
+                  className="canvas-display-slider"
+                  type="range"
+                  min={Math.round(COVERAGE_MIN * 100)}
+                  max={Math.round(COVERAGE_MAX * 100)}
+                  step="1"
+                  value={Math.round(shownCoverage * 100)}
+                  aria-describedby="canvas-community-coverage-readout"
+                  onChange={(event) =>
+                    scheduleSetting({
+                      communityCoverage: Number(event.target.value) / 100,
+                    })
+                  }
+                />
+                <div
+                  className="canvas-display-readout"
+                  id="canvas-community-coverage-readout"
+                >
+                  each outline holds {Math.round(shownCoverage * 100)}% of its
+                  community
+                </div>
+
+                <p className="canvas-display-note">
+                  Fewer partners splits the big groups by nationality — at 8,
+                  term 10 gives eighteen communities and most of them are
+                  national delegations. More merges them. The rule&rsquo;s value
+                  is round(&radic;n), chosen without looking at the answer,
+                  which is what stops the exercise being circular; moving it by
+                  hand is worth doing to see how firmly a bloc holds, not to
+                  find the number that agrees with you.
+                </p>
+              </div>
+            )}
             <p className="canvas-display-note">
               Louvain community detection over the votes alone — the seating
               plan is not an input. Every MEP has voted with every other, so the

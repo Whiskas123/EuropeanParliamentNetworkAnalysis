@@ -32,6 +32,7 @@ import {
 import { listParties } from "./parties.js";
 import {
   buildCommunityShapes,
+  DEFAULT_COVERAGE,
   labelCommunities,
   stackLabels,
 } from "./communityShapes.js";
@@ -209,9 +210,9 @@ function nodeRadius(count) {
  * that throws on some unusual network must not be the reason the file never
  * arrives — the picture without its outlines is still the picture.
  */
-function tryCommunityShapes(graphData) {
+function tryCommunityShapes(graphData, settings) {
   try {
-    return buildCommunityShapes(graphData);
+    return buildCommunityShapes(graphData, settings);
   } catch (error) {
     console.warn("exportNetworkSVG: community outlines unavailable:", error);
     return null;
@@ -868,7 +869,12 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   let communityLabelParts = [];
   let communityNote = "no community outlines";
   if (view.communities) {
-    const communities = tryCommunityShapes(graphData);
+    // The same k and coverage the screen used, or the print carries outlines
+    // of a partition the reader never saw.
+    const communities = tryCommunityShapes(graphData, {
+      k: view.communityK ?? null,
+      coverage: view.communityCoverage,
+    });
     if (communities && communities.shapes.length > 0) {
       const names = labelCommunities(communities.shapes, info.mandate);
       // In design units, like the caption: the outline and its name are the

@@ -376,3 +376,37 @@
   padding-top: 0;
   border-top: none;
 }
+
+/**
+ * The settings that hang under a section's readout — community detection's k
+ * and coverage. Indented and hairline-marked so they read as belonging to the
+ * thing above them rather than as two more top-level controls.
+ */
+.canvas-display-subsection {
+  margin-top: 10px;
+  padding-left: 8px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.canvas-display-sublabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #444;
+}
+
+/** A reset offered inside a readout line, not as its own control. */
+.canvas-display-inline-reset {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: #1a5fb4;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: #0b3d7a;
+  }
+}

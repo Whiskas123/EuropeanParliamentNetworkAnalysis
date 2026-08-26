@@ -90,6 +90,8 @@ export default function VisualizationPage() {
     colorMode: DEFAULT_VIEW.colorMode,
     dim: DEFAULT_VIEW.dim,
     communities: DEFAULT_VIEW.communities,
+    communityK: DEFAULT_VIEW.communityK,
+    communityCoverage: DEFAULT_VIEW.communityCoverage,
   });
 
   // Guards the first render: the URL is the source of truth on load, and
@@ -496,6 +498,8 @@ export default function VisualizationPage() {
       colorMode: view.colorMode,
       dim: view.dim,
       communities: view.communities,
+      communityK: view.communityK,
+      communityCoverage: view.communityCoverage,
     });
     // Both of these are applied once the network is loaded, below. Setting the
     // group here instead looks like it works and does not: loadAndPrepareGraph
