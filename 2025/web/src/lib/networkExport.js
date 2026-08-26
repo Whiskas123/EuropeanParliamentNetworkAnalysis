@@ -30,7 +30,7 @@ import {
 import { listParties } from "./parties.js";
 import {
   buildCommunityShapes,
-  communityLabel,
+  labelCommunities,
   stackLabels,
 } from "./communityShapes.js";
 import {
@@ -841,15 +841,16 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   if (view.communities) {
     const communities = tryCommunityShapes(graphData);
     if (communities && communities.shapes.length > 0) {
+      const names = labelCommunities(communities.shapes, info.mandate);
       // In design units, like the caption: the outline and its name are the
       // same fraction of the picture whether the layout spans 400 units or
       // 12,000, which is also what the canvas does with them on screen.
       const outlineWidth = Math.max(radius * 0.3, du(1.1));
       const dashOn = outlineWidth * 5;
       const dashOff = outlineWidth * 3.6;
-      const titleSize = Math.max(radius * 2.2, du(13));
-      const countSize = titleSize * 0.68;
-      communityParts = communities.shapes.map((shape) => {
+      const titleSize = Math.max(radius * 2.2, du(17));
+      const countSize = titleSize * 0.62;
+      communityParts = communities.shapes.map((shape, index) => {
         const d = shape.rings
           .map(
             (ring) =>
@@ -858,7 +859,7 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
                 .join("L")}Z`
           )
           .join("");
-        const name = communityLabel(shape, info.mandate);
+        const name = names[index];
         return (
           `<g data-community="${esc(name)}" data-size="${shape.size}">` +
           `<title>${esc(`${name} — ${shape.size} MEPs`)}</title>` +
@@ -874,25 +875,40 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
       // collision test that only ever moves a label upwards.
       const blockHeight = titleSize + countSize * 1.15;
       const labelBaselines = stackLabels(
-        communities.shapes.map((shape) => ({
+        communities.shapes.map((shape, index) => ({
           x: shape.anchor.x,
           y: shape.anchor.y - titleSize * 0.75,
           width: Math.max(
-            estimateWidth(communityLabel(shape, info.mandate), titleSize),
+            estimateWidth(names[index], titleSize),
             estimateWidth(`${shape.size} MEPs`, countSize)
           ),
           height: blockHeight,
         })),
-        titleSize * 0.4
+        titleSize * 0.55
       );
+      const padX = titleSize * 0.42;
+      const padY = titleSize * 0.3;
       communityLabelParts = communities.shapes.flatMap((shape, index) => {
         const countY = labelBaselines[index];
         const titleY = countY - countSize * 1.15;
+        const plateWidth =
+          Math.max(
+            estimateWidth(names[index], titleSize),
+            estimateWidth(`${shape.size} MEPs`, countSize)
+          ) + padX * 2;
+        const plateHeight = blockHeight + padY * 2;
         return [
-          svgText(shape.anchor.x, titleY, communityLabel(shape, info.mandate), {
+          // A plate, not a halo: a stroke heavy enough to lift type off seven
+          // hundred dots eats the letterforms. Same reasoning as the canvas.
+          `<rect x="${n1(shape.anchor.x - plateWidth / 2)}" y="${n1(
+            titleY - titleSize + padY * 0.2
+          )}" width="${n1(plateWidth)}" height="${n1(
+            plateHeight
+          )}" rx="${n2(titleSize * 0.32)}" fill="${PAPER}" fill-opacity="0.9"/>`,
+          svgText(shape.anchor.x, titleY, names[index], {
             size: titleSize,
             weight: 600,
-            fill: shape.color,
+            fill: shape.labelColor || shape.color,
             anchor: "middle",
           }),
           svgText(shape.anchor.x, countY, `${shape.size} MEPs`, {
@@ -903,9 +919,7 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
           }),
         ];
       });
-      communityNote =
-        `${communities.count} communities detected, ` +
-        `${communities.shapes.length} outlined`;
+      communityNote = `${communities.shapes.length} community outlines`;
     } else {
       communityNote = "community outlines requested, none could be drawn";
     }

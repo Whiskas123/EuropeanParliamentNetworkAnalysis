@@ -207,3 +207,141 @@
     animation: none !important;
   }
 }
+
+/**
+ * The card that opens when the cursor is inside a community's outline.
+ *
+ * Same surface as the display panel — white, hairline border, 6px radius —
+ * because it belongs to the same layer of the page: things the canvas says
+ * about itself. It is deliberately not the dark MEP tooltip, which is a label
+ * for one dot; this is a small report about a region, and it carries tables.
+ *
+ * pointer-events: none throughout. The card follows the cursor and the cursor
+ * is over the canvas; a card that could be hovered would flicker as it stole
+ * its own trigger.
+ */
+.community-tip {
+  position: fixed;
+  z-index: 1001;
+  width: 290px;
+  padding: 10px 12px 11px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  font-size: 12px;
+  line-height: 1.45;
+  color: #1a1a1a;
+  pointer-events: none;
+}
+
+.community-tip-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.community-tip-swatch {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  align-self: center;
+}
+
+.community-tip-name {
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-tip-size {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+}
+
+.community-tip-lede {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  color: #444;
+}
+
+.community-tip-label {
+  margin: 10px 0 4px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #666;
+}
+
+.community-tip-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.community-tip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.community-tip-dot {
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.community-tip-row-name {
+  flex: 0 0 auto;
+  max-width: 128px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+}
+
+.community-tip-row-wide {
+  max-width: 150px;
+}
+
+.community-tip-row-count {
+  margin-left: auto;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.community-tip-row-note {
+  flex: 0 0 auto;
+  width: 96px;
+  text-align: right;
+  font-size: 10.5px;
+  color: #777;
+}
+
+.community-tip-foot {
+  margin: 9px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 10.5px;
+  color: #777;
+}
+
+/** The "and 9 more" under a truncated list: a footnote, not a section. */
+.community-tip-foot-tight {
+  margin-top: 4px;
+  padding-top: 0;
+  border-top: none;
+}

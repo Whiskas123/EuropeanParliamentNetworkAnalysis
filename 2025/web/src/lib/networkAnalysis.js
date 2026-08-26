@@ -662,8 +662,11 @@ export function analyzeStructure(graphData, options = {}) {
         groupId,
         count,
         share: count / community.size,
-        // What share of that whole group landed here.
+        // What share of that whole group landed here, and out of how many —
+        // "23 of the EPP's 176" is the figure that separates a splinter from
+        // a group, and neither number means much without the other.
         shareOfGroup: count / (groupSizes.get(groupId) || 1),
+        groupTotal: groupSizes.get(groupId) || count,
       }))
       .sort((a, b) => b.count - a.count);
     const countries = Array.from(community.countries.entries())

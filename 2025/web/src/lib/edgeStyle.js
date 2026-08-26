@@ -181,6 +181,10 @@ export function isEmphasised(node, dim) {
   if (!dim || !dim.value) return true;
   if (dim.type === "group") return node.groupId === dim.value;
   if (dim.type === "country") return node.country === dim.value;
+  // A set of MEP ids, for a focus that is not a property of the node and
+  // cannot be looked up on it — hovering a community is the case. Transient:
+  // this form is never written to the URL.
+  if (dim.type === "members") return dim.members.has(node.id);
   return true;
 }
 

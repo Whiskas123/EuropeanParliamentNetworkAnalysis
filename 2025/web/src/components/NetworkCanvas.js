@@ -22,7 +22,9 @@ import {
 import { getGroupAcronym, getGroupColor } from "../lib/utils";
 import {
   buildCommunityShapes,
-  communityLabel,
+  describeCommunity,
+  describeGeography,
+  labelCommunities,
   stackLabels,
 } from "../lib/communityShapes";
 import "../styles/canvas-controls.scss";
@@ -67,7 +69,7 @@ function canvasFont(size, weight = 600) {
  * name is always readable, whatever the network's own scale happens to be.
  */
 const OUTLINE_MIN_PX = 1.1;
-const COMMUNITY_LABEL_PX = 13;
+const COMMUNITY_LABEL_PX = 17;
 
 /** Parties smaller than this are folded into "others" in the legend. */
 const LEGEND_MIN_PARTY_MEMBERS = 2;
@@ -111,19 +113,23 @@ function tryExportCall(label, fn, fallback = null) {
  * units, so the overlay scales with the picture and a print matches the screen
  * without a second set of numbers.
  */
-function drawCommunityOutlines(ctx, communities, nodeSize, viewScale) {
+function drawCommunityOutlines(ctx, communities, nodeSize, viewScale, focusId) {
   if (!communities || communities.length === 0) return;
   ctx.save();
   ctx.lineJoin = "round";
   ctx.lineCap = "butt";
   const stroke = Math.max(nodeSize * 0.3, OUTLINE_MIN_PX / viewScale);
-  ctx.lineWidth = stroke;
   ctx.setLineDash([stroke * 5, stroke * 3.6]);
-  ctx.globalAlpha = 0.9;
 
   for (let i = 0; i < communities.length; i += 1) {
     const community = communities[i];
+    const focused = focusId === null || focusId === community.id;
     ctx.strokeStyle = community.color;
+    // Hovering one community is a question about that one. The others stay
+    // drawn — they are the context that makes the answer mean anything — but
+    // they step back, at the same weight the dim control uses on nodes.
+    ctx.globalAlpha = focused ? 0.95 : 0.18;
+    ctx.lineWidth = focusId === community.id ? stroke * 1.6 : stroke;
     for (let r = 0; r < community.rings.length; r += 1) {
       const ring = community.rings[r];
       if (ring.length < 3) continue;
@@ -138,62 +144,129 @@ function drawCommunityOutlines(ctx, communities, nodeSize, viewScale) {
 }
 
 /**
+ * Is this point inside any of a community's rings?
+ *
+ * The same even-odd test lib/communityShapes.js uses, repeated here because
+ * this one runs on every mouse move and takes the layout coordinates the
+ * canvas already has, not the grid coordinates the tracing worked in.
+ */
+function pointInRings(x, y, rings) {
+  let inside = false;
+  for (let r = 0; r < rings.length; r += 1) {
+    const ring = rings[r];
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const yi = ring[i][1];
+      const yj = ring[j][1];
+      if (yi > y !== yj > y) {
+        const xCross =
+          ((ring[j][0] - ring[i][0]) * (y - yi)) / (yj - yi) + ring[i][0];
+        if (x < xCross) inside = !inside;
+      }
+    }
+  }
+  return inside;
+}
+
+/** A rounded rectangle, with a path for browsers that predate roundRect. */
+function roundedRect(ctx, x, y, width, height, radius) {
+  if (typeof ctx.roundRect === "function") {
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, radius);
+    return;
+  }
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + width, y, x + width, y + height, r);
+  ctx.arcTo(x + width, y + height, x, y + height, r);
+  ctx.arcTo(x, y + height, x, y, r);
+  ctx.arcTo(x, y, x + width, y, r);
+  ctx.closePath();
+}
+
+/**
  * The community names, over the nodes.
  *
  * Drawn after the nodes rather than with the outlines: an outline is texture
- * and can sit under a node, a name cannot. Each one gets a white halo for the
- * same reason — the anchor is the top of the shape, which is the emptiest edge
- * of it, but "emptiest" is not "empty" on a canvas holding seven hundred MEPs.
+ * and can sit under a node, a name cannot.
+ *
+ * Each name sits on a plate rather than wearing a halo. A halo is a fat stroke
+ * of white under the glyphs, and at the weight needed to survive seven hundred
+ * dots behind it, it eats into the letterforms and the name comes out looking
+ * soft — which is exactly what it looked like. An opaque plate leaves the
+ * glyphs untouched, so the type is as crisp as the canvas can draw it.
  */
-function drawCommunityLabels(ctx, communities, nodeSize, viewScale) {
+function drawCommunityLabels(
+  ctx,
+  communities,
+  nodeSize,
+  viewScale,
+  focusId,
+  boxesOut
+) {
   if (!communities || communities.length === 0) return;
   ctx.save();
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
   ctx.lineJoin = "round";
   ctx.setLineDash([]);
-  ctx.globalAlpha = 1;
 
   const titleSize = Math.max(nodeSize * 2.2, COMMUNITY_LABEL_PX / viewScale);
-  const countSize = titleSize * 0.68;
+  const countSize = titleSize * 0.62;
   const blockHeight = titleSize + countSize * 1.15;
+  const padX = titleSize * 0.42;
+  const padY = titleSize * 0.3;
 
   // Shapes overlap, so their names would too. Measured here and stacked in
   // lib/communityShapes.js, on the rule the SVG export also follows.
-  const baselines = stackLabels(
-    communities.map((community) => {
-      ctx.font = canvasFont(titleSize);
-      const titleWidth = ctx.measureText(community.label).width;
-      ctx.font = canvasFont(countSize, 500);
-      const countWidth = ctx.measureText(community.countLabel).width;
-      return {
-        x: community.anchor.x,
-        y: community.anchor.y - titleSize * 0.75,
-        width: Math.max(titleWidth, countWidth),
-        height: blockHeight,
-      };
-    }),
-    titleSize * 0.4
-  );
+  const measured = communities.map((community) => {
+    ctx.font = canvasFont(titleSize);
+    const titleWidth = ctx.measureText(community.label).width;
+    ctx.font = canvasFont(countSize, 500);
+    const countWidth = ctx.measureText(community.countLabel).width;
+    return {
+      x: community.anchor.x,
+      y: community.anchor.y - titleSize * 0.75,
+      width: Math.max(titleWidth, countWidth),
+      height: blockHeight,
+    };
+  });
+  const baselines = stackLabels(measured, titleSize * 0.55);
 
   for (let i = 0; i < communities.length; i += 1) {
     const community = communities[i];
     const x = community.anchor.x;
     const countY = baselines[i];
     const titleY = countY - countSize * 1.15;
+    const faded = focusId !== null && focusId !== community.id;
+    ctx.globalAlpha = faded ? 0.25 : 1;
 
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+    const plateWidth = measured[i].width + padX * 2;
+    const plateHeight = blockHeight + padY * 2;
+    const plateLeft = x - plateWidth / 2;
+    const plateTop = titleY - titleSize + padY * 0.2;
+    // The plate is the reliable way to reach a community: inside a group's
+    // cloud almost every pixel is within hover range of an MEP, and an MEP
+    // always wins. The name is a target nothing else covers.
+    if (boxesOut) {
+      boxesOut.push({
+        id: community.id,
+        left: plateLeft,
+        top: plateTop,
+        right: plateLeft + plateWidth,
+        bottom: plateTop + plateHeight,
+      });
+    }
+    roundedRect(ctx, plateLeft, plateTop, plateWidth, plateHeight, titleSize * 0.32);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.fill();
 
     ctx.font = canvasFont(titleSize);
-    ctx.lineWidth = titleSize * 0.3;
-    ctx.strokeText(community.label, x, titleY);
-    ctx.fillStyle = community.color;
+    ctx.fillStyle = community.labelColor || community.color;
     ctx.fillText(community.label, x, titleY);
 
     ctx.font = canvasFont(countSize, 500);
-    ctx.lineWidth = countSize * 0.34;
-    ctx.strokeText(community.countLabel, x, countY);
-    ctx.fillStyle = "rgba(60, 60, 66, 0.85)";
+    ctx.fillStyle = "rgba(70, 70, 78, 0.9)";
     ctx.fillText(community.countLabel, x, countY);
   }
   ctx.restore();
@@ -220,6 +293,7 @@ function drawScene(ctx, params) {
     lineWidthDivisor,
     baseEdgeAlpha,
     communities,
+    communityFocusId,
     viewScale,
   } = params;
 
@@ -262,7 +336,13 @@ function drawScene(ctx, params) {
 
   // Between the edges and the nodes: an outline is a region, so it belongs
   // behind the MEPs standing in it and in front of the wash of ties.
-  drawCommunityOutlines(ctx, communities, nodeSize, viewScale);
+  drawCommunityOutlines(
+    ctx,
+    communities,
+    nodeSize,
+    viewScale,
+    communityFocusId ?? null
+  );
 
   const selectedNodeSize = nodeSize * 1.2;
   const haloSize1 = selectedNodeSize * 1.9;
@@ -321,7 +401,116 @@ function drawScene(ctx, params) {
   }
 
   ctx.globalAlpha = 1;
-  drawCommunityLabels(ctx, communities, nodeSize, viewScale);
+  drawCommunityLabels(
+    ctx,
+    communities,
+    nodeSize,
+    viewScale,
+    communityFocusId ?? null,
+    params.labelBoxes
+  );
+}
+
+/**
+ * What is inside this community.
+ *
+ * Most communities are a political group, and for those this card confirms it
+ * in a line and is done. The ones worth the card are the others: a slice of a
+ * group, or two groups the algorithm merged. For those the question a reader
+ * actually has is "what do these people have in common that the rest of their
+ * group does not" — and the answer is usually a country or a corner of
+ * Europe, which is why the geography is here and not buried.
+ *
+ * Positioned in viewport coordinates like the MEP tooltip, and flipped to the
+ * other side of the cursor near the right edge, where a card this wide would
+ * otherwise be cut in half by the sidebar.
+ */
+function CommunityTooltip({ shape, position, mandate }) {
+  if (!shape || !position) return null;
+
+  const viewportWidth =
+    typeof window === "undefined" ? 1200 : window.innerWidth;
+  const viewportHeight =
+    typeof window === "undefined" ? 800 : window.innerHeight;
+  const width = 290;
+  const flip = position.x + width + 28 > viewportWidth;
+  const left = flip ? position.x - width - 16 : position.x + 16;
+  const top = Math.min(Math.max(12, position.y - 24), viewportHeight - 340);
+
+  const geography = describeGeography(shape);
+  const countries = shape.countries || [];
+
+  return (
+    <div className="community-tip" style={{ left: `${left}px`, top: `${top}px` }}>
+      <div className="community-tip-head">
+        <span
+          className="community-tip-swatch"
+          style={{ background: shape.color }}
+          aria-hidden="true"
+        />
+        <span className="community-tip-name">{shape.label}</span>
+        <span className="community-tip-size">{shape.countLabel}</span>
+      </div>
+
+      <p className="community-tip-lede">{describeCommunity(shape, mandate)}</p>
+      {geography && <p className="community-tip-lede">{geography}</p>}
+
+      <div className="community-tip-label">Groups inside</div>
+      <ul className="community-tip-rows">
+        {shape.composition.slice(0, 5).map((part) => (
+          <li className="community-tip-row" key={part.groupId}>
+            <span
+              className="community-tip-dot"
+              style={{ background: getGroupColor(part.groupId) }}
+              aria-hidden="true"
+            />
+            <span className="community-tip-row-name">
+              {getGroupAcronym(part.groupId, mandate)}
+            </span>
+            <span className="community-tip-row-count">{part.count}</span>
+            <span className="community-tip-row-note">
+              {Math.round(part.shareOfGroup * 100)}% of the group
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {countries.length > 0 && (
+        <>
+          <div className="community-tip-label">
+            {countries.length === 1
+              ? "Country"
+              : `Countries · ${countries.length}`}
+          </div>
+          <ul className="community-tip-rows">
+            {countries.slice(0, 4).map((entry) => (
+              <li className="community-tip-row" key={entry.country}>
+                <span className="community-tip-row-name community-tip-row-wide">
+                  {entry.country}
+                </span>
+                <span className="community-tip-row-count">{entry.count}</span>
+                <span className="community-tip-row-note">
+                  {Math.round(entry.share * 100)}%
+                </span>
+              </li>
+            ))}
+          </ul>
+          {countries.length > 4 && (
+            <p className="community-tip-foot community-tip-foot-tight">
+              and {countries.length - 4} more
+            </p>
+          )}
+        </>
+      )}
+
+      {shape.islands > 1 && (
+        <p className="community-tip-foot">
+          Drawn as {shape.islands} islands: its members sit in that many pockets
+          of the layout rather than in one.
+        </p>
+      )}
+    </div>
+  );
 }
 
 /**
@@ -429,6 +618,15 @@ export default function NetworkCanvas({
   // second on the full network, which has to happen off the click.
   const [communityData, setCommunityData] = useState(null);
   const [communitiesPending, setCommunitiesPending] = useState(false);
+  // {id, x, y} while the cursor is inside a community's outline. The mouse
+  // handler is installed once and never re-installed, so the outlines it
+  // hit-tests against have to reach it through a ref.
+  const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  const communityOverlayRef = useRef(null);
+  // Where each community's name was drawn, in layout coordinates, refreshed on
+  // every paint. Hovering the name is how you reach a community that is buried
+  // in a cloud of MEPs.
+  const communityLabelBoxesRef = useRef([]);
 
   // Defaults keep this component usable on its own if a caller ever drops the
   // prop; page.js always passes a complete object.
@@ -602,47 +800,74 @@ export default function NetworkCanvas({
   // geometry does not depend on the term and the acronyms do.
   const communityOverlay = useMemo(() => {
     if (!communityData || communityData.shapes.length === 0) return null;
-    return communityData.shapes.map((shape) => ({
+    const labels = labelCommunities(communityData.shapes, mandate);
+    return communityData.shapes.map((shape, index) => ({
       ...shape,
-      label: communityLabel(shape, mandate),
+      label: labels[index],
       countLabel: `${shape.size} MEP${shape.size === 1 ? "" : "s"}`,
     }));
   }, [communityData, mandate]);
 
+  // Smallest first: a community inside another one is only reachable if it is
+  // tested first, because the bigger outline covers every point of it.
+  useEffect(() => {
+    communityOverlayRef.current = communityOverlay
+      ? [...communityOverlay].sort((a, b) => a.size - b.size)
+      : null;
+    if (!communityOverlay) setHoveredCommunity(null);
+  }, [communityOverlay]);
+
+  const focusedCommunity = useMemo(() => {
+    if (!hoveredCommunity || !communityOverlay) return null;
+    return (
+      communityOverlay.find((community) => community.id === hoveredCommunity.id) ||
+      null
+    );
+  }, [hoveredCommunity, communityOverlay]);
+
   /**
-   * The figures under the switch, and the exception if there is one.
+   * Hovering a community asks "who is in this one?", so everyone else steps
+   * back while the question is open.
    *
-   * Both matter more than they look: a community that is counted and not
-   * drawn has to be accounted for somewhere, or the overlay quietly reports a
-   * smaller Parliament than the algorithm found.
+   * Expressed as a dim rather than as a new kind of fading, because the canvas
+   * already has one and a second one would be a second set of opacities to
+   * keep in agreement. When a dim is already set the two intersect: a country
+   * dim plus a community hover leaves that country's members of that
+   * community lit, which is the only reading that respects both controls.
+   */
+  const effectiveDim = useMemo(() => {
+    if (!focusedCommunity) return dim;
+    const members =
+      dim && dim.value
+        ? new Set(
+            (graphData?.nodes || [])
+              .filter(
+                (node) =>
+                  focusedCommunity.memberSet.has(node.id) &&
+                  isEmphasised(node, dim)
+              )
+              .map((node) => node.id)
+          )
+        : focusedCommunity.memberSet;
+    return { type: "members", value: `community-${focusedCommunity.id}`, members };
+  }, [focusedCommunity, dim, graphData]);
+
+  /**
+   * The figures under the switch.
+   *
+   * Two numbers and no more: how many communities the votes produced, and how
+   * often one of them turns out to be a political group. The second is the one
+   * that says whether the first is interesting.
    */
   const communityReadout = communitiesPending
     ? "Finding communities…"
     : !communityData
     ? "This network is too small to partition."
-    : [
-        `${communityData.count} communit${
-          communityData.count === 1 ? "y" : "ies"
-        }`,
-        communityData.shapes.length < communityData.count
-          ? `${communityData.shapes.length} outlined`
-          : null,
-        `${Math.round(
-          communityData.concordantShare * 100
-        )}% land with their own group`,
-      ]
-        .filter(Boolean)
-        .join(" · ");
-
-  const scatteredNote = useMemo(() => {
-    if (!communityData || communityData.scattered.length === 0) return "";
-    const names = communityData.scattered
-      .map((shape) => `${communityLabel(shape, mandate)} (${shape.size})`)
-      .join(", ");
-    return communityData.scattered.length === 1
-      ? `${names} is spread through another community rather than standing in a place of its own, so it is counted here and not outlined.`
-      : `${names} are spread through other communities rather than standing in places of their own, so they are counted here and not outlined.`;
-  }, [communityData, mandate]);
+    : `${communityData.count} communit${
+        communityData.count === 1 ? "y" : "ies"
+      } · ${Math.round(
+        communityData.concordantShare * 100
+      )}% land with their own group`;
 
   // Only needed to label the loyalty gradient's ends.
   const loyaltyRange = useMemo(() => {
@@ -702,6 +927,8 @@ export default function NetworkCanvas({
     ctx.translate(t.x, t.y);
     ctx.scale(t.k, t.k);
 
+    const labelBoxes = [];
+
     // Everything visual happens in drawScene, which the PNG export also calls.
     // Line widths are divided by effectivePixelRatio because the context is
     // scaled by it; Safari draws on a 1:1 canvas and needs a lower edge alpha
@@ -712,14 +939,17 @@ export default function NetworkCanvas({
       colorFor,
       selectedNode,
       widthMultiplier,
-      dim,
+      dim: effectiveDim,
       communities: communityOverlay,
+      communityFocusId: focusedCommunity ? focusedCommunity.id : null,
+      labelBoxes: labelBoxes,
       viewScale: t.k,
       lineWidthDivisor: effectivePixelRatio,
       baseEdgeAlpha: isSafari ? 0.05 : 0.3,
     });
 
     ctx.restore();
+    communityLabelBoxesRef.current = labelBoxes;
   }, [
     graphData,
     selectedNode,
@@ -728,8 +958,9 @@ export default function NetworkCanvas({
     drawnLinks,
     colorFor,
     widthMultiplier,
-    dim,
+    effectiveDim,
     communityOverlay,
+    focusedCommunity,
   ]);
 
   // Setup canvas (only once)
@@ -849,6 +1080,26 @@ export default function NetworkCanvas({
 
       const nodeSize = nodeRadiusFor(graphData.nodes.length);
 
+      // A community's name sits over everything, so it is tested before the
+      // MEPs underneath it.
+      const overlay = communityOverlayRef.current;
+      const labelled = overlay
+        ? communityLabelBoxesRef.current.find(
+            (box) =>
+              x >= box.left && x <= box.right && y >= box.top && y <= box.bottom
+          )
+        : null;
+      if (labelled) {
+        onNodeHover(null);
+        canvas.style.cursor = "grab";
+        setHoveredCommunity({
+          id: labelled.id,
+          x: event.clientX,
+          y: event.clientY,
+        });
+        return;
+      }
+
       // Find hovered node
       // Use a minimum hover radius in screen space (8 pixels) for better UX when zoomed
       const minHoverRadius = 8 / currentTransform.k; // Convert to data space
@@ -864,14 +1115,35 @@ export default function NetworkCanvas({
         onNodeHover(hovered);
         onHoverPositionChange({ x: event.clientX, y: event.clientY });
         canvas.style.cursor = "pointer";
-      } else {
-        onNodeHover(null);
-        canvas.style.cursor = "grab";
+        setHoveredCommunity(null);
+        return;
       }
+
+      onNodeHover(null);
+      canvas.style.cursor = "grab";
+
+      // No MEP under the cursor: is it inside a community? An MEP wins over a
+      // community's interior, because the outline covers hundreds of them and
+      // the specific answer beats the general one.
+      if (!overlay) {
+        setHoveredCommunity(null);
+        return;
+      }
+      // Smallest first, so a community sitting inside another one is reachable
+      // at all — the outline of the bigger one covers every point of it.
+      const found = overlay.find((community) =>
+        pointInRings(x, y, community.rings)
+      );
+      setHoveredCommunity(
+        found
+          ? { id: found.id, x: event.clientX, y: event.clientY }
+          : null
+      );
     };
 
     const handleMouseLeave = () => {
       onNodeHover(null);
+      setHoveredCommunity(null);
       canvas.style.cursor = "grab";
     };
 
@@ -1714,8 +1986,8 @@ export default function NetworkCanvas({
               plan is not an input. Every MEP has voted with every other, so the
               graph is complete and has nothing to separate until each MEP is
               cut back to their{communityData ? ` ${communityData.k}` : ""}{" "}
-              strongest partners; these outlines are what survives that.
-              {scatteredNote ? ` ${scatteredNote}` : ""}
+              strongest partners; these outlines are what survives that. Hover
+              one to see who is inside it.
             </p>
           </div>
 
@@ -1842,6 +2114,11 @@ export default function NetworkCanvas({
           )}
         </div>
       )}
+      <CommunityTooltip
+        shape={focusedCommunity}
+        position={hoveredCommunity}
+        mandate={mandate}
+      />
       <div
         className="network-canvas-tip"
         title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps"
