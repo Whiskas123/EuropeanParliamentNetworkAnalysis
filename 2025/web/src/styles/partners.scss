@@ -1,0 +1,242 @@
+// One group's partners across five terms, and who wins votes with whom.
+//
+// Shares the trends panel's drawing conventions rather than inventing a second
+// set: charts are drawn in real pixels (the component measures the panel and
+// makes that the viewBox width), the grid is a hairline, there is no axis
+// frame, and axis numbers take the sidebar's smallest type tier because they
+// are the same kind of mark as a rank or a unit.
+//
+// Where this panel differs, it differs on purpose. Its lines are coloured by
+// *political family*, using the group colours the canvas already uses, because
+// each line here is a party rather than a measure — the trends panel's blue /
+// grey / muted scale would say these six series were six statistics. The one
+// chart that is about change rather than party (the shift arrows) drops the
+// family colours entirely and uses the sidebar's red and green, since there a
+// colour has to carry direction and no mark can mean two things on one page.
+//
+// The controls are the sidebar's existing ones: .sb-sort for the form switch
+// (SegmentedToggle), and pressed-state chips built from the same 8px coloured
+// square that .leads-dot and .insights-swatch use for a political group.
+
+.partners-panel {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--sb-rule);
+}
+
+.partners-status {
+  padding: 8px 0;
+}
+
+// --- controls -------------------------------------------------------------
+
+.partners-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.partners-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.partners-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.partners-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border: 1px solid var(--sb-rule);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--sb-ink-soft);
+  font-size: var(--sb-fs-control);
+  font-family: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #c8ced6;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: 1px;
+  }
+
+  // The selected family. Filled rather than outlined, so which group the panel
+  // is about survives a glance at a screen full of chips.
+  &[aria-pressed="true"] {
+    background: var(--sb-ink);
+    border-color: var(--sb-ink);
+    color: #ffffff;
+  }
+}
+
+.partners-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  // Group colours run from yellow to black, and a pale square on white loses
+  // its edge; a hairline keeps every family's mark the same size.
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.partners-terms {
+  display: flex;
+  gap: 3px;
+}
+
+.partners-term {
+  padding: 3px 6px;
+  border: 1px solid var(--sb-rule);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--sb-faint);
+  font-size: var(--sb-fs-micro);
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: 1px;
+  }
+
+  &[aria-pressed="true"] {
+    background: var(--sb-rule-soft);
+    border-color: #c8ced6;
+    color: var(--sb-ink);
+    font-weight: 600;
+  }
+}
+
+// --- chart ----------------------------------------------------------------
+
+.partners-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.partners-grid {
+  stroke: var(--sb-rule-soft);
+  stroke-width: 1;
+}
+
+.partners-crosshair {
+  stroke: #c8ced6;
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+// Where the reader is standing, on the house profile. The same dark short tick
+// every RadialGauge uses for a reference value.
+.partners-seat {
+  stroke: #465060cc;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.partners-axis-label {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.partners-tick {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-muted);
+
+  // The term or family the canvas is currently showing.
+  &.current {
+    fill: var(--sb-ink);
+    font-weight: 600;
+  }
+}
+
+.partners-line-label {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-muted);
+  font-variant-numeric: tabular-nums;
+
+  &.current {
+    fill: var(--sb-ink);
+    font-weight: 600;
+  }
+}
+
+.partners-arrow-name {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-ink-soft);
+}
+
+// The change in points, at the end of each row. Takes the arrow's own colour
+// rather than the ink grey: it is the same fact stated twice, and splitting the
+// colour would make the number look like a separate measure.
+.partners-arrow-delta {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.partners-hit {
+  fill: transparent;
+  cursor: crosshair;
+}
+
+// --- legend and notes -----------------------------------------------------
+
+.partners-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 12px;
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.partners-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
+}
+
+.partners-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.partners-legend-value {
+  color: var(--sb-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.partners-legend-term {
+  color: var(--sb-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.partners-caveat {
+  margin: 8px 0 0;
+}

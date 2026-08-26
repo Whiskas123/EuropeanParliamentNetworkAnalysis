@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
 import MEPInfoPanel from "./MEPInfoPanel";
 import AgreementByGroup from "./AgreementByGroup";
+import CoalitionPanel from "./CoalitionPanel";
 import ClosestMEPs from "./ClosestMEPs";
 import CohesionHeatmap from "./CohesionHeatmap";
 import IntragroupCohesion from "./IntragroupCohesion";
@@ -11,6 +12,7 @@ import CountrySimilarity from "./CountrySimilarity";
 import GroupInfoPanel from "./GroupInfoPanel";
 import LoadingSpinner from "./LoadingSpinner";
 import CohesionInsights from "./CohesionInsights";
+import PartnerTrends from "./PartnerTrends";
 import TrendsPanel from "./TrendsPanel";
 import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
 import {
@@ -424,20 +426,45 @@ export default function Sidebar({
               baseline={baseline}
             />
           )}
+          {/* Last on the tab because it is the one panel here that does not
+              follow a country filter: a group's direction on a vote is its
+              members across the house. It says so itself rather than being
+              hidden, since the question it answers — who wins with whom — is
+              the one the panels above cannot reach at all. */}
+          <CoalitionPanel
+            mandate={mandate}
+            selectedCountry={selectedCountry}
+            selectedSubject={selectedSubject}
+          />
         </>
       );
     }
 
-    // History is one panel, so it wears no collapse chevron: opening the tab is
-    // the act that asks for the content, and a control that hides everything
-    // under it would leave the tab looking broken.
+    // Neither panel here wears a collapse chevron: opening the tab is the act
+    // that asks for the content, and a control that hides everything under it
+    // would leave the tab looking broken.
+    //
+    // The two are the same five terms read at two altitudes. The first plots
+    // the Parliament's averages, which is where its clearest story lives and
+    // also where the more pointed questions go to die — the between-groups line
+    // falls across the five terms, but drop the far right and the remaining
+    // pairs are flat, so the decline is one bloc leaving rather than a chamber
+    // polarising. The second plots the pairs themselves, which is the only
+    // level at which that is visible.
     return (
-      <TrendsPanel
-        mandate={mandate}
-        onMandateChange={onMandateChange}
-        selectedCountry={selectedCountry}
-        selectedSubject={selectedSubject}
-      />
+      <>
+        <TrendsPanel
+          mandate={mandate}
+          onMandateChange={onMandateChange}
+          selectedCountry={selectedCountry}
+          selectedSubject={selectedSubject}
+        />
+        <PartnerTrends
+          mandate={mandate}
+          selectedCountry={selectedCountry}
+          selectedSubject={selectedSubject}
+        />
+      </>
     );
   };
 

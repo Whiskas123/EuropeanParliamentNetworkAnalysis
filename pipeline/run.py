@@ -7,6 +7,7 @@
     python -m pipeline.run publish          # copy into the site
     python -m pipeline.run participation    # per-MEP vote counts -> the site
     python -m pipeline.run deviations       # distance from own group -> the site
+    python -m pipeline.run coalitions       # who wins votes together -> the site
     python -m pipeline.run layouts          # ForceAtlas2 positions (node)
     python -m pipeline.run verify           # check what is on disk for the site
     python -m pipeline.run classify         # label the "Others" residual with a model
@@ -18,13 +19,13 @@ import argparse
 import subprocess
 import sys
 
-from . import (build_networks, build_votes, config, deviations, llm_subjects,
-               participation, verify_site)
+from . import (build_networks, build_votes, coalitions, config, deviations,
+               llm_subjects, participation, verify_site)
 from .network import load_meps
 from .report import PipelineError, Report, atomic_write_json
 
 STEPS = ["votes", "networks", "compare", "publish", "participation",
-         "deviations", "layouts",
+         "deviations", "coalitions", "layouts",
          "verify"]
 
 # Deliberately outside `all`: it costs money, calls a model rather than an
@@ -211,6 +212,11 @@ def main(argv=None):
             # After publish, because it reproduces the participation filter the
             # published networks use and should describe the same membership.
             deviations.run(report, mandates, meps=load_meps())
+        if "coalitions" in steps:
+            # Reads data/final directly rather than the published networks:
+            # it classifies whole roll-calls, so the participation filter
+            # and the 0.6 edge cut both have nothing to say about it.
+            coalitions.run(report, mandates)
         if "layouts" in steps:
             if args.layout_mandates is not None:
                 layout_targets = [m for m in args.layout_mandates.split(",") if m]

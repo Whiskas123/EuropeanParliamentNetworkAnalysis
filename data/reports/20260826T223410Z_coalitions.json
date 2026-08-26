@@ -1,0 +1,86 @@
+{
+  "run": "coalitions",
+  "provenance": {
+    "python": "3.14.5",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-26T22:34:10.924704+00:00",
+    "seconds": 56.7,
+    "git_commit": "5982200e0962c11dc3aa4d0efa22339a9268b16f",
+    "git_dirty": true,
+    "raw_votes_bytes": 651231920,
+    "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
+    "raw_meps_bytes": 210840123,
+    "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
+  },
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "warnings": 0,
+    "failures": 0
+  },
+  "facts": {},
+  "steps": [
+    {
+      "name": "coalitions",
+      "facts": {
+        "mandate 6: decided votes classified": "5817 of 5838",
+        "mandate 6: dropped for an absent family": "16 (0.27%)",
+        "mandate 7: decided votes classified": "4355 of 4360",
+        "mandate 7: dropped for an absent family": "3 (0.07%)",
+        "mandate 8: decided votes classified": "11275 of 11286",
+        "mandate 8: dropped for an absent family": "0 (0.00%)",
+        "mandate 9: decided votes classified": "18816 of 18827",
+        "mandate 9: dropped for an absent family": "0 (0.00%)",
+        "mandate 10: decided votes classified": "4244 of 4245",
+        "mandate 10: dropped for an absent family": "0 (0.00%)",
+        "consensus votes, first term to last": "52.2% -> 26.6%",
+        "written": "coalitions.json (198 KB)"
+      },
+      "seconds": 56.6
+    }
+  ],
+  "checks": [
+    {
+      "name": "mandate 6: nearly every vote yields a coalition",
+      "ok": true,
+      "detail": "0.3% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
+      "name": "mandate 7: nearly every vote yields a coalition",
+      "ok": true,
+      "detail": "0.1% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
+      "name": "mandate 8: nearly every vote yields a coalition",
+      "ok": true,
+      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
+      "name": "mandate 9: nearly every vote yields a coalition",
+      "ok": true,
+      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
+      "name": "mandate 10: nearly every vote yields a coalition",
+      "ok": true,
+      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
+      "name": "consensus voting fell across the five terms",
+      "ok": true,
+      "detail": "consensus ran 52.2% in the first term and 26.6% in the last, so the site's headline no longer holds",
+      "fatal": false,
+      "step": "coalitions"
+    }
+  ]
+}

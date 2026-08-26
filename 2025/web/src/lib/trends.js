@@ -13,10 +13,12 @@
  * MEPs and the Parliament's own averages. It now follows the view, and keeps
  * the Parliament series as a faint reference behind it.
  *
- * Everything here is deliberately import-free: the derivation is a pure
- * function of `cohesionData`, so it can be replayed over the raw files by a
- * plain node script.
+ * The derivation is a pure function of `cohesionData` with no fetching and no
+ * globals, so it can be replayed over the raw files by a plain node script.
+ * Its one import, `families.js`, holds the same property.
  */
+
+import { familyMembers, familyPairs } from "./families.js";
 
 /** Group id used for MEPs who sit in no political group. */
 export const NON_ATTACHED = "NonAttached";
@@ -129,7 +131,18 @@ function groupPairs(intergroup) {
  * @returns {Object}
  */
 function missingTerm(term) {
-  return { ...term, missing: true, nodeCount: null, sessions: null, thin: false };
+  return {
+    ...term,
+    missing: true,
+    nodeCount: null,
+    sessions: null,
+    thin: false,
+    // Present but empty rather than absent: every reader of a row looks these
+    // up, and a gap in a chart is drawn from a row that exists and has nothing
+    // in it, not from a row that has to be guarded against first.
+    familyPairs: {},
+    familyMembers: {},
+  };
 }
 
 /**
@@ -181,6 +194,13 @@ export function summarizeTerm(mandate, cohesionData, nodeCount, sessions = null)
     withinGroup: mean(groups.map((item) => item.score)),
     crossGroup: mean(pairs.map((pair) => pair.score)),
     withinCountry: mean(countries.map((item) => item.score)),
+    // Every pair of political *families* — S&D rather than PSE-or-S&D, the far
+    // right as one line rather than five. The only form in which a series can
+    // cross a term boundary; see families.js for what the merge asserts.
+    familyPairs: familyPairs(cohesionData.intergroupCohesion),
+    familyMembers: familyMembers(
+      (cohesionData.intergroupCohesion || {}).groups || []
+    ),
     lowestPair,
     mostCohesiveGroup: rankedGroups[0] || null,
     leastCohesiveGroup: rankedGroups[rankedGroups.length - 1] || null,
