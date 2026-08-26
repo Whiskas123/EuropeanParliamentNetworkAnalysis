@@ -641,6 +641,11 @@ export function analyzeStructure(graphData, options = {}) {
       size: 0,
       counts: new Map(),
       countries: new Map(),
+      // groupId -> (country -> count). Where a community holds a slice of a
+      // group rather than the group, this is the table that says what the
+      // slice has in common: nine Renew members who are all German is a
+      // different fact from nine Renew members from nine countries.
+      groupCountries: new Map(),
       members: [],
     });
   }
@@ -653,6 +658,12 @@ export function analyzeStructure(graphData, options = {}) {
     community.size++;
     community.counts.set(groupId, (community.counts.get(groupId) || 0) + 1);
     community.countries.set(country, (community.countries.get(country) || 0) + 1);
+    let perCountry = community.groupCountries.get(groupId);
+    if (!perCountry) {
+      perCountry = new Map();
+      community.groupCountries.set(groupId, perCountry);
+    }
+    perCountry.set(country, (perCountry.get(country) || 0) + 1);
     community.members.push(nodes[i].id);
     groupSizes.set(groupId, (groupSizes.get(groupId) || 0) + 1);
     countrySizes.set(country, (countrySizes.get(country) || 0) + 1);
@@ -669,6 +680,15 @@ export function analyzeStructure(graphData, options = {}) {
         // a group, and neither number means much without the other.
         shareOfGroup: count / (groupSizes.get(groupId) || 1),
         groupTotal: groupSizes.get(groupId) || count,
+        countries: Array.from(
+          (community.groupCountries.get(groupId) || new Map()).entries()
+        )
+          .map(([country, inGroup]) => ({
+            country,
+            count: inGroup,
+            share: inGroup / count,
+          }))
+          .sort((a, b) => b.count - a.count),
       }))
       .sort((a, b) => b.count - a.count);
     const countries = Array.from(community.countries.entries())

@@ -25,6 +25,7 @@ import {
   describeCommunity,
   describeDelegations,
   describeGeography,
+  describeOrigin,
   labelCommunities,
   stackLabels,
 } from "../lib/communityShapes";
@@ -475,23 +476,39 @@ function CommunityTooltip({ shape, position, mandate }) {
 
       <div className="community-tip-label">Groups inside</div>
       <ul className="community-tip-rows">
-        {shape.composition.slice(0, 5).map((part) => (
-          <li className="community-tip-row" key={part.groupId}>
-            <span
-              className="community-tip-dot"
-              style={{ background: getGroupColor(part.groupId) }}
-              aria-hidden="true"
-            />
-            <span className="community-tip-row-name">
-              {getGroupAcronym(part.groupId, mandate)}
-            </span>
-            <span className="community-tip-row-count">{part.count}</span>
-            <span className="community-tip-row-note">
-              {Math.round(part.shareOfGroup * 100)}% of the group
-            </span>
-          </li>
-        ))}
+        {shape.composition.slice(0, 5).map((part) => {
+          // What the members of this group inside this community have in
+          // common. On a community that is 80% EPP, the nine Renew members
+          // turning out to be all German is the reason the community exists.
+          const origin = describeOrigin(part.countries, part.count);
+          return (
+            <li className="community-tip-group" key={part.groupId}>
+              <span className="community-tip-row">
+                <span
+                  className="community-tip-dot"
+                  style={{ background: getGroupColor(part.groupId) }}
+                  aria-hidden="true"
+                />
+                <span className="community-tip-row-name">
+                  {getGroupAcronym(part.groupId, mandate)}
+                </span>
+                <span className="community-tip-row-count">{part.count}</span>
+                <span className="community-tip-row-note">
+                  {Math.round(part.shareOfGroup * 100)}% of the group
+                </span>
+              </span>
+              {origin && (
+                <span className="community-tip-origin">{origin}</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
+      {shape.composition.length > 5 && (
+        <p className="community-tip-foot community-tip-foot-tight">
+          and {shape.composition.length - 5} more
+        </p>
+      )}
 
       {/* A country view has one country, and a table of it is a table of the
           size that is already in the header. */}
@@ -889,11 +906,22 @@ export default function NetworkCanvas({
     ? "Finding communities…"
     : !communityData
     ? "This network is too small to partition."
-    : `${communityData.count} communit${
-        communityData.count === 1 ? "y" : "ies"
-      } · ${Math.round(
-        communityData.concordantShare * 100
-      )}% land with their own group`;
+    : [
+        `${communityData.count} communit${
+          communityData.count === 1 ? "y" : "ies"
+        }`,
+        // Communities of one are counted here and not drawn: on a policy area
+        // there can be ten of them, and the number is the finding — ten MEPs
+        // who vote like nobody else on that subject.
+        communityData.singletons > 0
+          ? `${communityData.singletons} of them one MEP, not outlined`
+          : null,
+        `${Math.round(
+          communityData.concordantShare * 100
+        )}% land with their own group`,
+      ]
+        .filter(Boolean)
+        .join(" · ");
 
   // Only needed to label the loyalty gradient's ends.
   const loyaltyRange = useMemo(() => {

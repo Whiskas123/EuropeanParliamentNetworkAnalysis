@@ -142,6 +142,40 @@ const REGIONS = new Map(
   })
 );
 
+/**
+ * Groupings of countries that people already have a word for.
+ *
+ * Sub-regions are too coarse for the thing worth noticing. When the seven ECR
+ * members inside an otherwise EPP community turn out to be Danish, Swedish and
+ * Finnish, "Northern Europe" is true and flat — it also covers Ireland and the
+ * Baltics — while "the Nordics" is the sentence a reader would say out loud.
+ * These are named groupings in ordinary political use, not clusters found in
+ * the data, and they are only ever used to describe a set of countries that is
+ * already wholly inside one of them.
+ */
+const COUNTRY_CLUSTERS = [
+  { name: "the Nordics", members: ["Denmark", "Finland", "Sweden"] },
+  { name: "the Baltics", members: ["Estonia", "Latvia", "Lithuania"] },
+  { name: "Benelux", members: ["Belgium", "Netherlands", "Luxembourg"] },
+  {
+    name: "the Visegrád four",
+    members: ["Czechia", "Hungary", "Poland", "Slovakia"],
+  },
+  { name: "Iberia", members: ["Portugal", "Spain"] },
+];
+
+/**
+ * A community of one is a fact, and not a shape.
+ *
+ * Subject networks produce them in numbers — term 9's Agriculture votes give
+ * nineteen communities, ten of which are a single MEP. Each of those would be
+ * a dashed circle round one dot with a label saying "1 MEP", which is ten
+ * labels' worth of clutter to say what the dot already says. They are counted
+ * in the panel instead, where the number itself is the interesting part: ten
+ * MEPs who vote like nobody else on farming.
+ */
+const MIN_OUTLINE_SIZE = 2;
+
 /** Colour for a community with no group in it at all; should not happen. */
 export const UNKNOWN_COMMUNITY_COLOR = "#5a5a63";
 
@@ -507,9 +541,14 @@ function computeCommunityShapes(graphData) {
   });
 
   const shapes = [];
+  let singletons = 0;
   analysis.communities.forEach((community) => {
     const memberIds = community.members.filter((id) => gridOf.has(id));
     if (memberIds.length === 0) return;
+    if (memberIds.length < MIN_OUTLINE_SIZE) {
+      singletons++;
+      return;
+    }
     const memberSet = new Set(memberIds);
     const members = memberIds.map((id) => gridOf.get(id));
     const others = [];
@@ -572,6 +611,7 @@ function computeCommunityShapes(graphData) {
     ari: analysis.agreement ? analysis.agreement.ari : null,
     k: analysis.preprocessing.k,
     nodeCount: analysis.preprocessing.nodeCount,
+    singletons,
     oneCountry,
   };
 }
@@ -884,6 +924,46 @@ export function stackLabels(boxes, gap = 0) {
   return result;
 }
 
+/**
+ * Where a set of members comes from, in a few words, or nothing.
+ *
+ * Used on each group inside a community — the question "what do these nine
+ * Renew members have in common that the rest of Renew does not" has a one-word
+ * answer surprisingly often, and it is always a country or a corner of Europe.
+ * Returns "" when there is no such answer, because a group drawn from six
+ * countries in no particular pattern should not be given a story.
+ *
+ * @param {Array<{country, count}>} countries - largest first
+ * @param {number} total - how many members those counts add up to
+ */
+export function describeOrigin(countries, total) {
+  const entries = (countries || []).filter((entry) => entry.count > 0);
+  if (entries.length === 0 || total <= 0) return "";
+
+  if (entries.length === 1) {
+    return total > 1 ? `all from ${entries[0].country}` : `from ${entries[0].country}`;
+  }
+
+  const present = entries.map((entry) => entry.country);
+  const cluster = COUNTRY_CLUSTERS.find((candidate) =>
+    present.every((country) => candidate.members.includes(country))
+  );
+  if (cluster) return `all from ${cluster.name}`;
+
+  const top = entries[0];
+  if (top.count / total >= 0.8) {
+    return `mostly ${top.country} (${top.count} of ${total})`;
+  }
+
+  const region = regionsOf(entries)[0];
+  if (region && region.region !== "Elsewhere" && region.share >= 0.8) {
+    return region.share >= 0.999
+      ? `all from ${region.region}`
+      : `mostly ${region.region}`;
+  }
+  return "";
+}
+
 /** Groups that are not a political group: an MEP is in one by not being in one. */
 const NON_GROUPS = new Set(["NonAttached", "NI", "Non-attached", "Unknown"]);
 
@@ -919,17 +999,29 @@ export function describeCommunity(shape, mandate) {
   const name = groupPhrase(shape.dominantGroup, mandate);
   const first = shape.composition[0];
 
-  // Two or more groups voting closely enough that the algorithm merged them.
+  // A plurality rather than a majority. Two shapes of that: several groups
+  // the algorithm could not separate, or one group diluted by a long tail of
+  // ones and twos. Naming a single group after the words "no single group" is
+  // the sentence that gave this its second branch.
   if (shape.dominantShare < 0.75) {
-    const parts = shape.composition
-      .filter((part) => part.share >= 0.15)
-      .map(
-        (part) =>
-          `${getGroupAcronym(part.groupId, mandate)} ${Math.round(
-            part.share * 100
-          )}%`
-      );
-    return `No single group — ${parts.join(", ")}. They vote together often enough that the algorithm could not separate them.`;
+    const parts = shape.composition.filter((part) => part.share >= 0.15);
+    const named = parts.map(
+      (part) =>
+        `${getGroupAcronym(part.groupId, mandate)} ${Math.round(
+          part.share * 100
+        )}%`
+    );
+    if (parts.length > 1) {
+      return `No single group — ${named.join(
+        ", "
+      )}. They vote together often enough that the algorithm could not separate them.`;
+    }
+    const tail = shape.composition.length - 1;
+    return `Mostly ${name} — ${Math.round(
+      shape.dominantShare * 100
+    )}% of it, with the rest spread across ${tail} other group${
+      tail === 1 ? "" : "s"
+    }.`;
   }
 
   if (NON_GROUPS.has(shape.dominantGroup)) {
@@ -1045,13 +1137,6 @@ export function describeDelegations(shape) {
 }
 
 /**
- * What to write on a community: the groups inside it, largest first.
- *
- * Acronyms only, and at most two of them. The label sits on a canvas already
- * carrying seven hundred nodes; a full group name would be a wall of text over
- * the picture, and the composition is readable from the node colours anyway.
- */
-/**
  * Labels for a whole set of communities at once, disambiguated.
  *
  * Two communities of the same group get the same name from communityLabel,
@@ -1066,10 +1151,34 @@ export function labelCommunities(shapes, mandate) {
   return labels.map((label, index) => {
     if ((counts.get(label) || 0) < 2) return label;
     const top = shapes[index].countries && shapes[index].countries[0];
-    return top && top.share >= 0.3 ? `${label} · ${top.country}` : label;
+    if (!top || top.share < 0.3) return label;
+    // The name may already carry that country, from the national-splinter
+    // rule. "RE · Romania · Romania" is what happens when it does.
+    return label.includes(`· ${top.country}`)
+      ? label
+      : `${label} · ${top.country}`;
   });
 }
 
+/**
+ * What to write on a community: the groups inside it, largest first.
+ *
+ * Acronyms only, and at most two of them. The label sits on a canvas already
+ * carrying seven hundred nodes; a full group name would be a wall of text over
+ * the picture, and the composition is readable from the node colours anyway.
+ *
+ * The "+ 2" on the end counts *groups*, not members. It counted members first
+ * — "EPP + 8 others" — and on a name whose other half is a list of political
+ * groups, that is read as eight more groups; there is no way to read it
+ * otherwise. As a count of groups it says the one thing the name would
+ * otherwise hide, that this community is not only the group it is named after,
+ * and the head count that goes with it is in the tooltip where there is room
+ * to break it down.
+ *
+ * A name carrying a country can still hold members from elsewhere — the
+ * country is named at 90% — and the number does not try to cover that too.
+ * One kind of count in one place.
+ */
 export function communityLabel(shape, mandate) {
   if (!shape) return "";
 
@@ -1085,31 +1194,6 @@ export function communityLabel(shape, mandate) {
     ? getGroupAcronym(shape.dominantGroup, mandate)
     : "Mixed";
 
-  return `${head}${offTitleCount(shape, country, named)}`;
-}
-
-/**
- * The "+ 4 others" on the end of a name, or nothing.
- *
- * A community called EPP is nearly always not only the EPP — four Renew
- * members and a non-attached MEP who vote with it are exactly the finding
- * worth having, and a title that hides them is the wrong kind of tidy. So the
- * name says how many members it does not describe: the ones outside the groups
- * it names, or outside the country it names, whichever is the larger miss.
- *
- * Larger rather than the sum, because the two overlap and no honest count of
- * "people this title does not cover" can be worked out from the two summaries
- * alone. It is a floor, and a floor is the safe direction to be wrong in for a
- * number whose whole job is to stop the title overclaiming.
- */
-function offTitleCount(shape, country, named) {
-  const inNamedGroups = named.reduce((sum, part) => sum + part.count, 0);
-  const outsideGroups = named.length > 0 ? shape.size - inNamedGroups : 0;
-  const countryEntry = country
-    ? (shape.countries || []).find((entry) => entry.country === country)
-    : null;
-  const outsideCountry = countryEntry ? shape.size - countryEntry.count : 0;
-  const off = Math.max(outsideGroups, outsideCountry);
-  if (off <= 0) return "";
-  return ` + ${off} other${off === 1 ? "" : "s"}`;
+  const others = Math.max(0, (shape.composition || []).length - named.length);
+  return others > 0 ? `${head} + ${others}` : head;
 }
