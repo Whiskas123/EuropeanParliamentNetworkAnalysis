@@ -23,6 +23,14 @@ export const DEFAULT_VIEW = {
   dim: null,
   /** Draw the detected communities as outlines over the network. */
   communities: false,
+  /**
+   * How many partners each MEP keeps when the graph is thinned, or null for
+   * the automatic round(sqrt(n)). It decides how many communities there are,
+   * so a link that does not carry it opens a different picture.
+   */
+  communityK: null,
+  /** Share of a community its outline has to enclose. See communityShapes.js. */
+  communityCoverage: 0.85,
   /** MEP id to select, if any. */
   mep: null,
   /** Political group to open the group panel on, if any. */
@@ -40,6 +48,10 @@ const KEYS = {
   colorMode: "k",
   dim: "d",
   communities: "u",
+  // "k" is already the colour mode, and these two only mean anything with
+  // "u" set. Short because the whole string may end up as a printed QR code.
+  communityK: "j",
+  communityCoverage: "v",
   mep: "n",
   group: "g",
 };
@@ -71,6 +83,12 @@ export function encodeView(view) {
   put("edgeWidth", view.edgeWidth, DEFAULT_VIEW.edgeWidth);
   put("colorMode", view.colorMode, DEFAULT_VIEW.colorMode);
   if (view.communities) params.set(KEYS.communities, "1");
+  put("communityK", view.communityK, null);
+  put(
+    "communityCoverage",
+    view.communityCoverage,
+    DEFAULT_VIEW.communityCoverage
+  );
   put("mep", view.mep, null);
   put("group", view.group, null);
   if (view.dim && view.dim.value) {
@@ -131,6 +149,24 @@ export function decodeView(query) {
   }
 
   view.communities = params.get(KEYS.communities) === "1";
+
+  const communityK = params.get(KEYS.communityK);
+  if (communityK !== null) {
+    // Bounds are the library's business and depend on the network, which is
+    // not loaded yet; this only rejects what could never be a k at all.
+    const n = parseInt(communityK, 10);
+    if (Number.isFinite(n) && n >= 2 && n <= 200) view.communityK = n;
+  }
+
+  const coverage = params.get(KEYS.communityCoverage);
+  if (coverage !== null) {
+    view.communityCoverage = clamp(
+      coverage,
+      0.5,
+      0.98,
+      DEFAULT_VIEW.communityCoverage
+    );
+  }
 
   const mep = params.get(KEYS.mep);
   if (mep) view.mep = mep;
