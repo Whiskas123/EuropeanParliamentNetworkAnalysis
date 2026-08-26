@@ -6,7 +6,7 @@ import {
   getGroupDisplayName,
   getSubjectEmoji,
 } from "../lib/utils.js";
-import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import RadialGauge, { RadialGrid } from "./RadialGauge";
 import GroupDeviation, { useDeviationFile } from "./GroupDeviation";
 
 export default function SimilarityScores({
@@ -394,7 +394,7 @@ export default function SimilarityScores({
                       from 16% to 98% — 28% of these figures in the dataset are
                       under 50%, so a 50% floor would blank a quarter of the
                       dials. */}
-                  <RadialScaleNote floor={0} />
+             
                   <RadialGrid>
                     {displayAgreementScores
                       // The non-attached are not a group, so agreement "with"

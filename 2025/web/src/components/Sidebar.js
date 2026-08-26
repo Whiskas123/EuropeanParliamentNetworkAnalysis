@@ -306,8 +306,7 @@ export default function Sidebar({
                 <span className="sidebar-tip-line">
                   Abstentions are not among them: they say nothing about who
                   agrees with whom, so they are left out of every figure on this
-                  page. A country or policy area changes which votes are
-                  counted, never who cast them.
+                  page.
                 </span>
               </span>
             </span>

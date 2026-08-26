@@ -9,7 +9,7 @@ import {
   getGroupFamily,
   getSubjectEmoji,
 } from "../lib/utils.js";
-import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import RadialGauge, { RadialGrid } from "./RadialGauge";
 
 export default function GroupInfoPanel({
   groupId,
@@ -498,7 +498,7 @@ export default function GroupInfoPanel({
                 className="group-subject-scores-list"
                 ref={subjectScoresListRef}
               >
-                <RadialScaleNote />
+              
                 <RadialGrid>
                   {sortedSubjectScores.map((item) => (
                     <RadialGauge

@@ -257,21 +257,4 @@ export function RadialGrid({ columns = 4, children, className = "" }) {
   );
 }
 
-/**
- * The line above a grid that says what the ring means.
- *
- * Without it the crop is invisible: a reader sees a ring three-quarters full
- * and reads it as 75%. One sentence, once per grid.
- */
-export function RadialScaleNote({ hasBaseline = false, floor = RADIAL_FLOOR }) {
-  return (
-    <div className="radial-scale-note">
-      {floor > 0
-        ? `Rings fill from ${
-            floor * 100
-          }% — where MEPs agree as often as not — to 100%.`
-        : "Rings fill from 0% to 100%."}
-      {hasBaseline ? " The notch marks the baseline." : ""}
-    </div>
-  );
-}
+

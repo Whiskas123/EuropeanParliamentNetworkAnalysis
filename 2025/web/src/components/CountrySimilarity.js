@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CountryFlag } from "../lib/utils.js";
-import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import RadialGauge, { RadialGrid } from "./RadialGauge";
 import SegmentedToggle, { ORDER_OPTIONS } from "./SegmentedToggle";
 
 // Countries have no colour of their own the way political groups do, so every
@@ -98,13 +98,6 @@ export default function CountrySimilarity({
         )}
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
-        <RadialScaleNote hasBaseline={comparable} />
-        {comparable && <SegmentedToggle
-            value={sortBy}
-            onChange={setSortBy}
-            options={ORDER_OPTIONS}
-            label="Order"
-          />}
         <RadialGrid>
           {rows.map((item) => (
             <RadialGauge

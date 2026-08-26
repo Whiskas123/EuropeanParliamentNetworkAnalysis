@@ -2196,9 +2196,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={handleRotate}
-          data-tooltip={`Rotate 45° — now ${Math.round(
-            (rotation * 180) / Math.PI
-          )}° from the layout`}
+          data-tooltip={`Rotate 45°`}
           aria-label="Rotate the network 45 degrees"
           disabled={!graphData}
         >
@@ -2221,8 +2219,8 @@ export default function NetworkCanvas({
           onClick={() => updateSettings({ communities: !showCommunities })}
           data-tooltip={
             showCommunities
-              ? "Community outlines — hide them"
-              : "Community outlines — draw them"
+              ? "Community outlines"
+              : "Community outlines"
           }
           aria-label="Community outlines"
           aria-pressed={showCommunities}
@@ -2249,7 +2247,7 @@ export default function NetworkCanvas({
         <button
           className="network-zoom-button"
           onClick={() => setShowDisplayPanel((open) => !open)}
-          data-tooltip="Display settings — colour, edge cutoff, width, dim"
+          data-tooltip="Display settings"
           aria-label="Display settings"
           aria-expanded={showDisplayPanel}
           aria-pressed={showDisplayPanel}
@@ -2301,7 +2299,7 @@ export default function NetworkCanvas({
           <button
             className="network-zoom-button"
             onClick={handleExportSVG}
-            data-tooltip="Export as SVG — vector, for print"
+            data-tooltip="Export as SVG"
             aria-label="Export Network as SVG"
             disabled={!graphData || !canvasReady}
           >

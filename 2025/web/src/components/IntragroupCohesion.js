@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getGroupAcronym, getGroupDisplayName } from "../lib/utils.js";
-import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import RadialGauge, { RadialGrid } from "./RadialGauge";
 import SegmentedToggle, { ORDER_OPTIONS } from "./SegmentedToggle";
 
 export default function IntragroupCohesion({
@@ -104,7 +104,7 @@ export default function IntragroupCohesion({
         )}
       </div>
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
-        <RadialScaleNote hasBaseline={comparable} />
+        
         {comparable && <SegmentedToggle
             value={sortBy}
             onChange={setSortBy}

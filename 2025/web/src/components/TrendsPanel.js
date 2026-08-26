@@ -969,10 +969,7 @@ export default function TrendsPanel({
             </div>
           )}
 
-          <p className="trends-axis-note">
-            The scale starts at {Math.round(geometry.domain[0] * 100)}%, not zero —
-            every line would otherwise sit in the same flat band.
-          </p>
+
 
           {/* What the reader has to know before quoting any of it: which
               points are thin, and which terms are not here. */}
