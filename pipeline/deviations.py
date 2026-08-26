@@ -205,6 +205,54 @@ def country_of_mep(mep_ids, n_votes, meps):
     return out, names
 
 
+# A national party is not a sample of anything, it is the whole of the thing,
+# so no size floor applies: a group with one member from a country still gets a
+# dial, because "how do you sit with the one Italian Green" is a real question
+# about a real person and the panel's reader asked for it.
+#
+# The arithmetic still needs one other member present to have a balance at all.
+# That has two consequences worth knowing rather than hiding: the sole member of
+# a national party gets no dial for their *own* party - there is nobody to agree
+# with - and gets nothing at all in this view, because the reference is that
+# same party and there is no average of one to differ from.
+MIN_CELL_TARGET_PEERS = 1
+MIN_CELL_REFERENCE_PEERS = 1
+
+
+def country_group_cells(group_index, country_index, group_names, country_names):
+    """Bloc index per (MEP, vote) for each (country, political group) cell.
+
+    The Italian ECR is a bloc in exactly the sense a group or a delegation is: a
+    set of MEPs with a balance on a vote. Built in the shape `group_at_vote`
+    returns so the same arithmetic runs over it unchanged, and named by the
+    (country, group) pair rather than a string, because nothing downstream
+    should have to parse a separator back apart.
+
+    Cells whose group is Non-Attached are never built. The Non-Attached are not
+    a bloc nationally for the same reason they are not one in the chamber.
+    """
+    n_groups = len(group_names)
+    valid = (group_index >= 0) & (country_index >= 0)
+    for gi, name in enumerate(group_names):
+        if name in NOT_A_GROUP:
+            valid &= group_index != gi
+    combined = np.where(
+        valid, country_index.astype(np.int32) * n_groups + group_index, -1
+    )
+
+    names = []
+    out = np.full(combined.shape, -1, dtype=np.int16)
+    for code in np.unique(combined):
+        code = int(code)
+        if code < 0:
+            continue
+        out[combined == code] = len(names)
+        names.append(
+            (country_names[code // n_groups], group_names[code % n_groups])
+        )
+    return out, names
+
+
 def kept_for_view(counts, total_votes, is_subject):
     """The participation filter, matching what the published networks used.
 
@@ -241,7 +289,8 @@ def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
 
     `rows` are the matrix rows this view covers - a whole term, or one subject.
     Returns ({column index: (reference bloc, votes cast, votes used,
-    {bloc: share})}, {reference bloc: {bloc: share}}, worst excess).
+    {bloc: share}, {bloc: votes behind that share})},
+    {reference bloc: {bloc: share}}, worst excess, dropped).
 
     The bloc is a political group by default. Pass a country membership matrix
     instead and the same arithmetic answers the national question, which is the
@@ -436,7 +485,7 @@ def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
         base = level_index[reference_index, usable]
         agreement = normalise(diff_index + base)
 
-        values = {}
+        values, sample = {}, {}
         for g, a in zip(columns, agreement):
             if not np.isfinite(a):
                 continue
@@ -445,6 +494,12 @@ def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
                 continue
             excess = max(excess, float(a) - 1, float(-a))
             values[group_names[g]] = round(float(min(max(a, 0.0), 1.0)), 4)
+            # The votes this one figure rests on, which is not the view's
+            # `used`: that counts any bloc the MEP could be compared against,
+            # and a national party is a much shorter run of votes than the
+            # chamber is. A dial captioned with the wrong one is a true number
+            # that misleads.
+            sample[group_names[g]] = int(dev_n[mep, g])
         if not values:
             continue
 
@@ -453,12 +508,14 @@ def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
             int(counts[kept[mep]]),
             int(votes_used[mep]),
             values,
+            sample,
         )
     return out, levels, excess, dropped
 
 
 def build_payload(mandate, subjects, per_view, per_view_levels, node_groups,
-                  targets, national=None, national_levels=None):
+                  targets, national=None, national_levels=None,
+                  national_groups=None, national_group_levels=None):
     """One file per term, shaped like `participation.py`'s."""
     subject_index = {name: i for i, name in enumerate(subjects)}
 
@@ -467,7 +524,7 @@ def build_payload(mandate, subjects, per_view, per_view_levels, node_groups,
 
     meps = {}
     for view, results in per_view.items():
-        for mep_id, (reference, votes, used, values) in results.items():
+        for mep_id, (reference, votes, used, values, _) in results.items():
             entry = meps.setdefault(
                 mep_id,
                 {"group": reference, "labelGroup": node_groups.get(mep_id),
@@ -493,6 +550,26 @@ def build_payload(mandate, subjects, per_view, per_view_levels, node_groups,
             if block is not None:
                 block["nat"] = share
                 entry["country"] = country
+
+    # And the same MEP against each political group *of their own country*.
+    # `natgrp` is aligned to `groups` exactly as `agr` is, so a reader holds one
+    # ordering for the whole file; `natgrpN` is the votes behind each figure,
+    # which is not the block's `used` and is usually far smaller.
+    for view, by_mep in (national_groups or {}).items():
+        key = "all" if view is None else str(subject_index[view])
+        for mep_id, (country, reference, values, sample) in by_mep.items():
+            entry = meps.get(mep_id)
+            if entry is None:
+                continue
+            block = entry["all"] if key == "all" else entry["bySubject"].get(key)
+            if block is None:
+                continue
+            block["natgrp"] = row(values)
+            block["natgrpN"] = [sample.get(g) for g in targets]
+            # Which row of nationalGroupLevels[view][country] these are to be
+            # read against; see the note where this is built.
+            block["natgrpRef"] = reference
+            entry["country"] = country
 
     # The level each group itself sat at, per view. The panel draws these as the
     # baseline notch, so a reader sees where the MEP is *and* where their group
@@ -521,6 +598,22 @@ def build_payload(mandate, subjects, per_view, per_view_levels, node_groups,
         "levels": levels,
         # Each delegation's own internal level, per view: the notch the national
         # dial is read against, exactly as `levels` is for the group dials.
+        # The notch under each national-group dial: what a member of this
+        # reference group typically manages with that group of that country,
+        # over the same votes the deviations were measured on. Keyed
+        # view -> country -> reference group, and each value is a row aligned
+        # to `groups`, so the panel indexes it the same way it indexes `agr`.
+        "nationalGroupLevels": {
+            ("all" if view is None else str(subject_index[view])): {
+                country: {
+                    reference: row(values)
+                    for reference, values in by_reference.items()
+                }
+                for country, by_reference in by_country.items()
+            }
+            for view, by_country in (national_group_levels or {}).items()
+            if by_country
+        },
         "nationalLevels": {
             ("all" if view is None else str(subject_index[view])): values
             for view, values in (national_levels or {}).items()
@@ -607,11 +700,12 @@ def run(report, mandates=None, meps=None):
         country_index, country_names = country_of_mep(
             builder.mep_ids, len(builder.vote_ids), meps
         )
-        national, national_levels = {}, {}
-        for view, view_rows in [(None, list(range(len(builder.vote_ids))))] + [
+        views = [(None, list(range(len(builder.vote_ids))))] + [
             (s, subject_rows[s]) for s in subjects
             if len(subject_rows[s]) >= config.MIN_SUBJECT_VOTES
-        ]:
+        ]
+        national, national_levels = {}, {}
+        for view, view_rows in views:
             result, levels_here, _, _ = deviations_for_view(
                 matrix, view_rows, country_index, country_names,
                 is_subject=view is not None,
@@ -627,7 +721,7 @@ def run(report, mandates=None, meps=None):
             # has any use for.
             national[view] = {
                 builder.mep_ids[column]: (own, values[own])
-                for column, (own, _, _, values) in result.items()
+                for column, (own, _, _, values, _sample) in result.items()
                 if own in values
             }
             national_levels[view] = {
@@ -635,6 +729,106 @@ def run(report, mandates=None, meps=None):
                 for country, values in levels_here.items()
                 if values.get(country) is not None
             }
+
+        # The same question one step finer: not "how do you sit with your
+        # compatriots" but "how do you sit with each *group* of your
+        # compatriots". Both the targets and the reference are (country, group)
+        # cells, so an Italian ECR member is measured against the *Italian* ECR
+        # and not against ECR at large - which is what a reader who has opened
+        # the Italy network is asking, and the only reference that answers it.
+        #
+        # That choice makes the whole pass decompose by country: an MEP's
+        # reference peers and every target kept for them are compatriots, so
+        # nothing crosses a border and each country can be run on its own
+        # columns. Which is also what makes it cheap - one call over Italy's 76
+        # MEPs and its handful of cells, rather than one over 700 MEPs and
+        # every cell in the Union.
+        cell_index, cell_names = country_group_cells(
+            group_index, country_index, group_names, country_names
+        )
+        report.fact(f"mandate {mandate}: national group cells", len(cell_names))
+
+        columns_by_country = defaultdict(list)
+        for col in range(len(builder.mep_ids)):
+            place = int(country_index[col, 0])
+            if place >= 0:
+                columns_by_country[country_names[place]].append(col)
+
+        national_groups, national_group_levels = {}, {}
+        cell_dropped, cell_published = 0, 0
+        for country, columns in sorted(columns_by_country.items()):
+            columns = np.array(columns)
+            # This country's own slice of the matrix and of the cell index. The
+            # participation filter inside is per MEP against the view's own
+            # vote count, so narrowing the columns does not change who passes
+            # it - only how much work the pass does.
+            sub_matrix = matrix[:, columns]
+            sub_cells = cell_index[columns]
+            keep = sorted({
+                int(c) for c in np.unique(sub_cells) if c >= 0
+            })
+            if len(keep) < 2:
+                # One party, or none: there is nothing to sit beside.
+                continue
+            remap = {old: new for new, old in enumerate(keep)}
+            local_index = np.full(sub_cells.shape, -1, dtype=np.int16)
+            for old, new in remap.items():
+                local_index[sub_cells == old] = new
+            local_names = [cell_names[old][1] for old in keep]
+
+            for view, view_rows in views:
+                result, levels_here, _, view_dropped = deviations_for_view(
+                    sub_matrix, view_rows, local_index, local_names,
+                    is_subject=view is not None,
+                    not_a_bloc=set(),
+                    min_target_peers=MIN_CELL_TARGET_PEERS,
+                    min_reference_peers=MIN_CELL_REFERENCE_PEERS,
+                )
+                cell_dropped += view_dropped
+                if not result:
+                    continue
+
+                # `used` from the view counts votes usable against any of this
+                # country's cells, so it says nothing about the sample under
+                # one dial. The per-cell count does, and a cell below MIN_VOTES
+                # is dropped for the same reason that floor exists at all.
+                by_mep = national_groups.setdefault(view, {})
+                for column, (reference, _, _, values, sample) in result.items():
+                    mep_id = builder.mep_ids[int(columns[column])]
+                    mine = {
+                        group: share
+                        for group, share in values.items()
+                        if sample[group] >= MIN_VOTES
+                    }
+                    if not mine:
+                        continue
+                    # The reference travels with the block rather than being
+                    # inferred from the MEP's term-wide group later. They are
+                    # not always the same: a member who crossed the floor is
+                    # measured against whichever national party they sat in for
+                    # most of *this view's* votes, so on one policy area their
+                    # notch is a row the term-wide group does not name. Reading
+                    # the wrong row silently loses the notch - 144 figures
+                    # across terms 7 to 9 did exactly that.
+                    by_mep[mep_id] = (
+                        country,
+                        reference,
+                        mine,
+                        {group: sample[group] for group in mine},
+                    )
+                    cell_published += len(mine)
+                if not by_mep:
+                    national_groups.pop(view, None)
+
+                # The notch under each dial: what a typical member of the
+                # reader's own national party manages with that other national
+                # party. Keyed view -> country -> the MEP's own group, which is
+                # how the panel reaches for it.
+                if levels_here:
+                    national_group_levels.setdefault(view, {})[country] = {
+                        reference: dict(cells)
+                        for reference, cells in levels_here.items()
+                    }
 
         node_groups = {}
         for mep_id in builder.mep_ids:
@@ -652,6 +846,7 @@ def run(report, mandates=None, meps=None):
              for k, res in per_view.items()},
             per_view_levels, node_groups, targets,
             national, national_levels,
+            national_groups, national_group_levels,
         )
 
         # A column nobody has a figure for renders as an empty dial, which reads
@@ -729,6 +924,73 @@ def run(report, mandates=None, meps=None):
             f"{share_dropped:.1%} of figures had to be dropped, so the level and "
             f"the deviation are not describing the same votes",
         )
+
+        # The national-group view, held to the same standard. Its deviations
+        # are differences from the MEP's *own national party's* footing with
+        # another national party, so subtracting that footing back off must
+        # leave the same small centred number the group view leaves - if it
+        # does not, the level and the deviation are standing on different votes
+        # and their sum is about nothing.
+        #
+        # Counted off the payload rather than off the loop that produced it,
+        # because the two do not agree and the gap is itself worth reporting:
+        # the national-group pass measures an MEP inside their own country,
+        # while a block to hang the figures on only exists if the chamber pass
+        # also measured them. A member who sat Non-Attached for most of the
+        # term has a national party for the rest and no chamber reference at
+        # all, so their figures are computed and then have nowhere to go.
+        national_pp = []
+        written = notchless = 0
+        for entry in published.values():
+            country = entry.get("country")
+            blocks = [("all", entry["all"])] + list(entry["bySubject"].items())
+            for view, block in blocks:
+                if not block or block.get("natgrp") is None:
+                    continue
+                base = (payload["nationalGroupLevels"].get(view, {})
+                        .get(country or "", {}).get(block.get("natgrpRef")))
+                for index, value in enumerate(block["natgrp"]):
+                    if value is None:
+                        continue
+                    written += 1
+                    line = base[index] if base else None
+                    if line is None:
+                        notchless += 1
+                    else:
+                        national_pp.append((value - line) * 100)
+        national_median = (
+            float(np.median(np.abs(national_pp))) if national_pp else 0.0
+        )
+        report.fact(f"mandate {mandate}: national-group figures published", written)
+        report.fact(f"mandate {mandate}: national-group figures with no block to "
+                    f"write to", cell_published - written)
+        report.fact(f"mandate {mandate}: median |national-group deviation|",
+                    f"{national_median:.2f} pp")
+        report.check(
+            f"mandate {mandate}: national-group figures were produced",
+            written > 100,
+            f"only {written} national-group figures across every view",
+        )
+        report.check(
+            f"mandate {mandate}: national-group deviations are centred",
+            national_median < 8.0,
+            f"median |deviation| is {national_median:.2f} pp against the "
+            f"reference group's own footing with the same national cell",
+            fatal=False,
+        )
+        # Exactly, not nearly. A figure without a notch is a dial the panel
+        # draws with no baseline to read it against, and letting a few through
+        # is how the reference-row mismatch hid: at a 95% bar, 144 silently
+        # notchless figures across terms 7 to 9 still passed.
+        report.check(
+            f"mandate {mandate}: every published national-group figure has a notch",
+            notchless == 0,
+            f"{notchless} of {written} published figures have no level to be "
+            f"read against",
+        )
+        share_cell_dropped = cell_dropped / max(cell_published + cell_dropped, 1)
+        report.fact(f"mandate {mandate}: national-group figures dropped as unmatched",
+                    f"{cell_dropped} ({share_cell_dropped:.2%})")
 
         out = PRECOMPUTED / f"mep_deviations_{mandate}.json"
         atomic_write_json(out, payload)

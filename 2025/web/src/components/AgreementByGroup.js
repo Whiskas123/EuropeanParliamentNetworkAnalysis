@@ -55,6 +55,7 @@ const THIN_SAMPLE = 100;
 export default function AgreementByGroup({
   mandate,
   selectedNode,
+  selectedCountry,
   subject,
   onSubjectChange,
   subjectLocked,
@@ -66,6 +67,14 @@ export default function AgreementByGroup({
   const [collapsed, setCollapsed] = useState(false);
   const [areaOrder, setAreaOrder] = useState("high");
   const [areasCollapsed, setAreasCollapsed] = useState(false);
+  // Which room the dials are read in. Derived rather than stored, so there is
+  // no copy of the open network to fall out of step with it: until a reader
+  // moves the toggle themselves it simply follows the map they are standing
+  // in, and once they have moved it, it stays where they put it - which is
+  // what makes it usable for comparing one MEP against the next.
+  const [scope, setScope] = useState("house");
+  const [scopeTouched, setScopeTouched] = useState(false);
+  const wanted = scopeTouched ? scope : selectedCountry ? "country" : "house";
 
   const reading = useMemo(
     () => readAgreement(file, selectedNode?.id, subject),
@@ -90,14 +99,45 @@ export default function AgreementByGroup({
   // once, so reversing them shows the same eight dials in the other direction -
   // a control that costs a heading row and answers a question the grid already
   // answers by being read from the other end.
+  // Every political group that has anyone at all from this MEP's own country.
+  // No size floor: one Italian Green is still a person you can ask about. The
+  // arithmetic needs one *other* member to have a balance, so the sole member
+  // of a national party gets no dial for their own party - and no country view
+  // at all, since that party is also their reference. Empty likewise for the
+  // Non-Attached, which is why the toggle is offered only where there is
+  // something on the other side of it.
+  const nationalRows = useMemo(
+    () => (usingRaw ? [] : reading?.nationalGroups ?? []),
+    [usingRaw, reading]
+  );
+  const canScope = nationalRows.length > 0 && Boolean(reading?.country);
+  const showing = canScope && wanted === "country" ? "country" : "house";
+
   const rows = useMemo(() => {
+    if (showing === "country") {
+      return [...nationalRows].sort((a, b) => b.value - a.value);
+    }
     const source = usingRaw
       ? raw
           .filter((item) => item.groupId !== "NonAttached")
           .map((item) => ({ groupId: item.groupId, value: item.score, level: null }))
       : reading?.groups ?? [];
     return [...source].sort((a, b) => b.value - a.value);
-  }, [usingRaw, raw, reading]);
+  }, [showing, nationalRows, usingRaw, raw, reading]);
+
+  // The thinnest dial on screen, which is the one a caveat has to be written
+  // for. A national cell is a handful of colleagues over a handful of votes.
+  const thinnest = useMemo(
+    () =>
+      showing === "country"
+        ? rows.reduce(
+            (least, row) =>
+              typeof row.votes === "number" ? Math.min(least, row.votes) : least,
+            Infinity
+          )
+        : Infinity,
+    [showing, rows]
+  );
 
   const areas = useMemo(() => {
     const sorted = [...byArea].sort((a, b) => b.value - a.value);
@@ -140,6 +180,28 @@ export default function AgreementByGroup({
       <div className="sb-panel-head">
         <h4 className="sb-panel-title">Group Agreement</h4>
         <div className="sb-panel-controls">
+          {canScope && !collapsed && (
+            <SegmentedToggle
+              value={showing}
+              onChange={(next) => {
+                setScopeTouched(true);
+                setScope(next);
+              }}
+              options={[
+                {
+                  id: "house",
+                  text: "Chamber",
+                  title: `${name} against each group across the whole House`,
+                },
+                {
+                  id: "country",
+                  text: reading.country,
+                  title: `${name} against each group's ${reading.country} members only`,
+                },
+              ]}
+              label="Room"
+            />
+          )}
           {!subjectLocked && (
             <SubjectSelector
               currentMandate={mandate}
@@ -196,6 +258,16 @@ export default function AgreementByGroup({
                   group
                   {subject ? ` on ${subject}` : ""}.
                 </>
+              ) : showing === "country" ? (
+                <>
+                  Where <strong>{name}</strong> sits beside each party of{" "}
+                  <strong>{reading.country}</strong>
+                  {subject ? ` on ${subject}` : ""}. The notch marks what a
+                  typical {ownAcronym} member <em>from {reading.country}</em>{" "}
+                  manages with those same colleagues &mdash; so the gap is{" "}
+                  {name}&rsquo;s own doing rather than their party&rsquo;s, and
+                  the whole reading stays inside {reading.country}.
+                </>
               ) : (
                 <>
                   Where <strong>{name}</strong> sits beside each group, over the{" "}
@@ -234,19 +306,40 @@ export default function AgreementByGroup({
                   floor={0}
                   color={groupColors?.get(row.groupId) || "#CCCCCC"}
                   label={getGroupAcronym(row.groupId, mandate)}
-                  // "<what> is N points higher/lower than <label>", so each
-                  // half names one side: this MEP against their own group, both
-                  // measured toward the same target.
-                  what={`${name}'s agreement with ${getGroupAcronym(
-                    row.groupId,
-                    mandate
-                  )}`}
-                  baselineLabel={`${ownAcronym}'s own agreement with ${getGroupAcronym(
-                    row.groupId,
-                    mandate
-                  )}`}
+                  // The badge reads "N pp below <label>", so the label only
+                  // has to name the baseline: what a typical member of this
+                  // MEP's own group manages toward the same target.
+                  baselineLabel={
+                    showing === "country"
+                      ? `what a typical ${ownAcronym} member from ${
+                          reading.country
+                        } manages with ${reading.country}'s ${getGroupAcronym(
+                          row.groupId,
+                          mandate
+                        )}`
+                      : `the average ${ownAcronym} member's agreement with ${getGroupAcronym(
+                          row.groupId,
+                          mandate
+                        )}`
+                  }
+                  sub={
+                    showing === "country" && typeof row.votes === "number"
+                      ? `${row.votes.toLocaleString()} votes`
+                      : undefined
+                  }
                   title={
-                    row.level === null
+                    showing === "country"
+                      ? `${name} sits at ${(row.value * 100).toFixed(
+                          1
+                        )}% with ${reading.country}'s ${getGroupDisplayName(
+                          row.groupId,
+                          mandate
+                        )}; a typical ${ownAcronym} member from ${
+                          reading.country
+                        } sits at ${(row.level * 100).toFixed(
+                          1
+                        )}% with them, over ${row.votes?.toLocaleString()} votes`
+                      : row.level === null
                       ? `${name} voted with ${getGroupDisplayName(
                           row.groupId,
                           mandate
@@ -266,7 +359,16 @@ export default function AgreementByGroup({
               ))}
             </RadialGrid>
 
-            {!usingRaw && reading.used < THIN_SAMPLE && (
+            {showing === "country" && thinnest < THIN_SAMPLE && (
+              <p className="sb-note">
+                The thinnest dial here rests on {thinnest.toLocaleString()}{" "}
+                votes, so read the ranking rather than the size of a gap &mdash;
+                a national party is a handful of colleagues and a few of them
+                being away moves the figure several points.
+              </p>
+            )}
+
+            {showing === "house" && !usingRaw && reading.used < THIN_SAMPLE && (
               <p className="sb-note">
                 Drawn from only {reading.used?.toLocaleString()} votes, so treat
                 the gaps lightly &mdash; a policy area this small moves several
@@ -317,8 +419,7 @@ export default function AgreementByGroup({
                   baseline={area.level}
                   color={groupColors?.get(reading?.group) || "#6B7C93"}
                   label={`${getSubjectEmoji(area.subject)} ${area.subject}`}
-                  what={`${name}'s agreement with ${ownAcronym} here`}
-                  baselineLabel={`what ${ownAcronym} manages among itself here`}
+                  baselineLabel={`the average ${ownAcronym} member's agreement with ${ownAcronym} in this policy area`}
                   sub={`${area.votes?.toLocaleString()} votes`}
                   title={`${area.subject} — ${name} sits at ${(
                     area.value * 100

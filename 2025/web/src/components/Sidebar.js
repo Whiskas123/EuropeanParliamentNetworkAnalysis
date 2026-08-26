@@ -19,6 +19,13 @@ import {
   useNormalisedAgreement,
   readAgreement,
 } from "../lib/normalisedAgreement.js";
+import {
+  downloadSVG,
+  exportGroupMatrixSheetSVG,
+  exportStatsSheetSVG,
+  exportTrendsSheetSVG,
+} from "../lib/networkExport";
+import { loadTrendSeries } from "../lib/trends.js";
 
 /**
  * The network view, split by what each panel is actually about.
@@ -113,6 +120,10 @@ export default function Sidebar({
   const [searchResults, setSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(TABS[0].id);
+  // {status, missing}. The button reports its own outcome: these sheets are
+  // printed, and a click that silently hands over two of the three charts is
+  // worse than one that says which it could not draw.
+  const [exportState, setExportState] = useState({ status: "idle", missing: [] });
 
   const subjectForPanel = selectedSubject ?? panelSubject;
   const agreementFile = useNormalisedAgreement(mandate);
@@ -373,6 +384,105 @@ export default function Sidebar({
   ) : null;
 
 
+  // Both tabs' charts, as two print sheets.
+  //
+  // Neither panel is serialisable: Agreement is HTML bars and a CSS grid, and
+  // History is an SVG sized to whatever the sidebar happens to be that day, in
+  // colours that come from custom properties. So the sheets are drawn from the
+  // same numbers the panels are drawn from, by lib/networkExport.js, on the
+  // same paper as the network export — a network, its figures and its history
+  // print as one set.
+  //
+  // History is fetched rather than read off the screen: only the active tab is
+  // mounted, and the button has to work from either. loadTrendSeries caches per
+  // scope, so if the History tab has been opened this costs nothing.
+  const handleExportCharts = async () => {
+    if (exportState.status === "working") return;
+    setExportState({ status: "working", missing: [] });
+
+    const exportMeta = {
+      mandate,
+      country: selectedCountry || null,
+      subject: selectedSubject || null,
+      nodeCount,
+      votingSessions,
+    };
+    const slug = (value) =>
+      String(value)
+        .replace(/[^a-zA-Z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+    const parts = [`mandate-${mandate || "all"}`];
+    if (selectedCountry) parts.push(`country-${slug(selectedCountry)}`);
+    if (selectedSubject) parts.push(`subject-${slug(selectedSubject)}`);
+    const stem = `charts-${parts.join("-")}`;
+
+    const sheets = [];
+    const missing = [];
+    try {
+      sheets.push([
+        `${stem}-agreement.svg`,
+        exportStatsSheetSVG({
+          graphData,
+          meta: exportMeta,
+          stats: {
+            intragroupCohesion: intragroupCohesion || [],
+            countrySimilarity: countrySimilarity || [],
+            baseline,
+          },
+        }),
+      ]);
+    } catch (error) {
+      missing.push("the agreement dials");
+      console.warn("Sidebar export: the figures sheet could not be drawn:", error);
+    }
+
+    try {
+      sheets.push([
+        `${stem}-between-groups.svg`,
+        exportGroupMatrixSheetSVG({
+          graphData,
+          meta: exportMeta,
+          intergroupCohesion,
+          baseline,
+        }),
+      ]);
+    } catch (error) {
+      missing.push("the between-groups grid");
+      console.warn("Sidebar export: the between-groups sheet could not be drawn:", error);
+    }
+
+    try {
+      const scoped = Boolean(selectedCountry || selectedSubject);
+      const [series, reference] = await Promise.all([
+        loadTrendSeries({ country: selectedCountry, subject: selectedSubject }),
+        scoped ? loadTrendSeries().catch(() => null) : Promise.resolve(null),
+      ]);
+      sheets.push([
+        `${stem}-history.svg`,
+        exportTrendsSheetSVG({ meta: exportMeta, series, reference }),
+      ]);
+    } catch (error) {
+      missing.push("the history");
+      console.warn("Sidebar export: the History sheet could not be drawn:", error);
+    }
+
+    if (sheets.length === 0) {
+      setExportState({ status: "failed", missing });
+      return;
+    }
+
+    // Staggered: Chrome and Safari drop the second of two downloads fired in
+    // the same tick.
+    sheets.forEach(([name, svg], index) => {
+      setTimeout(() => downloadSVG(svg, name), index * 350);
+    });
+    setExportState({
+      status: missing.length === 0 ? "idle" : "partial",
+      missing,
+    });
+  };
+
   const renderTabPanel = () => {
     if (activeTab === "cohesion") {
       const nothingReady =
@@ -547,29 +657,75 @@ export default function Sidebar({
           would have to fight the container's own 20px padding, and the strip
           has to stay put while a tab three thousand pixels tall scrolls. */}
       {showTabs && (
-        <div
-          className="sidebar-tabs"
-          role="tablist"
-          aria-label="Network sidebar sections"
-          onKeyDown={handleTabKeyDown}
-        >
-          {TABS.map((tab) => (
+        <div className="sidebar-tabs">
+          <div
+            className="sidebar-tabs-list"
+            role="tablist"
+            aria-label="Network sidebar sections"
+            onKeyDown={handleTabKeyDown}
+          >
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={`sidebar-tab-${tab.id}`}
+                aria-selected={activeTab === tab.id}
+                aria-controls={`sidebar-tabpanel-${tab.id}`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                className={`sidebar-tab ${
+                  activeTab === tab.id ? "sidebar-tab--active" : ""
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sits on the tab strip rather than inside either panel: it takes
+              both tabs, so hanging it under one of them would say it only
+              takes that one. */}
+          <span className="sidebar-fact-tip sidebar-tabs-export">
             <button
-              key={tab.id}
               type="button"
-              role="tab"
-              id={`sidebar-tab-${tab.id}`}
-              aria-selected={activeTab === tab.id}
-              aria-controls={`sidebar-tabpanel-${tab.id}`}
-              tabIndex={activeTab === tab.id ? 0 : -1}
-              className={`sidebar-tab ${
-                activeTab === tab.id ? "sidebar-tab--active" : ""
-              }`}
-              onClick={() => setActiveTab(tab.id)}
+              className="sidebar-tabs-export-button"
+              onClick={handleExportCharts}
+              disabled={exportState.status === "working"}
+              aria-label="Download these charts as SVG"
             >
-              {tab.label}
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
             </button>
-          ))}
+            <span className="sidebar-tip sidebar-tip-right" role="tooltip">
+              <span className="sidebar-tip-line">
+                {exportState.status === "failed"
+                  ? "Nothing could be drawn — this view's figures have not finished loading."
+                  : exportState.status === "partial"
+                  ? `Downloaded all but ${exportState.missing.join(" and ")}, which this view does not carry.`
+                  : exportState.status === "working"
+                  ? "Reading twenty years of votes for the history sheet…"
+                  : "Downloads both tabs as vector sheets: the agreement dials, the between-groups grid, and the history."}
+              </span>
+              <span className="sidebar-tip-line">
+                Three SVG files, A4 and print-ready. Same dials, same grid,
+                same lines as the panels — redrawn for paper, not screenshotted.
+              </span>
+            </span>
+          </span>
         </div>
       )}
 
@@ -595,6 +751,7 @@ export default function Sidebar({
             <AgreementByGroup
               mandate={mandate}
               selectedNode={selectedNode}
+              selectedCountry={selectedCountry}
               subject={subjectForPanel}
               onSubjectChange={setPanelSubject}
               subjectLocked={Boolean(selectedSubject)}

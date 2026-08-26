@@ -40,6 +40,11 @@
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 6px;
+  // Group Agreement can carry three controls at once - the room toggle, the
+  // policy-area picker and the chevron - and a country name is as long as it
+  // is. Wrapping drops the controls under the title rather than squeezing the
+  // title to nothing.
+  flex-wrap: wrap;
 
   .sb-panel-title {
     margin: 0;
@@ -89,7 +94,7 @@
 // like everything else in the sidebar, and by less of it than divides two
 // panels so the pair still reads as one subject.
 .sb-subpanel {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .sb-panel-title--sub {

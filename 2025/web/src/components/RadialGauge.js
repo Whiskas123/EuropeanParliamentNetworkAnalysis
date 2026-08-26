@@ -93,8 +93,7 @@ function tickLine(fraction) {
  * @param {node}   label           what the dial is, under the ring
  * @param {node}   [flag]          rendered before the label (country flags)
  * @param {string} [title]         full hover text, since labels get truncated
- * @param {string} [what]          what is measured, for the delta tooltip
- * @param {string} [baselineLabel] what the baseline is, for the same tooltip
+ * @param {string} [baselineLabel] what the delta badge is measured against
  * @param {node}   [sub]           a sample size, shown under the delta
  * @param {func}   [onClick]       makes the whole cell a button
  */
@@ -105,7 +104,6 @@ export default function RadialGauge({
   label,
   flag = null,
   title,
-  what = "",
   baselineLabel = "",
   sub = null,
   onClick = null,
@@ -209,7 +207,6 @@ export default function RadialGauge({
             score={value}
             baseline={baseline}
             label={baselineLabel}
-            what={what}
           />
         </span>
       ) : null}

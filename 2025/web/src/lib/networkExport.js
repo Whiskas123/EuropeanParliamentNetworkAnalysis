@@ -30,6 +30,7 @@ import {
   UNKNOWN_COLOR,
 } from "./edgeStyle.js";
 import { listParties } from "./parties.js";
+import { MIN_TERM_SESSIONS } from "./trends.js";
 import {
   buildCommunityShapes,
   DEFAULT_COVERAGE,
@@ -39,6 +40,7 @@ import {
 import {
   getGroupDisplayName,
   getGroupAcronym,
+  getGroupColor,
   getDelta,
   getRedGreenColor,
   getDivergingColor,
@@ -83,8 +85,19 @@ const DEFAULT_RENDER = {
   colorMode: "group",
   dim: null,
   communities: false,
+  /** null means the automatic split; a number pins the count. */
+  communityK: null,
+  /** Share of a community its outline encloses; see communityShapes.js. */
+  communityCoverage: DEFAULT_COVERAGE,
   /** Radians clockwise, as set by the canvas's rotate control. */
   rotation: 0,
+  /**
+   * The printed furniture — title, footnotes, colour key — around the
+   * picture. Off by default: the file that gets carried into Figma or onto a
+   * panel is wanted as the network alone, and a caption is a caption there,
+   * not a layer. The PNG export still carries its band.
+   */
+  captions: false,
 };
 
 /** Parties below this many MEPs never reach the legend; there is a long tail. */
@@ -570,7 +583,7 @@ function renderLegend(entries, plan, du) {
  * @param {Object} options
  * @param {Object} options.graphData - nodes, links, allLinks, nodeMap
  * @param {Object} options.renderSettings - {edgePercentile, edgeWidth,
- *   colorMode, dim, communities, rotation}
+ *   colorMode, dim, communities, communityK, communityCoverage, rotation}
  * @param {Object} options.meta - {mandate, country, subject, nodeCount, votingSessions}
  * @returns {string} a complete <svg> document
  */
@@ -652,16 +665,11 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   const netTop = minY - pad;
   const netHeight = spanY + pad * 2;
 
-  // A portrait layout can be narrower than its own caption wants to be.
-  const minWidth = du(1080);
-  if (width < minWidth) {
-    left -= (minWidth - width) / 2;
-    width = minWidth;
-  }
-  const margin = du(40);
-  const contentWidth = width - margin * 2;
-
   // --- caption ------------------------------------------------------------
+  // Always built, not always drawn: it is what the document's <title> and
+  // <desc> carry, and a file with no provenance in it at all is a file nobody
+  // can place six months later. Whether any of it is set in type around the
+  // picture is the caller's call, and by default it is not.
   const caption = buildCaption({
     mandate: info.mandate,
     country: info.country,
@@ -669,72 +677,87 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     nodeCount: info.nodeCount ?? nodes.length,
     votingSessions: info.votingSessions,
   });
-  const legend = buildLegend(graphData, view.colorMode, info.mandate);
-
-  const titleSize = du(38);
-  const subtitleSize = du(19);
-  const lineSize = du(15);
-  const caveatSize = du(13);
 
   const headerParts = [];
-  let hy = du(34);
-  headerParts.push(
-    svgText(margin, hy + titleSize, caption.title, {
-      size: titleSize,
-      weight: 600,
-      fill: INK,
-    })
-  );
-  hy += titleSize * 1.28;
-  headerParts.push(
-    svgText(margin, hy + subtitleSize, caption.subtitle, {
-      size: subtitleSize,
-      fill: SECONDARY,
-    })
-  );
-  hy += subtitleSize * 1.5;
-  headerParts.push(svgRule(margin, hy + du(16), contentWidth, RULE, du(1)));
-  const headerHeight = hy + du(16) + du(26);
-
-  const legendPlan = planLegend(legend, contentWidth, du);
-  if (legendPlan.gradient) {
-    legendPlan.columnWidth = Math.min(contentWidth, du(420));
-    legendPlan.stripWidth = legendPlan.columnWidth;
-  }
-
   const footerParts = [];
-  let fy = du(24);
-  footerParts.push(svgRule(margin, fy, contentWidth, RULE, du(1)));
-  fy += du(30);
-  caption.lines.forEach((line, index) => {
-    footerParts.push(
-      svgText(margin, fy + lineSize, line, {
-        size: lineSize,
-        fill: index === caption.lines.length - 1 ? SECONDARY : INK,
-        weight: index === caption.lines.length - 1 ? undefined : 500,
+  let headerHeight = 0;
+  let footerHeight = 0;
+
+  if (view.captions) {
+    // A portrait layout can be narrower than its own caption wants to be.
+    const minWidth = du(1080);
+    if (width < minWidth) {
+      left -= (minWidth - width) / 2;
+      width = minWidth;
+    }
+    const margin = du(40);
+    const contentWidth = width - margin * 2;
+
+    const legend = buildLegend(graphData, view.colorMode, info.mandate);
+
+    const titleSize = du(38);
+    const subtitleSize = du(19);
+    const lineSize = du(15);
+    const caveatSize = du(13);
+
+    let hy = du(34);
+    headerParts.push(
+      svgText(margin, hy + titleSize, caption.title, {
+        size: titleSize,
+        weight: 600,
+        fill: INK,
       })
     );
-    fy += lineSize * 1.6;
-  });
-  if (legendPlan.height > 0) {
-    fy += du(14);
-    footerParts.push(
-      `<g id="legend" transform="translate(${n1(margin)}, ${n1(fy)})">` +
-        renderLegend(legend, legendPlan, du) +
-        `</g>`
+    hy += titleSize * 1.28;
+    headerParts.push(
+      svgText(margin, hy + subtitleSize, caption.subtitle, {
+        size: subtitleSize,
+        fill: SECONDARY,
+      })
     );
-    fy += legendPlan.height;
+    hy += subtitleSize * 1.5;
+    headerParts.push(svgRule(margin, hy + du(16), contentWidth, RULE, du(1)));
+    headerHeight = hy + du(16) + du(26);
+
+    const legendPlan = planLegend(legend, contentWidth, du);
+    if (legendPlan.gradient) {
+      legendPlan.columnWidth = Math.min(contentWidth, du(420));
+      legendPlan.stripWidth = legendPlan.columnWidth;
+    }
+
+    let fy = du(24);
+    footerParts.push(svgRule(margin, fy, contentWidth, RULE, du(1)));
+    fy += du(30);
+    caption.lines.forEach((line, index) => {
+      footerParts.push(
+        svgText(margin, fy + lineSize, line, {
+          size: lineSize,
+          fill: index === caption.lines.length - 1 ? SECONDARY : INK,
+          weight: index === caption.lines.length - 1 ? undefined : 500,
+        })
+      );
+      fy += lineSize * 1.6;
+    });
+    if (legendPlan.height > 0) {
+      fy += du(14);
+      footerParts.push(
+        `<g id="legend" transform="translate(${n1(margin)}, ${n1(fy)})">` +
+          renderLegend(legend, legendPlan, du) +
+          `</g>`
+      );
+      fy += legendPlan.height;
+    }
+    fy += du(12);
+    footerParts.push(
+      svgText(margin, fy + caveatSize, caption.caveat, {
+        size: caveatSize,
+        fill: MUTED,
+        italic: true,
+      })
+    );
+    fy += caveatSize * 1.5;
+    footerHeight = fy + du(34);
   }
-  fy += du(12);
-  footerParts.push(
-    svgText(margin, fy + caveatSize, caption.caveat, {
-      size: caveatSize,
-      fill: MUTED,
-      italic: true,
-    })
-  );
-  fy += caveatSize * 1.5;
-  const footerHeight = fy + du(34);
 
   const top = netTop - headerHeight;
   const height = headerHeight + netHeight + footerHeight;
@@ -1006,25 +1029,321 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     (communityLabelParts.length > 0
       ? `<g id="community-labels">${communityLabelParts.join("")}</g>`
       : "") +
-    `<g id="caption">` +
-    `<g id="caption-header" transform="translate(${n1(left)}, ${n1(top)})">${headerParts.join(
-      ""
-    )}</g>` +
-    `<g id="caption-footer" transform="translate(${n1(left)}, ${n1(
-      netTop + netHeight
-    )})">${footerParts.join("")}</g>` +
-    `</g>` +
+    (headerParts.length > 0 || footerParts.length > 0
+      ? `<g id="caption">` +
+        `<g id="caption-header" transform="translate(${n1(left)}, ${n1(
+          top
+        )})">${headerParts.join("")}</g>` +
+        `<g id="caption-footer" transform="translate(${n1(left)}, ${n1(
+          netTop + netHeight
+        )})">${footerParts.join("")}</g>` +
+        `</g>`
+      : "") +
     `</svg>\n`
   );
 }
 
+/* -------------------------------------------------------------------------
+ * Sheet furniture, shared by the three sidebar sheets
+ * ---------------------------------------------------------------------- */
+
 /**
- * A companion sheet of the figures behind the current view, styled to match
- * the network export so the two can hang together.
+ * The sidebar's own palette, so a sheet and the panel it was drawn from are
+ * the same greys. These shadow the network export's slightly different set
+ * rather than replacing it: that one is tuned for a picture on a wall.
+ */
+const SB_INK = "#1a1a1a";
+const SB_BODY = "#5f6672";
+const SB_MUTED = "#808893";
+const SB_FAINT = "#a6adb7";
+const SB_RULE = "#e4e7eb";
+
+/** The delta badge's three states, as the sidebar paints them. */
+const DELTA_UP = { fill: "#e4f2e8", ink: "#1a6b3c" };
+const DELTA_DOWN = { fill: "#fbe8e6", ink: "#a32a1e" };
+const DELTA_FLAT = { fill: "#efefef", ink: SB_MUTED };
+
+/**
+ * What a sheet says about itself, in one line.
+ *
+ * There is no display-size title. These are read as a set, next to the network
+ * they came from and often on a panel that carries its own heading, and a
+ * fifteen-point title on each of three sheets was three headings competing
+ * with the one that mattered. The scope, the term and the sample still have to
+ * be on the paper — a sheet of figures with no term on it is not evidence —
+ * so they go in one small line above the rule.
+ *
+ * @returns {{parts: string[], y: number}}
+ */
+function sheetHeader(caption, M, inner, note = null) {
+  const parts = [];
+  let y = M + 6;
+  // One muted line, at the size of a footnote: no heading of any weight. What
+  // is on it is the minimum that keeps the sheet evidence rather than a
+  // picture — which scope, which term, and how large the sample was.
+  const line = [
+    caption.title,
+    caption.subtitle,
+    ...(caption.lines || []).slice(0, 2),
+    note,
+  ]
+    .filter(Boolean)
+    .join("  ·  ");
+  parts.push(svgText(M, y, line, { size: 6.5, fill: SB_MUTED }));
+  y += 5;
+  parts.push(svgRule(M, y, inner, SB_RULE, 1));
+  return { parts, y: y + 14 };
+}
+
+/** A panel heading and its lede, at the sidebar's own two tiers. */
+function sectionHead(title, lede, M, inner) {
+  const parts = [svgText(M, 0, title, { size: 9, weight: 700, fill: SB_INK })];
+  let y = 11;
+  if (lede) {
+    wrapText(lede, 96)
+      .slice(0, 2)
+      .forEach((line) => {
+        parts.push(svgText(M, y, line, { size: 6.5, fill: SB_BODY }));
+        y += 7;
+      });
+  }
+  return { parts, height: y + 4 };
+}
+
+/* -------------------------------------------------------------------------
+ * Gauges
+ * ---------------------------------------------------------------------- */
+
+/** RadialGauge's geometry, as ratios of the dial box it is drawn in. */
+const GAUGE = {
+  radius: 18 / 44,
+  stroke: 4 / 44,
+  // A touch under the panel's 12.5, because this draws in Helvetica rather
+  // than the site's UI stack: at the same ratio "96.1%" is wider than the
+  // ring's inner diameter and the digits sit on the arc.
+  figure: 11.4 / 44,
+  unit: 7 / 44,
+  tickInset: 1.6 / 44,
+};
+
+/** Where a self-cohesion ring's empty end sits. Mirrors RADIAL_FLOOR. */
+const GAUGE_FLOOR = 0.5;
+
+/** A score as a fraction of the ring, clamped, or null. */
+function gaugeSweep(value, floor) {
+  if (!Number.isFinite(value)) return null;
+  return Math.max(0, Math.min(1, (value - floor) / (1 - floor)));
+}
+
+/**
+ * One dial: ring, figure, label, baseline notch and delta badge.
+ *
+ * A redrawing of RadialGauge rather than a screenshot of one, down to the
+ * cropped scale — the arc measures how far above a coin flip a bloc's internal
+ * agreement sits, because drawn 0–100% every one of these figures is a
+ * three-quarter arc and no two are tellable apart. The absolute number is
+ * printed in the middle where it cannot be misread. See that component for the
+ * argument in full.
+ *
+ * @param {Object} o
+ * @param {number} o.cx - centre of the dial box
+ * @param {number} o.top - top of the cell
+ * @param {number} o.size - dial box, in sheet units
+ * @param {number} o.value - the figure, on [0, 1]
+ * @param {number|null} o.baseline - the same figure with one filter removed
+ * @param {string} o.color - the entity's colour
+ * @param {string} o.label - what the dial is
+ * @param {string|null} o.sub - sample size
+ * @returns {string}
+ */
+function svgGauge({
+  cx,
+  top,
+  size,
+  value,
+  baseline = null,
+  color = "#6B7C93",
+  label,
+  sub = null,
+  floor = GAUGE_FLOOR,
+  labelWidth,
+}) {
+  const parts = [];
+  const r = size * GAUGE.radius;
+  const stroke = size * GAUGE.stroke;
+  const cy = top + size / 2;
+  const circumference = 2 * Math.PI * r;
+  const fraction = gaugeSweep(value, floor);
+  // Under its own floor the arc has nowhere to go, so the track goes dotted:
+  // an empty ring would read as a figure that is missing rather than low.
+  const underFloor = Number.isFinite(value) && value < floor;
+
+  parts.push(
+    `<circle cx="${n1(cx)}" cy="${n1(cy)}" r="${n1(r)}" fill="none" stroke="${
+      underFloor ? "#c3c9d0" : SB_RULE
+    }" stroke-width="${n2(stroke)}"${
+      underFloor ? ` stroke-dasharray="1 3" stroke-linecap="round"` : ""
+    }/>`
+  );
+
+  if (fraction !== null && fraction > 0) {
+    parts.push(
+      `<circle cx="${n1(cx)}" cy="${n1(cy)}" r="${n1(
+        r
+      )}" fill="none" stroke="${color}" stroke-width="${n2(
+        stroke
+      )}" stroke-linecap="butt" stroke-dasharray="${n2(
+        fraction * circumference
+      )} ${n2(circumference)}" transform="rotate(-90 ${n1(cx)} ${n1(cy)})"/>`
+    );
+  }
+
+  // The baseline notch, dropped at either extreme where it would sit under the
+  // arc's own endpoint and read as part of it.
+  const baseFraction = gaugeSweep(baseline, floor);
+  if (baseFraction !== null && baseFraction > 0.01 && baseFraction < 0.99) {
+    const radians = (baseFraction * 360 - 90) * (Math.PI / 180);
+    const cos = Math.cos(radians);
+    const sin = Math.sin(radians);
+    const inset = size * GAUGE.tickInset;
+    const inner = r - stroke / 2 - inset;
+    const outer = r + stroke / 2 + inset;
+    const coords = `x1="${n1(cx + cos * inner)}" y1="${n1(
+      cy + sin * inner
+    )}" x2="${n1(cx + cos * outer)}" y2="${n1(cy + sin * outer)}"`;
+    // Pale line first, so the notch stays legible whether it lands on the
+    // coloured arc or on the bare track.
+    parts.push(
+      `<line ${coords} stroke="#ffffff" stroke-width="${n2(
+        size * 0.059
+      )}" stroke-linecap="round"/>`
+    );
+    parts.push(
+      `<line ${coords} stroke="#465060" stroke-opacity="0.5" stroke-width="${n2(
+        size * 0.025
+      )}" stroke-linecap="round"/>`
+    );
+  }
+
+  // The figure, with the unit on its baseline rather than centred with it.
+  const figureSize = size * GAUGE.figure;
+  const unitSize = size * GAUGE.unit;
+  const percent = Number.isFinite(value) ? (value * 100).toFixed(1) : "—";
+  parts.push(
+    `<text x="${n1(cx)}" y="${n1(
+      cy + figureSize * 0.36
+        )}" font-size="${n2(figureSize)}" font-weight="700" text-anchor="middle" ` +
+      `letter-spacing="${n2(-figureSize * 0.032)}" ` +
+      `fill="${underFloor ? SB_MUTED : SB_INK}" font-variant-numeric="tabular-nums">` +
+      `${esc(percent)}<tspan font-size="${n2(
+        unitSize
+      )}" font-weight="500" fill="${SB_FAINT}">%</tspan></text>`
+  );
+
+  let y = top + size + size * 0.2;
+  const labelSize = Math.max(5.4, size * 0.165);
+  parts.push(
+    svgText(cx, y, clipText(label, labelWidth, labelSize), {
+      size: labelSize,
+      anchor: "middle",
+      fill: SB_INK,
+    })
+  );
+  y += labelSize + 2.5;
+
+  const delta = getDelta(value, baseline);
+  if (delta) {
+    const tone =
+      delta.direction > 0 ? DELTA_UP : delta.direction < 0 ? DELTA_DOWN : DELTA_FLAT;
+    const badgeSize = Math.max(5, size * 0.145);
+    const text = `${delta.text} pp`;
+    const width = estimateWidth(text, badgeSize) + 5;
+    parts.push(
+      `<rect x="${n1(cx - width / 2)}" y="${n1(y - badgeSize)}" width="${n1(
+        width
+      )}" height="${n1(badgeSize + 3)}" rx="1.5" fill="${tone.fill}"/>`
+    );
+    parts.push(
+      svgText(cx, y, text, {
+        size: badgeSize,
+        anchor: "middle",
+        weight: 600,
+        fill: tone.ink,
+        monospaceDigits: true,
+      })
+    );
+    y += badgeSize + 3.5;
+  }
+
+  if (sub) {
+    const subSize = Math.max(4.8, size * 0.135);
+    parts.push(
+      svgText(cx, y, sub, { size: subSize, anchor: "middle", fill: SB_MUTED })
+    );
+    y += subSize + 1;
+  }
+
+  return { markup: parts.join(""), bottom: y };
+}
+
+/** Truncate to what fits, with an ellipsis where something was dropped. */
+function clipText(text, width, size) {
+  const value = String(text || "");
+  if (!width || estimateWidth(value, size) <= width) return value;
+  const max = Math.max(1, Math.floor(width / (size * 0.52)) - 1);
+  return `${value.slice(0, max)}…`;
+}
+
+/**
+ * A grid of dials, in the reading order the sidebar puts them in.
+ *
+ * Six to a row rather than the sidebar's four: the panel is a 380-pixel column
+ * and this is a 420-unit page, and at four the twenty-seven delegations run
+ * off the bottom of it.
+ */
+function gaugeGrid(entries, { x, y, width, columns, size, labelWidth }) {
+  const parts = [];
+  const colWidth = width / columns;
+  let bottom = y;
+  entries.forEach((entry, index) => {
+    const col = index % columns;
+    const row = Math.floor(index / columns);
+    const cell = svgGauge({
+      ...entry,
+      cx: x + colWidth * (col + 0.5),
+      top: y + row * entry.pitch,
+      size,
+      labelWidth,
+    });
+    parts.push(cell.markup);
+    bottom = Math.max(bottom, cell.bottom);
+  });
+  return { markup: parts.join(""), bottom };
+}
+
+/** Head count per group and per country, from the nodes actually drawn. */
+function countNodes(graphData, key) {
+  const counts = new Map();
+  for (const node of (graphData && graphData.nodes) || []) {
+    const value = node[key];
+    if (!value) continue;
+    counts.set(value, (counts.get(value) || 0) + 1);
+  }
+  return counts;
+}
+
+/**
+ * The Agreement tab as a sheet: the two dial grids it opens with.
+ *
+ * Dials rather than the bar rows this used to draw, because the panel draws
+ * dials — a sheet that rearranges the figures into a different chart is a
+ * second reading of them, and the whole point of an export is that it is the
+ * same reading on paper.
  *
  * @param {Object} options - as exportNetworkSVG, plus:
  * @param {Object} options.stats - {intragroupCohesion, countrySimilarity,
- *   intergroupCohesion, baseline, outliers}
+ *   baseline}. The between-groups matrix is a separate sheet; see
+ *   exportGroupMatrixSheetSVG.
  * @returns {string} a complete <svg> document
  */
 export function exportStatsSheetSVG({ graphData, meta, stats } = {}) {
@@ -1032,7 +1351,6 @@ export function exportStatsSheetSVG({ graphData, meta, stats } = {}) {
   const {
     intragroupCohesion = [],
     countrySimilarity = [],
-    intergroupCohesion = null,
     baseline = null,
   } = stats || {};
 
@@ -1042,203 +1360,111 @@ export function exportStatsSheetSVG({ graphData, meta, stats } = {}) {
   const H = 594;
   const M = 30;
   const inner = W - M * 2;
+  const term = meta && meta.mandate;
 
   const parts = [];
-  let y = M + 14;
+  const groupCounts = countNodes(graphData, "groupId");
+  const countryCounts = countNodes(graphData, "country");
 
-  parts.push(svgText(M, y, caption.title, { size: 15, weight: 700 }));
-  y += 15;
-  parts.push(svgText(M, y, caption.subtitle, { size: 9.5, fill: SECONDARY }));
-  y += 11;
-  parts.push(
-    svgText(M, y, (caption.lines || []).slice(0, 2).join("  ·  "), {
-      size: 8.5,
-      fill: MUTED,
-    })
-  );
-  y += 8;
-  parts.push(svgRule(M, y, inner, INK, 1.2));
-  y += 16;
-
-  if (baseline && baseline.label) {
-    parts.push(
-      svgText(M, y, `Change measured against ${baseline.label}.`, {
-        size: 8,
-        fill: MUTED,
-        italic: true,
-      })
-    );
-    y += 12;
-  }
-
-  // One cohesion table. Each row carries a bar, so relative size reads without
-  // reading every figure, and a delta column whenever a baseline exists.
-  const table = (title, rows, lookup, limit) => {
-    if (!rows || rows.length === 0) return;
-    parts.push(svgText(M, y, title, { size: 9, weight: 700 }));
-    y += 4;
-    parts.push(svgRule(M, y, inner, RULE));
-    y += 11;
-
-    const barX = M + 150;
-    const barW = 90;
-    const scoreX = barX + barW + 34;
-    const deltaX = M + inner;
-
-    rows.slice(0, limit).forEach((row) => {
-      const label = row.label || "";
-      const score = row.score;
-      parts.push(
-        svgText(M, y, label.length > 30 ? `${label.slice(0, 29)}…` : label, {
-          size: 8.5,
-        })
-      );
-      if (Number.isFinite(score)) {
-        parts.push(svgRect(barX, y - 5, barW, 5, "#eeeeee"));
-        parts.push(
-          svgRect(
-            barX,
-            y - 5,
-            Math.max(0, Math.min(1, score)) * barW,
-            5,
-            row.color || "#9aa3ad"
-          )
-        );
-        parts.push(
-          svgText(scoreX, y, fmtPct(score), {
-            size: 8.5,
-            anchor: "end",
-            monospaceDigits: true,
-          })
-        );
-      }
-      const delta = getDelta(score, lookup ? lookup(row) : null);
-      if (delta) {
-        parts.push(
-          svgText(deltaX, y, `${delta.text} pp`, {
-            size: 8.5,
-            anchor: "end",
-            monospaceDigits: true,
-            // Same direction as the sidebar: green is more agreement.
-            fill:
-              delta.direction > 0
-                ? "#1a6b3c"
-                : delta.direction < 0
-                ? "#a32a1e"
-                : MUTED,
-          })
-        );
-      }
-      y += 12;
-    });
-    y += 10;
-  };
-
-  const groupRows = [...intragroupCohesion]
-    .filter((item) => item && item.group)
+  // Same two exclusions the panels make. The non-attached are not a group, so
+  // their internal agreement is not a property of anything.
+  const groupEntries = [...intragroupCohesion]
+    .filter((item) => item && item.group && item.group !== "NonAttached")
     .sort((a, b) => (b.score || 0) - (a.score || 0))
-    .map((item) => ({
-      label: getGroupDisplayName(item.group, meta && meta.mandate),
-      score: item.score,
-      key: item.group,
-      color: groupColorFromNodes(graphData, item.group),
-    }));
-  table(
-    "Agreement within each political group",
-    groupRows,
-    (row) => baseline?.scores?.intragroup?.[row.key],
-    12
-  );
+    .map((item) => {
+      const count = groupCounts.get(item.group) || 0;
+      return {
+        value: item.score,
+        baseline:
+          baseline && baseline.comparing === "subject"
+            ? baseline.scores?.intragroup?.[item.group] ?? null
+            : null,
+        color: groupColorFromNodes(graphData, item.group),
+        label: getGroupAcronym(item.group, term),
+        sub: `${count} MEP${count === 1 ? "" : "s"}`,
+      };
+    });
 
-  const countryRows = [...countrySimilarity]
+  // Countries have no colour of their own, so every dial takes one slate hue
+  // and the arc alone carries the magnitude — as in CountrySimilarity.
+  const countryEntries = [...countrySimilarity]
     .filter((item) => item && item.country)
     .sort((a, b) => (b.score || 0) - (a.score || 0))
-    .map((item) => ({
-      label: item.country,
-      score: item.score,
-      key: item.country,
-    }));
-  table(
-    "Agreement within each national delegation",
-    countryRows,
-    // In a country view this figure comes from the same MEP pairs as the
-    // whole-Parliament one, so its delta is zero by construction; the sidebar
-    // omits it for the same reason.
-    (row) =>
-      baseline && baseline.comparing !== "country"
-        ? baseline.scores?.country?.[row.key]
-        : null,
-    countryRows.length > 14 ? 14 : countryRows.length
+    .map((item) => {
+      const count = countryCounts.get(item.country) || 0;
+      return {
+        value: item.score,
+        // In a country view this figure rests on the same pairs as the
+        // whole-Parliament one, so its delta is zero by construction and the
+        // panel drops it. Removing the subject filter is a real comparison.
+        baseline:
+          baseline && baseline.comparing !== "country"
+            ? baseline.scores?.country?.[item.country] ?? null
+            : null,
+        color: "#6B7C93",
+        label: item.country,
+        sub: `${count} MEP${count === 1 ? "" : "s"}`,
+      };
+    });
+
+  const hasDelta =
+    groupEntries.some((entry) => getDelta(entry.value, entry.baseline)) ||
+    countryEntries.some((entry) => getDelta(entry.value, entry.baseline));
+
+  // The baseline is named only where something on the sheet is measured
+  // against it. Both panels drop their deltas at a country scope — inside one
+  // country a group's members share a delegation as well as a group, so the
+  // change would be a reading of the delegation — and a note promising a
+  // comparison that no dial carries is worse than no note.
+  const header = sheetHeader(
+    caption,
+    M,
+    inner,
+    hasDelta && baseline?.label ? `change against ${baseline.label}` : null
+  );
+  parts.unshift(...header.parts);
+  let y = header.y;
+
+  const columns = 6;
+  const colWidth = inner / columns;
+  const groupBlock = sectionHead(
+    "Group Agreement",
+    "Average voting agreement among members within each political group.",
+    M,
+    inner
+  );
+  const countryBlock = sectionHead(
+    "Country Agreement",
+    "Average voting agreement among MEPs from the same country.",
+    M,
+    inner
   );
 
-  if (intergroupCohesion && Array.isArray(intergroupCohesion.groups)) {
-    const groups = intergroupCohesion.groups.filter((g) => g !== "NonAttached");
-    const matrix = intergroupCohesion.matrix || [];
-    const indexOf = new Map(intergroupCohesion.groups.map((g, i) => [g, i]));
-    const cell = Math.min(26, Math.floor((inner - 44) / Math.max(groups.length, 1)));
+  // The dial size falls out of the room left, rather than being a constant the
+  // twenty-seven delegations then overflow.
+  const rows =
+    Math.ceil(groupEntries.length / columns) +
+    Math.ceil(countryEntries.length / columns);
+  const room =
+    H - M - 30 - y - groupBlock.height - countryBlock.height - (rows ? 8 : 0);
+  const pitch = Math.max(44, Math.min(76, rows ? room / rows : 60));
+  const size = Math.max(24, Math.min(44, pitch - (hasDelta ? 28 : 19)));
 
-    if (groups.length > 1 && y + cell * groups.length + 40 < H - M) {
-      parts.push(svgText(M, y, "Agreement between groups", { size: 9, weight: 700 }));
-      y += 4;
-      parts.push(svgRule(M, y, inner, RULE));
-      y += 14;
-
-      const gridX = M + 44;
-      groups.forEach((group, col) => {
-        parts.push(
-          svgText(
-            gridX + cell * col + cell / 2,
-            y,
-            getGroupAcronym(group, meta && meta.mandate).slice(0, 5),
-            { size: 6, anchor: "middle", fill: SECONDARY }
-          )
-        );
-      });
-      y += 5;
-
-      groups.forEach((rowGroup) => {
-        const rowIndex = indexOf.get(rowGroup);
-        parts.push(
-          svgText(
-            M + 40,
-            y + cell * 0.62,
-            getGroupAcronym(rowGroup, meta && meta.mandate).slice(0, 6),
-            { size: 6, anchor: "end", fill: SECONDARY }
-          )
-        );
-        groups.forEach((colGroup, col) => {
-          const colIndex = indexOf.get(colGroup);
-          const score = matrix[rowIndex] ? matrix[rowIndex][colIndex] : null;
-          const x = gridX + cell * col;
-          if (!Number.isFinite(score) || score === 0) {
-            parts.push(svgRect(x, y, cell - 1, cell - 1, "#f4f4f4"));
-            return;
-          }
-          const rgb = getRedGreenColor(score);
-          parts.push(svgRect(x, y, cell - 1, cell - 1, `rgb(${rgb.r},${rgb.g},${rgb.b})`));
-          const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
-          parts.push(
-            svgText(x + (cell - 1) / 2, y + cell * 0.62, Math.round(score * 100), {
-              size: 6,
-              anchor: "middle",
-              fill: luminance > 0.5 ? "#000000" : "#ffffff",
-              monospaceDigits: true,
-            })
-          );
-        });
-        y += cell;
-      });
-      y += 14;
-    }
-  }
-
-  const footerY = H - M;
-  parts.push(svgRule(M, footerY - 22, inner, RULE));
-  wrapText(caption.caveat, 78).forEach((line, i) => {
-    parts.push(
-      svgText(M, footerY - 12 + i * 8, line, { size: 7, fill: MUTED, italic: true })
+  const drawBlock = (block, entries) => {
+    if (entries.length === 0) return;
+    parts.push(`<g transform="translate(0 ${n1(y)})">${block.parts.join("")}</g>`);
+    y += block.height;
+    const grid = gaugeGrid(
+      entries.map((entry) => ({ ...entry, pitch })),
+      { x: M, y, width: inner, columns, size, labelWidth: colWidth - 6 }
     );
-  });
+    parts.push(grid.markup);
+    y = y + (Math.ceil(entries.length / columns) - 1) * pitch;
+    y = Math.max(grid.bottom, y) + 12;
+  };
+
+  drawBlock(groupBlock, groupEntries);
+  drawBlock(countryBlock, countryEntries);
 
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
@@ -1296,4 +1522,529 @@ export function downloadSVG(svgString, filename = "network.svg") {
   // Revoking synchronously cancels the download in Safari, which reads the
   // blob after the click returns.
   setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+/* -------------------------------------------------------------------------
+ * History sheet
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The three series the History tab plots, in the order it plots them.
+ *
+ * Colour is not the separator here. These sheets are printed, sometimes in
+ * greyscale, so each series carries a dash pattern and a marker shape as well
+ * — exactly as TrendsPanel does on screen, and for the same reason.
+ */
+const TREND_SERIES = [
+  { key: "withinGroup", label: "Within group", color: "#003399", dash: "", marker: "circle" },
+  { key: "withinCountry", label: "Within country", color: "#4a4a4a", dash: "5 3", marker: "square" },
+  { key: "crossGroup", label: "Between groups", color: "#8a8a8a", dash: "1.5 3", marker: "triangle" },
+];
+
+/** One series marker, centred on (x, y). Shapes, so greyscale still reads. */
+function trendMarker(shape, x, y, color, size = 2.6) {
+  if (shape === "square") {
+    return svgRect(x - size, y - size, size * 2, size * 2, color);
+  }
+  if (shape === "triangle") {
+    const points = [
+      `${n1(x)},${n1(y - size * 1.1)}`,
+      `${n1(x + size)},${n1(y + size * 0.8)}`,
+      `${n1(x - size)},${n1(y + size * 0.8)}`,
+    ].join(" ");
+    return `<polygon points="${points}" fill="${color}"/>`;
+  }
+  return `<circle cx="${n1(x)}" cy="${n1(y)}" r="${n2(size)}" fill="${color}"/>`;
+}
+
+/**
+ * A polyline through the terms that have a value, drawn as separate runs so a
+ * missing term is a gap rather than a straight line pretending to be evidence.
+ */
+function trendPath(points, color, dash, width = 1.4) {
+  const runs = [];
+  let run = [];
+  points.forEach((point) => {
+    if (point) {
+      run.push(point);
+      return;
+    }
+    if (run.length > 1) runs.push(run);
+    run = [];
+  });
+  if (run.length > 1) runs.push(run);
+  return runs
+    .map(
+      (segment) =>
+        `<polyline points="${segment
+          .map((p) => `${n1(p.x)},${n1(p.y)}`)
+          .join(" ")}" fill="none" stroke="${color}" stroke-width="${n2(
+          width
+        )}"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`
+    )
+    .join("");
+}
+
+/**
+ * The History tab as a sheet: twenty years of agreement at the open scope,
+ * with the whole Parliament behind it when the scope is narrower.
+ *
+ * Same paper, margins and type as exportStatsSheetSVG, so a network, its
+ * figures and its history print as one set.
+ *
+ * @param {Object} options
+ * @param {Object} options.meta - as buildCaption
+ * @param {Array} options.series - rows from lib/trends.js loadTrendSeries
+ * @param {Array|null} options.reference - the whole-Parliament series, drawn
+ *   faintly behind when the open scope is a country or a policy area
+ * @returns {string} a complete <svg> document
+ */
+export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
+  const rows = Array.isArray(series) ? series : [];
+  if (rows.length === 0) {
+    throw new Error("exportTrendsSheetSVG: no terms to draw");
+  }
+
+  const caption = buildCaption(meta || {});
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+
+  const header = sheetHeader(caption, M, inner);
+  const parts = [...header.parts];
+  let y = header.y;
+
+  const head = sectionHead(
+    "Five terms compared",
+    "Agreement within groups, within countries, and between groups, at this scope since 2004.",
+    M,
+    inner
+  );
+  parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+  y += head.height + 10;
+
+  // The domain covers both the open series and the Parliament behind it, or
+  // the two are drawn at different scales and the comparison is a lie.
+  const values = [];
+  const collect = (source) =>
+    (source || []).forEach((row) =>
+      TREND_SERIES.forEach((s) => {
+        if (Number.isFinite(row && row[s.key])) values.push(row[s.key]);
+      })
+    );
+  collect(rows);
+  collect(reference);
+  if (values.length === 0) {
+    throw new Error("exportTrendsSheetSVG: the series carries no finite value");
+  }
+  const lo = Math.max(0, Math.min(...values) - 0.05);
+  const hi = Math.min(1, Math.max(...values) + 0.05);
+  const span = hi - lo || 1;
+
+  const plot = { left: M + 22, right: M + inner, top: y, height: 215 };
+  const plotWidth = plot.right - plot.left;
+  const xAt = (index) =>
+    rows.length === 1
+      ? plot.left + plotWidth / 2
+      : plot.left + (plotWidth * index) / (rows.length - 1);
+  const yAt = (value) => plot.top + plot.height - ((value - lo) / span) * plot.height;
+
+  // Gridlines and the percentage axis.
+  [0, 0.25, 0.5, 0.75, 1].forEach((t) => {
+    const value = lo + span * t;
+    const gy = yAt(value);
+    parts.push(svgRule(plot.left, gy, plotWidth, SB_RULE, 0.5));
+    parts.push(
+      svgText(plot.left - 5, gy + 2.5, Math.round(value * 100), {
+        size: 6.5,
+        anchor: "end",
+        fill: SB_MUTED,
+        monospaceDigits: true,
+      })
+    );
+  });
+
+  const drawSeries = (source, faint) =>
+    TREND_SERIES.forEach((s) => {
+      const points = (source || []).map((row, index) =>
+        Number.isFinite(row && row[s.key])
+          ? { x: xAt(index), y: yAt(row[s.key]) }
+          : null
+      );
+      const color = faint ? "#c4c4c4" : s.color;
+      parts.push(trendPath(points, color, s.dash, faint ? 0.9 : 1.4));
+      if (faint) return;
+      points.forEach((point) => {
+        if (point) parts.push(trendMarker(s.marker, point.x, point.y, color));
+      });
+    });
+
+  // The Parliament first, so the scope on the sheet is drawn over it.
+  if (reference && reference.length === rows.length) drawSeries(reference, true);
+  drawSeries(rows, false);
+
+  // Term ticks, with the thin ones marked where they sit rather than in a note
+  // at the bottom that nobody reads next to the point it is about.
+  const axisY = plot.top + plot.height + 10;
+  rows.forEach((row, index) => {
+    parts.push(
+      svgText(xAt(index), axisY, row.short || `T${row.mandate}`, {
+        size: 7,
+        anchor: "middle",
+        weight: 700,
+      })
+    );
+    parts.push(
+      svgText(xAt(index), axisY + 7, row.years || "", {
+        size: 6,
+        anchor: "middle",
+        fill: SB_MUTED,
+      })
+    );
+    if (row.missing) {
+      parts.push(
+        svgText(xAt(index), axisY + 14.5, "no data", {
+          size: 5.5,
+          anchor: "middle",
+          fill: SB_MUTED,
+          italic: true,
+        })
+      );
+    } else if (row.thin) {
+      parts.push(
+        svgText(xAt(index), axisY + 14.5, `${fmtInt(row.sessions)} votes`, {
+          size: 5.5,
+          anchor: "middle",
+          fill: SB_MUTED,
+          italic: true,
+        })
+      );
+    }
+  });
+  y = axisY + 24;
+
+  // Legend, one line, in the order the series were drawn.
+  let legendX = plot.left;
+  TREND_SERIES.forEach((s) => {
+    parts.push(
+      `<line x1="${n1(legendX)}" y1="${n1(y)}" x2="${n1(legendX + 12)}" y2="${n1(
+        y
+      )}" stroke="${s.color}" stroke-width="1.4"${
+        s.dash ? ` stroke-dasharray="${s.dash}"` : ""
+      }/>`
+    );
+    parts.push(trendMarker(s.marker, legendX + 6, y, s.color, 2.2));
+    parts.push(svgText(legendX + 16, y + 2.5, s.label, { size: 7, fill: SB_BODY }));
+    legendX += 16 + estimateWidth(s.label, 7) + 14;
+  });
+  if (reference && reference.length === rows.length) {
+    y += 10;
+    parts.push(
+      svgText(plot.left, y + 2.5, "Faint lines behind: the whole Parliament.", {
+        size: 6.5,
+        fill: SB_MUTED,
+        italic: true,
+      })
+    );
+  }
+  y += 22;
+
+  // The second chart: the lowest agreement any two groups reach, term by term.
+  const pairs = rows.map((row) => (row && row.lowestPair) || null);
+  if (pairs.some((pair) => pair && Number.isFinite(pair.score))) {
+    parts.push(svgText(M, y, "The two groups furthest apart", { size: 9, weight: 700, fill: SB_INK }));
+    y += 4;
+    parts.push(svgRule(M, y, inner, SB_RULE));
+    y += 16;
+
+    const scores = pairs.filter(Boolean).map((pair) => pair.score);
+    // Zero floor, as on screen: where the least-agreeing pair sits relative to
+    // never voting together is the reading, and a cropped floor would make an
+    // 18% pair look like a modest dip. Headroom above, because every point
+    // carries its figure on top of it.
+    const sLo = 0;
+    const sHi = Math.min(1, Math.max(...scores) + 0.09);
+    const sSpan = sHi - sLo || 1;
+    // Two lines of pair names hang under this plot's axis, and the footer rule
+    // is fixed: take the height from what is left rather than from a constant,
+    // or a scope that adds a line above — the Parliament reference note — pushes
+    // the names through the rule.
+    const spark = { top: y, height: Math.max(60, Math.min(130, H - M - 20 - 32 - y)) };
+    const sparkY = (value) =>
+      spark.top + spark.height - ((value - sLo) / sSpan) * spark.height;
+
+    [0, 0.5, 1].forEach((t) => {
+      const value = sLo + sSpan * t;
+      const gy = sparkY(value);
+      parts.push(svgRule(plot.left, gy, plotWidth, SB_RULE, 0.5));
+      parts.push(
+        svgText(plot.left - 5, gy + 2.5, Math.round(value * 100), {
+          size: 6.5,
+          anchor: "end",
+          fill: SB_MUTED,
+          monospaceDigits: true,
+        })
+      );
+    });
+
+    const sparkPoints = pairs.map((pair, index) =>
+      pair && Number.isFinite(pair.score)
+        ? { x: xAt(index), y: sparkY(pair.score) }
+        : null
+    );
+    parts.push(trendPath(sparkPoints, INK, "", 1.2));
+    sparkPoints.forEach((point, index) => {
+      if (!point) return;
+      parts.push(trendMarker("circle", point.x, point.y, INK, 2.4));
+      // The last term sits on the right margin, so its figure is hung from the
+      // point rather than centred on it, and dropped under the point rather
+      // than over it — the line arrives at that point from above and the label
+      // sat on top of it.
+      const last = index === pairs.length - 1;
+      parts.push(
+        svgText(point.x + (last ? -4 : 0), point.y + (last ? 9 : -6), fmtPct(pairs[index].score), {
+          size: 6,
+          anchor: last ? "end" : "middle",
+          fill: SB_BODY,
+          monospaceDigits: true,
+        })
+      );
+    });
+
+    // Which two groups they were. Rarely the same pair twice, which is the
+    // reason the names are under the axis rather than in a single caption —
+    // each under its own colour, as the panel draws them. The colour comes
+    // from the group palette rather than from the nodes on screen: these are
+    // pairs from five terms, and most of those groups are not in the open
+    // network to be read off.
+    const labelY = spark.top + spark.height + 6;
+    const swatch = 5;
+    const rowPitch = 12;
+    pairs.forEach((pair, index) => {
+      const ids = pair ? [pair.a, pair.b] : [];
+      ids.slice(0, 2).forEach((group, line) => {
+        const top = labelY + line * rowPitch;
+        parts.push(
+          `<rect x="${n1(xAt(index) - swatch / 2)}" y="${n1(
+            top
+          )}" width="${swatch}" height="${swatch}" rx="1.5" fill="${getGroupColor(
+            group
+          )}"/>`
+        );
+        parts.push(
+          svgText(
+            xAt(index),
+            top + swatch + 5,
+            getGroupAcronym(group, meta && meta.mandate).slice(0, 11),
+            { size: 5.5, anchor: "middle", fill: SB_MUTED }
+          )
+        );
+      });
+    });
+    y = labelY + rowPitch * 2 + 8;
+  }
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="history-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
+}
+
+/* -------------------------------------------------------------------------
+ * Between-groups sheet
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The intergroup agreement matrix, alone on a sheet.
+ *
+ * It used to be squeezed into whatever the two tables on the figures sheet
+ * left, which meant a cell of 26 units carrying six-point type, and on a full
+ * Parliament it did not fit at all and was silently dropped. Given the page it
+ * can carry the group names down the side in full and a legend for its own
+ * colour scale, which is what makes it readable without the site open.
+ *
+ * @param {Object} options
+ * @param {Object} options.graphData
+ * @param {Object} options.meta - as buildCaption
+ * @param {Object} options.intergroupCohesion - {groups, matrix}
+ * @param {Object|null} options.baseline
+ * @returns {string} a complete <svg> document
+ */
+export function exportGroupMatrixSheetSVG({
+  graphData,
+  meta,
+  intergroupCohesion,
+  baseline = null,
+} = {}) {
+  const allGroups = (intergroupCohesion && intergroupCohesion.groups) || [];
+  const matrix = (intergroupCohesion && intergroupCohesion.matrix) || [];
+  // Non-attached members never vote as a group, so the row is not a reading of
+  // anything; the sidebar leaves it out of this grid for the same reason.
+  const groups = allGroups.filter((group) => group !== "NonAttached");
+  if (groups.length < 2) {
+    throw new Error("exportGroupMatrixSheetSVG: fewer than two groups to compare");
+  }
+
+  const caption = buildCaption(meta || {});
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+  const term = meta && meta.mandate;
+
+  const header = sheetHeader(
+    caption,
+    M,
+    inner,
+    baseline && baseline.label ? `change against ${baseline.label}` : null
+  );
+  const parts = [...header.parts];
+  let y = header.y;
+
+  const head = sectionHead(
+    "Inter-Group Voting Agreement",
+    "Average voting agreement between members of different political groups.",
+    M,
+    inner
+  );
+  parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+  y += head.height + 12;
+
+  // Acronyms down the side, each with the group's own colour beside it, as in
+  // the panel. Full names would take a third of the page and push the cells
+  // down to something no printer resolves.
+  const labelSize = 7;
+  const acronyms = groups.map((group) => getGroupAcronym(group, term));
+  const swatch = 6;
+  const labelWidth = Math.min(
+    110,
+    Math.max(...acronyms.map((name) => estimateWidth(name, labelSize))) + swatch + 10
+  );
+  const gridX = M + labelWidth;
+  // Cells are twice as wide as they are tall, as on screen: the figure inside
+  // one is two digits, so a square cell is mostly empty and the grid runs down
+  // the page further than it needs to.
+  const cellW = Math.min(
+    Math.floor((inner - labelWidth) / groups.length),
+    Math.floor(((H - M - 96 - y) / groups.length) * 2)
+  );
+  const cellH = cellW / 2;
+  const indexOf = new Map(allGroups.map((group, index) => [group, index]));
+  const colorOf = (group) => groupColorFromNodes(graphData, group);
+
+  groups.forEach((group, col) => {
+    const centre = gridX + cellW * col + (cellW - 1) / 2;
+    parts.push(
+      svgText(centre, y - 10, heatmapColumnLabel(group, term), {
+        size: 5.8,
+        anchor: "middle",
+        fill: SB_BODY,
+      })
+    );
+    parts.push(
+      `<rect x="${n1(centre - swatch / 2)}" y="${n1(
+        y - 7.5
+      )}" width="${swatch}" height="${swatch}" rx="1.5" fill="${colorOf(group)}"/>`
+    );
+  });
+
+  groups.forEach((rowGroup, row) => {
+    const rowIndex = indexOf.get(rowGroup);
+    const top = y + cellH * row;
+    const mid = top + cellH * 0.62;
+    parts.push(
+      `<rect x="${n1(gridX - 4 - swatch)}" y="${n1(
+        mid - swatch + 1
+      )}" width="${swatch}" height="${swatch}" rx="1.5" fill="${colorOf(rowGroup)}"/>`
+    );
+    parts.push(
+      svgText(gridX - 8 - swatch, mid, acronyms[row], {
+        size: labelSize,
+        anchor: "end",
+        fill: SB_INK,
+      })
+    );
+
+    groups.forEach((colGroup, col) => {
+      // The panel draws the lower triangle only: the matrix is symmetric, and
+      // the other half is the same eight readings a second time.
+      if (row < col) return;
+      const colIndex = indexOf.get(colGroup);
+      const score = matrix[rowIndex] ? matrix[rowIndex][colIndex] : null;
+      const x = gridX + cellW * col;
+      if (!Number.isFinite(score) || score === 0) {
+        parts.push(svgRect(x, top, cellW - 1, cellH - 1, "#f4f4f4"));
+        return;
+      }
+      const rgb = getRedGreenColor(score);
+      parts.push(svgRect(x, top, cellW - 1, cellH - 1, `rgb(${rgb.r},${rgb.g},${rgb.b})`));
+      const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+      const ink = luminance > 0.5 ? "#000000" : "#ffffff";
+      const delta = getDelta(
+        score,
+        // Same key as baselineForGroupPair in dataLoader.js: sorted, so one
+        // pair has one entry however the grid is walked.
+        baseline?.scores?.intergroup?.[[rowGroup, colGroup].sort().join("|")]
+      );
+      parts.push(
+        svgText(x + (cellW - 1) / 2, top + cellH * (delta && cellH >= 18 ? 0.5 : 0.66), Math.round(score * 100), {
+          size: Math.min(9, cellH * 0.5),
+          anchor: "middle",
+          fill: ink,
+          monospaceDigits: true,
+        })
+      );
+      if (delta && cellH >= 18) {
+        parts.push(
+          svgText(x + (cellW - 1) / 2, top + cellH * 0.85, delta.text, {
+            size: Math.min(5.4, cellH * 0.3),
+            anchor: "middle",
+            fill: ink,
+            opacity: 0.65,
+            monospaceDigits: true,
+          })
+        );
+      }
+    });
+  });
+  y += cellH * groups.length + 20;
+
+  // The colour ramp, so a printed cell can be read back to a number.
+  parts.push(svgText(M, y, "Share of votes cast the same way", { size: 6.5, fill: SB_BODY }));
+  y += 6;
+  const rampWidth = Math.min(180, inner);
+  const steps = 24;
+  for (let i = 0; i < steps; i += 1) {
+    const rgb = getRedGreenColor(i / (steps - 1));
+    parts.push(
+      svgRect(M + (rampWidth / steps) * i, y, rampWidth / steps + 0.4, 6, `rgb(${rgb.r},${rgb.g},${rgb.b})`)
+    );
+  }
+  y += 13;
+  parts.push(svgText(M, y, "0%", { size: 6, fill: SB_MUTED }));
+  parts.push(svgText(M + rampWidth, y, "100%", { size: 6, anchor: "end", fill: SB_MUTED }));
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="group-matrix-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
+}
+
+/**
+ * The acronym as the heatmap's own column headers write it.
+ *
+ * "Greens/EFA" is the one that does not fit a cell, and the panel shortens it
+ * to "Greens" there and only there; kept in step by hand, as on screen.
+ */
+function heatmapColumnLabel(groupId, mandate) {
+  const acronym = getGroupAcronym(groupId, mandate);
+  return acronym === "Greens/EFA" ? "Greens" : acronym;
 }

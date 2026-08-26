@@ -163,6 +163,7 @@ export function readAgreement(file, mepId, subject) {
             value: block.agr?.[ownIndex] ?? null,
             level: groupLevels?.[ownIndex] ?? null,
           },
+    country: entry.country ?? null,
     national:
       typeof block.nat === "number"
         ? {
@@ -171,7 +172,44 @@ export function readAgreement(file, mepId, subject) {
             level: file.nationalLevels?.[key]?.[entry.country] ?? null,
           }
         : null,
+    // The same MEP against each political group *of their own country* - the
+    // Italian ECR, the Italian PD - rather than against those groups whole.
+    //
+    // The notch is national too: what a typical member of this MEP's *own
+    // national party* manages with that same cell. Open the Italy map and
+    // every figure on screen is about Italians, which is what a reader who
+    // narrowed to one country is asking for. It also means a shared national
+    // pull cancels rather than showing, so what is left on a dial is this MEP
+    // against their own party-mates and nobody else.
+    //
+    // Empty for the Non-Attached, and for the sole member of a national party:
+    // their own party is their reference and there is no average of one.
+    nationalGroups: nationalGroups(file, key, entry, group, block),
   };
+}
+
+/** One row per political group of an MEP's own country; see `readAgreement`. */
+function nationalGroups(file, key, entry, group, block) {
+  const country = entry.country ?? null;
+  if (!country || !Array.isArray(block.natgrp)) return [];
+  // The block names its own reference row. It is usually the MEP's term-wide
+  // group, and for a member who crossed the floor it is not: in one policy
+  // area they may have sat mostly with a different national party, and that is
+  // the party the figures were measured against. Taking `group` here instead
+  // silently dropped the notch for 144 figures across terms 7 to 9.
+  const reference = block.natgrpRef ?? group;
+  const levels = file.nationalGroupLevels?.[key]?.[country]?.[reference] ?? null;
+  return (file.groups || [])
+    .map((groupId, index) => ({
+      groupId,
+      value: block.natgrp[index] ?? null,
+      level: levels?.[index] ?? null,
+      // Not the block's `used`. A national cell is a handful of colleagues, so
+      // the sample under one of these dials is its own number and a much
+      // smaller one; the panel warns on it separately.
+      votes: block.natgrpN?.[index] ?? null,
+    }))
+    .filter((row) => typeof row.value === "number");
 }
 
 /**
