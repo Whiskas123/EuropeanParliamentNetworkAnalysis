@@ -20,8 +20,13 @@
 //
 // Type and colour come from the sidebar scale in globals.scss, which also
 // declares .trends-title, .trends-description, .trends-status,
-// .trends-spark-title and .trends-spark-lede. The view switch and the change badges are the shared
-// .sb-sort and .delta-badge, same as the dial grids two tabs over.
+// .trends-spark-title and .trends-spark-lede.
+//
+// This panel used to carry a Chart/Numbers switch over a table of the same five
+// terms, and a change badge on every readout row. Both are gone: the readout
+// stands under a chart that already draws the change as the slope between two
+// points, and a table restating the chart is a second thing to maintain and a
+// second place for the two to disagree.
 
 .trends-panel {
   margin-top: 30px;
@@ -219,19 +224,13 @@
   color: var(--sb-muted);
 }
 
-// Figure and change form two columns to read down, not a sentence to read
-// across, so both are fixed-width and right-aligned.
+// A column to read down, not a sentence to read across: fixed-width and
+// right-aligned, so the three figures line up under each other.
 .trends-readout-value {
   min-width: 42px;
   text-align: right;
   color: var(--sb-ink);
   font-variant-numeric: tabular-nums;
-}
-
-.trends-readout-row .delta-badge {
-  min-width: 48px;
-  margin-left: 2px;
-  justify-content: center;
 }
 
 // --- the lowest pair, on its own scale ------------------------------------
@@ -316,96 +315,4 @@
 // takes the note colour rather than the faint one.
 .trends-caveat {
   margin: 8px 0 0;
-}
-
-// --- numbers view ---------------------------------------------------------
-
-.trends-table-scroll {
-  margin-top: 2px;
-  overflow-x: auto;
-}
-
-.trends-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--sb-fs-sub);
-  font-variant-numeric: tabular-nums;
-
-  th,
-  td {
-    padding: 4px 5px;
-    text-align: right;
-    border-bottom: 1px solid var(--sb-rule-soft);
-    white-space: nowrap;
-  }
-
-  thead th {
-    font-weight: 600;
-    color: var(--sb-muted);
-    font-size: var(--sb-fs-micro);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  tbody th {
-    text-align: left;
-    font-weight: 500;
-    color: var(--sb-ink);
-  }
-
-  td {
-    color: var(--sb-muted);
-  }
-
-  tr.current {
-    background-color: var(--sb-wash);
-
-    th,
-    td {
-      color: var(--sb-ink);
-      font-weight: 600;
-    }
-  }
-
-  // A term this view never reached: one cell saying so, spanning the figures
-  // it does not have.
-  tr.absent {
-    td {
-      text-align: left;
-      color: var(--sb-faint);
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    th {
-      color: var(--sb-faint);
-      font-weight: 400;
-    }
-  }
-
-  // The vote count a thin term rests on, marked the way the chart marks it.
-  td.thin {
-    color: var(--sb-ink);
-    cursor: help;
-  }
-}
-
-// The table's version of a hollow marker — the same shape carrying the same
-// warning, so the two views of this panel do not each invent a convention.
-.trends-thin-mark {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-left: 5px;
-  border: 1.5px solid var(--sb-ink-soft);
-  border-radius: 50%;
-  background: #ffffff;
-}
-
-.trends-table-caption {
-  caption-side: top;
-  text-align: left;
-  font-size: var(--sb-fs-note);
-  color: var(--sb-muted);
-  padding-bottom: 4px;
 }
