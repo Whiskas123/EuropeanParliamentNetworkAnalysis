@@ -75,6 +75,9 @@ const ARROW_BOX = { top: 8, right: 40, bottom: 20, left: 52 };
 const ARROW_ROW = 19;
 const ARROW_DOT = 3.2;
 
+/** Clearance between two term names at the right edge of the house profile. */
+const LABEL_GAP = 10;
+
 /**
  * Change is red or green, as it is on every DeltaBadge in the sidebar.
  *
@@ -126,17 +129,27 @@ function segments(pts) {
   return runs;
 }
 
-/** Scale a set of values to a padded domain that never leaves [0, 1]. */
-function domainOf(values, padShare = 0.12) {
-  const usable = values.filter(finite);
-  if (usable.length === 0) return [0, 1];
-  const lo = Math.min(...usable);
-  const hi = Math.max(...usable);
-  // A zero baseline would press every line into a band at the top; agreement
-  // between two groups is never near zero. The axis numbers say where we are.
-  const pad = Math.max((hi - lo) * padShare, 0.02);
-  return [Math.max(0, lo - pad), Math.min(1, hi + pad)];
-}
+/**
+ * The axis, fixed at 0–100% on every form.
+ *
+ * These charts used to scale to their own data, which reads better in
+ * isolation — a fitted axis fills the plot and every wobble is visible — and is
+ * the wrong default here, because the axis then changes underneath the reader.
+ * Switching pivot from the EPP to the far right, or ticking a term off, silently
+ * redrew the scale, so two panels showing genuinely different levels looked
+ * alike and a line that had barely moved could fill the plot. The controls
+ * above invite exactly that comparison.
+ *
+ * Fixed means a line's height is a fact about the number, not about which
+ * options happen to be selected, and the three forms can be read against each
+ * other. The cost is real and accepted: agreement between two groups is rarely
+ * below 20% or above 90%, so the top and bottom fifths of every plot stay
+ * empty and small movements are smaller than they were.
+ */
+const AXIS = [0, 1];
+
+/** Quarters of the axis — the gridlines every form shares. */
+const AXIS_TICKS = [0, 0.25, 0.5, 0.75, 1];
 
 export default function PartnerTrends({
   mandate,
@@ -215,7 +228,7 @@ export default function PartnerTrends({
     if (!all.some(finite)) return null;
 
     if (form === "arrows") {
-      const domain = domainOf(all, 0.08);
+      const domain = AXIS;
       const height = ARROW_BOX.top + ARROW_BOX.bottom + partners.length * ARROW_ROW;
       const plotWidth = width - ARROW_BOX.left - ARROW_BOX.right;
       const x = (v) =>
@@ -249,7 +262,7 @@ export default function PartnerTrends({
     }
 
     if (form === "profile") {
-      const domain = domainOf(all, 0.12);
+      const domain = AXIS;
       const height = ratio(width, 0.5, 168, 300);
       const plotWidth = width - PROFILE_BOX.left - PROFILE_BOX.right;
       const plotHeight = height - PROFILE_BOX.top - PROFILE_BOX.bottom;
@@ -276,10 +289,49 @@ export default function PartnerTrends({
           }),
         };
       });
-      return { kind: "profile", domain, height, x, y, step, lines, plotHeight };
+      // Each line is named at its right end, and on a fixed axis those ends
+      // bunch: the EPP's last four terms land within nine pixels of each other
+      // and the names print on top of one another. Resolved in one pass over
+      // all five rather than per line — nudging one into its neighbour is how
+      // the pile started — by walking down the sorted ends and pushing each to
+      // at least LABEL_GAP below the one above, then clamping the run inside
+      // the plot. What moves is the label, never the point.
+      const ends = lines
+        .map((line, index) => {
+          const drawn = line.points.filter(Boolean);
+          return drawn.length > 0 ? { index, y: drawn[drawn.length - 1].y } : null;
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.y - b.y);
+      let floor = PROFILE_BOX.top;
+      ends.forEach((end) => {
+        end.labelY = Math.max(end.y, floor);
+        floor = end.labelY + LABEL_GAP;
+      });
+      // If that pushed the last one past the axis, walk back up.
+      let ceiling = PROFILE_BOX.top + plotHeight;
+      for (let i = ends.length - 1; i >= 0; i -= 1) {
+        ends[i].labelY = Math.min(ends[i].labelY, ceiling);
+        ceiling = ends[i].labelY - LABEL_GAP;
+      }
+      const labelled = lines.map((line, index) => {
+        const end = ends.find((entry) => entry.index === index);
+        return { ...line, labelY: end ? end.labelY : null };
+      });
+
+      return {
+        kind: "profile",
+        domain,
+        height,
+        x,
+        y,
+        step,
+        lines: labelled,
+        plotHeight,
+      };
     }
 
-    const domain = domainOf(all, 0.12);
+    const domain = AXIS;
     const height = ratio(width, 0.5, 168, 300);
     const plotWidth = width - LINE_BOX.left - LINE_BOX.right;
     const plotHeight = height - LINE_BOX.top - LINE_BOX.bottom;
@@ -485,7 +537,7 @@ export default function PartnerTrends({
 /** Terms on the x-axis, one coloured line per partner family. */
 function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered }) {
   const { domain, height, x, y, lines, plotHeight } = geometry;
-  const ticks = [domain[0], (domain[0] + domain[1]) / 2, domain[1]];
+  const ticks = AXIS_TICKS;
 
   return (
     <svg
@@ -592,7 +644,7 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
  */
 function ArrowChart({ geometry, width, pivot }) {
   const { domain, height, x, bars } = geometry;
-  const ticks = [domain[0], (domain[0] + domain[1]) / 2, domain[1]];
+  const ticks = AXIS_TICKS;
   const id = useId();
 
   return (
@@ -690,7 +742,7 @@ function ArrowChart({ geometry, width, pivot }) {
  */
 function ProfileChart({ geometry, rows, width, pivot, mandate }) {
   const { domain, height, x, y, lines, plotHeight } = geometry;
-  const ticks = [domain[0], (domain[0] + domain[1]) / 2, domain[1]];
+  const ticks = AXIS_TICKS;
   const pivotIndex = FAMILY_ORDER.indexOf(pivot);
 
   return (
@@ -766,13 +818,13 @@ function ProfileChart({ geometry, rows, width, pivot, mandate }) {
               </title>
             </circle>
           ))}
-          {line.points.filter(Boolean).length > 0 && (
+          {line.labelY !== null && (
             <text
               className={`partners-line-label ${
                 line.row.mandate === mandate ? "current" : ""
               }`}
               x={width - PROFILE_BOX.right + 4}
-              y={line.points.filter(Boolean).slice(-1)[0].y + 3}
+              y={line.labelY + 3}
             >
               {line.row.short}
             </text>
