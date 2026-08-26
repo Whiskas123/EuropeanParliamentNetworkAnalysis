@@ -9,12 +9,13 @@ import {
   isEmphasised,
   nodeOpacity,
   edgeOpacity,
+  boundsCenter,
+  rotatePoint,
   UNKNOWN_COLOR,
 } from "../lib/edgeStyle";
 import { listParties } from "../lib/parties";
 import {
   exportNetworkSVG,
-  exportStatsSheetSVG,
   downloadSVG,
   buildCaption,
   buildLegend,
@@ -87,6 +88,54 @@ function nodeRadiusFor(nodeCount) {
     3,
     Math.min(15, baseNodeSize * Math.pow(nodeCount / 700, 0.4))
   );
+}
+
+/**
+ * The eight orientations the rotate control steps through.
+ *
+ * Half a right angle: enough that one press visibly turns the picture, few
+ * enough that eight presses bring it back to where it started.
+ */
+const ROTATION_STEP = Math.PI / 4;
+
+/**
+ * The transform that fits the whole layout, at a given orientation, into a
+ * viewport of this size.
+ *
+ * The bounding box of a rotated cloud is not the rotated bounding box — a wide
+ * layout stood on its corner is taller and narrower than it was — so the
+ * extent is measured after the turn, not before it. At angle 0 this is exactly
+ * the fit the network has always opened at.
+ */
+function fitTransform(nodes, center, angle, width, height) {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (let i = 0; i < nodes.length; i += 1) {
+    const point = rotatePoint(nodes[i].x, nodes[i].y, center, angle);
+    if (!Number.isFinite(point.x) || !Number.isFinite(point.y)) continue;
+    if (point.x < minX) minX = point.x;
+    if (point.x > maxX) maxX = point.x;
+    if (point.y < minY) minY = point.y;
+    if (point.y > maxY) maxY = point.y;
+  }
+  if (!Number.isFinite(minX)) return { x: 0, y: 0, k: 1 };
+
+  const fullWidth = Math.max(maxX - minX, 1);
+  const fullHeight = Math.max(maxY - minY, 1);
+  // 10% of the viewport on each side, so nothing sits against an edge.
+  const margin = 0.1;
+  const scale = Math.min(
+    (width * (1 - 2 * margin)) / fullWidth,
+    (height * (1 - 2 * margin)) / fullHeight
+  );
+  const k = Math.max(0.01, Math.min(10, scale));
+  return {
+    x: width / 2 - (k * (minX + maxX)) / 2,
+    y: height / 2 - (k * (minY + maxY)) / 2,
+    k,
+  };
 }
 
 /**
@@ -204,10 +253,26 @@ function drawCommunityLabels(
   nodeSize,
   viewScale,
   focusId,
-  boxesOut
+  boxesOut,
+  rotation,
+  center
 ) {
   if (!communities || communities.length === 0) return;
   ctx.save();
+  // A turned network is still read horizontally, so the names come back out of
+  // the rotation: the context is put back the way it was, and each name is
+  // drawn at where its community *ended up*. Everything measured and stacked
+  // below therefore happens in the upright frame, which is the frame the
+  // collisions are actually seen in — and, because the boxes recorded here
+  // are the ones the cursor is tested against, the one hit-testing uses too.
+  if (rotation) {
+    ctx.translate(center.x, center.y);
+    ctx.rotate(-rotation);
+    ctx.translate(-center.x, -center.y);
+  }
+  const anchors = communities.map((community) =>
+    rotatePoint(community.anchor.x, community.anchor.y, center, rotation)
+  );
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
   ctx.lineJoin = "round";
@@ -221,14 +286,14 @@ function drawCommunityLabels(
 
   // Shapes overlap, so their names would too. Measured here and stacked in
   // lib/communityShapes.js, on the rule the SVG export also follows.
-  const measured = communities.map((community) => {
+  const measured = communities.map((community, index) => {
     ctx.font = canvasFont(titleSize);
     const titleWidth = ctx.measureText(community.label).width;
     ctx.font = canvasFont(countSize, 500);
     const countWidth = ctx.measureText(community.countLabel).width;
     return {
-      x: community.anchor.x,
-      y: community.anchor.y - titleSize * 0.75,
+      x: anchors[index].x,
+      y: anchors[index].y - titleSize * 0.75,
       width: Math.max(titleWidth, countWidth),
       height: blockHeight,
     };
@@ -237,7 +302,7 @@ function drawCommunityLabels(
 
   for (let i = 0; i < communities.length; i += 1) {
     const community = communities[i];
-    const x = community.anchor.x;
+    const x = anchors[i].x;
     const countY = baselines[i];
     const titleY = countY - countSize * 1.15;
     const faded = focusId !== null && focusId !== community.id;
@@ -297,6 +362,10 @@ function drawScene(ctx, params) {
     communities,
     communityFocusId,
     viewScale,
+    // The turn the caller has already applied to the context, and the point it
+    // was applied about. Only the names need them, to come back out of it.
+    rotation = 0,
+    rotationCenter,
   } = params;
 
   const dimActive = Boolean(dim && dim.value);
@@ -409,7 +478,9 @@ function drawScene(ctx, params) {
     nodeSize,
     viewScale,
     communityFocusId ?? null,
-    params.labelBoxes
+    params.labelBoxes,
+    rotation,
+    rotationCenter || { x: 0, y: 0 }
   );
 }
 
@@ -616,12 +687,6 @@ export default function NetworkCanvas({
   selectedSubject,
   renderSettings,
   onRenderSettingsChange,
-  // Only read by the stats-sheet export, which puts the sidebar's figures on
-  // a sheet to hang beside the printed network.
-  baseline,
-  intergroupCohesion,
-  intragroupCohesion,
-  countrySimilarity,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -643,6 +708,14 @@ export default function NetworkCanvas({
   });
   const initialScaleRef = useRef(1);
   const initialTransformRef = useRef({ x: 0, y: 0, k: 1 });
+  // The point the whole view turns about: the centre of the layout's bounding
+  // box, refreshed whenever a new network arrives.
+  const layoutCenterRef = useRef({ x: 0, y: 0 });
+  // How far the view has been turned, in radians. Kept in a ref as well as in
+  // state because the mouse handlers are installed once and never re-installed,
+  // so the angle they undo has to reach them the same way the transform does.
+  const [rotation, setRotation] = useState(0);
+  const rotationRef = useRef(0);
   const [canvasReady, setCanvasReady] = useState(false);
   const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
   const [isAtMinZoom, setIsAtMinZoom] = useState(false);
@@ -655,7 +728,6 @@ export default function NetworkCanvas({
   // until lib/networkExport.js is implemented. Offering a button that cannot
   // work is worse than not offering it.
   const [svgExportBroken, setSvgExportBroken] = useState(false);
-  const [statsExportBroken, setStatsExportBroken] = useState(false);
   // The community outlines, once they have been computed. Held here rather
   // than derived in a useMemo because computing them blocks for a fifth of a
   // second on the full network, which has to happen off the click.
@@ -980,6 +1052,14 @@ export default function NetworkCanvas({
     ctx.scale(effectivePixelRatio, effectivePixelRatio);
     ctx.translate(t.x, t.y);
     ctx.scale(t.k, t.k);
+    // The turn goes inside the pan and zoom, so panning stays panning: the
+    // network rotates about its own centre, not about the corner of the screen.
+    const center = layoutCenterRef.current;
+    if (rotation) {
+      ctx.translate(center.x, center.y);
+      ctx.rotate(rotation);
+      ctx.translate(-center.x, -center.y);
+    }
 
     const labelBoxes = [];
 
@@ -1000,6 +1080,8 @@ export default function NetworkCanvas({
       viewScale: t.k,
       lineWidthDivisor: effectivePixelRatio,
       baseEdgeAlpha: isSafari ? 0.05 : 0.3,
+      rotation,
+      rotationCenter: center,
     });
 
     ctx.restore();
@@ -1009,6 +1091,7 @@ export default function NetworkCanvas({
     selectedNode,
     canvasReady,
     transform,
+    rotation,
     drawnLinks,
     colorFor,
     widthMultiplier,
@@ -1127,10 +1210,22 @@ export default function NetworkCanvas({
 
       const rect = canvas.getBoundingClientRect();
       const currentTransform = transformRef.current;
-      const x =
+      // Two frames, because the names are drawn in one and everything else in
+      // the other: `viewX/viewY` undoes only the pan and zoom, which is where
+      // the label plates live; `x/y` undoes the turn as well, and is where the
+      // MEPs and the outlines are.
+      const viewX =
         (event.clientX - rect.left - currentTransform.x) / currentTransform.k;
-      const y =
+      const viewY =
         (event.clientY - rect.top - currentTransform.y) / currentTransform.k;
+      const layoutPoint = rotatePoint(
+        viewX,
+        viewY,
+        layoutCenterRef.current,
+        -rotationRef.current
+      );
+      const x = layoutPoint.x;
+      const y = layoutPoint.y;
 
       const nodeSize = nodeRadiusFor(graphData.nodes.length);
 
@@ -1140,7 +1235,10 @@ export default function NetworkCanvas({
       const labelled = overlay
         ? communityLabelBoxesRef.current.find(
             (box) =>
-              x >= box.left && x <= box.right && y >= box.top && y <= box.bottom
+              viewX >= box.left &&
+              viewX <= box.right &&
+              viewY >= box.top &&
+              viewY <= box.bottom
           )
         : null;
       if (labelled) {
@@ -1207,10 +1305,15 @@ export default function NetworkCanvas({
 
       const rect = canvas.getBoundingClientRect();
       const currentTransform = transformRef.current;
-      const x =
-        (event.clientX - rect.left - currentTransform.x) / currentTransform.k;
-      const y =
-        (event.clientY - rect.top - currentTransform.y) / currentTransform.k;
+      // Back through the turn as well as the pan and zoom, so a click lands on
+      // the MEP that is under the cursor rather than the one that was there
+      // before the network was rotated.
+      const { x, y } = rotatePoint(
+        (event.clientX - rect.left - currentTransform.x) / currentTransform.k,
+        (event.clientY - rect.top - currentTransform.y) / currentTransform.k,
+        layoutCenterRef.current,
+        -rotationRef.current
+      );
 
       const nodeSize = nodeRadiusFor(graphData.nodes.length);
 
@@ -1273,40 +1376,27 @@ export default function NetworkCanvas({
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
 
-    // Calculate initial transform to fit all nodes with margins
-    const xExtent = d3.extent(graphData.nodes, (d) => d.x);
-    const yExtent = d3.extent(graphData.nodes, (d) => d.y);
+    // The point the rotate control turns the view about, and the point the
+    // exporter turns it about too.
+    const center = boundsCenter(graphData.nodes);
+    layoutCenterRef.current = center;
 
-    // Handle edge case: if all nodes are at the same position
-    const fullWidth = Math.max(xExtent[1] - xExtent[0], 1);
-    const fullHeight = Math.max(yExtent[1] - yExtent[0], 1);
+    // A new network arrives in the orientation it was laid out in. Carrying a
+    // turn over from the last one would mean a country view opening at an
+    // angle nobody asked for.
+    rotationRef.current = 0;
+    setRotation(0);
 
-    const centerX = (xExtent[0] + xExtent[1]) / 2;
-    const centerY = (yExtent[0] + yExtent[1]) / 2;
-
-    // Add margins (10% on each side = 20% total, so use 0.8 multiplier)
-    const margin = 0.1; // 10% margin on each side
-    const availableWidth = width * (1 - 2 * margin);
-    const availableHeight = height * (1 - 2 * margin);
-
-    // Calculate scale to fit nodes with margins
-    const scaleX = availableWidth / fullWidth;
-    const scaleY = availableHeight / fullHeight;
-    const scale = Math.min(scaleX, scaleY);
-
-    // Ensure minimum scale to prevent extreme zoom
-    const minScale = 0.01;
-    const maxScale = 10;
-    const clampedScale = Math.max(minScale, Math.min(maxScale, scale));
-
-    const initialTransform = {
-      x: width / 2 - clampedScale * centerX,
-      y: height / 2 - clampedScale * centerY,
-      k: clampedScale,
-    };
+    const initialTransform = fitTransform(
+      graphData.nodes,
+      center,
+      0,
+      width,
+      height
+    );
 
     // Store initial scale and transform to prevent zooming out more than this
-    initialScaleRef.current = clampedScale;
+    initialScaleRef.current = initialTransform.k;
     initialTransformRef.current = { ...initialTransform };
 
     transformRef.current = initialTransform;
@@ -1318,7 +1408,7 @@ export default function NetworkCanvas({
 
     // Update scale extent with the new initial scale
     if (zoomRef.current) {
-      zoomRef.current.scaleExtent([clampedScale, 10]);
+      zoomRef.current.scaleExtent([initialTransform.k, 10]);
     }
 
     zoomSelection.call(
@@ -1354,15 +1444,69 @@ export default function NetworkCanvas({
     zoomSelection.call(zoomRef.current.transform, newTransform);
   };
 
-  const handleResetZoom = () => {
-    if (!zoomRef.current || !canvasRef.current) return;
+  /**
+   * Turn the whole network an eighth of a turn clockwise.
+   *
+   * A layout has no north — the axes mean nothing — so which way up it sits is
+   * a composition decision, and this is the control for it: turn the picture
+   * until the shape reads the way the page or the panel needs it to.
+   *
+   * Two things have to be redone at each step. The fit changes, because a
+   * cloud on its corner needs a different scale to stay inside the viewport
+   * than the same cloud square-on, and that fit is also the floor on zooming
+   * out. And if the reader has zoomed in, the point they were looking at is
+   * held at the centre of the screen through the turn, so rotating never
+   * loses their place.
+   */
+  const handleRotate = () => {
+    if (!zoomRef.current || !canvasRef.current || !containerRef.current) return;
+    const graph = graphDataRef.current;
+    if (!graph || !graph.nodes || graph.nodes.length === 0) return;
+
     const d3 = require("d3");
-    const zoomSelection = d3.select(canvasRef.current);
-    const initialTransform = initialTransformRef.current;
-    const newTransform = d3.zoomIdentity
-      .translate(initialTransform.x, initialTransform.y)
-      .scale(initialTransform.k);
-    zoomSelection.call(zoomRef.current.transform, newTransform);
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+    const center = layoutCenterRef.current;
+    const previous = rotationRef.current;
+    const next = (previous + ROTATION_STEP) % (Math.PI * 2);
+
+    const fit = fitTransform(graph.nodes, center, next, width, height);
+    const wasAtMinZoom =
+      Math.abs(transformRef.current.k - initialScaleRef.current) < 0.001;
+
+    initialScaleRef.current = fit.k;
+    initialTransformRef.current = { ...fit };
+    zoomRef.current.scaleExtent([fit.k, 10]);
+
+    let target = fit;
+    if (!wasAtMinZoom) {
+      // Whatever is at the middle of the screen stays at the middle of the
+      // screen. Undoing the pan and zoom gives where that point sits at the
+      // current angle; turning it one more step gives where it will sit at
+      // the next one, and the new pan is whatever puts that back under the
+      // middle pixel. The full angle never enters into it — only the step
+      // between the two — so the MEP itself is never named.
+      const current = transformRef.current;
+      const k = Math.max(fit.k, current.k);
+      const heldAfterTurn = rotatePoint(
+        (width / 2 - current.x) / current.k,
+        (height / 2 - current.y) / current.k,
+        center,
+        ROTATION_STEP
+      );
+      target = {
+        x: width / 2 - k * heldAfterTurn.x,
+        y: height / 2 - k * heldAfterTurn.y,
+        k,
+      };
+    }
+
+    rotationRef.current = next;
+    setRotation(next);
+    d3.select(canvasRef.current).call(
+      zoomRef.current.transform,
+      d3.zoomIdentity.translate(target.x, target.y).scale(target.k)
+    );
   };
 
   // What the exporters need to know about the view they are printing.
@@ -1406,6 +1550,10 @@ export default function NetworkCanvas({
           edgeWidth: widthMultiplier,
           colorMode,
           dim,
+          // What is on screen is what comes out: outlines when the outlines
+          // are up, at the orientation the reader turned the network to.
+          communities: showCommunities,
+          rotation,
         },
         meta: exportMeta,
       })
@@ -1427,49 +1575,6 @@ export default function NetworkCanvas({
       false
     );
     if (!delivered) setSvgExportBroken(true);
-  };
-
-  /**
-   * The figures behind the current view, as a sheet to hang beside the print.
-   *
-   * Separate from the network export because on a wall they are two objects:
-   * the shape, and the numbers that shape came from.
-   */
-  const handleExportStatsSheet = () => {
-    if (!graphData) return;
-    const svg = tryExportCall("exportStatsSheetSVG", () =>
-      exportStatsSheetSVG({
-        graphData,
-        renderSettings: {
-          edgePercentile,
-          edgeWidth: widthMultiplier,
-          colorMode,
-          dim,
-        },
-        meta: exportMeta,
-        stats: {
-          intragroupCohesion: intragroupCohesion || [],
-          countrySimilarity: countrySimilarity || [],
-          intergroupCohesion: intergroupCohesion || null,
-          baseline: baseline || null,
-        },
-      })
-    );
-
-    if (!svg) {
-      setStatsExportBroken(true);
-      return;
-    }
-
-    const delivered = tryExportCall(
-      "downloadSVG",
-      () => {
-        downloadSVG(svg, buildExportFilename("svg").replace(/\.svg$/, "-stats.svg"));
-        return true;
-      },
-      false
-    );
-    if (!delivered) setStatsExportBroken(true);
   };
 
   const handleExportPNG = () => {
@@ -1594,6 +1699,12 @@ export default function NetworkCanvas({
     // After scaling the context, translate and scale transforms apply in the scaled space
     exportCtx.translate(t.x, t.y);
     exportCtx.scale(t.k, t.k);
+    const exportCenter = layoutCenterRef.current;
+    if (rotation) {
+      exportCtx.translate(exportCenter.x, exportCenter.y);
+      exportCtx.rotate(rotation);
+      exportCtx.translate(-exportCenter.x, -exportCenter.y);
+    }
 
     // Same draw path as the screen, so an export cannot drift from the view.
     // The export context is scaled by `scale` rather than by the device pixel
@@ -1609,6 +1720,8 @@ export default function NetworkCanvas({
       viewScale: t.k,
       lineWidthDivisor: 1,
       baseEdgeAlpha: 0.3,
+      rotation,
+      rotationCenter: exportCenter,
     });
 
     exportCtx.restore();
@@ -1812,9 +1925,12 @@ export default function NetworkCanvas({
         </button>
         <button
           className="network-zoom-button"
-          onClick={handleResetZoom}
-          title="Reset Zoom (or double-click)"
-          aria-label="Reset Zoom"
+          onClick={handleRotate}
+          title={`Rotate 45° — now ${Math.round(
+            (rotation * 180) / Math.PI
+          )}° from the layout`}
+          aria-label="Rotate the network 45 degrees"
+          disabled={!graphData}
         >
           <svg
             width="16"
@@ -1826,10 +1942,38 @@ export default function NetworkCanvas({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-            <path d="M21 3v5h-5"></path>
-            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-            <path d="M3 21v-5h5"></path>
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+        <button
+          className="network-zoom-button"
+          onClick={() => updateSettings({ communities: !showCommunities })}
+          title={
+            showCommunities
+              ? "Hide the community outlines"
+              : "Outline the communities the votes fall into"
+          }
+          aria-label="Community outlines"
+          aria-pressed={showCommunities}
+          disabled={!graphData}
+        >
+          {/* Three MEPs with a dashed ring drawn round them — the same dashed
+              outline the canvas uses for a community. */}
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="9" strokeDasharray="3.6 2.6"></circle>
+            <circle cx="9" cy="10" r="1.7" fill="currentColor"></circle>
+            <circle cx="15" cy="9.5" r="1.7" fill="currentColor"></circle>
+            <circle cx="12" cy="15.5" r="1.7" fill="currentColor"></circle>
           </svg>
         </button>
         <button
@@ -1905,31 +2049,6 @@ export default function NetworkCanvas({
               <polyline points="14 2 14 8 20 8"></polyline>
               <polyline points="10 12 8 14 10 16"></polyline>
               <polyline points="14 12 16 14 14 16"></polyline>
-            </svg>
-          </button>
-        )}
-        {!statsExportBroken && (
-          <button
-            className="network-zoom-button"
-            onClick={handleExportStatsSheet}
-            title="Export the figures as a sheet to hang beside the print"
-            aria-label="Export statistics sheet as SVG"
-            disabled={!graphData || !canvasReady}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="8" y1="13" x2="16" y2="13"></line>
-              <line x1="8" y1="17" x2="13" y2="17"></line>
             </svg>
           </button>
         )}
@@ -2010,31 +2129,14 @@ export default function NetworkCanvas({
             <span className="canvas-display-label" id="canvas-communities-label">
               Communities
             </span>
-            <div
-              className="canvas-display-modes"
-              role="group"
-              aria-labelledby="canvas-communities-label"
-            >
-              <button
-                type="button"
-                className="canvas-display-mode"
-                aria-pressed={!showCommunities}
-                onClick={() => updateSettings({ communities: false })}
-              >
-                Off
-              </button>
-              <button
-                type="button"
-                className="canvas-display-mode"
-                aria-pressed={showCommunities}
-                onClick={() => updateSettings({ communities: true })}
-              >
-                Outline
-              </button>
+            {/* The switch itself is the dashed-ring button in the toolbar; what
+                is left here is what the outlines are and what they came out to
+                this time. */}
+            <div className="canvas-display-readout">
+              {showCommunities
+                ? communityReadout
+                : "Off — the dashed-ring button in the toolbar draws them."}
             </div>
-            {showCommunities && (
-              <div className="canvas-display-readout">{communityReadout}</div>
-            )}
             <p className="canvas-display-note">
               Louvain community detection over the votes alone — the seating
               plan is not an input. Every MEP has voted with every other, so the

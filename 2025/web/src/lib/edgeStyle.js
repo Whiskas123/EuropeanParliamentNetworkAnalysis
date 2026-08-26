@@ -199,3 +199,51 @@ export function nodeOpacity(emphasised, dimActive) {
   if (!dimActive) return 1;
   return emphasised ? 1 : 0.12;
 }
+
+/**
+ * The middle of a set of positions, by bounding box.
+ *
+ * The point the view is turned about. The bounding-box centre rather than the
+ * average position, because it is what the initial fit already centres on, and
+ * a turn about any other point would slide the network sideways.
+ */
+export function boundsCenter(nodes) {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (let i = 0; i < nodes.length; i += 1) {
+    const { x, y } = nodes[i];
+    if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  }
+  if (!Number.isFinite(minX)) return { x: 0, y: 0 };
+  return { x: (minX + maxX) / 2, y: (minY + maxY) / 2 };
+}
+
+/**
+ * A point, turned about a centre.
+ *
+ * Which way up a layout sits carries no meaning — the axes of a force layout
+ * are arbitrary — so the reader is free to turn the picture to suit a page or
+ * a panel. That turn belongs to the view and never to the data: no stored
+ * position changes, the canvas and the exporter apply the same function, and
+ * running it with a negative angle is how a cursor finds the MEP under it.
+ *
+ * An angle of 0 returns the point untouched, which is the case every network
+ * opens in.
+ */
+export function rotatePoint(x, y, center, angle) {
+  if (!angle) return { x, y };
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  const dx = x - center.x;
+  const dy = y - center.y;
+  return {
+    x: center.x + dx * cos - dy * sin,
+    y: center.y + dx * sin + dy * cos,
+  };
+}

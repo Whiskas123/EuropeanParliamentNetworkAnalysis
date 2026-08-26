@@ -989,10 +989,6 @@ export default function VisualizationPage() {
               selectedSubject={selectedSubject}
               renderSettings={renderSettings}
               onRenderSettingsChange={setRenderSettings}
-              baseline={baseline}
-              intergroupCohesion={intergroupCohesion}
-              intragroupCohesion={intragroupCohesion}
-              countrySimilarity={countrySimilarity}
             />
             {loading && <LoadingSpinner message="Loading network data..." />}
           </div>

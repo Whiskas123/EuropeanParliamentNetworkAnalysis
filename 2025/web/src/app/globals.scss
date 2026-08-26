@@ -1788,6 +1788,19 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     transform: scale(0.95);
   }
 
+  // A toggle that is on stays visibly on: the two buttons in this rail that
+  // hold a state — the display panel and the community outlines — are
+  // otherwise indistinguishable from the ones that just fire and forget.
+  &[aria-pressed="true"] {
+    background: var(--eu-blue);
+    color: white;
+
+    &:hover {
+      background: var(--eu-blue);
+      color: white;
+    }
+  }
+
   &:focus {
     outline: 2px solid var(--eu-blue);
     outline-offset: 2px;

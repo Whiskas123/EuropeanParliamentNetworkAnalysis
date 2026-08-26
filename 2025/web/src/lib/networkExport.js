@@ -25,6 +25,8 @@ import {
   nodeOpacity,
   edgeOpacity,
   computeLoyalty,
+  boundsCenter,
+  rotatePoint,
   UNKNOWN_COLOR,
 } from "./edgeStyle.js";
 import { listParties } from "./parties.js";
@@ -80,6 +82,8 @@ const DEFAULT_RENDER = {
   colorMode: "group",
   dim: null,
   communities: false,
+  /** Radians clockwise, as set by the canvas's rotate control. */
+  rotation: 0,
 };
 
 /** Parties below this many MEPs never reach the legend; there is a long tail. */
@@ -564,7 +568,8 @@ function renderLegend(entries, plan, du) {
  *
  * @param {Object} options
  * @param {Object} options.graphData - nodes, links, allLinks, nodeMap
- * @param {Object} options.renderSettings - {edgePercentile, edgeWidth, colorMode, dim}
+ * @param {Object} options.renderSettings - {edgePercentile, edgeWidth,
+ *   colorMode, dim, communities, rotation}
  * @param {Object} options.meta - {mandate, country, subject, nodeCount, votingSessions}
  * @returns {string} a complete <svg> document
  */
@@ -596,11 +601,26 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   }
 
   // --- geometry -----------------------------------------------------------
+  // The reader may have turned the network before asking for the print — a
+  // layout has no north, so which way up it sits is a composition decision.
+  // The turn is applied to the coordinates once, here, and everything below —
+  // the page the picture is cut to, the edges, the outlines, the names — then
+  // works in the chosen orientation without knowing there was one.
+  const rotation = Number.isFinite(view.rotation) ? view.rotation : 0;
+  const center = boundsCenter(nodes);
+  const place = (x, y) => rotatePoint(x, y, center, rotation);
+  const placed = rotation
+    ? nodes.map((node) => {
+        const point = place(node.x, node.y);
+        return { ...node, x: point.x, y: point.y };
+      })
+    : nodes;
+
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;
   let maxY = -Infinity;
-  nodes.forEach((node) => {
+  placed.forEach((node) => {
     if (node.x < minX) minX = node.x;
     if (node.x > maxX) maxX = node.x;
     if (node.y < minY) minY = node.y;
@@ -719,7 +739,16 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   const height = headerHeight + netHeight + footerHeight;
 
   // --- edges --------------------------------------------------------------
-  const lookup = makeNodeLookup(graphData, nodes);
+  // A turned view cannot borrow graphData's own node map: that map holds the
+  // untouched positions, and half a picture drawn at the old angle is worse
+  // than one drawn at either.
+  let lookup;
+  if (rotation) {
+    const placedById = new Map(placed.map((node) => [node.id, node]));
+    lookup = (id) => placedById.get(id);
+  } else {
+    lookup = makeNodeLookup(graphData, nodes);
+  }
   const colorFn = makeNodeColorFn(graphData, view.colorMode);
   const dim = view.dim && view.dim.value ? view.dim : null;
   const emphasised = new Set();
@@ -792,7 +821,7 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
 
   // --- nodes --------------------------------------------------------------
   const byGroup = new Map();
-  nodes.forEach((node) => {
+  placed.forEach((node) => {
     const groupId = node.groupId || "Unknown";
     let bucket = byGroup.get(groupId);
     if (!bucket) {
@@ -850,12 +879,21 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
       const dashOff = outlineWidth * 3.6;
       const titleSize = Math.max(radius * 2.2, du(17));
       const countSize = titleSize * 0.62;
+      // The outlines are traced through the same turn as the MEPs inside them,
+      // and the names are placed at where their community ended up — but drawn
+      // upright, because a turned network is still read horizontally.
+      const anchors = communities.shapes.map((shape) =>
+        place(shape.anchor.x, shape.anchor.y)
+      );
       communityParts = communities.shapes.map((shape, index) => {
         const d = shape.rings
           .map(
             (ring) =>
               `M${ring
-                .map((point) => `${c(point[0])} ${c(point[1])}`)
+                .map((point) => {
+                  const turned = place(point[0], point[1]);
+                  return `${c(turned.x)} ${c(turned.y)}`;
+                })
                 .join("L")}Z`
           )
           .join("");
@@ -876,8 +914,8 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
       const blockHeight = titleSize + countSize * 1.15;
       const labelBaselines = stackLabels(
         communities.shapes.map((shape, index) => ({
-          x: shape.anchor.x,
-          y: shape.anchor.y - titleSize * 0.75,
+          x: anchors[index].x,
+          y: anchors[index].y - titleSize * 0.75,
           width: Math.max(
             estimateWidth(names[index], titleSize),
             estimateWidth(`${shape.size} MEPs`, countSize)
@@ -900,18 +938,18 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
         return [
           // A plate, not a halo: a stroke heavy enough to lift type off seven
           // hundred dots eats the letterforms. Same reasoning as the canvas.
-          `<rect x="${n1(shape.anchor.x - plateWidth / 2)}" y="${n1(
+          `<rect x="${n1(anchors[index].x - plateWidth / 2)}" y="${n1(
             titleY - titleSize + padY * 0.2
           )}" width="${n1(plateWidth)}" height="${n1(
             plateHeight
           )}" rx="${n2(titleSize * 0.32)}" fill="${PAPER}" fill-opacity="0.9"/>`,
-          svgText(shape.anchor.x, titleY, names[index], {
+          svgText(anchors[index].x, titleY, names[index], {
             size: titleSize,
             weight: 600,
             fill: shape.labelColor || shape.color,
             anchor: "middle",
           }),
-          svgText(shape.anchor.x, countY, `${shape.size} MEPs`, {
+          svgText(anchors[index].x, countY, `${shape.size} MEPs`, {
             size: countSize,
             weight: 500,
             fill: SECONDARY,
@@ -936,6 +974,9 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     `width x${round(view.edgeWidth, 2)}`,
     `colour by ${view.colorMode}`,
     dim ? `dimmed to ${dim.type} ${dim.value}` : "no dim",
+    rotation
+      ? `turned ${round((rotation * 180) / Math.PI, 0)}° from the layout`
+      : "at the layout's own orientation",
     communityNote,
     `${invisible.toLocaleString("en-US")} selected edges fall at or below the neutral weight and carry no width`,
   ].join(", ");
