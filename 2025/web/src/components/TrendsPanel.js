@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { loadTrendSeries, MIN_TERM_SESSIONS, TERMS } from "../lib/trends.js";
+import { getGroupAcronym, getGroupColor } from "../lib/utils";
 import SegmentedToggle from "./SegmentedToggle";
 import DeltaBadge from "./DeltaBadge";
 import "../styles/trends.scss";
@@ -35,6 +36,14 @@ import "../styles/trends.scss";
  * beneath rather than in the main plot. Its range barely overlaps the others,
  * and forcing them onto a shared axis would flatten all four. Two plots on one
  * axis each beats one plot on two axes.
+ *
+ * That second plot is drawn with the first one's furniture — the same hairline
+ * grid, the same axis numbers, the same term ticks, the same hit target per
+ * term feeding the same hover — because it is the same kind of measure read the
+ * same way, and a bare sparkline under a full chart reads as a different panel.
+ * Under its axis each term names its own pair, group colours and all: the line
+ * connects a *different* two groups in every term, which a single line cannot
+ * say and a closing sentence about the last term said only once.
  */
 
 /**
@@ -102,7 +111,18 @@ const VIEW_OPTIONS = [
  * of 9px in the SVG is 9px on screen, the same 9px the ranks and units use.
  */
 const CHART_BOX = { top: 12, right: 10, bottom: 26, left: 24 };
-const SPARK_BOX = { top: 10, right: 10, bottom: 18, left: 24 };
+const SPARK_BOX = { top: 12, right: 10, bottom: 16, left: 24 };
+
+/**
+ * The band under the spark's axis, holding each term's pair.
+ *
+ * Two rows of a coloured rail with the group's acronym under it — the legend's
+ * own mark, turned on its side and centred in the term's column. Fixed in
+ * pixels like everything else in these charts: it holds two 9px lines whatever
+ * the sidebar is doing.
+ */
+const PAIR_BAND = 34;
+const PAIR_RAIL = 8;
 
 /** Width assumed before the panel has been measured, and on the server. */
 const ASSUMED_WIDTH = 336;
@@ -129,6 +149,16 @@ const finite = (value) => typeof value === "number" && isFinite(value);
 // trip hydration.
 const thousands = (value) =>
   finite(value) ? String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "";
+
+/**
+ * A group name centred in a term's column, cut to fit it.
+ *
+ * SVG text neither wraps nor ellipsises, and "Greens/EFA" against a 300px
+ * sidebar is wider than a fifth of the plot. The full name stays on the
+ * column's <title>, so nothing is lost, only shortened.
+ */
+const clip = (text, max) =>
+  text.length > max ? `${text.slice(0, Math.max(1, max - 1))}…` : text;
 
 /** What the sidebar is filtered to, in the words the rest of the app uses. */
 function describeScope(country, subject) {
@@ -220,10 +250,13 @@ export default function TrendsPanel({
     () => ({ ...CHART_BOX, width: chartWidth, height: ratio(chartWidth, 0.43, 150, 260) }),
     [chartWidth]
   );
-  const SPARK = useMemo(
-    () => ({ ...SPARK_BOX, width: chartWidth, height: ratio(chartWidth, 0.18, 62, 110) }),
-    [chartWidth]
-  );
+  // `height` is the plot; `total` adds the band of pair labels under its axis,
+  // which is drawn inside the same SVG so the names sit exactly under the
+  // points they belong to.
+  const SPARK = useMemo(() => {
+    const height = ratio(chartWidth, 0.2, 76, 124);
+    return { ...SPARK_BOX, width: chartWidth, height, band: PAIR_BAND, total: height + PAIR_BAND };
+  }, [chartWidth]);
 
   const scoped = Boolean(selectedCountry || selectedSubject);
   const scopeLabel = describeScope(selectedCountry, selectedSubject);
@@ -335,20 +368,29 @@ export default function TrendsPanel({
       const sw = SPARK.width - SPARK.left - SPARK.right;
       const sh = SPARK.height - SPARK.top - SPARK.bottom;
       const sstep = TERMS.length > 1 ? sw / (TERMS.length - 1) : 0;
+      const sx = (i) => SPARK.left + sstep * i;
+      const sy = (v) =>
+        SPARK.top + sh * (1 - (v - pdomain[0]) / (pdomain[1] - pdomain[0] || 1));
       spark = {
         domain: pdomain,
+        x: sx,
+        y: sy,
+        step: sstep,
+        // How many characters a group acronym gets in one term's column. The
+        // columns are a fifth of a sidebar that has no maximum width, so this
+        // is measured rather than assumed: ~5.6px per character at 9px.
+        chars: Math.max(4, Math.floor((sstep - 8) / 5.6)),
         points: TERMS.map((term, i) => {
           const row = series.find((entry) => entry.mandate === term.mandate);
           const score = row && row.lowestPair ? row.lowestPair.score : null;
           if (!finite(score)) return null;
           return {
-            x: SPARK.left + sstep * i,
-            y:
-              SPARK.top +
-              sh * (1 - (score - pdomain[0]) / (pdomain[1] - pdomain[0] || 1)),
+            x: sx(i),
+            y: sy(score),
             value: score,
             pair: row.lowestPair,
             thin: Boolean(row.thin),
+            mandate: term.mandate,
             i,
           };
         }),
@@ -383,6 +425,23 @@ export default function TrendsPanel({
       : null;
   const firstSpark =
     geometry && geometry.spark ? geometry.spark.points.find(Boolean) : null;
+
+  // Every term's pair in one sentence. The chart says this with five columns of
+  // coloured rails; a screen reader gets the same five facts in order, which is
+  // what the single aria-label on the plot has to carry.
+  const sparkSummary = useMemo(() => {
+    if (!geometry || !geometry.spark) return "";
+    return TERMS.map((term, i) => {
+      const point = geometry.spark.points[i];
+      if (!point) return null;
+      return `${term.short}, ${getGroupAcronym(point.pair.a, term.mandate)} and ${getGroupAcronym(
+        point.pair.b,
+        term.mandate
+      )}, ${pct(point.value)}`;
+    })
+      .filter(Boolean)
+      .join("; ");
+  }, [geometry]);
 
   return (
     <div className="trends-panel" ref={panelRef}>
@@ -673,17 +732,59 @@ export default function TrendsPanel({
 
               {geometry.spark && lastSpark && (
                 <div className="trends-spark-block">
-                  <div className="trends-spark-title">The two groups furthest apart</div>
+                  <h4 className="trends-spark-title">The two groups furthest apart</h4>
+                  <p className="trends-spark-lede">
+                    The lowest agreement any two groups reach, term by term. Which two
+                    they are is named under the axis — it is rarely the same pair twice.
+                  </p>
+
                   <svg
                     className="trends-chart"
-                    viewBox={`0 0 ${SPARK.width} ${SPARK.height}`}
+                    viewBox={`0 0 ${SPARK.width} ${SPARK.total}`}
                     role="img"
-                    aria-label={`Agreement between the least-agreeing pair of groups in ${scopeLabel}, ${pct(
-                      firstSpark.value
-                    )} in ${TERMS[firstSpark.i].short} and ${pct(
-                      lastSpark.value
-                    )} in ${TERMS[lastSpark.i].short}`}
+                    aria-label={`The least-agreeing pair of groups in ${scopeLabel}: ${sparkSummary}`}
+                    onMouseLeave={() => setHovered(null)}
                   >
+                    {/* The plot above's own axis, at this plot's numbers. Same
+                        hairline grid and same smallest-tier labels: the reader
+                        already knows how to read it, and seeing 18 here under 53
+                        up there is the whole reason this is a second chart. */}
+                    {[0, 0.5, 1].map((t) => {
+                      const value =
+                        geometry.spark.domain[0] +
+                        (geometry.spark.domain[1] - geometry.spark.domain[0]) * t;
+                      const y = geometry.spark.y(value);
+                      return (
+                        <g key={t}>
+                          <line
+                            x1={SPARK.left}
+                            y1={y}
+                            x2={SPARK.width - SPARK.right}
+                            y2={y}
+                            className="trends-grid"
+                          />
+                          <text
+                            x={SPARK.left - 5}
+                            y={y + 3}
+                            className="trends-axis-label"
+                            textAnchor="end"
+                          >
+                            {Math.round(value * 100)}
+                          </text>
+                        </g>
+                      );
+                    })}
+
+                    {activeIndex >= 0 && (
+                      <line
+                        x1={geometry.spark.x(activeIndex)}
+                        y1={SPARK.top}
+                        x2={geometry.spark.x(activeIndex)}
+                        y2={SPARK.height - SPARK.bottom}
+                        className="trends-crosshair"
+                      />
+                    )}
+
                     {segments(geometry.spark.points).map((run, index) => (
                       <path
                         key={index}
@@ -700,31 +801,155 @@ export default function TrendsPanel({
                         x={p.x}
                         y={p.y}
                         color="var(--sb-ink)"
-                        size={p.i === activeIndex ? 3.6 : 2.6}
+                        size={p.i === activeIndex ? 4.2 : 2.6}
                         filled={!p.thin}
                       />
                     ))}
-                    {/* Both ends labelled. The spark only exists with two or
-                        more terms in it, so these are never the same point. */}
-                    {[firstSpark, lastSpark].map((p, index) =>
-                      p ? (
-                        <text
-                          key={index}
-                          x={p.x + (index === 0 ? 6 : -6)}
-                          y={p.y - 6}
-                          className="trends-point-label"
-                          textAnchor={index === 0 ? "start" : "end"}
-                          fill="var(--sb-ink)"
-                        >
-                          {(p.value * 100).toFixed(1)}
-                        </text>
-                      ) : null
-                    )}
+
+                    {/* Both ends, and whichever term is being read. The ends
+                        give the span without a hover; the third follows the
+                        crosshair, so the number under the cursor is on screen
+                        rather than in a tooltip that will not print. */}
+                    {(() => {
+                      const marks = [
+                        firstSpark,
+                        lastSpark,
+                        geometry.spark.points[activeIndex],
+                      ].filter(Boolean);
+                      return marks
+                        .filter((p, index) => marks.findIndex((q) => q.i === p.i) === index)
+                        .map((p) => {
+                          const last = p.i === TERMS.length - 1;
+                          return (
+                            <text
+                              key={p.i}
+                              x={p.x + (p.i === 0 ? 7 : last ? -7 : 0)}
+                              y={p.y - 8}
+                              className={`trends-point-label ${
+                                p.i === activeIndex ? "current" : ""
+                              }`}
+                              textAnchor={p.i === 0 ? "start" : last ? "end" : "middle"}
+                              fill={p.i === activeIndex ? "var(--sb-ink)" : "var(--sb-muted)"}
+                            >
+                              {(p.value * 100).toFixed(1)}
+                            </text>
+                          );
+                        });
+                    })()}
+
+                    {/* Under the axis: the two groups this term's point is
+                        about, each on the coloured rail the rest of the site
+                        uses for that group. The pair changes term to term, so
+                        it belongs on the axis and not in a caption. */}
+                    {TERMS.map((term, i) => {
+                      const point = geometry.spark.points[i];
+                      const active = i === activeIndex;
+                      const x = geometry.spark.x(i);
+                      const pair = point ? [point.pair.a, point.pair.b] : [];
+                      const names = pair.map((id) => getGroupAcronym(id, term.mandate));
+                      // T6 and T10 sit *on* the ends of the axis, so a name
+                      // centred on the point hangs off the panel — "Greens/EFA"
+                      // by 15px in term 10. The label block slides back inside
+                      // the plot; the tick and the point stay where they are.
+                      const labelWidth =
+                        Math.max(
+                          ...names.map((name) => clip(name, geometry.spark.chars).length),
+                          1
+                        ) * 5.6;
+                      const cx = Math.min(
+                        Math.max(x, labelWidth / 2 + 1),
+                        SPARK.width - labelWidth / 2 - 1
+                      );
+                      return (
+                        <g key={term.mandate}>
+                          <title>
+                            {point
+                              ? `${term.short}, ${term.years}: ${names[0]} and ${names[1]}, ${pct(
+                                  point.value
+                                )}`
+                              : `${term.short}, ${term.years}: no network for ${scopeLabel}`}
+                          </title>
+
+                          <text
+                            x={x}
+                            y={SPARK.height - 5}
+                            className={`trends-tick ${term.mandate === mandate ? "current" : ""} ${
+                              point ? "" : "absent"
+                            }`}
+                            textAnchor="middle"
+                          >
+                            {term.short}
+                          </text>
+
+                          {point ? (
+                            pair.map((id, row) => (
+                              <g key={id}>
+                                <line
+                                  x1={cx - PAIR_RAIL}
+                                  y1={SPARK.height + 6 + row * 16}
+                                  x2={cx + PAIR_RAIL}
+                                  y2={SPARK.height + 6 + row * 16}
+                                  className={`trends-pair-rail ${active ? "current" : ""}`}
+                                  stroke={getGroupColor(id)}
+                                />
+                                <text
+                                  x={cx}
+                                  y={SPARK.height + 15 + row * 16}
+                                  className={`trends-pair-name ${active ? "current" : ""}`}
+                                  textAnchor="middle"
+                                >
+                                  {clip(names[row], geometry.spark.chars)}
+                                </text>
+                              </g>
+                            ))
+                          ) : (
+                            <text
+                              x={x}
+                              y={SPARK.height + 15}
+                              className="trends-pair-none"
+                              textAnchor="middle"
+                            >
+                              —
+                            </text>
+                          )}
+
+                          {/* One hit target per term, over the plot and its
+                              labels both, driving the same hover as the chart
+                              above: reading a pair down here moves the crosshair
+                              and the readout up there. */}
+                          <rect
+                            x={x - geometry.spark.step / 2}
+                            y={SPARK.top}
+                            width={geometry.spark.step || SPARK.width}
+                            height={SPARK.total - SPARK.top}
+                            className={`trends-hit ${point ? "" : "absent"}`}
+                            onMouseEnter={() => setHovered(i)}
+                            onFocus={() => setHovered(i)}
+                            onBlur={() => setHovered(null)}
+                            onClick={
+                              !point || !onMandateChange
+                                ? undefined
+                                : () => onMandateChange(term.mandate)
+                            }
+                            tabIndex={0}
+                            role={point ? "button" : "img"}
+                            aria-label={
+                              point
+                                ? `${term.short}, ${term.years}. Furthest apart: ${names[0]} and ${
+                                    names[1]
+                                  }, ${pct(point.value)}. Open this term.`
+                                : `${term.short}, ${term.years}. No network for ${scopeLabel} in this term.`
+                            }
+                          />
+                        </g>
+                      );
+                    })}
                   </svg>
-                  <div className="trends-spark-note">
-                    {lastSpark.pair.a} and {lastSpark.pair.b} are the furthest apart in{" "}
-                    {TERMS[lastSpark.i].short}.
-                  </div>
+
+                  <p className="trends-spark-note">
+                    On its own scale, below everything in the plot above — one axis for
+                    both would flatten both.
+                  </p>
                 </div>
               )}
 

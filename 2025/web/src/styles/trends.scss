@@ -19,8 +19,8 @@
 // silently smoothed over.
 //
 // Type and colour come from the sidebar scale in globals.scss, which also
-// declares .trends-title, .trends-description, .trends-status and
-// .trends-spark-title. The view switch and the change badges are the shared
+// declares .trends-title, .trends-description, .trends-status,
+// .trends-spark-title and .trends-spark-lede. The view switch and the change badges are the shared
 // .sb-sort and .delta-badge, same as the dial grids two tabs over.
 
 .trends-panel {
@@ -99,6 +99,21 @@
   font-size: var(--sb-fs-micro);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+
+  // A halo, so the label can sit close to its point without the line running
+  // through the digits — Croatia's last two terms fall steeply enough that the
+  // number and the line want the same pixels. Painted under the glyphs, so the
+  // colour set on the element is untouched.
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+
+  // The figure under the crosshair, on the plot where the crosshair is the
+  // only thing naming it.
+  &.current {
+    font-weight: 700;
+  }
 }
 
 .trends-tick {
@@ -220,10 +235,16 @@
 }
 
 // --- the lowest pair, on its own scale ------------------------------------
+//
+// A second plot, not a sparkline: it borrows the grid, the axis numbers, the
+// term ticks, the crosshair and the hit targets from the chart above, and the
+// only things it declares for itself are its line and the band of group names
+// under its axis. A bare line with a sentence under it was the one thing on
+// this tab that looked like it came from somewhere else.
 
 .trends-spark-block {
-  margin-top: 12px;
-  padding-top: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 1px solid var(--sb-rule);
 }
 
@@ -236,13 +257,52 @@
 }
 
 .trends-spark-title {
-  margin-bottom: 2px;
+  margin-bottom: 3px;
+}
+
+.trends-spark-lede {
+  margin-bottom: 6px;
 }
 
 .trends-spark-note {
   font-size: var(--sb-fs-note);
   line-height: 1.45;
   color: var(--sb-muted);
+  margin: 4px 0 0;
+}
+
+// --- each term's pair, under the spark's axis ------------------------------
+//
+// The legend's mark, turned on its side: a short rule in the group's own colour
+// with the acronym under it. The colour is the group's, so it is set on the
+// element and never here; what is here is only the weight of the rule and how
+// far back an unread column sits.
+.trends-pair-rail {
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0.75;
+
+  &.current {
+    opacity: 1;
+  }
+}
+
+.trends-pair-name {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-muted);
+
+  // The term being read — hovered, or the one the canvas is showing.
+  &.current {
+    fill: var(--sb-ink);
+    font-weight: 600;
+  }
+}
+
+// A term this scope never reached keeps its column and says so, rather than
+// leaving a hole the eye reads as a rendering fault.
+.trends-pair-none {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-faint);
 }
 
 // --- honesty about the axis and the sample --------------------------------
