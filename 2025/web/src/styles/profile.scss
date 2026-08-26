@@ -14,13 +14,24 @@
 // last, because the chevron acts on everything the picker changes.
 // ---------------------------------------------------------------------------
 
+// Panels are told apart by the space between them, not by a rule. The rest of
+// the sidebar already works that way - the cohesion, country and history panels
+// all sit on a 30px margin with nothing drawn between them - and a profile that
+// boxed each of its three panels in lines read as a different screen.
 .sb-panel {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--sb-rule);
+  margin: 0 0 30px;
 
   &:last-child {
-    border-bottom: 0;
+    margin-bottom: 12px;
   }
+}
+
+// The photo block is followed immediately by the identity row, which carries
+// its own spacing; the 20px under it opened a gap the panel does not need.
+// The national party section keeps its own, since it divides two label-and-
+// value pairs that would otherwise run together.
+.mep-info-section--header {
+  margin-bottom: 0;
 }
 
 .sb-panel-head {
@@ -66,12 +77,11 @@
   }
 }
 
-// A second grid under the first, inside one panel. Divided by space and a soft
-// rule rather than a second panel border, so the two read as one subject.
+// A second grid under the first, inside one panel. Set apart by space alone,
+// like everything else in the sidebar, and by less of it than divides two
+// panels so the pair still reads as one subject.
 .sb-subpanel {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--sb-rule-soft);
+  margin-top: 20px;
 }
 
 .sb-panel-title--sub {

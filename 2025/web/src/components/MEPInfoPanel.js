@@ -134,7 +134,7 @@ export default function MEPInfoPanel({
 
   return (
     <div>
-      <div className="mep-info-section">
+      <div className="mep-info-section mep-info-section--header">
         <div className="mep-info-header">
           {photoURL && !imageError && (
             <Image

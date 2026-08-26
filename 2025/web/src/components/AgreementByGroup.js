@@ -237,8 +237,17 @@ export default function AgreementByGroup({
                   floor={0}
                   color={groupColors?.get(row.groupId) || "#CCCCCC"}
                   label={getGroupAcronym(row.groupId, mandate)}
-                  what={`agreement with ${getGroupAcronym(row.groupId, mandate)}`}
-                  baselineLabel={ownAcronym || ""}
+                  // "<what> is N points higher/lower than <label>", so each
+                  // half names one side: this MEP against their own group, both
+                  // measured toward the same target.
+                  what={`${name}'s agreement with ${getGroupAcronym(
+                    row.groupId,
+                    mandate
+                  )}`}
+                  baselineLabel={`${ownAcronym}'s own agreement with ${getGroupAcronym(
+                    row.groupId,
+                    mandate
+                  )}`}
                   title={
                     row.level === null
                       ? `${name} voted with ${getGroupDisplayName(
@@ -310,8 +319,8 @@ export default function AgreementByGroup({
                   baseline={area.level}
                   color={groupColors?.get(reading?.group) || "#6B7C93"}
                   label={`${getSubjectEmoji(area.subject)} ${area.subject}`}
-                  what={`agreement with ${ownAcronym}`}
-                  baselineLabel={ownAcronym || ""}
+                  what={`${name}'s agreement with ${ownAcronym} here`}
+                  baselineLabel={`what ${ownAcronym} manages among itself here`}
                   sub={`${area.votes?.toLocaleString()} votes`}
                   title={`${area.subject} — ${name} sits at ${(
                     area.value * 100
