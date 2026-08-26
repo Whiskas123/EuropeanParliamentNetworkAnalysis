@@ -18,13 +18,13 @@ import "../styles/deviation.scss";
  * the ones under 120 votes span 56.5% to 72.7%. The variation is attendance.
  *
  * A deviation cancels that out. It compares an MEP only with the peers who
- * were in the room with them, debate by debate, so a consensual debate lifts
- * everyone present equally and drops out. Across those same 41 MEPs the spread
- * falls from 16.1 points to 3.4.
+ * were in the room with them, vote by vote, so a consensual vote lifts everyone
+ * present equally and drops out. Across those same 41 MEPs the spread falls
+ * from 16.1 points to 2.3.
  *
  * What is lost is the absolute reading: this panel cannot tell you an MEP votes
- * with the EPP 73% of the time, only that they are 0.9 points more EPP-leaning
- * than their own group was in the same debates. That is a deliberate trade -
+ * with the EPP 73% of the time, only that they are 1.0 points more EPP-leaning
+ * than their own group was over the same votes. That is a deliberate trade -
  * the absolute number was not comparable between two MEPs, and it read as
  * though it were.
  *
@@ -51,11 +51,24 @@ function loadDeviations(mandate) {
   return deviationPromises[mandate];
 }
 
-// Points either side of centre that the bars span. Term 10's median deviation
-// is 2.0 points and its 90th percentile 8.6, so a wider axis would flatten
-// almost everyone onto the centre line; 8% of figures fall outside this and are
-// drawn as off-scale rather than clipped silently.
-const SCALE = 10;
+// Points either side of centre that the bars span. Across all five terms the
+// median deviation is 1.5 points and the 95th percentile 10.4, so this is set
+// by the tail rather than the middle: at ±10 a twentieth of every bar drawn ran
+// off the end, and a reader cannot tell a clipped bar from an extreme one. ±20
+// leaves 1.3% off-scale, and those are drawn hatched rather than clipped
+// silently. A typical bar being a stub is the finding, not a defect - most MEPs
+// really do sit on their group's line.
+//
+// One scale for every view on purpose. Subject views are wider than the
+// mandate-wide one (p95 10.6 against 6.4), so a per-view axis would fit each
+// better, but the axis would then change under the reader when they switch the
+// policy-area dropdown and two bars of equal length would mean different things.
+const SCALE = 20;
+
+// Below this many votes the panel adds a caution. Set where the noise starts to
+// rival the signal rather than at a round number: the published median block
+// rests on 252 votes, and 16% of blocks fall under this.
+const THIN_SAMPLE = 100;
 
 /**
  * The deviation file for a term, or null while loading and where none is
@@ -107,6 +120,15 @@ export default function GroupDeviation({
       .sort((a, b) => b.value - a.value);
   }, [block, file]);
 
+  // A policy area where nobody could be measured is not the same failure as an
+  // MEP who was absent from one, and the empty state has to say which it is.
+  const subjectIsUnmeasurable = useMemo(() => {
+    if (!file || !subject) return false;
+    const index = (file.subjects || []).indexOf(subject);
+    if (index === -1) return true;
+    return (file.subjectCoverage?.[String(index)] ?? 0) === 0;
+  }, [file, subject]);
+
   // The file is a progressive enhancement: an older deployment simply does not
   // have it, and the caller falls back to the absolute dials.
   if (!file) return null;
@@ -124,7 +146,14 @@ export default function GroupDeviation({
     return (
       <div className="deviation">
         <p className="deviation-empty">
-          {own === null && entry === null ? (
+          {subjectIsUnmeasurable ? (
+            // Nobody at all has a figure here, so blaming this MEP's attendance
+            // would be a plain untruth — the policy area is the problem.
+            <>
+              Not shown for anyone. This policy area&rsquo;s votes are too few,
+              or too lopsided, for any MEP to be measured against their group.
+            </>
+          ) : entry === null ? (
             <>
               Not shown. {name} either sat as Non-Attached for these votes —
               which is not a group, so there is nothing to differ from — or cast
@@ -132,9 +161,9 @@ export default function GroupDeviation({
             </>
           ) : (
             <>
-              Not shown. {name} voted in fewer than {file.minDebates} of this
-              topic&rsquo;s debates, and a deviation drawn from one debate is
-              that debate&rsquo;s quirk rather than a position.
+              Not shown. {name} cast fewer than {file.minVotes} votes here, and
+              a deviation drawn from a handful of votes is those votes&rsquo;
+              quirk rather than a position.
             </>
           )}
         </p>
@@ -150,9 +179,8 @@ export default function GroupDeviation({
       <p className="deviation-lede">
         How <strong>{name}</strong> differs from {ownName}, over the{" "}
         {block.votes.toLocaleString()} vote{block.votes === 1 ? "" : "s"} they
-        cast here in {block.debates} debate{block.debates === 1 ? "" : "s"}.
-        Zero means voting exactly like {getGroupAcronym(own, mandate)} did in
-        those same debates.
+        cast here. Zero means voting exactly like{" "}
+        {getGroupAcronym(own, mandate)} did on those same votes.
       </p>
       {mismatch && (
         <p className="deviation-note">
@@ -175,12 +203,24 @@ export default function GroupDeviation({
               </span>
               <span
                 className="deviation-track"
-                title={`${name} is ${Math.abs(value).toFixed(1)} points ${
-                  value >= 0 ? "closer to" : "further from"
-                } ${getGroupDisplayName(groupId, mandate)} than ${getGroupAcronym(
-                  own,
-                  mandate
-                )} was, over the same ${block.debates} debates`}
+                title={
+                  // Against the MEP's own group the "than their group was"
+                  // clause turns into "than EPP was, compared with EPP", which
+                  // is not a sentence. Same number, different words.
+                  groupId === own
+                    ? `${name} voted with ${getGroupAcronym(own, mandate)} ` +
+                      `${Math.abs(value).toFixed(1)} points ${
+                        value >= 0 ? "more" : "less"
+                      } than its other members did, over the same ` +
+                      `${block.used.toLocaleString()} votes`
+                    : `${name} is ${Math.abs(value).toFixed(1)} points ${
+                        value >= 0 ? "closer to" : "further from"
+                      } ${getGroupDisplayName(
+                        groupId,
+                        mandate
+                      )} than ${getGroupAcronym(own, mandate)} was, over the ` +
+                      `same ${block.used.toLocaleString()} votes`
+                }
               >
                 <span className="deviation-origin" />
                 <span
@@ -204,6 +244,18 @@ export default function GroupDeviation({
           );
         })}
       </div>
+
+      {block.used < THIN_SAMPLE && (
+        // The measure is a difference of two rates, so its noise falls as
+        // 1/sqrt(votes). Down here a few points of lean is well inside what
+        // the sample alone would produce, and the panel should say so rather
+        // than let a long bar speak with a short bar's authority.
+        <p className="deviation-note">
+          Drawn from only {block.used.toLocaleString()} votes, so treat the
+          size of these bars lightly — a policy area this small moves several
+          points on which sittings {name} happened to attend.
+        </p>
+      )}
 
       <p className="deviation-scale-note">
         Bars run &minus;{SCALE} to +{SCALE} percentage points. A hatched end

@@ -38,8 +38,10 @@
   display: grid;
   // Fixed label and figure columns so every rail starts and ends on the same
   // vertical, which is what makes the origin read as one axis down the whole
-  // panel rather than eight unrelated ones.
-  grid-template-columns: 58px minmax(0, 1fr) 40px;
+  // panel rather than eight unrelated ones. The label column fits the longest
+  // acronym the site prints - "Greens/EFA" - which at 58px ellipsed to
+  // "Greens/…"; the figure column fits a hyphen-minus, two digits and a decimal.
+  grid-template-columns: 76px minmax(0, 1fr) 40px;
   align-items: center;
   gap: 6px;
 }
@@ -93,13 +95,23 @@
 
 // A clipped bar must not read as one that happens to end at the edge, so the
 // far end is hatched. Same reasoning as the off-scale ring in RadialGauge.
+//
+// The stripes are matched on alpha, not luminance. An earlier version asked for
+// `mask-mode: luminance` over black stripes, and black is luminance zero - so
+// every bar past the end of the scale was masked away entirely and the most
+// extreme MEPs in the panel drew no bar at all.
 .deviation-bar--offscale {
+  -webkit-mask-image: repeating-linear-gradient(
+    -45deg,
+    #000 0 3px,
+    transparent 3px 5px
+  );
   mask-image: repeating-linear-gradient(
     -45deg,
     #000 0 3px,
     transparent 3px 5px
   );
-  mask-mode: luminance;
+  mask-mode: alpha;
 }
 
 // Neutral, like the figure inside a dial. Red and green are the sidebar's
