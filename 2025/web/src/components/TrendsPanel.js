@@ -117,19 +117,21 @@ const SPARK_BOX = { top: 12, right: 10, bottom: 16, left: 24 };
 /**
  * The band under the spark's axis, holding each term's pair.
  *
- * Two rows of the chip the rest of the sidebar uses for a political group — an
- * 8px square in the group's colour with its acronym beside it, as in
- * .leads-dot, .insights-swatch and the canvas tooltip. Fixed in pixels like
- * everything else in these charts: it holds two 9px rows whatever the sidebar
- * is doing.
+ * Two rows of the square the rest of the sidebar uses for a political group —
+ * 8px, 2px radius, the group's own colour, as in .leads-dot, .insights-swatch
+ * and the canvas tooltip. Fixed in pixels like everything else in these charts.
  *
- * The two rows share a left edge and the block is centred on the term, rather
- * than each row centred on its own: stacked chips of different widths read as
- * ragged, and the eye is reading down the pair, not across it.
+ * The square sits *above* its name rather than beside it, which is not how the
+ * chip is built elsewhere, and the reason is alignment. Beside the name, a
+ * column is as wide as its longest acronym, and centring that on the point
+ * leaves every column starting at a different distance from its own tick —
+ * 14px under T8, 59px under T10 — so the row reads as drifting. Above it, the
+ * square is a fixed 8px whatever the name says, so it lands exactly under the
+ * tick in every column and the whole row lines up.
  */
-const PAIR_BAND = 30;
+const PAIR_BAND = 43;
 const PAIR_SWATCH = 8;
-const PAIR_GAP = 4;
+const PAIR_ROW = 21;
 const PAIR_MIN_GAP = 8;
 
 /** Width assumed before the panel has been measured, and on the server. */
@@ -384,12 +386,12 @@ export default function TrendsPanel({
         x: sx,
         y: sy,
         step: sstep,
-        // How many characters a group acronym gets under one term, after its
-        // swatch and the gaps. Budgeted over the whole row rather than one
-        // column: the end blocks are pushed off their points to stay inside the
-        // plot, so what has to fit is five blocks and four gaps across the
-        // axis. ~5.6px per character at 9px, measured.
-        chars: Math.max(3, Math.floor((0.8 * sstep - PAIR_SWATCH - PAIR_GAP) / 5.6)),
+        // How many characters a group acronym gets under one term. Budgeted
+        // over the whole row rather than one column: the end labels are pushed
+        // off their points to stay inside the plot, so what has to fit is five
+        // names and four gaps across the axis. ~5.6px per character at 9px,
+        // measured.
+        chars: Math.max(3, Math.floor((0.8 * sstep) / 5.6)),
         points: TERMS.map((term, i) => {
           const row = series.find((entry) => entry.mandate === term.mandate);
           const score = row && row.lowestPair ? row.lowestPair.score : null;
@@ -441,10 +443,10 @@ export default function TrendsPanel({
    *
    * Centred on the term's point, then constrained: inside the plot at the two
    * ends, and never closer than PAIR_MIN_GAP to a neighbour. Both constraints
-   * bind on a narrow sidebar — T10's block is pushed left off its point, which
-   * walks into T9's — so the row is placed in one pass over all five columns
-   * rather than each column on its own. Within a block the two rows share a
-   * left edge: stacked chips of different widths read as ragged.
+   * bind on a narrow sidebar — T10's name is pushed left off its point, which
+   * can walk into T9's — so the row is placed in one pass over all five columns
+   * rather than each column on its own. What moves is the *label*: the square
+   * and its name are one block, so a nudged column stays square-over-name.
    */
   const pairLayout = useMemo(() => {
     if (!geometry || !geometry.spark) return null;
@@ -457,7 +459,10 @@ export default function TrendsPanel({
         : [];
       const width =
         names.length > 0
-          ? PAIR_SWATCH + PAIR_GAP + Math.max(...names.map((name) => name.length)) * 5.6
+          ? Math.max(
+              PAIR_SWATCH,
+              Math.max(...names.map((name) => name.length)) * 5.6
+            )
           : PAIR_SWATCH;
       return { names, width, left: geometry.spark.x(i) - width / 2 };
     });
@@ -471,6 +476,8 @@ export default function TrendsPanel({
     blocks.forEach((block) => {
       block.left = Math.max(block.left, floor);
       floor = block.left + block.width + PAIR_MIN_GAP;
+      // Everything in the band is drawn from the column's centre.
+      block.centre = block.left + block.width / 2;
     });
     return blocks;
   }, [geometry, SPARK]);
@@ -895,7 +902,7 @@ export default function TrendsPanel({
                       const active = i === activeIndex;
                       const x = geometry.spark.x(i);
                       const pair = point ? [point.pair.a, point.pair.b] : [];
-                      const { names, left } = pairLayout[i];
+                      const { names, centre } = pairLayout[i];
                       return (
                         <g key={term.mandate}>
                           <title>
@@ -924,8 +931,8 @@ export default function TrendsPanel({
                             pair.map((id, row) => (
                               <g key={id}>
                                 <rect
-                                  x={left}
-                                  y={SPARK.height + 5 + row * 15}
+                                  x={centre - PAIR_SWATCH / 2}
+                                  y={SPARK.height + 2 + row * PAIR_ROW}
                                   width={PAIR_SWATCH}
                                   height={PAIR_SWATCH}
                                   rx="2"
@@ -933,9 +940,10 @@ export default function TrendsPanel({
                                   fill={getGroupColor(id)}
                                 />
                                 <text
-                                  x={left + PAIR_SWATCH + PAIR_GAP}
-                                  y={SPARK.height + 12 + row * 15}
+                                  x={centre}
+                                  y={SPARK.height + 19 + row * PAIR_ROW}
                                   className={`trends-pair-name ${active ? "current" : ""}`}
+                                  textAnchor="middle"
                                 >
                                   {names[row]}
                                 </text>
@@ -943,7 +951,7 @@ export default function TrendsPanel({
                             ))
                           ) : (
                             <text
-                              x={x}
+                              x={centre}
                               y={SPARK.height + 12}
                               className="trends-pair-none"
                               textAnchor="middle"
