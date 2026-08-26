@@ -666,44 +666,153 @@ function CommunityTooltip({ shape, pinned, mandate }) {
  * Laid out here rather than in lib/networkExport.js because that module deals
  * in SVG; the text and the legend it hands back are shared, the drawing is not.
  */
-function drawCaptionBand(ctx, params) {
-  const { caption, legend, width, height, scale } = params;
+/** Break `text` into lines that each fit `maxWidth` in the context's font. */
+function wrapText(ctx, text, maxWidth) {
+  const words = String(text || "").split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+  const lines = [];
+  let current = words[0];
+  for (let i = 1; i < words.length; i += 1) {
+    const candidate = `${current} ${words[i]}`;
+    if (ctx.measureText(candidate).width > maxWidth) {
+      lines.push(current);
+      current = words[i];
+    } else {
+      current = candidate;
+    }
+  }
+  lines.push(current);
+  return lines;
+}
+
+/** `text`, cut with an ellipsis if it does not fit. For names, which never wrap. */
+function ellipsize(ctx, text, maxWidth) {
+  const value = String(text || "");
+  if (!value || ctx.measureText(value).width <= maxWidth) return value;
+  let low = 0;
+  let high = value.length;
+  while (low < high) {
+    const mid = (low + high + 1) >> 1;
+    if (ctx.measureText(`${value.slice(0, mid)}…`).width <= maxWidth) low = mid;
+    else high = mid - 1;
+  }
+  return `${value.slice(0, low).trimEnd()}…`;
+}
+
+/**
+ * Where everything in the caption band goes, and how tall that makes it.
+ *
+ * Measured rather than assumed, and measured once: the export has to know the
+ * height before it can size the canvas, and the drawing has to know the
+ * positions afterwards. Two separate guesses is how the band ended up with a
+ * title running through the colour key and party names walking off the right
+ * edge of the page.
+ *
+ * The colour key is the fixed point — it takes the width its longest name
+ * needs, up to a share of the band — and the prose gets what is left, wrapped
+ * into it. Nothing here can overflow the band by construction.
+ */
+function planCaptionBand(ctx, params) {
+  const { caption, legend, width, scale } = params;
   const pad = 24 * scale;
   const titleSize = 26 * scale;
   const bodySize = 15 * scale;
+  const lineHeight = bodySize * 1.5;
+  const gutter = 30 * scale;
+  const swatch = bodySize;
+  const labelOffset = swatch * 1.6;
+
+  const bodyFont = `${bodySize}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
+  const titleFont = `600 ${titleSize}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
+
+  const entries = (legend || []).slice(0, 10);
+
+  // The key's width comes from its longest name, but it never takes more than
+  // 40% of the band — a legend of full party names would otherwise leave the
+  // caption nowhere to go.
+  ctx.font = bodyFont;
+  const widestLabel = entries.reduce(
+    (widest, entry) => Math.max(widest, ctx.measureText(entry.label || "").width),
+    0
+  );
+  const columnWidth =
+    entries.length > 0
+      ? Math.min(widestLabel + labelOffset, width * 0.4)
+      : 0;
+  const columnX = width - pad - columnWidth;
+  const labelWidth = Math.max(columnWidth - labelOffset, bodySize);
+
+  // Whatever the key did not take, less a gutter so the two never touch.
+  const textWidth = Math.max(
+    (entries.length > 0 ? columnX - gutter : width - pad) - pad,
+    bodySize * 4
+  );
+
+  ctx.font = titleFont;
+  const title = ellipsize(ctx, caption.title, textWidth);
+
+  ctx.font = bodyFont;
+  const lines = [caption.subtitle, ...(caption.lines || []), caption.caveat]
+    .filter(Boolean)
+    .flatMap((line) => wrapText(ctx, line, textWidth));
+
+  const rows = entries.map((entry) => ({
+    color: entry.color || NEUTRAL_EDGE_COLOR,
+    label: ellipsize(ctx, entry.label, labelWidth),
+  }));
+
+  const textBottom = pad + titleSize * 1.35 + lines.length * lineHeight;
+  const keyBottom = pad + rows.length * lineHeight;
+  return {
+    pad,
+    titleSize,
+    bodySize,
+    lineHeight,
+    swatch,
+    labelOffset,
+    columnX,
+    titleFont,
+    bodyFont,
+    title,
+    lines,
+    rows,
+    height: Math.round(Math.max(textBottom, keyBottom) + pad),
+  };
+}
+
+function drawCaptionBand(ctx, params) {
+  const { plan, width, height, scale } = params;
+  if (!plan) return;
 
   ctx.save();
   ctx.globalAlpha = 1;
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = "#e0e0e0";
-  ctx.fillRect(pad, 0, width - pad * 2, Math.max(1, scale));
+  ctx.fillRect(plan.pad, 0, width - plan.pad * 2, Math.max(1, scale));
 
   ctx.textBaseline = "top";
   ctx.fillStyle = "#1a1a1a";
-  ctx.font = `600 ${titleSize}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
-  ctx.fillText(caption.title || "", pad, pad);
+  ctx.font = plan.titleFont;
+  ctx.fillText(plan.title, plan.pad, plan.pad);
 
-  const bodyFont = `${bodySize}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
-  ctx.font = bodyFont;
+  ctx.font = plan.bodyFont;
   ctx.fillStyle = "#666666";
-  const lines = [caption.subtitle, ...(caption.lines || []), caption.caveat]
-    .filter(Boolean)
-    .slice(0, 6);
-  lines.forEach((line, index) => {
-    ctx.fillText(line, pad, pad + titleSize * 1.35 + index * bodySize * 1.5);
+  plan.lines.forEach((line, index) => {
+    ctx.fillText(
+      line,
+      plan.pad,
+      plan.pad + plan.titleSize * 1.35 + index * plan.lineHeight
+    );
   });
 
   // Colour key runs down the right-hand side of the band.
-  const entries = (legend || []).slice(0, 10);
-  const swatch = bodySize;
-  const columnX = width - pad - 340 * scale;
-  entries.forEach((entry, index) => {
-    const y = pad + index * bodySize * 1.5;
-    ctx.fillStyle = entry.color || NEUTRAL_EDGE_COLOR;
-    ctx.fillRect(columnX, y, swatch, swatch);
+  plan.rows.forEach((row, index) => {
+    const y = plan.pad + index * plan.lineHeight;
+    ctx.fillStyle = row.color;
+    ctx.fillRect(plan.columnX, y, plan.swatch, plan.swatch);
     ctx.fillStyle = "#1a1a1a";
-    ctx.fillText(entry.label || "", columnX + swatch * 1.6, y);
+    ctx.fillText(row.label, plan.columnX + plan.labelOffset, y);
   });
 
   ctx.restore();
@@ -1761,11 +1870,17 @@ export default function NetworkCanvas({
     if (!canvasRef.current || !graphData) return;
 
     const canvas = canvasRef.current;
-    const pixelRatio =
-      pixelRatioRef.current ||
-      (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
-    const logicalWidth = canvas.width / pixelRatio;
-    const logicalHeight = canvas.height / pixelRatio;
+    // The ratio this canvas was actually created with, which on Safari is 1
+    // and not the device pixel ratio — the setup effect gives Safari a 1:1
+    // backing store. Dividing by the device ratio there reports a canvas half
+    // the size it is, and since the view transform below is applied at full
+    // size, the export comes out cropped to its top-left quarter.
+    const effectivePixelRatio = isSafariRef.current
+      ? 1
+      : pixelRatioRef.current ||
+        (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
+    const logicalWidth = canvas.width / effectivePixelRatio;
+    const logicalHeight = canvas.height / effectivePixelRatio;
 
     // Ensure canvas has valid dimensions
     if (logicalWidth === 0 || logicalHeight === 0) {
@@ -1824,15 +1939,19 @@ export default function NetworkCanvas({
       () => buildLegend(graphData, colorMode),
       []
     );
-    const captionLineCount = caption
-      ? 1 +
-        [caption.subtitle, ...(caption.lines || []), caption.caveat].filter(
-          Boolean
-        ).length
-      : 0;
-    const wantedCaptionHeight = caption
-      ? Math.round((70 + captionLineCount * 23) * scale)
-      : 0;
+    // The band's height depends on how the prose wraps, which cannot be known
+    // without measuring it, which needs a context — and the export canvas
+    // cannot be made until the height is known. So the layout is measured on a
+    // scratch context first, and the same plan is what gets drawn.
+    const bandPlan = caption
+      ? planCaptionBand(document.createElement("canvas").getContext("2d"), {
+          caption,
+          legend,
+          width: exportWidth,
+          scale,
+        })
+      : null;
+    const wantedCaptionHeight = bandPlan ? bandPlan.height : 0;
     // Never let the caption push the image past what the browser will encode.
     const captionHeight =
       exportHeight + wantedCaptionHeight <= maxDimension
@@ -1909,12 +2028,11 @@ export default function NetworkCanvas({
     // Caption band, if lib/networkExport.js can supply the text. It throws
     // until that module is implemented, and a print without a caption still
     // beats no print at all.
-    if (captionHeight > 0 && caption) {
+    if (captionHeight > 0 && bandPlan) {
       exportCtx.save();
       exportCtx.translate(0, exportHeight);
       drawCaptionBand(exportCtx, {
-        caption,
-        legend,
+        plan: bandPlan,
         width: exportWidth,
         height: captionHeight,
         scale,
@@ -1923,59 +2041,31 @@ export default function NetworkCanvas({
     }
 
     // Verify we actually drew something by sampling multiple regions (corners + center)
-    const sampleSize = 200;
-    const positions = [
-      { x: 0, y: 0 },
-      { x: exportCanvas.width - sampleSize, y: 0 },
-      { x: 0, y: exportCanvas.height - sampleSize },
-      {
-        x: exportCanvas.width - sampleSize,
-        y: exportCanvas.height - sampleSize,
-      },
-      {
-        x: Math.max(0, Math.floor((exportCanvas.width - sampleSize) / 2)),
-        y: Math.max(0, Math.floor((exportCanvas.height - sampleSize) / 2)),
-      },
-    ];
-    const clampedSize = Math.max(
-      1,
-      Math.min(sampleSize, exportCanvas.width, exportCanvas.height)
-    );
-
+    // The whole image, shrunk to a thumbnail and read in one go, rather than
+    // five 200-pixel windows at the corners and the middle. At an 8x scale
+    // those windows are 25 layout units across, and the middle one lands in
+    // the empty channel between the parliament's two halves — so a perfectly
+    // good export of the full network was being refused as blank. Downscaling
+    // cannot miss ink anywhere, and costs one drawImage.
     let hasContent = false;
-    for (const pos of positions) {
-      const sampleX = Math.max(
-        0,
-        Math.min(exportCanvas.width - clampedSize, pos.x)
-      );
-      const sampleY = Math.max(
-        0,
-        Math.min(exportCanvas.height - clampedSize, pos.y)
-      );
-
-      try {
-        const imageData = exportCtx.getImageData(
-          sampleX,
-          sampleY,
-          clampedSize,
-          clampedSize
-        );
-        for (let i = 0; i < imageData.data.length; i += 4) {
-          if (
-            imageData.data[i] < 250 ||
-            imageData.data[i + 1] < 250 ||
-            imageData.data[i + 2] < 250
-          ) {
-            hasContent = true;
-            break;
-          }
+    try {
+      const probe = document.createElement("canvas");
+      probe.width = 64;
+      probe.height = 64;
+      const probeCtx = probe.getContext("2d");
+      probeCtx.fillStyle = "#ffffff";
+      probeCtx.fillRect(0, 0, probe.width, probe.height);
+      probeCtx.drawImage(exportCanvas, 0, 0, probe.width, probe.height);
+      const pixels = probeCtx.getImageData(0, 0, probe.width, probe.height).data;
+      for (let i = 0; i < pixels.length; i += 4) {
+        if (pixels[i] < 250 || pixels[i + 1] < 250 || pixels[i + 2] < 250) {
+          hasContent = true;
+          break;
         }
-      } catch (err) {
-        console.warn("Failed to sample export canvas content:", err);
-        hasContent = true; // Avoid false negatives if sampling fails
       }
-
-      if (hasContent) break;
+    } catch (err) {
+      console.warn("Failed to sample export canvas content:", err);
+      hasContent = true; // Avoid false negatives if sampling fails
     }
 
     if (!hasContent) {
