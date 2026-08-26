@@ -69,6 +69,11 @@ export default function VisualizationPage() {
   const [groupSimilarityScore, setGroupSimilarityScore] = useState(null);
   const [countrySimilarityScore, setCountrySimilarityScore] = useState(null);
   const [agreementScores, setAgreementScores] = useState(null);
+  // The counterparts an MEP agrees with least. Not derivable from the edges in
+  // memory - those are cut at 0.6 for the drawing, which keeps every agreement
+  // and drops every disagreement - so this is read from the field
+  // `pipeline/extremes.py` writes into the view's own precomputed file.
+  const [furthestMEPs, setFurthestMEPs] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [baseline, setBaseline] = useState(null);
@@ -178,6 +183,7 @@ export default function VisualizationPage() {
           similarityScores,
           cohesionData: precomputedCohesionData,
           countrySimilarityByMep,
+          furthestMEPs: furthestFromFile,
           subjects: precomputedSubjects,
           votingSessions: precomputedVotingSessions,
           metadata,
@@ -435,6 +441,7 @@ export default function VisualizationPage() {
           // Published per-MEP compatriot agreement. Not derivable from the
           // edges above: those are filtered for the drawing.
           countrySimilarityByMep: countrySimilarityByMep || null,
+          furthestMEPs: furthestFromFile || null,
           subjects: subjectsList, // Store subjects for fast access (filtered to >5 voting sessions)
           votingSessions: precomputedVotingSessions || null, // Voting sessions data (total and bySubject)
           metadata: metadata || null,
@@ -569,6 +576,7 @@ export default function VisualizationPage() {
   useEffect(() => {
     if (!selectedNode || !graphData) {
       setClosestMEPs([]);
+      setFurthestMEPs([]);
       setGroupSimilarityScore(null);
       setCountrySimilarityScore(null);
       setAgreementScores(null);
@@ -736,6 +744,21 @@ export default function VisualizationPage() {
     }));
 
     setClosestMEPs(closestNodes);
+
+    // Published as [mepId, share] pairs, weakest first, and already restricted
+    // to MEPs this view draws. Absent on a view the step did not cover, which
+    // the panel reports rather than filling in from the truncated edges.
+    const published = graphData.furthestMEPs?.[mepId];
+    setFurthestMEPs(
+      Array.isArray(published)
+        ? published
+            .map(([otherId, weight]) => {
+              const node = graphData.nodeMap.get(otherId);
+              return node ? { ...node, edgeWeight: weight } : null;
+            })
+            .filter(Boolean)
+        : []
+    );
   }, [selectedNode, graphData]);
 
   // Update graphData ref when it changes
@@ -1016,6 +1039,7 @@ export default function VisualizationPage() {
           groupSimilarityScore={groupSimilarityScore}
           countrySimilarityScore={countrySimilarityScore}
           agreementScores={agreementScores}
+          furthestMEPs={furthestMEPs}
           closestMEPs={closestMEPs}
           selectedSubject={selectedSubject}
           baseline={baseline}

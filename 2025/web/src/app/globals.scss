@@ -2381,12 +2381,9 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 }
 
-// Closest MEPs
-.closest-meps {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid var(--sb-rule);
-}
+// Closest MEPs. Spacing comes from .sb-panel now, like every other panel in
+// the profile; the rule that used to sit above this one was the only line
+// dividing two sidebar panels anywhere on the page.
 
 .closest-meps-list {
   display: flex;
