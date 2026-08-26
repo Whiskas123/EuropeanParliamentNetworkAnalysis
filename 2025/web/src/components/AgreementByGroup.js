@@ -40,9 +40,11 @@ import "../styles/profile.scss";
  * their colleagues, the notch is what those colleagues manage among themselves.
  */
 
+// Only the policy-area grid carries this now: two dozen areas do not all fit
+// on one screen, so which end of the ranking is on top is a real choice there.
 const ORDER = [
-  { id: "high", text: "Highest", title: "Closest groups first" },
-  { id: "low", text: "Lowest", title: "Furthest groups first" },
+  { id: "high", text: "Highest", title: "Closest policy areas first" },
+  { id: "low", text: "Lowest", title: "Furthest policy areas first" },
 ];
 
 // Under this many votes the figure is the sample rather than the politics; the
@@ -62,7 +64,6 @@ export default function AgreementByGroup({
   rawSubjectScores,
 }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [order, setOrder] = useState("high");
   const [areaOrder, setAreaOrder] = useState("high");
   const [areasCollapsed, setAreasCollapsed] = useState(false);
 
@@ -85,15 +86,18 @@ export default function AgreementByGroup({
   const raw = subject ? rawSubjectScores : rawAgreementScores;
   const usingRaw = Boolean(reading?.reason) && Array.isArray(raw) && raw.length > 0;
 
+  // Always closest first. There are eight groups and they are all on screen at
+  // once, so reversing them shows the same eight dials in the other direction -
+  // a control that costs a heading row and answers a question the grid already
+  // answers by being read from the other end.
   const rows = useMemo(() => {
     const source = usingRaw
       ? raw
           .filter((item) => item.groupId !== "NonAttached")
           .map((item) => ({ groupId: item.groupId, value: item.score, level: null }))
       : reading?.groups ?? [];
-    const sorted = [...source].sort((a, b) => b.value - a.value);
-    return order === "low" ? sorted.reverse() : sorted;
-  }, [usingRaw, raw, reading, order]);
+    return [...source].sort((a, b) => b.value - a.value);
+  }, [usingRaw, raw, reading]);
 
   const areas = useMemo(() => {
     const sorted = [...byArea].sort((a, b) => b.value - a.value);
@@ -134,7 +138,7 @@ export default function AgreementByGroup({
           chevron to its right: the chevron acts on everything the picker
           changes, so it reads as the outer of the two. */}
       <div className="sb-panel-head">
-        <h4 className="sb-panel-title">Where {name.split(" ").slice(-1)[0]} sits</h4>
+        <h4 className="sb-panel-title">Group Agreement</h4>
         <div className="sb-panel-controls">
           {!subjectLocked && (
             <SubjectSelector
@@ -221,12 +225,6 @@ export default function AgreementByGroup({
               </p>
             )}
 
-            <SegmentedToggle
-              value={order}
-              onChange={setOrder}
-              options={ORDER}
-              label="Order"
-            />
             <RadialGrid>
               {rows.map((row) => (
                 <RadialGauge
@@ -289,6 +287,14 @@ export default function AgreementByGroup({
               With {ownAcronym}, by policy area
             </h4>
             <div className="sb-panel-controls">
+              {!areasCollapsed && (
+                <SegmentedToggle
+                  value={areaOrder}
+                  onChange={setAreaOrder}
+                  options={ORDER}
+                  label="Order"
+                />
+              )}
               <button
                 type="button"
                 className="sb-collapse"
@@ -303,12 +309,6 @@ export default function AgreementByGroup({
           <div
             className={`collapsible-content ${!areasCollapsed ? "expanded" : ""}`}
           >
-            <SegmentedToggle
-              value={areaOrder}
-              onChange={setAreaOrder}
-              options={ORDER}
-              label="Order"
-            />
             <RadialGrid>
               {areas.map((area) => (
                 <RadialGauge

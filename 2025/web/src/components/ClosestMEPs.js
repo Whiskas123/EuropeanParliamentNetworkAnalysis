@@ -49,15 +49,28 @@ export default function ClosestMEPs({
   const showing = order === "low" ? furthest : meps;
   const canReverse = Array.isArray(furthest) && furthest.length > 0;
 
+  // Named for what it ranks. "Voting agreement" is the measure the whole
+  // sidebar is drawn from - every dial above this panel is one - so as a
+  // heading it said nothing about which agreement these five rows are.
   const title = selectedSubject
-    ? `Voting agreement (${getSubjectEmoji(selectedSubject)} ${selectedSubject})`
-    : "Voting agreement";
+    ? `Agreement with other MEPs (${getSubjectEmoji(
+        selectedSubject
+      )} ${selectedSubject})`
+    : "Agreement with other MEPs";
 
   return (
     <div className="sb-panel closest-meps">
       <div className="sb-panel-head">
         <h4 className="sb-panel-title">{title}</h4>
         <div className="sb-panel-controls">
+          {canReverse && !isCollapsed && (
+            <SegmentedToggle
+              value={order}
+              onChange={setOrder}
+              options={ORDER}
+              label="Order"
+            />
+          )}
           <button
             type="button"
             className="sb-collapse"
@@ -83,15 +96,6 @@ export default function ClosestMEPs({
       </div>
 
       <div className={`collapsible-content ${!isCollapsed ? "expanded" : ""}`}>
-        {canReverse && (
-          <SegmentedToggle
-            value={order}
-            onChange={setOrder}
-            options={ORDER}
-            label="Order"
-          />
-        )}
-
         {!showing || showing.length === 0 ? (
           <p className="sb-note sb-note--empty">
             {order === "low" && !canReverse ? (

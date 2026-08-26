@@ -26,17 +26,17 @@
   }
 }
 
-// The photo block is followed immediately by the identity row, which carries
-// its own spacing; the 20px under it opened a gap the panel does not need.
-// The national party section keeps its own, since it divides two label-and-
-// value pairs that would otherwise run together.
+// The photo block, the identity row and the panels below it all sit on the
+// sidebar's own rhythm: 20px between the parts of one block, 30px between
+// blocks. This was 0, which put the first panel heading hard against the
+// political group row with nothing between them.
 .mep-info-section--header {
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 .sb-panel-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 6px;
@@ -51,8 +51,16 @@
 .sb-panel-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex: 0 0 auto;
+
+  // The ordering switch is a heading-row control here, the way the group
+  // profile already carries its own. On its own line underneath it was a
+  // right-aligned strip floating between a description and a grid, belonging
+  // to neither.
+  .sb-sort {
+    margin: 0;
+  }
 }
 
 .sb-collapse {
@@ -107,80 +115,54 @@
 // Identity, with the two figures that place this MEP beside it
 // ---------------------------------------------------------------------------
 
-// Bottom-aligned, so the pair of dials ends level with the political group
-// row. Aligned to the top instead, the second dial hung below the last line of
-// text and opened a band the width of the panel with nothing on its left.
+// Top-aligned. The dials are one row now rather than a stacked pair, so the
+// two sides of this block are within a few pixels of the same height and there
+// is nothing left to take up by hanging one of them off the bottom.
 .mep-info-identity {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+  margin-bottom: 30px;
 }
 
 .mep-info-identity-facts {
   flex: 1 1 auto;
   min-width: 0;
 
-  // The last section's trailing margin is what the dials would be levelled
-  // against, so the pair would sit that far below the group row it is supposed
-  // to line up with. The panel below supplies its own top spacing.
+  // The last section's trailing margin would make this column 20px taller than
+  // the text it holds, which is what the row's own bottom margin is for. The
+  // block below supplies its own spacing.
   > .mep-info-section:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
   }
 }
 
-// Two dials against two rows of text, so each one is laid on its side: the ring
-// on the left, its name and its delta stacked beside it. Kept in the grid's
-// vertical arrangement - ring, then name, then delta - a pair of these stands
-// about 170px tall against roughly 120px of identity text, and no amount of
-// aligning hides the difference. Turned, a dial is as tall as its ring and the
-// pair fits the text exactly.
+// Two dials, side by side, in the form every other dial in this sidebar takes:
+// the ring, its name under it, its delta under that.
 //
-// Grid rather than flex because the component renders the three parts as
-// siblings with no wrapper to make a column of the last two.
+// They used to be laid on their side - ring on the left, name and delta stacked
+// to its right - so that a stacked pair would fit beside the identity text.
+// Turned, the name landed level with the top of its own ring and the delta
+// level with the bottom, twenty-seven pixels apart, and each read as a caption
+// for whichever identity row it happened to sit beside: "Group" against
+// National Party, "National" against Political Group, which is the opposite of
+// what either says.
+//
+// Set side by side they are about as tall as the two identity rows they sit
+// beside - which is what the sideways arrangement was reaching for - and every
+// label is under the ring it names.
 .mep-headline-dials {
   flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  .radial {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      "dial label"
-      "dial delta";
-    align-items: center;
-    justify-items: start;
-    gap: 1px 7px;
-    padding: 0;
-    width: auto;
-    text-align: left;
-  }
-
-  // The figure inside the ring is fixed-size HTML over an SVG that scales, so
-  // shrinking the ring does not shrink the number with it: at 42px "89.4%" was
-  // wider than the 31px of clear space inside the arc. 54px leaves about 40px,
-  // which fits the widest figure the dial can hold with room to spare.
-  .radial-dial {
-    grid-area: dial;
-    width: 54px;
-    max-width: 54px;
-    height: 54px;
-  }
-
-  .radial-label {
-    grid-area: label;
-    justify-content: flex-start;
-    font-size: var(--sb-fs-micro);
-    white-space: nowrap;
-  }
-
-  .radial-delta {
-    grid-area: delta;
-    justify-content: flex-start;
-  }
+  display: grid;
+  grid-auto-flow: column;
+  // A fixed column rather than a fraction of the block: with one of the two
+  // figures missing, a fractional column would stretch the survivor to twice
+  // the width of every other dial on the page.
+  grid-auto-columns: 84px;
+  gap: 4px;
+  align-items: start;
 }
 
 // ---------------------------------------------------------------------------
@@ -280,13 +262,33 @@
     margin: 0;
   }
 
+  // The control this borrows from lives on the dark toolbar over the canvas,
+  // so it is white text on a translucent white fill. Dropped into a white
+  // panel heading it was invisible: present in the DOM, hoverable, and legible
+  // only once the menu opened. Recoloured onto the sidebar's own scale, and
+  // built from the same hairline box as the ordering switch it sits beside.
   .selector-button {
     padding: 3px 6px;
     font-size: var(--sb-fs-note);
+    background: none;
+    border-color: var(--sb-rule);
+    border-radius: 3px;
+    color: var(--sb-body);
     // The toolbar's copy of this control is as wide as the panel; here it is
     // one of several things on a heading row, so it is capped and the long
     // policy-area names truncate rather than pushing the chevron off the end.
     max-width: 168px;
+
+    &:hover {
+      background: var(--sb-wash);
+      border-color: var(--sb-rule);
+      color: var(--sb-ink);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--eu-blue);
+      outline-offset: 1px;
+    }
   }
 
   .selector-value {
