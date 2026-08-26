@@ -238,7 +238,7 @@
 //
 // A second plot, not a sparkline: it borrows the grid, the axis numbers, the
 // term ticks, the crosshair and the hit targets from the chart above, and the
-// only things it declares for itself are its line and the band of group names
+// only things it declares for itself are its line and the band of group chips
 // under its axis. A bare line with a sentence under it was the one thing on
 // this tab that looked like it came from somewhere else.
 
@@ -273,18 +273,14 @@
 
 // --- each term's pair, under the spark's axis ------------------------------
 //
-// The legend's mark, turned on its side: a short rule in the group's own colour
-// with the acronym under it. The colour is the group's, so it is set on the
-// element and never here; what is here is only the weight of the rule and how
-// far back an unread column sits.
-.trends-pair-rail {
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  opacity: 0.75;
-
-  &.current {
-    opacity: 1;
-  }
+// The chip the sidebar already gives a political group — an 8px square with a
+// 2px radius, the acronym beside it — drawn in SVG instead of flex, so it can
+// sit under the point it belongs to. Same size and radius as .leads-dot and
+// .insights-swatch; the colour is the group's, set on the element, never here.
+.trends-pair-swatch {
+  // An 8px square with a 2px radius: worth asking for the accurate corner
+  // rather than the fast one.
+  shape-rendering: geometricPrecision;
 }
 
 .trends-pair-name {

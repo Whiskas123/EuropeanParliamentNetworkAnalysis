@@ -41,7 +41,8 @@ import "../styles/trends.scss";
  * grid, the same axis numbers, the same term ticks, the same hit target per
  * term feeding the same hover — because it is the same kind of measure read the
  * same way, and a bare sparkline under a full chart reads as a different panel.
- * Under its axis each term names its own pair, group colours and all: the line
+ * Under its axis each term names its own pair, on the same coloured square the
+ * rest of the sidebar gives a political group: the line
  * connects a *different* two groups in every term, which a single line cannot
  * say and a closing sentence about the last term said only once.
  */
@@ -116,13 +117,20 @@ const SPARK_BOX = { top: 12, right: 10, bottom: 16, left: 24 };
 /**
  * The band under the spark's axis, holding each term's pair.
  *
- * Two rows of a coloured rail with the group's acronym under it — the legend's
- * own mark, turned on its side and centred in the term's column. Fixed in
- * pixels like everything else in these charts: it holds two 9px lines whatever
- * the sidebar is doing.
+ * Two rows of the chip the rest of the sidebar uses for a political group — an
+ * 8px square in the group's colour with its acronym beside it, as in
+ * .leads-dot, .insights-swatch and the canvas tooltip. Fixed in pixels like
+ * everything else in these charts: it holds two 9px rows whatever the sidebar
+ * is doing.
+ *
+ * The two rows share a left edge and the block is centred on the term, rather
+ * than each row centred on its own: stacked chips of different widths read as
+ * ragged, and the eye is reading down the pair, not across it.
  */
-const PAIR_BAND = 34;
-const PAIR_RAIL = 8;
+const PAIR_BAND = 30;
+const PAIR_SWATCH = 8;
+const PAIR_GAP = 4;
+const PAIR_MIN_GAP = 8;
 
 /** Width assumed before the panel has been measured, and on the server. */
 const ASSUMED_WIDTH = 336;
@@ -376,10 +384,12 @@ export default function TrendsPanel({
         x: sx,
         y: sy,
         step: sstep,
-        // How many characters a group acronym gets in one term's column. The
-        // columns are a fifth of a sidebar that has no maximum width, so this
-        // is measured rather than assumed: ~5.6px per character at 9px.
-        chars: Math.max(4, Math.floor((sstep - 8) / 5.6)),
+        // How many characters a group acronym gets under one term, after its
+        // swatch and the gaps. Budgeted over the whole row rather than one
+        // column: the end blocks are pushed off their points to stay inside the
+        // plot, so what has to fit is five blocks and four gaps across the
+        // axis. ~5.6px per character at 9px, measured.
+        chars: Math.max(3, Math.floor((0.8 * sstep - PAIR_SWATCH - PAIR_GAP) / 5.6)),
         points: TERMS.map((term, i) => {
           const row = series.find((entry) => entry.mandate === term.mandate);
           const score = row && row.lowestPair ? row.lowestPair.score : null;
@@ -425,6 +435,45 @@ export default function TrendsPanel({
       : null;
   const firstSpark =
     geometry && geometry.spark ? geometry.spark.points.find(Boolean) : null;
+
+  /**
+   * Where each term's two chips sit under the axis.
+   *
+   * Centred on the term's point, then constrained: inside the plot at the two
+   * ends, and never closer than PAIR_MIN_GAP to a neighbour. Both constraints
+   * bind on a narrow sidebar — T10's block is pushed left off its point, which
+   * walks into T9's — so the row is placed in one pass over all five columns
+   * rather than each column on its own. Within a block the two rows share a
+   * left edge: stacked chips of different widths read as ragged.
+   */
+  const pairLayout = useMemo(() => {
+    if (!geometry || !geometry.spark) return null;
+    const blocks = TERMS.map((term, i) => {
+      const point = geometry.spark.points[i];
+      const names = point
+        ? [point.pair.a, point.pair.b].map((id) =>
+            clip(getGroupAcronym(id, term.mandate), geometry.spark.chars)
+          )
+        : [];
+      const width =
+        names.length > 0
+          ? PAIR_SWATCH + PAIR_GAP + Math.max(...names.map((name) => name.length)) * 5.6
+          : PAIR_SWATCH;
+      return { names, width, left: geometry.spark.x(i) - width / 2 };
+    });
+
+    let limit = SPARK.width - 1;
+    for (let i = blocks.length - 1; i >= 0; i -= 1) {
+      blocks[i].left = Math.min(blocks[i].left, limit - blocks[i].width);
+      limit = blocks[i].left - PAIR_MIN_GAP;
+    }
+    let floor = 1;
+    blocks.forEach((block) => {
+      block.left = Math.max(block.left, floor);
+      floor = block.left + block.width + PAIR_MIN_GAP;
+    });
+    return blocks;
+  }, [geometry, SPARK]);
 
   // Every term's pair in one sentence. The chart says this with five columns of
   // coloured rails; a screen reader gets the same five facts in order, which is
@@ -838,7 +887,7 @@ export default function TrendsPanel({
                     })()}
 
                     {/* Under the axis: the two groups this term's point is
-                        about, each on the coloured rail the rest of the site
+                        about, each on the coloured swatch the rest of the site
                         uses for that group. The pair changes term to term, so
                         it belongs on the axis and not in a caption. */}
                     {TERMS.map((term, i) => {
@@ -846,25 +895,15 @@ export default function TrendsPanel({
                       const active = i === activeIndex;
                       const x = geometry.spark.x(i);
                       const pair = point ? [point.pair.a, point.pair.b] : [];
-                      const names = pair.map((id) => getGroupAcronym(id, term.mandate));
-                      // T6 and T10 sit *on* the ends of the axis, so a name
-                      // centred on the point hangs off the panel — "Greens/EFA"
-                      // by 15px in term 10. The label block slides back inside
-                      // the plot; the tick and the point stay where they are.
-                      const labelWidth =
-                        Math.max(
-                          ...names.map((name) => clip(name, geometry.spark.chars).length),
-                          1
-                        ) * 5.6;
-                      const cx = Math.min(
-                        Math.max(x, labelWidth / 2 + 1),
-                        SPARK.width - labelWidth / 2 - 1
-                      );
+                      const { names, left } = pairLayout[i];
                       return (
                         <g key={term.mandate}>
                           <title>
                             {point
-                              ? `${term.short}, ${term.years}: ${names[0]} and ${names[1]}, ${pct(
+                              ? `${term.short}, ${term.years}: ${getGroupAcronym(
+                                  point.pair.a,
+                                  term.mandate
+                                )} and ${getGroupAcronym(point.pair.b, term.mandate)}, ${pct(
                                   point.value
                                 )}`
                               : `${term.short}, ${term.years}: no network for ${scopeLabel}`}
@@ -884,28 +923,28 @@ export default function TrendsPanel({
                           {point ? (
                             pair.map((id, row) => (
                               <g key={id}>
-                                <line
-                                  x1={cx - PAIR_RAIL}
-                                  y1={SPARK.height + 6 + row * 16}
-                                  x2={cx + PAIR_RAIL}
-                                  y2={SPARK.height + 6 + row * 16}
-                                  className={`trends-pair-rail ${active ? "current" : ""}`}
-                                  stroke={getGroupColor(id)}
+                                <rect
+                                  x={left}
+                                  y={SPARK.height + 5 + row * 15}
+                                  width={PAIR_SWATCH}
+                                  height={PAIR_SWATCH}
+                                  rx="2"
+                                  className="trends-pair-swatch"
+                                  fill={getGroupColor(id)}
                                 />
                                 <text
-                                  x={cx}
-                                  y={SPARK.height + 15 + row * 16}
+                                  x={left + PAIR_SWATCH + PAIR_GAP}
+                                  y={SPARK.height + 12 + row * 15}
                                   className={`trends-pair-name ${active ? "current" : ""}`}
-                                  textAnchor="middle"
                                 >
-                                  {clip(names[row], geometry.spark.chars)}
+                                  {names[row]}
                                 </text>
                               </g>
                             ))
                           ) : (
                             <text
                               x={x}
-                              y={SPARK.height + 15}
+                              y={SPARK.height + 12}
                               className="trends-pair-none"
                               textAnchor="middle"
                             >
@@ -935,9 +974,13 @@ export default function TrendsPanel({
                             role={point ? "button" : "img"}
                             aria-label={
                               point
-                                ? `${term.short}, ${term.years}. Furthest apart: ${names[0]} and ${
-                                    names[1]
-                                  }, ${pct(point.value)}. Open this term.`
+                                ? `${term.short}, ${term.years}. Furthest apart: ${getGroupAcronym(
+                                    point.pair.a,
+                                    term.mandate
+                                  )} and ${getGroupAcronym(
+                                    point.pair.b,
+                                    term.mandate
+                                  )}, ${pct(point.value)}. Open this term.`
                                 : `${term.short}, ${term.years}. No network for ${scopeLabel} in this term.`
                             }
                           />
