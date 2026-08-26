@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
 import MEPInfoPanel from "./MEPInfoPanel";
-import SimilarityScores from "./SimilarityScores";
+import AgreementByGroup from "./AgreementByGroup";
 import ClosestMEPs from "./ClosestMEPs";
 import CohesionHeatmap from "./CohesionHeatmap";
 import IntragroupCohesion from "./IntragroupCohesion";
@@ -13,6 +13,10 @@ import LoadingSpinner from "./LoadingSpinner";
 import CohesionInsights from "./CohesionInsights";
 import TrendsPanel from "./TrendsPanel";
 import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
+import {
+  useNormalisedAgreement,
+  readAgreement,
+} from "../lib/normalisedAgreement.js";
 
 /**
  * The network view, split by what each panel is actually about.
@@ -81,6 +85,7 @@ export default function Sidebar({
   countrySimilarityScore,
   agreementScores,
   closestMEPs,
+  furthestMEPs,
   intergroupCohesion,
   intragroupCohesion,
   countrySimilarity,
@@ -96,10 +101,33 @@ export default function Sidebar({
   onMandateChange,
   loading = false,
 }) {
+  // The policy area this profile is read at. Held here rather than inside the
+  // panel that carries the control, because the headline dials on the identity
+  // block and the grids below it have to be reading the same votes - a header
+  // saying 98% over a section headed "Fisheries" is two answers to one
+  // question. Follows the toolbar whenever the toolbar has one set.
+  const [panelSubject, setPanelSubject] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(TABS[0].id);
+
+  const subjectForPanel = selectedSubject ?? panelSubject;
+  const agreementFile = useNormalisedAgreement(mandate);
+  const reading = useMemo(
+    () => readAgreement(agreementFile, selectedNode?.id, subjectForPanel),
+    [agreementFile, selectedNode, subjectForPanel]
+  );
+  // One pass over the nodes instead of a find() per group inside a render.
+  const groupColors = useMemo(() => {
+    const colors = new Map();
+    for (const node of graphData?.nodes || []) {
+      if (node.groupId && !colors.has(node.groupId)) {
+        colors.set(node.groupId, node.color);
+      }
+    }
+    return colors;
+  }, [graphData]);
 
   // Get voting sessions from metadata
   const votingSessions = graphData?.metadata?.votingSessions ?? null;
@@ -241,6 +269,13 @@ export default function Sidebar({
    */
   const factsStrip = graphData ? (
     <div className="sidebar-facts">
+      {/* How many MEPs the view holds is context for a view. With one MEP open
+          the sidebar is a profile about that person, and a headline count of
+          everybody else reads as a figure about them - which is why it is left
+          out here rather than restyled. The tooltip it carried, naming who the
+          participation filter left out, belongs to the same scope and goes with
+          it; the network view still shows both. */}
+      {!selectedNode && (
       <span className="sidebar-fact sidebar-fact-tip">
         <span className="sidebar-fact-anchor" tabIndex={0}>
           <strong>{thousands(nodeCount)}</strong> MEPs
@@ -284,9 +319,12 @@ export default function Sidebar({
           )}
         </span>
       </span>
+      )}
       {votingSessions !== null && (
         <>
-          <span className="sidebar-fact-sep" aria-hidden="true" />
+          {!selectedNode && (
+            <span className="sidebar-fact-sep" aria-hidden="true" />
+          )}
           {votesCast !== null ? (
             <span className="sidebar-fact sidebar-fact-tip sidebar-fact-tip-strip">
               <span className="sidebar-fact-anchor" tabIndex={0}>
@@ -525,21 +563,31 @@ export default function Sidebar({
               graphData={graphData}
               mandate={mandate}
               onSelectGroup={onSelectGroup}
+              reading={reading}
+              subject={subjectForPanel}
             />
-            <SimilarityScores
-              selectedCountry={selectedCountry}
-              groupSimilarityScore={groupSimilarityScore}
-              countrySimilarityScore={countrySimilarityScore}
-              agreementScores={agreementScores}
-              graphData={graphData}
+            <AgreementByGroup
               mandate={mandate}
-              selectedSubject={selectedSubject}
               selectedNode={selectedNode}
+              subject={subjectForPanel}
+              onSubjectChange={setPanelSubject}
+              subjectLocked={Boolean(selectedSubject)}
+              file={agreementFile}
+              groupColors={groupColors}
+              rawAgreementScores={agreementScores}
+              rawSubjectScores={
+                subjectForPanel
+                  ? graphData?.similarityScores?.[selectedNode.id]
+                      ?.subjectAgreementScores?.[subjectForPanel]
+                  : null
+              }
             />
             <ClosestMEPs
               meps={closestMEPs}
+              furthest={furthestMEPs}
               onSelectMEP={onSelectNode}
               selectedSubject={selectedSubject}
+              mandate={mandate}
             />
           </>
         ) : selectedGroup ? (

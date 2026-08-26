@@ -712,6 +712,11 @@ export async function loadMandateData(mandate, country = null, subject = null) {
         agreementScores: agreementScores,
         similarityScores,
         cohesionData: cohesionData, // Precomputed cohesion data
+        // Each MEP's least-agreeing counterparts. Absent from views
+        // `pipeline/extremes.py` does not cover, and from any file written
+        // before it existed, which the panel reports rather than papering over
+        // with the truncated edges here.
+        furthestMEPs: precomputed.furthestMEPs || null,
         // The only statistic with no correct source in this file; see
         // loadCountrySimilarity above.
         countrySimilarityByMep: await getCountrySimilarity(mandate, subject),

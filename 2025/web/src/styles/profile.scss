@@ -1,0 +1,253 @@
+// The MEP profile: identity, the figures that place them, and ranked rows.
+//
+// Everything here takes its type and colour from the sidebar scale in
+// globals.scss. Nothing in this file introduces a size, a grey or a rule the
+// rest of the sidebar does not already use.
+
+// ---------------------------------------------------------------------------
+// A panel and its heading row
+//
+// The heading used to *be* the control: the whole <h4> was clickable and the
+// chevron sat inside it, which meant a panel that also needed a policy-area
+// picker had to put it on a line of its own underneath. The heading is now a
+// heading, and the controls sit beside it on one row - picker first, chevron
+// last, because the chevron acts on everything the picker changes.
+// ---------------------------------------------------------------------------
+
+.sb-panel {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--sb-rule);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.sb-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+
+  .sb-panel-title {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.sb-panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.sb-collapse {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 2px;
+  margin: 0;
+  color: var(--sb-muted);
+  cursor: pointer;
+  display: inline-flex;
+  border-radius: 3px;
+
+  &:hover {
+    color: var(--sb-ink);
+    background-color: var(--sb-wash);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: 1px;
+  }
+}
+
+// A second grid under the first, inside one panel. Divided by space and a soft
+// rule rather than a second panel border, so the two read as one subject.
+.sb-subpanel {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sb-rule-soft);
+}
+
+.sb-panel-title--sub {
+  color: var(--sb-ink-soft);
+}
+
+.sb-note--empty {
+  display: block;
+  padding: 10px 0 2px;
+}
+
+// A caveat that changes how the figures above it should be read, rather than a
+// footnote about them. Marked with a rule in the margin, which is the sidebar's
+// existing way of setting something apart without adding a colour.
+.sb-note--warn {
+  display: block;
+  border-left: 2px solid var(--sb-rule);
+  padding: 2px 0 2px 8px;
+  margin: 0 0 10px;
+}
+
+// ---------------------------------------------------------------------------
+// Identity, with the two figures that place this MEP beside it
+// ---------------------------------------------------------------------------
+
+.mep-info-identity {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mep-info-identity-facts {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// Two dials, stacked, sized down from the grid's. They sit against two rows of
+// text rather than in a grid of their own, so they take the height of that text
+// and not the height a grid cell would give them.
+.mep-headline-dials {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 2px;
+
+  .radial {
+    width: 62px;
+  }
+
+  .radial-dial {
+    width: 46px;
+    height: 46px;
+  }
+
+  .radial-label {
+    font-size: var(--sb-fs-micro);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// A ranked list of MEPs
+//
+// One line each. The old two-line card cost about 48px per MEP and carried the
+// same four facts; at five MEPs that was a screenful for a list whose whole
+// content is an ordering.
+// ---------------------------------------------------------------------------
+
+.mep-rank {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mep-rank-row {
+  appearance: none;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  width: 100%;
+  display: grid;
+  // rank | name | flag | group | figure. The name is the only elastic column,
+  // so a long name truncates and every figure still lines up down the list.
+  grid-template-columns: 14px minmax(0, 1fr) auto auto 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 4px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 3px;
+  border-bottom: 1px solid var(--sb-rule-soft);
+
+  &:hover {
+    background-color: var(--sb-wash);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
+  }
+}
+
+.mep-rank li:last-child .mep-rank-row {
+  border-bottom: 0;
+}
+
+.mep-rank-n {
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.mep-rank-name {
+  font-size: var(--sb-fs-row);
+  color: var(--sb-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mep-rank-flag {
+  display: inline-flex;
+  font-size: var(--sb-fs-row);
+}
+
+.mep-rank-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-muted);
+  white-space: nowrap;
+}
+
+.mep-rank-swatch {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  flex: 0 0 auto;
+}
+
+.mep-rank-value {
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+// ---------------------------------------------------------------------------
+// The policy-area picker, inside a panel heading rather than over the canvas
+// ---------------------------------------------------------------------------
+
+.selector-dropdown--compact {
+  .selector-header {
+    margin: 0;
+  }
+
+  .selector-button {
+    padding: 3px 6px;
+    font-size: var(--sb-fs-note);
+    // The toolbar's copy of this control is as wide as the panel; here it is
+    // one of several things on a heading row, so it is capped and the long
+    // policy-area names truncate rather than pushing the chevron off the end.
+    max-width: 168px;
+  }
+
+  .selector-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .selector-dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 240px;
+  }
+}

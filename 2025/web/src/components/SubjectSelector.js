@@ -22,6 +22,11 @@ export default function SubjectSelector({
   currentSubject,
   onSubjectChange,
   disabled = false, // Optional; no longer set by the app - country and subject can be combined
+  // Inside a sidebar panel the control is one of several on a heading row, and
+  // the standing "Policy Area" caption above it is a second label for something
+  // the heading already names. Compact drops the caption and the session count
+  // from the button, keeping the emoji, the name and the menu.
+  compact = false,
 }) {
   const [subjects, setSubjects] = useState([]);
   const [totalSessions, setTotalSessions] = useState(null);
@@ -142,9 +147,13 @@ export default function SubjectSelector({
 
   if (loading) {
     return (
-      <div className="selector-dropdown subject-selector">
+      <div
+        className={`selector-dropdown subject-selector ${
+          compact ? "selector-dropdown--compact" : ""
+        }`}
+      >
         <div className="selector-header">
-          <span className="selector-title">Policy Area</span>
+          {!compact && <span className="selector-title">Policy Area</span>}
           <button className="selector-button" disabled>
             <span className="selector-value">Loading...</span>
           </button>
@@ -196,11 +205,13 @@ export default function SubjectSelector({
 
   return (
     <div
-      className={`selector-dropdown subject-selector ${isOpen ? "open" : ""}`}
+      className={`selector-dropdown subject-selector ${isOpen ? "open" : ""} ${
+        compact ? "selector-dropdown--compact" : ""
+      }`}
       ref={dropdownRef}
     >
       <div className="selector-header">
-        <span className="selector-title">Policy Area</span>
+        {!compact && <span className="selector-title">Policy Area</span>}
         <button
           className={`selector-button ${disabled ? "disabled" : ""}`}
           onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -209,7 +220,7 @@ export default function SubjectSelector({
           title={buttonTitle}
         >
           <span className="selector-value">{displayText}</span>
-          {typeof selectedSessions === "number" && (
+          {typeof selectedSessions === "number" && !compact && (
             <span className="subject-count-inline">{selectedSessions}</span>
           )}
           <svg

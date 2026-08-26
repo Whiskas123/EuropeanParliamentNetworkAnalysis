@@ -10,6 +10,17 @@ import {
   getSubjectEmoji,
 } from "../lib/utils.js";
 import RadialGauge, { RadialGrid, RadialScaleNote } from "./RadialGauge";
+import SegmentedToggle from "./SegmentedToggle";
+
+// One ordering control for the whole sidebar. This panel used to carry its own
+// - a labelled button with a rotating double arrow reporting its state as
+// "Highest to Lowest (click to reverse)" - while the network tabs used the
+// segmented pair. Two controls doing one job in two visual languages, on panels
+// a reader moves between.
+const ORDER = [
+  { id: "desc", text: "Highest", title: "Highest first" },
+  { id: "asc", text: "Lowest", title: "Lowest first" },
+];
 
 export default function GroupInfoPanel({
   groupId,
@@ -390,14 +401,6 @@ export default function GroupInfoPanel({
 
   const groupColor = getGroupColor(groupId);
 
-  const toggleSortDirection = () => {
-    setSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
-  };
-
-  const toggleSubjectSortDirection = () => {
-    setSubjectSortDirection((prev) => (prev === "desc" ? "asc" : "desc"));
-  };
-
   return (
     <div className="group-info-panel">
       <div className="group-info-header">
@@ -452,39 +455,12 @@ export default function GroupInfoPanel({
           {sortedSubjectScores &&
             sortedSubjectScores.length > 0 &&
             !isSubjectCollapsed && (
-              <button
-                className="group-info-sort-button"
-                onClick={toggleSubjectSortDirection}
-                title={
-                  subjectSortDirection === "desc"
-                    ? "Sort: Highest to Lowest (click to reverse)"
-                    : "Sort: Lowest to Highest (click to reverse)"
-                }
-              >
-                <span>
-                  {subjectSortDirection === "desc"
-                    ? "Highest to Lowest"
-                    : "Lowest to Highest"}
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
-                    transform:
-                      subjectSortDirection === "asc"
-                        ? "rotate(180deg)"
-                        : "none",
-                  }}
-                >
-                  <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
-                </svg>
-              </button>
+              <SegmentedToggle
+                value={subjectSortDirection}
+                onChange={setSubjectSortDirection}
+                options={ORDER}
+                label="Order"
+              />
             )}
         </div>
         <div
@@ -546,37 +522,12 @@ export default function GroupInfoPanel({
               </svg>
             </h4>
             {!isMEPsCollapsed && (
-              <button
-                className="group-info-sort-button"
-                onClick={toggleSortDirection}
-                title={
-                  sortDirection === "desc"
-                    ? "Sort: Highest to Lowest (click to reverse)"
-                    : "Sort: Lowest to Highest (click to reverse)"
-                }
-              >
-                <span>
-                  {sortDirection === "desc"
-                    ? "Highest to Lowest"
-                    : "Lowest to Highest"}
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
-                    transform:
-                      sortDirection === "asc" ? "rotate(180deg)" : "none",
-                  }}
-                >
-                  <path d="M7 13l5 5 5-5M7 6l5-5 5 5" />
-                </svg>
-              </button>
+              <SegmentedToggle
+                value={sortDirection}
+                onChange={setSortDirection}
+                options={ORDER}
+                label="Order"
+              />
             )}
           </div>
           <div

@@ -9,8 +9,16 @@ import {
   CountryFlag,
   getGroupColor,
 } from "../lib/utils.js";
+import MEPHeadlineDials from "./MEPHeadlineDials";
 
-export default function MEPInfoPanel({ node, graphData, mandate, onSelectGroup }) {
+export default function MEPInfoPanel({
+  node,
+  graphData,
+  mandate,
+  onSelectGroup,
+  reading = null,
+  subject = null,
+}) {
   const [showGroupTooltip, setShowGroupTooltip] = useState(false);
   const [showPartyTooltip, setShowPartyTooltip] = useState(false);
   const [groupTooltipPosition, setGroupTooltipPosition] = useState("right");
@@ -153,6 +161,11 @@ export default function MEPInfoPanel({ node, graphData, mandate, onSelectGroup }
         </div>
       </div>
 
+      {/* Identity on the left, the two figures that place this MEP on the
+          right. They are one row so the eye reads "who" and "how close" as a
+          single fact rather than as a caption and a chart. */}
+      <div className="mep-info-identity">
+        <div className="mep-info-identity-facts">
       {displayPartyName && (
         <div className="mep-info-section">
           <div className="mep-info-group-label">National Party</div>
@@ -303,6 +316,15 @@ export default function MEPInfoPanel({ node, graphData, mandate, onSelectGroup }
           </div>
         </div>
       )}
+        </div>
+        <MEPHeadlineDials
+          reading={reading}
+          mandate={mandate}
+          node={node}
+          groupColor={graphData?.nodeMap.get(node.id)?.color}
+          subject={subject}
+        />
+      </div>
     </div>
   );
 }
