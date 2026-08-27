@@ -342,7 +342,7 @@ export default function CohesionInsights({
             1
           )}× the ${PERCENTILE}th-percentile movement for ${
             KIND_NOUN[row.kind]
-          }, which is where the notch sits.`;
+          }.`;
           return (
             <div className="insights-row" key={row.key} title={title}>
               <span className="insights-row-label">
@@ -418,8 +418,7 @@ export default function CohesionInsights({
           That is the whole point of the normalisation and it has to be said,
           or the strip looks broken next to the numbers beside it. */}
       <div className="insights-note">
-        Notches mark each kind&rsquo;s own {PERCENTILE}th percentile. A longer
-        bar is rarer, not bigger.
+        
         {thin && (
           <>
             {" "}

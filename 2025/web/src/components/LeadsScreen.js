@@ -258,8 +258,7 @@ export default function LeadsScreen({
             <DeltaBadge
               score={row.score}
               baseline={row.baseline}
-              label={`${row.country}, all policy areas`}
-              what={`${row.country}'s internal agreement`}
+              label={`${row.country} across all policy areas`}
             />
           </span>
         </button>
@@ -290,8 +289,7 @@ export default function LeadsScreen({
             <DeltaBadge
               score={row.score}
               baseline={row.baseline}
-              label={`${name}, all policy areas`}
-              what={`${name} agreement`}
+              label={`${name} across all policy areas`}
             />
           </span>
         </button>
@@ -324,8 +322,7 @@ export default function LeadsScreen({
             <DeltaBadge
               score={row.score}
               baseline={row.baseline}
-              label={`${nameA} and ${nameB}, all policy areas`}
-              what={`Agreement between ${nameA} and ${nameB}`}
+              label={`${nameA} and ${nameB} across all policy areas`}
             />
           </span>
         </button>
@@ -375,8 +372,7 @@ export default function LeadsScreen({
           <DeltaBadge
             score={row.score}
             baseline={row.baseline}
-            label={`their own group, ${own}`}
-            what={`Agreement with ${closest}`}
+            label={`their agreement with their own group, ${own}`}
           />
         </span>
       </button>

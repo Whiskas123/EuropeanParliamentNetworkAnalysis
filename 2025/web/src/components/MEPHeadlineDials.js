@@ -45,17 +45,13 @@ export default function MEPHeadlineDials({
           baseline={own.level}
           color={groupColor || "#6B7C93"}
           label="Group"
-          // The badge reads "<what> is N points higher/lower than <label>", so
-          // both halves have to name a side of the comparison. "agreement with
-          // PfE is lower than PfE" named the same side twice and said nothing.
-          what={`${name}'s agreement with ${getGroupAcronym(
+          // The badge reads "N pp below <label>" beside the figure it belongs
+          // to, so the label names only the other side of the comparison: what
+          // a typical member of the same group manages.
+          baselineLabel={`the average ${getGroupAcronym(
             own.groupId,
             mandate
-          )}`}
-          baselineLabel={`what ${getGroupAcronym(
-            own.groupId,
-            mandate
-          )} manages among itself`}
+          )} member's agreement with ${getGroupAcronym(own.groupId, mandate)}`}
           title={
             `${name} votes with ${getGroupAcronym(own.groupId, mandate)} ` +
             `${(own.value * 100).toFixed(1)}% of the time${where}` +
@@ -74,8 +70,7 @@ export default function MEPHeadlineDials({
           color="#6B7C93"
           label="National"
           flag={<CountryFlag country={national.country} />}
-          what={`${name}'s agreement with the ${national.country} delegation`}
-          baselineLabel="what the delegation manages among itself"
+          baselineLabel={`the average ${national.country} MEP's agreement with the delegation`}
           title={
             `${name} votes with the rest of the ${national.country} ` +
             `delegation ${(national.value * 100).toFixed(1)}% of the time` +

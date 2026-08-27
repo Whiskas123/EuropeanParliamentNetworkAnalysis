@@ -169,3 +169,10 @@ data/archive/*
 
 # Claude Code session state, including git worktrees (whole checkouts).
 .claude/
+.next/
+data/reports
+
+exhibition/
+
+metrics-explainer.svg
+metrics-explainer-pt.svg

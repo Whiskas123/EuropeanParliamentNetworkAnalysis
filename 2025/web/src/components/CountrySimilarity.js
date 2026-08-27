@@ -112,7 +112,6 @@ export default function CountrySimilarity({
               )}% internal agreement across ${item.mepCount} MEP${
                 item.mepCount === 1 ? "" : "s"
               }${navigable ? ". Click to open this delegation." : ""}`}
-              what={`${item.country} agreement`}
               baselineLabel={baseline?.label}
               sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
               onClick={

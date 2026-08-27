@@ -1842,7 +1842,17 @@ export default function NetworkCanvas({
           // What is on screen is what comes out: outlines when the outlines
           // are up, at the orientation the reader turned the network to.
           communities: showCommunities,
+          // Including how the reader tuned them: the number of communities
+          // and how tightly each outline hugs its members are the two knobs
+          // in display settings, and an export that ignored them would print
+          // the automatic split instead of the one on screen.
+          communityK,
+          communityCoverage,
           rotation,
+          // The picture alone — no title, footnotes or colour key set around
+          // it. These files go into Figma and onto printed panels, where the
+          // caption is typeset there and not here. The PNG keeps its band.
+          captions: false,
         },
         meta: exportMeta,
       })

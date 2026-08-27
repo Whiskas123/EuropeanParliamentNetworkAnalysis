@@ -297,16 +297,6 @@ function AllyBars({ allies, mode, onMode, family, term }) {
           </li>
         ))}
       </ul>
-
-      {/* The axis is 0-100% and the bars are drawn against it, so a reader can
-          compare a bar here with a bar under a different family. Named because
-          nothing else on the row says what full width means. */}
-      <p className="sb-note coalitions-caveat">
-        Bars run to 100%. {top ? `${FAMILIES[top.family].label} is the closest at ${whole(top.share)}` : ""}
-        {mode === "wonTogether"
-          ? ". A family scoring high here but low on every vote wins mainly in someone else's company."
-          : ". Switch to “when it wins” to see who is there on the votes it carries."}
-      </p>
     </div>
   );
 }
@@ -359,32 +349,6 @@ function Ranking({ rows, view, family, term, subject, minShare }) {
           </li>
         ))}
       </ul>
-
-      {/* The seven squares are always all seven, filled or hollow, so a row is
-          read as a shape rather than a list of names — which is what makes
-          "everyone but the right" recognisable at a glance across rows. Every
-          bar is the same colour on purpose: which coalitions are worth noticing
-          is the reader's call, and colouring some of them would be this panel
-          making it for them. */}
-      <p className="sb-note coalitions-caveat">
-        Seven squares, seated left to right:{" "}
-        {FAMILY_ORDER.map((id, i) => (
-          <span key={id}>
-            {i > 0 ? ", " : ""}
-            {FAMILIES[id].short}
-          </span>
-        ))}
-        . A filled square is in the winning coalition.{" "}
-        {!family && (
-          <>
-            These {rows.length} take {whole(covered)} of the term&rsquo;s decided
-            votes; the rest are spread over{" "}
-            {view.otherCoalitions ? view.otherCoalitions.count : 0} smaller
-            combinations, each under{" "}
-            {typeof minShare === "number" ? whole(minShare) : "1%"}.
-          </>
-        )}
-      </p>
     </div>
   );
 }

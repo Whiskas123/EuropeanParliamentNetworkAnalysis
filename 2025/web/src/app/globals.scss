@@ -841,6 +841,13 @@ a {
   position: static;
 }
 
+// Hung from the right edge, for a tip whose anchor is at the end of its row:
+// measured from the left it would run off the sidebar, which clips it.
+.sidebar-tip-right {
+  left: auto;
+  right: 0;
+}
+
 .sidebar-tip-end {
   left: 16px;
   right: 16px;
@@ -907,13 +914,64 @@ a {
 // The five tabs. Outside .sidebar-content so the strip stays put while a tab
 // three thousand pixels tall scrolls underneath it.
 .sidebar-tabs {
+  position: relative;
   display: flex;
+  align-items: stretch;
   flex-shrink: 0;
   gap: 1px;
   padding: 5px 6px 0;
   background-color: #ffffff;
   border-left: 1px solid var(--sb-rule);
   border-bottom: 1px solid var(--sb-rule);
+}
+
+// The tabs themselves. Split out of .sidebar-tabs when the export button
+// joined the strip: the tablist has to be exactly the tabs, and the button is
+// not one of them.
+.sidebar-tabs-list {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 1px;
+}
+
+// The export control. Held at the end of the strip at its own natural width so
+// the tabs keep splitting the rest of it evenly.
+.sidebar-tabs-export {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-bottom: 6px;
+}
+
+.sidebar-tabs-export-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  appearance: none;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  color: var(--sb-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    color: var(--sb-ink);
+    background-color: var(--sb-wash);
+  }
+
+  &:disabled {
+    cursor: progress;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sb-accent, #003399);
+    outline-offset: 1px;
+  }
 }
 
 .sidebar-tab {
