@@ -550,6 +550,12 @@ a {
 .group-info-section-title,
 .structure-title,
 .trends-title,
+// The lowest-agreeing pair used to be a section label inside the trends panel,
+// which is what it looked like: a small-caps line under a chart, reading as a
+// caption on the plot above rather than as the second of the History tab's
+// three charts. It carries its own axis, its own hover and its own collapse
+// chevron, so it takes a panel title like the two it sits between.
+.trends-spark-title,
 .insights-title {
   @extend .sb-panel-title;
 }
@@ -559,19 +565,18 @@ a {
 .cohesion-heatmap-description,
 .structure-description,
 .trends-description,
+.trends-spark-lede,
 .insights-desc,
 .deviation-lede,
 .deviation-empty {
   @extend .sb-panel-desc;
 }
 
-.structure-section-label,
-.trends-spark-title {
+.structure-section-label {
   @extend .sb-section-label;
 }
 
-.structure-section-lede,
-.trends-spark-lede {
+.structure-section-lede {
   @extend .sb-section-lede;
 }
 
@@ -1104,6 +1109,22 @@ a {
     &.collapsed {
       transform: rotate(-90deg);
     }
+  }
+}
+
+// The same chevron in the newer heading-row form: a .sb-collapse button beside a
+// .sb-panel-title, rather than the whole title being the control.
+//
+// It has never turned. The rotation above is written inside .collapsible-title
+// and a button is not one, so every panel built on .sb-panel-head — the closest
+// MEPs, group agreement, the group profile's four lists, and now the three
+// charts on the History tab — has shown a chevron pointing down whether its
+// content was open or shut. Stated once here rather than per panel.
+.sb-collapse .collapse-icon {
+  transition: transform 0.3s ease;
+
+  &.collapsed {
+    transform: rotate(-90deg);
   }
 }
 

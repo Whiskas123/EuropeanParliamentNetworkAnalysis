@@ -624,11 +624,13 @@ export default function Sidebar({
       );
     }
 
-    // Neither panel here wears a collapse chevron: opening the tab is the act
-    // that asks for the content, and a control that hides everything under it
-    // would leave the tab looking broken.
+    // Three charts, one per section, each folding away from its own heading —
+    // the same chevron the other sidebars give their sections. This tab used to
+    // argue against them, on the grounds that opening the tab is the act that
+    // asks for the content; that holds for a tab with one chart in it, and this
+    // one is a long scroll of three.
     //
-    // The two are the same five terms read at two altitudes. The first plots
+    // The two panels are the same five terms read at two altitudes. The first plots
     // the Parliament's averages, which is where its clearest story lives and
     // also where the more pointed questions go to die — the between-groups line
     // falls across the five terms, but drop the far right and the remaining

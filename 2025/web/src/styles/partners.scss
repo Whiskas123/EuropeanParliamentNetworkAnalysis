@@ -18,6 +18,10 @@
 // (SegmentedToggle), and pressed-state chips built from the same 8px coloured
 // square that .leads-dot and .insights-swatch use for a political group.
 
+// The third of the History tab's three sections, on the same rhythm as the two
+// above it: a hairline rule, 30px over it and 20px under, a heading row with a
+// chevron. It used to be the only one of the three with no rule above it, which
+// left the pair chart and this one reading as one long block.
 .partners-panel {
   margin-top: 30px;
   padding-top: 20px;
@@ -168,6 +172,34 @@
   }
 }
 
+// The years under a term number, a sub-line below a 9px label — the same
+// second row the two charts above put under their own term ticks.
+.partners-tick-years {
+  font-size: 8px;
+  fill: var(--sb-faint);
+}
+
+// A figure standing on the plot rather than in the legend beside it. Same mark
+// as .trends-point-label on the two charts above, halo and all: six family
+// lines can cross, and a number without one is unreadable wherever they do.
+// The colour is the line's, set on the element.
+.partners-point-label {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+
+  // The column under the cursor, on a plot where the crosshair is the only
+  // other thing naming it.
+  &.current {
+    font-weight: 700;
+  }
+}
+
 .partners-line-label {
   font-size: var(--sb-fs-micro);
   fill: var(--sb-muted);
@@ -223,12 +255,6 @@
   border-radius: 2px;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
-
-.partners-legend-value {
-  color: var(--sb-ink);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
 .partners-legend-term {

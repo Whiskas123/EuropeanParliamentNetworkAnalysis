@@ -10,6 +10,7 @@ import {
   profileFor,
 } from "../lib/families.js";
 import SegmentedToggle from "./SegmentedToggle";
+import "../styles/profile.scss";
 import "../styles/partners.scss";
 
 /**
@@ -75,8 +76,17 @@ const ARROW_BOX = { top: 8, right: 40, bottom: 20, left: 52 };
 const ARROW_ROW = 19;
 const ARROW_DOT = 3.2;
 
-/** Clearance between two term names at the right edge of the house profile. */
+/**
+ * Clearance between two labels sharing a column, and how far a value floats
+ * above the point it belongs to.
+ *
+ * One pair of numbers for the term names at the right edge of the house profile
+ * and for the figures over the partner lines: both are the same problem, a
+ * column of small text that must not pile up, and TrendsPanel resolves it the
+ * same way on the two charts above.
+ */
 const LABEL_GAP = 10;
+const LABEL_LIFT = 8;
 
 /**
  * Change is red or green, as it is on every DeltaBadge in the sidebar.
@@ -130,6 +140,85 @@ function segments(pts) {
 }
 
 /**
+ * Value labels in one column, pushed apart so no two sit on each other, and
+ * which points carry one.
+ *
+ * The same two helpers TrendsPanel uses for the charts above — duplicated here
+ * rather than shared, as `segments` and `toPath` already are, because a chart
+ * file in this app carries its own drawing primitives. The rule is one rule
+ * across the whole History tab: each line's last drawn point, so the plot reads
+ * without a hover, plus every line at the term under the cursor. That replaced
+ * the value column this panel used to keep in its legend, which was a caption
+ * beside the chart rather than a number on it and did not survive a print.
+ */
+function spread(column, top, bottom) {
+  const order = [...column].sort((a, b) => a.base - b.base);
+  let floor = top;
+  order.forEach((mark) => {
+    mark.labelY = Math.max(mark.base, floor);
+    floor = mark.labelY + LABEL_GAP;
+  });
+  let ceiling = bottom;
+  for (let i = order.length - 1; i >= 0; i -= 1) {
+    order[i].labelY = Math.min(order[i].labelY, ceiling);
+    ceiling = order[i].labelY - LABEL_GAP;
+  }
+  return column;
+}
+
+function valueMarks(lines, activeIndex, top, bottom) {
+  const marks = [];
+  lines.forEach((line) => {
+    const end = [...line.points].reverse().find(Boolean);
+    const active = activeIndex !== null && activeIndex >= 0 ? line.points[activeIndex] : null;
+    [end, active].forEach((point) => {
+      if (!point) return;
+      if (marks.some((mark) => mark.key === line.key && mark.i === point.i)) return;
+      marks.push({
+        key: line.key,
+        color: line.color,
+        i: point.i,
+        x: point.x,
+        base: point.y - LABEL_LIFT,
+        value: point.value,
+        current: point.i === activeIndex,
+      });
+    });
+  });
+  const columns = new Map();
+  marks.forEach((mark) => {
+    if (!columns.has(mark.i)) columns.set(mark.i, []);
+    columns.get(mark.i).push(mark);
+  });
+  columns.forEach((column) => spread(column, top, bottom));
+  return marks;
+}
+
+// A number at either end of the axis leans inward rather than over the edge.
+const labelAnchor = (i, last) => (i === 0 ? "start" : i === last ? "end" : "middle");
+const labelX = (x, i, last) => (i === 0 ? x + 5 : i === last ? x - 5 : x);
+
+/** The chevron every collapsing section in the sidebar wears. */
+function Chevron({ collapsed }) {
+  return (
+    <svg
+      className={`collapse-icon ${collapsed ? "collapsed" : ""}`}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+/**
  * The axis, fixed at 0–100% on every form.
  *
  * These charts used to scale to their own data, which reads better in
@@ -164,6 +253,9 @@ export default function PartnerTrends({
   const [chosen, setChosen] = useState(() => TERMS.map((term) => term.mandate));
   const [loaded, setLoaded] = useState(null);
   const [hovered, setHovered] = useState(null);
+  // The third of the History tab's three sections, folding away from its own
+  // heading like the two above it and like every section in the other sidebars.
+  const [closed, setClosed] = useState(false);
   const [width, setWidth] = useState(ASSUMED_WIDTH);
   const panelRef = useRef(null);
   const titleId = useId();
@@ -352,6 +444,13 @@ export default function PartnerTrends({
   }, [rows, partners, form, width, pivot]);
 
   const status = !series ? "loading" : rows.length === 0 ? "empty" : "ready";
+
+  // The column the chart is reading: whatever is under the cursor, and the term
+  // the canvas is showing when nothing is. The same rule the two charts above
+  // follow, which is what puts a crosshair and a set of figures on the open term
+  // on all three of them rather than on two.
+  const activeIndex =
+    hovered !== null ? hovered : rows.findIndex((row) => row.mandate === mandate);
   const thinRows = rows.filter((row) => row.thin);
 
   /** Which raw groups stood for each family, in the terms on screen. */
@@ -381,164 +480,169 @@ export default function PartnerTrends({
     });
   };
 
-  const hoveredRow = hovered !== null && rows[hovered] ? rows[hovered] : null;
 
   return (
     <section className="partners-panel" aria-labelledby={titleId} ref={panelRef}>
-      <h4 className="sb-panel-title" id={titleId}>
-        {opening(FAMILIES[pivot].possessive)} partners
-      </h4>
-      <p className="sb-panel-desc">
-        Agreement with each of the other families, term by term. Groups are
-        merged across renames, so a line can cross twenty years.
-      </p>
-
-      <div className="partners-controls">
-        <div className="partners-chips" role="group" aria-label="Political family">
-          {FAMILY_ORDER.map((family) => (
-            <button
-              key={family}
-              type="button"
-              className="partners-chip"
-              aria-pressed={pivot === family}
-              onClick={() => onPivotChange && onPivotChange(family)}
-              title={`Draw ${FAMILIES[family].possessive} agreement with the other six families`}
-            >
-              <span
-                className="partners-chip-dot"
-                style={{ background: FAMILIES[family].color }}
-                aria-hidden="true"
-              />
-              {FAMILIES[family].short}
-            </button>
-          ))}
-        </div>
-
-        <div className="partners-row">
-          <SegmentedToggle
-            value={form}
-            onChange={setForm}
-            options={FORMS}
-            label="Draw as"
-          />
-          <div className="partners-terms" role="group" aria-label="Terms compared">
-            {TERMS.map((term) => (
-              <button
-                key={term.mandate}
-                type="button"
-                className="partners-term"
-                aria-pressed={chosen.includes(term.mandate)}
-                onClick={() => toggleTerm(term.mandate)}
-                title={`${term.short}, ${term.years}`}
-              >
-                {term.short}
-              </button>
-            ))}
-          </div>
+      <div className="sb-panel-head">
+        <h3 className="sb-panel-title" id={titleId}>
+          {opening(FAMILIES[pivot].possessive)} partners
+        </h3>
+        <div className="sb-panel-controls">
+          <button
+            type="button"
+            className="sb-collapse"
+            aria-expanded={!closed}
+            onClick={() => setClosed(!closed)}
+            title={closed ? "Show this chart" : "Hide this chart"}
+          >
+            <Chevron collapsed={closed} />
+          </button>
         </div>
       </div>
 
-      {status === "loading" && (
-        <p className="sb-status partners-status">Reading twenty years of votes…</p>
-      )}
-      {status === "empty" && (
-        <p className="sb-note partners-status">
-          None of the terms ticked above carry this view.
+      <div className={`collapsible-content ${!closed ? "expanded" : ""}`}>
+        <p className="sb-panel-desc">
+          Agreement with each of the other families, term by term. Groups are
+          merged across renames, so the lines can cross multiple terms.
         </p>
-      )}
 
-      {status === "ready" && geometry && geometry.kind === "lines" && (
-        <LineChart
-          geometry={geometry}
-          rows={rows}
-          width={width}
-          pivot={pivot}
-          mandate={mandate}
-          hovered={hovered}
-          setHovered={setHovered}
-        />
-      )}
-      {status === "ready" && geometry && geometry.kind === "arrows" && (
-        <ArrowChart geometry={geometry} width={width} pivot={pivot} />
-      )}
-      {status === "ready" && geometry && geometry.kind === "profile" && (
-        <ProfileChart
-          geometry={geometry}
-          rows={rows}
-          width={width}
-          pivot={pivot}
-          mandate={mandate}
-        />
-      )}
-      {status === "ready" && !geometry && (
-        <p className="sb-note partners-status">
-          This view has no group pairs to compare — it holds one family.
-        </p>
-      )}
-
-      {status === "ready" && geometry && geometry.kind !== "arrows" && (
-        <ul className="partners-legend">
-          {(geometry.kind === "lines" ? partners : rows).map((entry) =>
-            geometry.kind === "lines" ? (
-              <li className="partners-legend-item" key={entry.family}>
+        <div className="partners-controls">
+          <div className="partners-chips" role="group" aria-label="Political family">
+            {FAMILY_ORDER.map((family) => (
+              <button
+                key={family}
+                type="button"
+                className="partners-chip"
+                aria-pressed={pivot === family}
+                onClick={() => onPivotChange && onPivotChange(family)}
+                title={`Draw ${FAMILIES[family].possessive} agreement with the other six families`}
+              >
                 <span
-                  className="partners-legend-dot"
-                  style={{ background: entry.color }}
+                  className="partners-chip-dot"
+                  style={{ background: FAMILIES[family].color }}
                   aria-hidden="true"
                 />
-                {entry.label}
-                <span className="partners-legend-value">
-                  {pct(
-                    hoveredRow
-                      ? entry.values[rows.indexOf(hoveredRow)]
-                      : entry.values[entry.values.length - 1]
-                  )}
-                </span>
-              </li>
-            ) : (
-              <li className="partners-legend-item" key={entry.mandate}>
-                <span className="partners-legend-term">{entry.short}</span>
-                {entry.years}
-              </li>
-            )
-          )}
-        </ul>
-      )}
+                {FAMILIES[family].short}
+              </button>
+            ))}
+          </div>
 
-      {status === "ready" && geometry && geometry.kind === "lines" && (
-        <p className="sb-note partners-caveat">
-          Values are for {hoveredRow ? hoveredRow.short : rows[rows.length - 1].short}
-          {hoveredRow ? "" : " (latest ticked)"}. Hover a term to read the rest.
-        </p>
-      )}
+          <div className="partners-row">
+            <SegmentedToggle
+              value={form}
+              onChange={setForm}
+              options={FORMS}
+              label="Draw as"
+            />
+            <div className="partners-terms" role="group" aria-label="Terms compared">
+              {TERMS.map((term) => (
+                <button
+                  key={term.mandate}
+                  type="button"
+                  className="partners-term"
+                  aria-pressed={chosen.includes(term.mandate)}
+                  onClick={() => toggleTerm(term.mandate)}
+                  title={`${term.short}, ${term.years}`}
+                >
+                  {term.short}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
-      {lineage.length > 0 && (
-        <p className="sb-note partners-caveat">
-          Merged across renames:{" "}
-          {lineage.map((entry, i) => (
-            <span key={entry.family}>
-              {i > 0 ? "; " : ""}
-              <strong>{entry.label}</strong> is {entry.groups.join(", ")}
-            </span>
-          ))}
-          . Pooling PfE with ESN, or UEN with ECR, is a judgement about lineage
-          rather than something the votes say.
-        </p>
-      )}
+        {status === "loading" && (
+          <p className="sb-status partners-status">Reading twenty years of votes…</p>
+        )}
+        {status === "empty" && (
+          <p className="sb-note partners-status">
+            None of the terms ticked above carry this view.
+          </p>
+        )}
 
-      {thinRows.length > 0 && (
-        <p className="sb-note partners-caveat">
-          {thinRows.map((row) => `${row.short} (${row.sessions} votes)`).join(", ")}{" "}
-          {thinRows.length === 1 ? "rests" : "rest"} on too few votes to carry a
-          trend on {thinRows.length === 1 ? "its" : "their"} own.
-        </p>
-      )}
+        {status === "ready" && geometry && geometry.kind === "lines" && (
+          <LineChart
+            geometry={geometry}
+            rows={rows}
+            width={width}
+            pivot={pivot}
+            mandate={mandate}
+            activeIndex={activeIndex}
+            setHovered={setHovered}
+          />
+        )}
+        {status === "ready" && geometry && geometry.kind === "arrows" && (
+          <ArrowChart geometry={geometry} width={width} pivot={pivot} />
+        )}
+        {status === "ready" && geometry && geometry.kind === "profile" && (
+          <ProfileChart
+            geometry={geometry}
+            rows={rows}
+            width={width}
+            pivot={pivot}
+            mandate={mandate}
+          />
+        )}
+        {status === "ready" && !geometry && (
+          <p className="sb-note partners-status">
+            This view has no group pairs to compare — it holds one family.
+          </p>
+        )}
+
+        {/* Identity only. The figures used to live here too, in a value column
+            that changed under a hover — a caption beside the chart rather than a
+            number on it, and the one reading on this tab a printed sheet lost
+            entirely. They are on the lines now. */}
+        {status === "ready" && geometry && geometry.kind !== "arrows" && (
+          <ul className="partners-legend">
+            {(geometry.kind === "lines" ? partners : rows).map((entry) =>
+              geometry.kind === "lines" ? (
+                <li className="partners-legend-item" key={entry.family}>
+                  <span
+                    className="partners-legend-dot"
+                    style={{ background: entry.color }}
+                    aria-hidden="true"
+                  />
+                  {entry.label}
+                </li>
+              ) : (
+                <li className="partners-legend-item" key={entry.mandate}>
+                  <span className="partners-legend-term">{entry.short}</span>
+                  {entry.years}
+                </li>
+              )
+            )}
+          </ul>
+        )}
+
+
+        {lineage.length > 0 && (
+          <p className="sb-note partners-caveat">
+            Merged across renames:{" "}
+            {lineage.map((entry, i) => (
+              <span key={entry.family}>
+                {i > 0 ? "; " : ""}
+                <strong>{entry.label}</strong> is {entry.groups.join(", ")}
+              </span>
+            ))}
+            .
+          </p>
+        )}
+
+        {thinRows.length > 0 && (
+          <p className="sb-note partners-caveat">
+            {thinRows.map((row) => `${row.short} (${row.sessions} votes)`).join(", ")}{" "}
+            {thinRows.length === 1 ? "rests" : "rest"} on too few votes to carry a
+            trend on {thinRows.length === 1 ? "its" : "their"} own.
+          </p>
+        )}
+      </div>
     </section>
   );
 }
 
 /** Terms on the x-axis, one coloured line per partner family. */
-function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered }) {
+function LineChart({ geometry, rows, width, pivot, mandate, activeIndex, setHovered }) {
   const { domain, height, x, y, lines, plotHeight } = geometry;
   const ticks = AXIS_TICKS;
 
@@ -562,7 +666,14 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
             y1={y(value)}
             y2={y(value)}
           />
-          <text className="partners-axis-label" x={2} y={y(value) + 3}>
+          {/* Right-aligned against the plot, as on the two charts above: a
+              column of numbers to read down, not a ragged edge. */}
+          <text
+            className="partners-axis-label"
+            x={LINE_BOX.left - 5}
+            y={y(value) + 3}
+            textAnchor="end"
+          >
             {Math.round(value * 100)}
           </text>
         </g>
@@ -570,7 +681,7 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
 
       {rows.map((row, i) => (
         <g key={row.mandate}>
-          {hovered === i && (
+          {activeIndex === i && (
             <line
               className="partners-crosshair"
               x1={x(i)}
@@ -579,13 +690,19 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
               y2={LINE_BOX.top + plotHeight}
             />
           )}
+          {/* Term over years, as on the two charts above. T6 means nothing on
+              its own, and the reader should not have to scroll up to the first
+              chart to find out that it is 2004-2009. */}
           <text
             className={`partners-tick ${row.mandate === mandate ? "current" : ""}`}
             x={x(i)}
-            y={height - 8}
+            y={height - 14}
             textAnchor="middle"
           >
             {row.short}
+          </text>
+          <text className="partners-tick-years" x={x(i)} y={height - 5} textAnchor="middle">
+            {row.years}
           </text>
         </g>
       ))}
@@ -621,6 +738,29 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
         </g>
       ))}
 
+      {/* Six families is the most crowded column on this tab, so the labels
+          are laid out rather than simply offset: each line's last drawn point
+          plus the whole column under the cursor, pushed apart to LABEL_GAP and
+          clamped inside the plot. Drawn after every line, so a label's halo
+          covers whichever line runs behind it. */}
+      {valueMarks(
+        lines.map((line) => ({ key: line.family, color: line.color, points: line.points })),
+        activeIndex,
+        LINE_BOX.top + LABEL_LIFT,
+        LINE_BOX.top + plotHeight
+      ).map((mark) => (
+        <text
+          key={`${mark.key}-${mark.i}`}
+          className={`partners-point-label ${mark.current ? "current" : ""}`}
+          x={labelX(mark.x, mark.i, rows.length - 1)}
+          y={mark.labelY}
+          textAnchor={labelAnchor(mark.i, rows.length - 1)}
+          fill={mark.color}
+        >
+          {Math.round(mark.value * 100)}
+        </text>
+      ))}
+
       {rows.map((row, i) => (
         <rect
           key={row.mandate}
@@ -631,7 +771,13 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
           height={plotHeight}
           onMouseEnter={() => setHovered(i)}
           onMouseLeave={() => setHovered(null)}
-        />
+        >
+          <title>
+            {`${row.short}, ${row.years}${
+              row.sessions ? `: ${row.sessions} votes` : ""
+            }`}
+          </title>
+        </rect>
       ))}
     </svg>
   );
@@ -766,7 +912,12 @@ function ProfileChart({ geometry, rows, width, pivot, mandate }) {
             y1={y(value)}
             y2={y(value)}
           />
-          <text className="partners-axis-label" x={2} y={y(value) + 3}>
+          <text
+            className="partners-axis-label"
+            x={PROFILE_BOX.left - 5}
+            y={y(value) + 3}
+            textAnchor="end"
+          >
             {Math.round(value * 100)}
           </text>
         </g>
