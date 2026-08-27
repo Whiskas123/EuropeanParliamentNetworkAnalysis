@@ -228,7 +228,6 @@ export default function CoalitionPanel({
           family={family}
           term={term}
           subject={selectedSubject}
-          minShare={data.minCoalitionShare}
         />
       )}
 
@@ -251,8 +250,6 @@ export default function CoalitionPanel({
  */
 function AllyBars({ allies, mode, onMode, family, term }) {
   const id = useId();
-  const top = allies.rows[0];
-  const chosen = MODES.find((entry) => entry.id === mode);
 
   return (
     <div className="coalitions-block">
@@ -302,9 +299,8 @@ function AllyBars({ allies, mode, onMode, family, term }) {
 }
 
 /** The winning coalitions of one term, largest first. */
-function Ranking({ rows, view, family, term, subject, minShare }) {
+function Ranking({ rows, view, family, term, subject }) {
   const widest = Math.max(...rows.map((row) => row.share), 0.01);
-  const covered = rows.reduce((total, row) => total + row.share, 0);
 
   return (
     <div className="coalitions-block">
