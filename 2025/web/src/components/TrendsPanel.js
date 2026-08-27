@@ -968,10 +968,7 @@ export default function TrendsPanel({
                 })}
               </svg>
 
-              <p className="trends-spark-note">
-                On its own scale, below everything in the plot above — one axis for
-                both would flatten both.
-              </p>
+
             </div>
           )}
 

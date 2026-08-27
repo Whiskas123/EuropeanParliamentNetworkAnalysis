@@ -1156,6 +1156,9 @@ function gaugeSweep(value, floor) {
  * @param {string} o.color - the entity's colour
  * @param {string} o.label - what the dial is
  * @param {string|null} o.sub - sample size
+ * @param {number} [o.maxLabelLines] - wrap the label over up to this many
+ *   lines instead of clipping it to one. Defaults to 1, which is what every
+ *   sheet uses; the element export raises it for long policy-area names.
  * @returns {string}
  */
 function svgGauge({
@@ -1169,6 +1172,7 @@ function svgGauge({
   sub = null,
   floor = GAUGE_FLOOR,
   labelWidth,
+  maxLabelLines = 1,
 }) {
   const parts = [];
   const r = size * GAUGE.radius;
@@ -1244,14 +1248,27 @@ function svgGauge({
 
   let y = top + size + size * 0.2;
   const labelSize = Math.max(5.4, size * 0.165);
-  parts.push(
-    svgText(cx, y, clipText(label, labelWidth, labelSize), {
-      size: labelSize,
-      anchor: "middle",
-      fill: SB_INK,
-    })
-  );
-  y += labelSize + 2.5;
+  // One line by default, which is what a sheet has room for and what every
+  // caller here wants. The element export asks for more: a policy-area name
+  // clipped to "Environment, Clim…" is merely terse in a sidebar, and a defect
+  // on a printed panel where there is no tooltip to recover the rest of it.
+  const labelLines =
+    maxLabelLines > 1
+      ? wrapText(String(label ?? ""), Math.max(4, Math.floor(labelWidth / (labelSize * 0.52)))).slice(
+          0,
+          maxLabelLines
+        )
+      : [clipText(label, labelWidth, labelSize)];
+  labelLines.forEach((line, index) => {
+    parts.push(
+      svgText(cx, y + index * (labelSize + 1.5), clipText(line, labelWidth, labelSize), {
+        size: labelSize,
+        anchor: "middle",
+        fill: SB_INK,
+      })
+    );
+  });
+  y += (labelLines.length - 1) * (labelSize + 1.5) + labelSize + 2.5;
 
   const delta = getDelta(value, baseline);
   if (delta) {
@@ -2176,9 +2193,8 @@ export function exportCoalitionsSheetSVG({
 
   if (rows.length > 0) {
     const head = sectionHead(
-      `What wins in ${termShort(mandate)}`,
-      `The families on the winning side, on the ${thousandsSep(view.decided)} decided votes` +
-        `${subject ? ` in ${subject}` : " of this term"}.` +
+      `What coalitions win in ${termShort(mandate)}`,
+      
         (family ? ` Only the coalitions that include ${family.sentence}.` : ""),
       M,
       inner
@@ -2421,3 +2437,52 @@ export function exportPartnersSheetSVG({ meta, series, pivot = "EPP" } = {}) {
     "</svg>",
   ].join("");
 }
+
+/* -------------------------------------------------------------------------
+ * Borrowed by the element export
+ * ---------------------------------------------------------------------- */
+
+/**
+ * The print primitives, re-exported for lib/elementExport.js.
+ *
+ * That module cuts the same marks loose from the sheet so they can be placed
+ * one at a time in Figma. It has to draw a dial that is the *same* dial — same
+ * cropped scale, same notch, same badge greys — or a poster and the sheet it
+ * was lifted from would disagree about a number, so it borrows the builders
+ * here rather than keeping a second copy of them in step by hand.
+ *
+ * Re-exported, not moved: everything above still calls these as locals, and
+ * NetworkCanvas's contract with this file is unchanged.
+ */
+export {
+  svgGauge,
+  gaugeSweep,
+  GAUGE,
+  GAUGE_FLOOR,
+  trendMarker,
+  trendPath,
+  TREND_SERIES,
+  svgText,
+  svgRect,
+  svgRule,
+  clipText,
+  estimateWidth,
+  wrapText,
+  esc,
+  xmlId,
+  n1,
+  n2,
+  fmtPct,
+  fmtInt,
+  FONT_STACK,
+  PAPER,
+  INK,
+  SB_INK,
+  SB_BODY,
+  SB_MUTED,
+  SB_FAINT,
+  SB_RULE,
+  DELTA_UP,
+  DELTA_DOWN,
+  DELTA_FLAT,
+};

@@ -1,0 +1,217 @@
+// The export workshop.
+//
+// Same type scale and the same greys as the sidebar, because it reads the same
+// figures and a second visual language for an internal tool is a second thing
+// to maintain. Nothing here is a chart: every mark this page is about ends up
+// in the SVG, not on the screen.
+
+.xp {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+  color: var(--sb-ink);
+  font-size: var(--sb-fs-row);
+}
+
+.xp-head {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    max-width: 60ch;
+    color: var(--sb-body);
+    font-size: var(--sb-fs-body);
+    line-height: 1.55;
+  }
+}
+
+.xp-panel {
+  border-top: 1px solid var(--sb-rule);
+  padding: 20px 0 24px;
+
+  h2 {
+    font-size: var(--sb-fs-title);
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  &--run {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+
+.xp-lede {
+  margin: 0 0 12px;
+  color: var(--sb-body);
+  font-size: var(--sb-fs-body);
+}
+
+.xp-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 12px 0 8px;
+}
+
+.xp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  flex: 1 1 180px;
+
+  span {
+    font-size: var(--sb-fs-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sb-muted);
+  }
+
+  select {
+    font-size: var(--sb-fs-control);
+    padding: 6px 8px;
+    border: 1px solid var(--sb-rule);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--sb-ink);
+  }
+}
+
+.xp-note {
+  margin: 6px 0 0;
+  color: var(--sb-muted);
+  font-size: var(--sb-fs-note);
+  line-height: 1.5;
+  max-width: 66ch;
+}
+
+.xp-names {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--sb-fs-control);
+  line-height: 1.7;
+  padding: 10px 12px;
+  border: 1px solid var(--sb-rule);
+  border-radius: 4px;
+  resize: vertical;
+  color: var(--sb-ink);
+}
+
+.xp-match {
+  margin-top: 12px;
+}
+
+.xp-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 3px 0;
+    border-bottom: 1px solid var(--sb-rule-soft);
+    font-size: var(--sb-fs-sub);
+  }
+}
+
+// Green and red as the delta badge uses them, so "resolved" and "did not"
+// read the same way as "above" and "below" everywhere else on the site.
+.xp-ok {
+  color: #1a6b3c;
+  font-weight: 600;
+}
+
+.xp-bad {
+  color: #a32a1e;
+  font-weight: 600;
+}
+
+.xp-dim {
+  color: var(--sb-muted);
+}
+
+.xp-families {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px 20px;
+  margin-top: 12px;
+}
+
+.xp-check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  cursor: pointer;
+
+  input {
+    margin-top: 2px;
+  }
+
+  b {
+    display: block;
+    font-weight: 600;
+    font-size: var(--sb-fs-row);
+  }
+
+  em {
+    display: block;
+    font-style: normal;
+    color: var(--sb-muted);
+    font-size: var(--sb-fs-note);
+  }
+}
+
+.xp-go {
+  font-size: var(--sb-fs-control);
+  font-weight: 600;
+  padding: 9px 20px;
+  border: 1px solid var(--sb-ink);
+  border-radius: 4px;
+  background: var(--sb-ink);
+  color: #fff;
+  cursor: pointer;
+
+  &:disabled {
+    background: var(--sb-wash-2);
+    border-color: var(--sb-rule);
+    color: var(--sb-muted);
+    cursor: default;
+  }
+}
+
+.xp-status {
+  flex: 1 1 340px;
+  font-size: var(--sb-fs-note);
+  line-height: 1.55;
+  color: var(--sb-body);
+
+  p {
+    margin: 0 0 4px;
+  }
+
+  // A partial run is the one that matters: it produced files and also left
+  // something out, and the whole point of listing the notes is that the gap
+  // is noticed here rather than at the printer.
+  &--partial p:first-child,
+  &--failed p:first-child {
+    color: #a32a1e;
+    font-weight: 600;
+  }
+
+  &--done p:first-child {
+    color: #1a6b3c;
+    font-weight: 600;
+  }
+}

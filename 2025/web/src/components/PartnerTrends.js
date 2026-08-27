@@ -390,7 +390,7 @@ export default function PartnerTrends({
       </h4>
       <p className="sb-panel-desc">
         Agreement with each of the other families, term by term. Groups are
-        merged across renames, so a line can cross twenty years.
+        merged across renames, so the lines can cross multiple terms.
       </p>
 
       <div className="partners-controls">
@@ -505,12 +505,6 @@ export default function PartnerTrends({
         </ul>
       )}
 
-      {status === "ready" && geometry && geometry.kind === "lines" && (
-        <p className="sb-note partners-caveat">
-          Values are for {hoveredRow ? hoveredRow.short : rows[rows.length - 1].short}
-          {hoveredRow ? "" : " (latest ticked)"}. Hover a term to read the rest.
-        </p>
-      )}
 
       {lineage.length > 0 && (
         <p className="sb-note partners-caveat">
@@ -521,8 +515,7 @@ export default function PartnerTrends({
               <strong>{entry.label}</strong> is {entry.groups.join(", ")}
             </span>
           ))}
-          . Pooling PfE with ESN, or UEN with ECR, is a judgement about lineage
-          rather than something the votes say.
+          .
         </p>
       )}
 
