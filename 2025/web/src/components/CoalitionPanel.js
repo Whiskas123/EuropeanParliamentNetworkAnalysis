@@ -321,12 +321,18 @@ function Ranking({ rows, view, family, term, subject, minShare }) {
       <h5 className="sb-section-label">
         What wins in {term ? term.short : "this term"}
       </h5>
+      {/* The no-family case used to end "Every coalition that took at least 1%
+          of them", which read as a threshold on *members* — as though a group
+          joined a coalition when 1% of its MEPs did. The floor is a share of
+          the term's roll-calls and has nothing to do with members: a group is
+          in a coalition when its own position, the most common ballot among its
+          members present, matched the outcome. Removed rather than reworded,
+          the floor being a detail of what the list omits rather than something
+          a reader of it needs. */}
       <p className="sb-section-lede">
         The families on the winning side, on the {thousands(view.decided)} decided
-        votes {subject ? `in ${subject}` : "of this term"}.{" "}
-        {family
-          ? `Only the coalitions that include ${family.sentence}.`
-          : "Every coalition that took at least 1% of them."}
+        votes {subject ? `in ${subject}` : "of this term"}.
+        {family ? ` Only the coalitions that include ${family.sentence}.` : ""}
       </p>
 
       <ul className="coalitions-ranking">
