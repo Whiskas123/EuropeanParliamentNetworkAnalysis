@@ -2,13 +2,14 @@
 
 import { useEffect, useId, useMemo, useState } from "react";
 import {
+  allyShares,
   coalitionsFor,
-  flankShares,
   loadCoalitions,
   viewFor,
 } from "../lib/coalitions.js";
 import { FAMILIES, FAMILY_ORDER, opening } from "../lib/families.js";
 import { TERMS } from "../lib/trends.js";
+import SegmentedToggle from "./SegmentedToggle";
 import "../styles/coalitions.scss";
 
 /**
@@ -16,25 +17,34 @@ import "../styles/coalitions.scss";
  *
  * Every other figure in this tab is pairwise similarity: over a term, how often
  * two MEPs cast the same ballot. That measure cannot answer "who governs with
- * whom", because it is dominated by the roll-calls nobody contests. Term 10
- * decides 4,244 votes and the two flanks are on opposite sides in most of them;
- * averaging the contested and the unanimous together lets a group look like
- * everyone's friend while losing consistently to a coalition it is not in.
+ * whom", because it is dominated by the roll-calls nobody contests — a group
+ * can look like everyone's friend while losing consistently to a coalition it
+ * is not in. This panel classifies whole roll-calls instead; see
+ * pipeline/coalitions.py.
  *
- * This panel classifies whole roll-calls instead — see pipeline/coalitions.py.
- * Two readings of the same classification:
+ * Two questions, and with no family selected only the second.
  *
- * **Which flank did this group carry the day with**, term by term. For the EPP:
- * consensus 52% falling to 27%, and EPP-with-the-left rising 17% to 50%. The
- * collapse of consensus voting is the cleanest trend in the whole dataset, and
- * this is the chart that shows what replaced it.
+ * **Who does this family share a side with**, in two readings whose *difference*
+ * is the finding. "When it wins" counts only the votes the family carried, and
+ * asks who was carrying them too. "Every vote" counts all decided roll-calls,
+ * win or lose. For the far right in term 10 those read 94% and 38% for the EPP:
+ * it almost never wins except on votes the EPP is already winning. A family
+ * with its own majority — the EPP, 92% and 88% with the liberals — scores alike
+ * on both. One number cannot say that, which is why the toggle is not a
+ * convenience.
  *
- * **Which whole coalitions win**, this term. Term 10's biggest is everyone but
- * the right at 35.8%. Sixth, at 5.8%, is EPP+Conservatives+far right — a
- * right-only majority that had no equivalent in term 9's top ten. That single
- * row is the honest version of a claim the pairwise numbers flatly reject: the
- * EPP has not drifted rightward on average, and a right-wing majority has
- * nonetheless become a thing that exists.
+ * **What wins**, ranked. Every coalition taking at least 1% of the term's
+ * decided votes, so the list is as long as the term was fragmented: twenty rows
+ * in 2004-09, thirteen now.
+ *
+ * **This panel used to report which flank a group won with** — consensus, with
+ * the left, with the right, alone. It was the clearest chart here and it is
+ * gone, because it could not be drawn without this code asserting that the EPP
+ * is the right, Renew the centre-left and the Greens the left. Those are
+ * contested claims, they were invisible to the reader, and they were doing all
+ * the work. Both replacements are counts of who stood where, which the
+ * roll-calls settle by themselves. The one editorial claim left in the panel is
+ * the family lineage, and it is printed under the charts.
  *
  * Two things this panel must not pretend to.
  *
@@ -48,49 +58,23 @@ import "../styles/coalitions.scss";
  * decides twelve votes. The view is still drawn, with its count, and marked.
  */
 
-/**
- * The four outcomes, in the order they stack.
- *
- * Consensus first because it is the baseline the other three are carved out of,
- * then the two flanks either side of it, then the group alone. Colours are
- * directional rather than partisan: a flank is three or four families and has
- * no group colour of its own, so left is the sidebar's red and right its navy,
- * with the whole house in grey between them.
- */
-const OUTCOMES = [
+/** The two readings of a family's allies. */
+const MODES = [
   {
-    id: "consensus",
-    label: "With both",
-    color: "#8c96a3",
-    describe: (owns) => `Votes where the left and the right both went ${owns} way`,
+    id: "wonTogether",
+    text: "When it wins",
+    title: "Of the votes this family won, how often each other family won too",
   },
   {
-    id: "left",
-    label: "With the left",
-    color: "#b5453a",
-    describe: () => `Votes carried with the left flank against the right`,
-  },
-  {
-    id: "right",
-    label: "With the right",
-    color: "#2b3a67",
-    describe: () => `Votes carried with the right flank against the left`,
-  },
-  {
-    id: "alone",
-    label: "Alone",
-    color: "#dfe3e8",
-    describe: (owns) => `Votes where neither flank went ${owns} way`,
+    id: "sameSide",
+    text: "Every vote",
+    title: "Of all decided votes, how often each other family took the same side",
   },
 ];
 
-const BAR_HEIGHT = 15;
-const BAR_GAP = 5;
-const BAR_LABEL = 26;
-
 const pct = (value) =>
   typeof value === "number" && isFinite(value) ? `${(value * 100).toFixed(1)}%` : "—";
-const short = (value) =>
+const whole = (value) =>
   typeof value === "number" && isFinite(value) ? `${Math.round(value * 100)}%` : "—";
 
 // Deterministic thousands separator, as in the facts strip and the trends
@@ -106,7 +90,10 @@ export default function CoalitionPanel({
   selectedCountry = null,
   selectedSubject = null,
 }) {
+  // null is a real state, not "nothing chosen yet": it means the whole chamber,
+  // and it is what the ranking below shows when no family is picked.
   const [pivot, setPivot] = useState("EPP");
+  const [mode, setMode] = useState("wonTogether");
   const [data, setData] = useState(null);
   const [failed, setFailed] = useState(false);
   const titleId = useId();
@@ -123,29 +110,23 @@ export default function CoalitionPanel({
     };
   }, []);
 
-  // Mid-sentence form; headings take the possessive. See families.js for why
-  // none of this can be built from the plain label.
-  const name = FAMILIES[pivot].sentence;
-  const owns = FAMILIES[pivot].possessive;
+  const family = pivot ? FAMILIES[pivot] : null;
+  const view = useMemo(
+    () => (data ? viewFor(data, mandate, selectedSubject) : null),
+    [data, mandate, selectedSubject]
+  );
 
-  /** One stacked bar per term, at whatever policy area is open. */
-  const bars = useMemo(() => {
-    if (!data) return [];
-    return TERMS.map((term) => {
-      const view = viewFor(data, term.mandate, selectedSubject);
-      const shares = flankShares(view, pivot);
-      return { term, shares, thin: Boolean(view && view.thin) };
-    }).filter((bar) => bar.shares);
-  }, [data, pivot, selectedSubject]);
+  const allies = useMemo(
+    () => (data && view && pivot ? allyShares(view, data, pivot, mode) : null),
+    [data, view, pivot, mode]
+  );
 
-  /** The winning coalitions of the term on screen, those this group is in. */
-  const ranking = useMemo(() => {
-    if (!data) return null;
-    const view = viewFor(data, mandate, selectedSubject);
-    if (!view) return null;
-    const rows = coalitionsFor(view, pivot).slice(0, 6);
-    return { view, rows };
-  }, [data, mandate, pivot, selectedSubject]);
+  const ranking = useMemo(
+    () => (view ? coalitionsFor(view, pivot) : []),
+    [view, pivot]
+  );
+
+  const term = TERMS.find((entry) => entry.mandate === mandate);
 
   if (failed) {
     return (
@@ -153,7 +134,9 @@ export default function CoalitionPanel({
         <h4 className="sb-panel-title" id={titleId}>
           Winning coalitions
         </h4>
-        <p className="sb-note">This view&rsquo;s roll-call classification could not be read.</p>
+        <p className="sb-note">
+          This view&rsquo;s roll-call classification could not be read.
+        </p>
       </section>
     );
   }
@@ -161,7 +144,7 @@ export default function CoalitionPanel({
   return (
     <section className="coalitions-panel" aria-labelledby={titleId}>
       <h4 className="sb-panel-title" id={titleId}>
-        {opening(owns)} winning coalitions
+        {family ? `${opening(family.possessive)} winning coalitions` : "What wins here"}
       </h4>
       <p className="sb-panel-desc">
         Not how often members vote alike — which side carried each roll-call.
@@ -169,21 +152,35 @@ export default function CoalitionPanel({
       </p>
 
       <div className="coalitions-chips" role="group" aria-label="Political family">
-        {FAMILY_ORDER.map((family) => (
+        {/* Deselecting is the point of this one: with no family picked the
+            ranking below stops being "who does X win with" and becomes the
+            whole term, which is a different and equally reasonable question. */}
+        <button
+          type="button"
+          className="coalitions-chip coalitions-chip--all"
+          aria-pressed={pivot === null}
+          onClick={() => setPivot(null)}
+          title="Every winning coalition in this term, whoever is in it"
+        >
+          All
+        </button>
+        {FAMILY_ORDER.map((id) => (
           <button
-            key={family}
+            key={id}
             type="button"
             className="coalitions-chip"
-            aria-pressed={pivot === family}
-            onClick={() => setPivot(family)}
-            title={`Show the coalitions that include ${FAMILIES[family].sentence}`}
+            aria-pressed={pivot === id}
+            // Clicking the selected chip clears it, so the row works as a
+            // filter rather than a radio group with no off switch.
+            onClick={() => setPivot((current) => (current === id ? null : id))}
+            title={`Show the coalitions that include ${FAMILIES[id].sentence}`}
           >
             <span
               className="coalitions-chip-dot"
-              style={{ background: FAMILIES[family].color }}
+              style={{ background: FAMILIES[id].color }}
               aria-hidden="true"
             />
-            {FAMILIES[family].short}
+            {FAMILIES[id].short}
           </button>
         ))}
       </div>
@@ -199,167 +196,194 @@ export default function CoalitionPanel({
 
       {!data && <p className="sb-status coalitions-status">Reading the roll-calls…</p>}
 
-      {data && bars.length > 0 && (
-        <FlankBars bars={bars} pivot={pivot} owns={owns} mandate={mandate} />
+      {data && pivot && allies && (
+        <AllyBars
+          allies={allies}
+          mode={mode}
+          onMode={setMode}
+          family={family}
+          term={term}
+        />
       )}
 
-      {data && bars.length === 0 && (
+      {data && pivot && !allies && (
         <p className="sb-note coalitions-status">
-          {opening(name)} did not sit in any term this view reaches.
+          {opening(family.sentence)} did not sit in this view.
         </p>
       )}
 
-      {data && ranking && ranking.rows.length > 0 && (
+      {data && view && view.thin && (
+        <p className="sb-note coalitions-caveat">
+          {selectedSubject || "This view"} decides only{" "}
+          <strong>{thousands(view.decided)}</strong> votes in{" "}
+          {term ? term.short : "this term"}, so every share below is a handful of
+          roll-calls rather than a pattern.
+        </p>
+      )}
+
+      {data && view && ranking.length > 0 && (
         <Ranking
-          rows={ranking.rows}
-          view={ranking.view}
-          pivot={pivot}
-          name={name}
-          mandate={mandate}
+          rows={ranking}
+          view={view}
+          family={family}
+          term={term}
           subject={selectedSubject}
+          minShare={data.minCoalitionShare}
         />
+      )}
+
+      {data && !view && (
+        <p className="sb-note coalitions-status">
+          No roll-calls were decided in this view.
+        </p>
       )}
     </section>
   );
 }
 
-/** One stacked bar per term: which flank the group carried the day with. */
-function FlankBars({ bars, pivot, owns, mandate }) {
+/**
+ * One bar per other family: how often it stands where this one stands.
+ *
+ * Ranked rather than seated, because the ranking *is* the answer — the reader
+ * is asking who the closest partners are, and putting them in seating order
+ * would make that a thing to work out. Each bar takes its family's own colour,
+ * which is what the rest of the sidebar does for a political group.
+ */
+function AllyBars({ allies, mode, onMode, family, term }) {
   const id = useId();
-  const first = bars[0];
-  const last = bars[bars.length - 1];
+  const top = allies.rows[0];
+  const chosen = MODES.find((entry) => entry.id === mode);
 
   return (
     <div className="coalitions-block">
-      <h5 className="sb-section-label">Which side, term by term</h5>
-
-      <div className="coalitions-bars" role="img" aria-labelledby={`${id}-summary`}>
-        {bars.map(({ term, shares, thin }) => (
-          <div className="coalitions-bar-row" key={term.mandate}>
-            <span
-              className={`coalitions-bar-term ${term.mandate === mandate ? "current" : ""}`}
-              style={{ width: BAR_LABEL }}
-            >
-              {term.short}
-            </span>
-            <span
-              className="coalitions-bar"
-              style={{ height: BAR_HEIGHT, marginBottom: BAR_GAP }}
-            >
-              {OUTCOMES.map((outcome) => {
-                const value = shares[outcome.id];
-                if (!value) return null;
-                return (
-                  <span
-                    key={outcome.id}
-                    className="coalitions-bar-part"
-                    style={{ width: `${value * 100}%`, background: outcome.color }}
-                    title={`${outcome.describe(owns)}: ${pct(value)} of ${term.short}'s ${thousands(shares.votes)} decided votes`}
-                  />
-                );
-              })}
-            </span>
-            <span className="coalitions-bar-figure">
-              {short(shares.consensus)}
-              {thin ? "*" : ""}
-            </span>
-          </div>
-        ))}
+      <div className="coalitions-block-head">
+        <h5 className="sb-section-label">Who stands with it</h5>
+        <SegmentedToggle value={mode} onChange={onMode} options={MODES} label="" />
       </div>
 
-      <ul className="coalitions-legend">
-        {OUTCOMES.map((outcome) => (
-          <li className="coalitions-legend-item" key={outcome.id} title={outcome.describe(owns)}>
-            <span
-              className="coalitions-legend-dot"
-              style={{ background: outcome.color }}
-              aria-hidden="true"
-            />
-            {outcome.label}
+      <p className="sb-section-lede" id={`${id}-lede`}>
+        {mode === "wonTogether" ? (
+          <>
+            Of the <strong>{thousands(allies.wins)}</strong> votes{" "}
+            {family.sentence} won in {term ? term.short : "this term"} — {whole(allies.wins / allies.votes)} of
+            those it sat — how often each other family was on the winning side too.
+          </>
+        ) : (
+          <>
+            Of all <strong>{thousands(allies.votes)}</strong> decided votes{" "}
+            {family.sentence} sat in {term ? term.short : "this term"}, how often
+            each other family took the same side, win or lose.
+          </>
+        )}
+      </p>
+
+      <ul className="coalitions-allies" aria-describedby={`${id}-lede`}>
+        {allies.rows.map((row) => (
+          <li className="coalitions-ally" key={row.family}>
+            <span className="coalitions-ally-name">{FAMILIES[row.family].short}</span>
+            <span className="coalitions-ally-track">
+              <span
+                className="coalitions-ally-fill"
+                style={{
+                  width: `${row.share * 100}%`,
+                  background: FAMILIES[row.family].color,
+                }}
+              />
+            </span>
+            <span className="coalitions-ally-value">{whole(row.share)}</span>
+            <span className="coalitions-ally-tip" role="tooltip">
+              {`${thousands(row.count)} of ${thousands(allies.denominator)} votes — ${pct(row.share)}`}
+            </span>
           </li>
         ))}
       </ul>
 
-      {/* The figure at the end of each bar is the consensus share, so the
-          column reads as one falling series rather than four stacks the eye has
-          to compare. Named here because a number with no unit beside a chart is
-          the sort of thing that gets printed and then queried. */}
-      <p className="sb-note coalitions-caveat" id={`${id}-summary`}>
-        The figure is the share where both flanks went {owns} way —{" "}
-        <strong>{short(first.shares.consensus)}</strong> in {first.term.short},{" "}
-        <strong>{short(last.shares.consensus)}</strong> in {last.term.short}.
-        {bars.some((bar) => bar.thin) && " * rests on under 60 decided votes."}
+      {/* The axis is 0-100% and the bars are drawn against it, so a reader can
+          compare a bar here with a bar under a different family. Named because
+          nothing else on the row says what full width means. */}
+      <p className="sb-note coalitions-caveat">
+        Bars run to 100%. {top ? `${FAMILIES[top.family].label} is the closest at ${whole(top.share)}` : ""}
+        {mode === "wonTogether"
+          ? ". A family scoring high here but low on every vote wins mainly in someone else's company."
+          : ". Switch to “when it wins” to see who is there on the votes it carries."}
       </p>
     </div>
   );
 }
 
 /** The winning coalitions of one term, largest first. */
-function Ranking({ rows, view, pivot, name, mandate, subject }) {
-  const term = TERMS.find((entry) => entry.mandate === mandate);
+function Ranking({ rows, view, family, term, subject, minShare }) {
   const widest = Math.max(...rows.map((row) => row.share), 0.01);
+  const covered = rows.reduce((total, row) => total + row.share, 0);
 
   return (
     <div className="coalitions-block">
       <h5 className="sb-section-label">
-        What wins in {term ? term.short : `T${mandate}`}
+        What wins in {term ? term.short : "this term"}
       </h5>
       <p className="sb-section-lede">
-        The families on the winning side, on the {thousands(view.decided)}{" "}
-        decided votes {subject ? `in ${subject}` : "of this term"}. Only the
-        coalitions that include {name}.
+        The families on the winning side, on the {thousands(view.decided)} decided
+        votes {subject ? `in ${subject}` : "of this term"}.{" "}
+        {family
+          ? `Only the coalitions that include ${family.sentence}.`
+          : "Every coalition that took at least 1% of them."}
       </p>
 
       <ul className="coalitions-ranking">
-        {rows.map((row) => {
-          const includesRight =
-            row.groups.includes("FarRight") && !row.groups.includes("Left");
-          return (
-            <li
-              className="coalitions-ranking-row"
-              key={row.groups.join("+")}
-              title={`${row.groups.map((family) => FAMILIES[family].label).join(" + ")} — ${thousands(row.votes)} votes, ${pct(row.share)}`}
-            >
-              <span className="coalitions-ranking-marks">
-                {FAMILY_ORDER.map((family) => {
-                  const inside = row.groups.includes(family);
-                  return (
-                    <span
-                      key={family}
-                      className={`coalitions-mark ${inside ? "in" : "out"}`}
-                      style={inside ? { background: FAMILIES[family].color } : undefined}
-                      aria-hidden="true"
-                    />
-                  );
-                })}
-              </span>
-              <span className="coalitions-ranking-bar">
-                <span
-                  className="coalitions-ranking-fill"
-                  style={{
-                    width: `${(row.share / widest) * 100}%`,
-                    background: includesRight ? "#2b3a67" : "var(--sb-ink-soft)",
-                  }}
-                />
-              </span>
-              <span className="coalitions-ranking-value">{pct(row.share)}</span>
-            </li>
-          );
-        })}
+        {rows.map((row) => (
+          <li
+            className="coalitions-ranking-row"
+            key={row.groups.join("+")}
+            title={`${row.groups.map((id) => FAMILIES[id].label).join(" + ")} — ${thousands(row.votes)} votes, ${pct(row.share)}`}
+          >
+            <span className="coalitions-ranking-marks">
+              {FAMILY_ORDER.map((id) => {
+                const inside = row.groups.includes(id);
+                return (
+                  <span
+                    key={id}
+                    className={`coalitions-mark ${inside ? "in" : "out"}`}
+                    style={inside ? { background: FAMILIES[id].color } : undefined}
+                    aria-hidden="true"
+                  />
+                );
+              })}
+            </span>
+            <span className="coalitions-ranking-bar">
+              <span
+                className="coalitions-ranking-fill"
+                style={{ width: `${(row.share / widest) * 100}%` }}
+              />
+            </span>
+            <span className="coalitions-ranking-value">{pct(row.share)}</span>
+          </li>
+        ))}
       </ul>
 
       {/* The seven squares are always all seven, filled or hollow, so a row is
           read as a shape rather than a list of names — which is what makes
-          "everyone but the right" recognisable at a glance across rows. */}
+          "everyone but the right" recognisable at a glance across rows. Every
+          bar is the same colour on purpose: which coalitions are worth noticing
+          is the reader's call, and colouring some of them would be this panel
+          making it for them. */}
       <p className="sb-note coalitions-caveat">
         Seven squares, seated left to right:{" "}
-        {FAMILY_ORDER.map((family, i) => (
-          <span key={family}>
+        {FAMILY_ORDER.map((id, i) => (
+          <span key={id}>
             {i > 0 ? ", " : ""}
-            {FAMILIES[family].short}
+            {FAMILIES[id].short}
           </span>
         ))}
-        . A filled square is in the winning coalition.
+        . A filled square is in the winning coalition.{" "}
+        {!family && (
+          <>
+            These {rows.length} take {whole(covered)} of the term&rsquo;s decided
+            votes; the rest are spread over{" "}
+            {view.otherCoalitions ? view.otherCoalitions.count : 0} smaller
+            combinations, each under{" "}
+            {typeof minShare === "number" ? whole(minShare) : "1%"}.
+          </>
+        )}
       </p>
     </div>
   );

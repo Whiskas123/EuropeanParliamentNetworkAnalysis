@@ -3,28 +3,35 @@
 The site's other agreement figures are *pairwise similarity*: over a term, how
 often do these two MEPs cast the same ballot. That measure answers "who votes
 like whom" and it cannot answer "who governs with whom", because it is
-dominated by the votes nobody contests. Term 10 decides 4,245 roll-calls and
-the two blocs are on opposite sides in 3,002 of them; the pairwise number
-averages both kinds together, so a group can look like everyone's friend while
-consistently losing to a coalition it is not in.
+dominated by the roll-calls nobody contests. Term 10 decides 4,244 votes and a
+group can look like everyone's friend while consistently losing to a coalition
+it is not in.
 
 This step classifies each roll-call directly. Every group's *direction* on a
-vote is the majority of its own members present. From those directions two
-questions get answered:
+vote is the majority of its own members present, and the chamber's is the
+outcome. From those two facts, three things get counted, none of which needs an
+opinion about who is left and who is right:
 
-* **Who did group X carry the day with?** With the left flank, the right flank,
-  both (a consensus vote), or neither. For the EPP across the five terms that
-  is 52% consensus falling to 27%, and EPP-with-the-left rising 17% -> 50%.
+* **Which whole coalitions win.** The set of families on the winning side,
+  tallied. Term 10's most common is Left+Greens+S&D+Liberals+EPP at 35.8% of
+  decided votes; sixth, at 5.8%, is EPP+Conservatives+FarRight, a right-only
+  majority with no equivalent in term 9.
 
-* **Which whole coalitions actually win?** The set of families on the winning
-  side, tallied. Term 10's most common is Left+Greens+S&D+Liberals+EPP at 35.8%
-  of decided votes -- everyone but the right. Sixth, at 5.8%, is
-  EPP+Conservatives+FarRight, a right-only majority that wins nearly a vote in
-  seventeen and has no equivalent in the term 9 top ten.
+* **Who each family wins with.** For every family, on the votes it won, how
+  often each other family was on the winning side too. This is the measure that
+  shows the far right has no majority of its own: of its wins, 94% are votes the
+  EPP also won, and 90% the Conservatives.
 
-Neither figure exists anywhere else in the pipeline, and neither is derivable
-from the published networks: `intergroupCohesion` is the pairwise measure, and
-the edge lists are cut at 0.6 besides.
+* **Who each family votes with**, over all decided votes rather than only its
+  wins. The plain co-voting rate, which separates a family that is often on the
+  same side from one that merely wins alongside.
+
+An earlier version reported instead which *flank* — left or right — a family
+carried the day with. That required this file to declare that the EPP is the
+right, Renew the centre-left, the Greens the left, and so on, and those
+assignments were doing invisible load-bearing work in a published chart. There
+is no agreed answer, so the question has been replaced with ones the roll-calls
+can settle on their own.
 
 Four decisions worth stating:
 
@@ -32,7 +39,8 @@ Four decisions worth stating:
   as are ALDE/Renew, PPE-DE/PPE, UEN/ECR, and the far-right lineage
   IND/DEM -> EFD -> EFDD+ENF -> ID -> PfE+ESN. Without this every chart over
   five terms is seven stubs. The lineage is an editorial claim, not a fact in
-  the data, so it is published in the output for the site to show.
+  the data, so it is published in the output for the site to show. It is also
+  the *only* such claim left in this file.
 
 * **A vote counts only if every family in that term has a direction.** The
   coalition string is a set of families, so a missing family would silently
@@ -43,15 +51,19 @@ Four decisions worth stating:
   not a bloc and never vote as one.
 
 * **Ties are not decided votes.** A roll-call with equal + and - fails, but it
-  fails without a winning side to tally, so it is left out of the coalition
-  counts rather than assigned to one.
+  fails without a winning side to tally, so it is left out rather than assigned
+  to one.
 
-Output is one small file for all five terms, `precomputed/coalitions.json`:
+Output is one file for all five terms, `precomputed/coalitions.json`. Ally
+counts are arrays aligned to `families`, the shape `participation.py` and
+`deviations.py` already use, so the names are held once:
 
     {"families": ["Left", ..., "FarRight"],
      "lineage": {"10": {"Left": ["The Left"], "FarRight": ["PfE", "ESN"]}},
-     "mandates": {"10": {"decided": 4244, "dropped": 1,
-                         "pivots": {"EPP": {...}},
+     "mandates": {"10": {"decided": 4244, "dropped": 0,
+                         "breadth": {"7": 254, "6": 637, ...},
+                         "allies": {"EPP": {"votes": 4244, "wins": 3988,
+                                            "sameSide": [...], "wonTogether": [...]}},
                          "coalitions": [...],
                          "bySubject": {...}}}}
 """
@@ -65,14 +77,19 @@ from .report import atomic_write_json
 
 PRECOMPUTED = config.WEB_DATA_DIR / "precomputed"
 
-# The seven families, seated left to right. Order is meaningful: the site draws
-# a "house profile" along this axis, and the flanks below are slices of it.
+# The seven families, seated left to right.
+#
+# The order is presentation only — it decides the order of the squares that
+# name a coalition on the site, and the order of these arrays. Nothing in this
+# file computes anything from it, which is the point: an earlier version sliced
+# this list into flanks and reported which one a group had sided with, and that
+# slice was an editorial claim dressed as a measurement.
 FAMILIES = ["Left", "Greens", "S&D", "Liberals", "EPP", "Conservatives", "FarRight"]
 
-# Every group id the vote dumps use, mapped onto its family. Both spellings of
-# the ids appear across the sources -- `data/final` writes "The Left" and
-# "Renew" where the precomputed networks write "GUE/NGL" and "RE" -- so both are
-# listed and the site can reuse this table against either.
+# Every group id either data source uses, mapped onto its family. Both
+# spellings appear -- `data/final` writes "The Left" and "Renew" where the
+# precomputed networks write "GUE/NGL" and "RE" -- so both are listed and one
+# table serves either source.
 #
 # Two of these lineages are arguable rather than given. UEN did not become ECR:
 # ECR was founded in 2009 out of UEN members and the British Conservatives, and
@@ -91,20 +108,16 @@ GROUP_FAMILY = {
     "ENF": "FarRight", "ID": "FarRight", "PfE": "FarRight", "ESN": "FarRight",
 }
 
-# The two flanks a pivot group is measured against. A pivot inside a flank is
-# taken out of it first, so "S&D won with the left" means S&D with the Left and
-# the Greens, not S&D with itself.
-LEFT_FLANK = ("Left", "Greens", "S&D")
-RIGHT_FLANK = ("Conservatives", "FarRight")
-
 # The Non-Attached are not a bloc; the site refuses to report agreement with
 # them for the same reason.
 NOT_A_GROUP = {"NonAttached", "NI", "NA"}
 
-# Coalitions kept per view before the tail is summed into one "other" row. The
-# tail is long -- term 9 sees hundreds of distinct winning sets -- and a chart
-# can show a dozen. The count and share of what was folded away is kept.
-TOP_COALITIONS = 12
+# A winning coalition is published if it took at least this share of a view's
+# decided votes. A share floor rather than a fixed top-N: the number of rows
+# then follows how fragmented the term actually was -- about 20 in term 6,
+# about 14 in term 10 -- instead of imposing the same length on every term. The
+# tail below the floor is summed into one row so the rest is accounted for.
+MIN_COALITION_SHARE = 0.01
 
 # Below this many decided votes a view's percentages are noise. Term 10's
 # Transport and Tourism has twelve. Published anyway, with the count, and
@@ -118,13 +131,13 @@ def family_directions(session):
     """Each family's majority direction on one roll-call, plus the outcome.
 
     A family's direction is the majority ballot of all its members present,
-    pooled across the groups that made it up in that term -- in term 10 the
-    far right is PfE and ESN voting as one line, which is the same merge the
-    charts draw.
+    pooled across the groups that made it up in that term -- in term 10 the far
+    right is PfE and ESN voting as one line, which is the same merge the charts
+    draw.
 
     Returns (directions, winner, ballots) where `winner` is "+" or "-", or None
     for a tie or a vote with no usable ballots, and `ballots` is each family's
-    raw per-position counts for the flank arithmetic below.
+    raw per-position counts.
     """
     votes = session.get("votes") or {}
     totals = {}
@@ -162,99 +175,101 @@ def majority(counter):
     return sorted(counter.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
 
 
-def bloc_direction(ballots, families):
-    """The majority direction of a flank, pooling its members' ballots.
-
-    Pooled at member level rather than one-family-one-vote: the left flank is
-    the Left, the Greens and S&D, and S&D is larger than the other two together
-    in every term, so counting families equally would let a 39-member group
-    outvote a 136-member one inside its own bloc.
-
-    Pooling ballots is also not the same as weighting each family's *position*
-    by its size, which is what an earlier version did. That version handed a
-    family's abstainers to whichever side its majority took, and moved term 6's
-    consensus share by 2.6 points. A flank's direction is how its members
-    actually voted.
-    """
-    counter = Counter()
-    for family in families:
-        for position, count in (ballots.get(family) or {}).items():
-            counter[position] += count
-    if not counter:
-        return None
-    return majority(counter)
+def blank_view():
+    """The mutable tallies one view accumulates."""
+    return {
+        "decided": 0,
+        "coalitions": Counter(),
+        "breadth": Counter(),
+        # pivot -> {"votes", "wins", "sameSide": Counter, "wonTogether": Counter}
+        "allies": defaultdict(
+            lambda: {"votes": 0, "wins": 0, "sameSide": Counter(), "wonTogether": Counter()}
+        ),
+    }
 
 
-def classify_pivot(directions, ballots, pivot):
-    """Which flank the pivot group carried this vote with.
+def tally(view, directions, winner):
+    """Add one roll-call to a view."""
+    view["decided"] += 1
+    winning = tuple(f for f in FAMILIES if directions.get(f) == winner)
+    view["coalitions"][winning] += 1
+    view["breadth"][len(winning)] += 1
 
-    "consensus" when both flanks went the pivot's way, "left" or "right" when
-    only one did, "alone" when neither. Returns None when the pivot did not
-    vote, or when a flank holds nothing but the pivot itself.
-    """
-    if pivot not in directions:
-        return None
-    own = directions[pivot]
-    left = bloc_direction(ballots, [f for f in LEFT_FLANK if f != pivot])
-    right = bloc_direction(ballots, [f for f in RIGHT_FLANK if f != pivot])
-    if left is None or right is None:
-        return None
-    if left == own and right == own:
-        return "consensus"
-    if left == own:
-        return "left"
-    if right == own:
-        return "right"
-    return "alone"
+    won = set(winning)
+    for pivot, own in directions.items():
+        block = view["allies"][pivot]
+        block["votes"] += 1
+        pivot_won = pivot in won
+        if pivot_won:
+            block["wins"] += 1
+        for other, other_side in directions.items():
+            if other == pivot:
+                continue
+            # Same side as the pivot, whoever won.
+            if other_side == own:
+                block["sameSide"][other] += 1
+            # On the winning side alongside the pivot. Only counted on the
+            # pivot's own wins, so the denominator is "times this family won"
+            # and the figure reads as "who was there when it did".
+            if pivot_won and other in won:
+                block["wonTogether"][other] += 1
 
 
 def summarise_view(rows):
     """Turn one view's raw tallies into the block the site reads."""
-    pivots = {}
-    for pivot, counter in rows["pivots"].items():
-        total = sum(counter.values())
-        if total == 0:
-            continue
-        pivots[pivot] = {
-            "votes": total,
-            "consensus": counter["consensus"],
-            "left": counter["left"],
-            "right": counter["right"],
-            "alone": counter["alone"],
-        }
-
     total = rows["decided"]
+
     ranked = rows["coalitions"].most_common()
-    kept = ranked[:TOP_COALITIONS]
-    tail = ranked[TOP_COALITIONS:]
+    floor = total * MIN_COALITION_SHARE
+    kept = [(groups, count) for groups, count in ranked if count >= floor]
+    tail = [(groups, count) for groups, count in ranked if count < floor]
     coalitions = [
         {"groups": list(groups), "votes": count,
          "share": round(count / total, 5) if total else 0.0}
         for groups, count in kept
     ]
     other_votes = sum(count for _, count in tail)
+
+    allies = {}
+    for pivot, block in rows["allies"].items():
+        if block["votes"] == 0:
+            continue
+        allies[pivot] = {
+            "votes": block["votes"],
+            "wins": block["wins"],
+            # Aligned to FAMILIES, null in the pivot's own slot.
+            "sameSide": [
+                None if f == pivot else block["sameSide"].get(f, 0) for f in FAMILIES
+            ],
+            "wonTogether": [
+                None if f == pivot else block["wonTogether"].get(f, 0) for f in FAMILIES
+            ],
+        }
+
     return {
         "decided": total,
         "thin": total < MIN_VIEW_VOTES,
-        "pivots": pivots,
         "coalitions": coalitions,
         "otherCoalitions": {
             "count": len(tail),
             "votes": other_votes,
             "share": round(other_votes / total, 5) if total else 0.0,
         },
+        # How many families the winning side held. No chart draws this yet; it
+        # is the classification-free form of the consensus-collapse headline
+        # (7-of-7 wins fell 11% -> 6% while 5-of-7 rose 26% -> 54%), and the
+        # run's validation gate below is checked against it.
+        "breadth": {str(k): v for k, v in sorted(rows["breadth"].items())},
+        "allies": allies,
     }
 
 
 def build_mandate(mandate, report):
-    """Read one term's roll-calls and tally both measures, overall and by area."""
+    """Read one term's roll-calls and tally, overall and per policy area."""
     path = config.FINAL_DIR / f"ep_votes_{mandate}.json"
 
-    def blank():
-        return {"decided": 0, "pivots": defaultdict(Counter), "coalitions": Counter()}
-
-    overall = blank()
-    by_subject = defaultdict(blank)
+    overall = blank_view()
+    by_subject = defaultdict(blank_view)
     sessions = []
     seen_groups = set()
     ties = 0
@@ -263,8 +278,8 @@ def build_mandate(mandate, report):
     # Two passes. Which families sat in this term is only known once every
     # roll-call has been read -- a group founded mid-term would otherwise make
     # the "every family voted" test mean something different in January than in
-    # December -- so the directions are computed first and judged second. Only
-    # the reduced per-vote directions are held, not the ballots.
+    # December -- so directions are computed first and judged second. Only the
+    # reduced per-vote directions are held, not the ballots.
     for session in iter_json_array(str(path)):
         total += 1
         for position in VOTE_POSITIONS:
@@ -273,32 +288,24 @@ def build_mandate(mandate, report):
                 if group not in NOT_A_GROUP:
                     seen_groups.add(group)
 
-        directions, winner, ballots = family_directions(session)
+        directions, winner, _ = family_directions(session)
         if winner is None:
             ties += 1
             continue
         sessions.append(
-            (session.get("subject") or config.FALLBACK_SUBJECT, directions, winner, ballots)
+            (session.get("subject") or config.FALLBACK_SUBJECT, directions, winner)
         )
 
     present = {GROUP_FAMILY[g] for g in seen_groups if g in GROUP_FAMILY}
     dropped = 0
-    for subject, directions, winner, ballots in sessions:
+    for subject, directions, winner in sessions:
         # Every family that sat in this term has to have voted, or the coalition
         # set is not the same kind of object from one row to the next.
         if not present.issubset(directions.keys()):
             dropped += 1
             continue
-        verdicts = {
-            pivot: classify_pivot(directions, ballots, pivot) for pivot in FAMILIES
-        }
-        winning = tuple(f for f in FAMILIES if directions.get(f) == winner)
-        for view in (overall, by_subject[subject]):
-            view["decided"] += 1
-            for pivot, verdict in verdicts.items():
-                if verdict:
-                    view["pivots"][pivot][verdict] += 1
-            view["coalitions"][winning] += 1
+        tally(overall, directions, winner)
+        tally(by_subject[subject], directions, winner)
 
     lineage = defaultdict(list)
     for group in sorted(seen_groups):
@@ -319,11 +326,24 @@ def build_mandate(mandate, report):
                 f"{overall['decided']} of {total}")
     report.fact(f"mandate {mandate}: dropped for an absent family",
                 f"{dropped} ({share_dropped:.2%})")
+    report.fact(f"mandate {mandate}: winning coalitions above the floor",
+                f"{len(payload['coalitions'])} of "
+                f"{len(payload['coalitions']) + payload['otherCoalitions']['count']} "
+                f"({1 - payload['otherCoalitions']['share']:.0%} of votes)")
     report.check(
         f"mandate {mandate}: nearly every vote yields a coalition",
         share_dropped < 0.05,
         f"{share_dropped:.1%} of roll-calls had a family with no ballot cast, "
         f"so the winning-coalition tally is not describing the whole term",
+    )
+    # The published rows have to be most of the term or the list is a curiosity
+    # rather than an answer to "what wins here".
+    report.check(
+        f"mandate {mandate}: the listed coalitions cover the term",
+        payload["otherCoalitions"]["share"] < 0.5,
+        f"coalitions below the {MIN_COALITION_SHARE:.0%} floor hold "
+        f"{payload['otherCoalitions']['share']:.0%} of decided votes",
+        fatal=False,
     )
     return payload, dict(lineage)
 
@@ -333,9 +353,8 @@ def run(report, mandates):
     out = {
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "families": FAMILIES,
-        "leftFlank": list(LEFT_FLANK),
-        "rightFlank": list(RIGHT_FLANK),
         "minViewVotes": MIN_VIEW_VOTES,
+        "minCoalitionShare": MIN_COALITION_SHARE,
         "lineage": {},
         "mandates": {},
     }
@@ -345,23 +364,26 @@ def run(report, mandates):
         out["mandates"][mandate] = payload
         out["lineage"][mandate] = lineage
 
-    # The one figure this whole step exists to publish. If it ever stops
-    # falling, the headline the site prints is wrong, and that should be caught
-    # here rather than on a wall.
-    consensus = {}
+    # The headline this step exists to publish, in its classification-free
+    # form: the share of votes won by every family at once. If it ever stops
+    # falling, what the site says about consensus is wrong, and that should be
+    # caught here rather than on a wall.
+    unanimous = {}
     for mandate, payload in out["mandates"].items():
-        block = payload["pivots"].get("EPP")
-        if block and block["votes"]:
-            consensus[mandate] = block["consensus"] / block["votes"]
-    if len(consensus) == len(config.MANDATE_ORDER):
-        first = consensus[config.MANDATE_ORDER[0]]
-        last = consensus[config.MANDATE_ORDER[-1]]
-        report.fact("consensus votes, first term to last", f"{first:.1%} -> {last:.1%}")
+        decided = payload["decided"]
+        if decided:
+            full = payload["breadth"].get(str(len(FAMILIES)), 0)
+            unanimous[mandate] = full / decided
+    if len(unanimous) == len(config.MANDATE_ORDER):
+        first = unanimous[config.MANDATE_ORDER[0]]
+        last = unanimous[config.MANDATE_ORDER[-1]]
+        report.fact("votes won by all seven families, first term to last",
+                    f"{first:.1%} -> {last:.1%}")
         report.check(
-            "consensus voting fell across the five terms",
+            "unanimous voting fell across the five terms",
             last < first,
-            f"consensus ran {first:.1%} in the first term and {last:.1%} in the "
-            f"last, so the site's headline no longer holds",
+            f"all-seven wins ran {first:.1%} in the first term and {last:.1%} in "
+            f"the last, so the site's headline no longer holds",
             fatal=False,
         )
 

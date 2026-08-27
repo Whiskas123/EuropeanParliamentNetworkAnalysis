@@ -5,10 +5,16 @@
  * figures are pairwise similarity over a term — how often two MEPs cast the
  * same ballot — which is dominated by the votes nobody contests. This file
  * carries the roll-call classification instead: on each vote, which families
- * were on the winning side, and which flank the pivot group carried the day
- * with. See pipeline/coalitions.py for how it is built.
+ * were on the winning side, and for each family, who it shares that side with.
+ * See pipeline/coalitions.py for how it is built.
  *
- * One file, ~200 KB, all five terms and all policy areas. Small enough to
+ * Nothing here needs a left/right axis, and that is deliberate: an earlier
+ * version reported which *flank* a group had won with, which meant the site
+ * was publishing a chart whose meaning rested on calling the EPP the right and
+ * Renew the centre. Those labels are contested, so the questions were changed
+ * to ones the roll-calls answer on their own.
+ *
+ * One file, ~290 KB, all five terms and all policy areas. Small enough to
  * fetch whole rather than per scope, unlike the trend series.
  *
  * **It has no country dimension, on purpose.** A group's direction on a vote is
@@ -67,24 +73,40 @@ export function viewFor(data, mandate, subject = null) {
 }
 
 /**
- * One pivot family's flank tally in one view, as shares.
+ * Who one family shares a side with, in one view.
+ *
+ * Two readings of the same roll-calls, and the difference between them is the
+ * point. `wonTogether` counts only the pivot's *wins* — of the votes this
+ * family carried, how often was that one carrying it too — so its denominator
+ * is `wins`. `sameSide` counts every decided vote, win or lose, so its
+ * denominator is `votes`. A family can score high on the first and low on the
+ * second by rarely winning except in someone else's company, which is exactly
+ * what the far right does: 94% of its wins are votes the EPP also won, while
+ * the two are on the same side on 38% of all votes.
+ *
+ * Sharing one denominator for both would make that difference invisible, so
+ * each mode carries its own.
  *
  * @param {Object|null} view - from `viewFor`
+ * @param {Object|null} data - from `loadCoalitions`, for the family order
  * @param {string} pivot - family id
- * @returns {{votes: number, consensus: number, left: number, right: number,
- *            alone: number}|null} shares in 0..1, with the raw vote count
+ * @param {"wonTogether"|"sameSide"} mode
+ * @returns {{votes: number, wins: number, denominator: number,
+ *            rows: Array<{family: string, share: number, count: number}>}|null}
  */
-export function flankShares(view, pivot) {
-  const block = view && view.pivots ? view.pivots[pivot] : null;
-  if (!block || !block.votes) return null;
-  const share = (value) => value / block.votes;
-  return {
-    votes: block.votes,
-    consensus: share(block.consensus),
-    left: share(block.left),
-    right: share(block.right),
-    alone: share(block.alone),
-  };
+export function allyShares(view, data, pivot, mode = "wonTogether") {
+  const block = view && view.allies ? view.allies[pivot] : null;
+  if (!block) return null;
+  const families = (data && data.families) || [];
+  const denominator = mode === "wonTogether" ? block.wins : block.votes;
+  if (!denominator) return null;
+  const counts = block[mode] || [];
+  const rows = families
+    .map((family, index) => ({ family, count: counts[index] }))
+    .filter((row) => row.family !== pivot && Number.isFinite(row.count))
+    .map((row) => ({ ...row, share: row.count / denominator }))
+    .sort((a, b) => b.share - a.share);
+  return { votes: block.votes, wins: block.wins, denominator, rows };
 }
 
 /**

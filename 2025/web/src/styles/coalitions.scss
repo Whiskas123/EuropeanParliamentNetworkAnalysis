@@ -83,48 +83,65 @@
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-// --- stacked bars, one per term -------------------------------------------
-
-.coalitions-bars {
-  margin-top: 6px;
+// "All" carries no square: it is not a family, and giving it a grey one would
+// put an eighth political group in the row.
+.coalitions-chip--all {
+  font-weight: 600;
 }
 
-.coalitions-bar-row {
+// --- who stands with this family ------------------------------------------
+
+// The section label and its mode switch on one line. The switch belongs to
+// this block rather than the panel: it changes what the bars count, not what
+// the panel is about.
+.coalitions-block-head {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 6px;
 }
 
-.coalitions-bar-term {
-  flex-shrink: 0;
-  font-size: var(--sb-fs-micro);
-  font-variant-numeric: tabular-nums;
-  color: var(--sb-faint);
-
-  // The term the canvas is showing.
-  &.current {
-    color: var(--sb-ink);
-    font-weight: 600;
-  }
+.coalitions-allies {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
 }
 
-.coalitions-bar {
+.coalitions-ally {
   display: flex;
-  flex: 1;
-  overflow: hidden;
-  border-radius: 2px;
-  // A rail behind the stack, so a bar that does not reach 100% — a group that
-  // abstained its way out of some votes — reads as a short bar rather than as
-  // a missing one.
-  background: var(--sb-rule-soft);
+  align-items: center;
+  gap: 7px;
+  padding: 2px 0;
+  position: relative;
 }
 
-.coalitions-bar-part {
+.coalitions-ally-name {
+  flex-shrink: 0;
+  width: 46px;
+  font-size: var(--sb-fs-micro);
+  color: var(--sb-ink-soft);
+}
+
+// Full width is 100%, always — the bars are comparable between one family and
+// the next only if the scale does not follow the data.
+.coalitions-ally-track {
+  flex: 1;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--sb-rule-soft);
+  overflow: hidden;
+}
+
+.coalitions-ally-fill {
   display: block;
   height: 100%;
+  // Group colours run from yellow to black; the hairline keeps a pale bar's
+  // end visible against the track.
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
 }
 
-.coalitions-bar-figure {
+.coalitions-ally-value {
   flex-shrink: 0;
   width: 34px;
   text-align: right;
@@ -134,30 +151,28 @@
   font-weight: 600;
 }
 
-.coalitions-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px 12px;
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0;
+// The raw counts behind a bar, on hover. A title attribute would do the same
+// job, but these rows are read in sequence and the browser's own delay makes
+// scanning four of them slow.
+.coalitions-ally-tip {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  z-index: 5;
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: var(--sb-ink);
+  color: #ffffff;
+  font-size: var(--sb-fs-micro);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
 }
 
-.coalitions-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: var(--sb-fs-sub);
-  color: var(--sb-muted);
-  cursor: help;
-}
-
-.coalitions-legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+.coalitions-ally:hover .coalitions-ally-tip {
+  opacity: 1;
 }
 
 // --- the ranking of winning coalitions ------------------------------------
@@ -206,9 +221,14 @@
   overflow: hidden;
 }
 
+// One colour for every row. An earlier version painted right-only coalitions
+// navy, which meant the panel deciding for the reader which rows were the
+// interesting ones — on a classification the reader never saw. The seven
+// squares beside each bar already say exactly who is in it.
 .coalitions-ranking-fill {
   display: block;
   height: 100%;
+  background: var(--sb-ink-soft);
 }
 
 .coalitions-ranking-value {
