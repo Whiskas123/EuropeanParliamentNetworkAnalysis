@@ -178,7 +178,7 @@ export default function AgreementByGroup({
           chevron to its right: the chevron acts on everything the picker
           changes, so it reads as the outer of the two. */}
       <div className="sb-panel-head">
-        <h4 className="sb-panel-title">Group Agreement</h4>
+        <h4 className="sb-panel-title">Group agreement</h4>
         <div className="sb-panel-controls">
           {canScope && !collapsed && (
             <SegmentedToggle

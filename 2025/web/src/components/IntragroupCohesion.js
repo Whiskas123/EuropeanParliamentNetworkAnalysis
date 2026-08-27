@@ -79,7 +79,7 @@ export default function IntragroupCohesion({
         className="intragroup-cohesion-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Group Agreement</span>
+        <span>Group agreement</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"

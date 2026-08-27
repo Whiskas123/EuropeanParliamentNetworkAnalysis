@@ -31,6 +31,8 @@ import {
 } from "./edgeStyle.js";
 import { listParties } from "./parties.js";
 import { MIN_TERM_SESSIONS } from "./trends.js";
+import { FAMILIES, FAMILY_ORDER, pairKey } from "./families.js";
+import { allyShares, coalitionsFor, viewFor } from "./coalitions.js";
 import {
   buildCommunityShapes,
   DEFAULT_COVERAGE,
@@ -2047,4 +2049,375 @@ export function exportGroupMatrixSheetSVG({
 function heatmapColumnLabel(groupId, mandate) {
   const acronym = getGroupAcronym(groupId, mandate);
   return acronym === "Greens/EFA" ? "Greens" : acronym;
+}
+
+/* -------------------------------------------------------------------------
+ * The Coalitions tab, as two sheets
+ * ---------------------------------------------------------------------- */
+
+/** "T10" for a mandate number, without importing the whole TERMS table. */
+function termShort(mandate) {
+  return mandate === null || mandate === undefined ? "this term" : `T${mandate}`;
+}
+
+/** Deterministic thousands separator, as the panels use. */
+function thousandsSep(value) {
+  const number = Number(value);
+  return Number.isFinite(number)
+    ? String(Math.round(number)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    : "";
+}
+
+/** First letter up, for a possessive that opens a heading. */
+function openingCap(text) {
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+}
+
+/**
+ * Who a family wins with, and what wins, on one sheet.
+ *
+ * The panel's two blocks in their panel order: the ally bars, then the ranked
+ * winning coalitions. Redrawings rather than screenshots, on the same paper and
+ * margins as the other sidebar sheets.
+ *
+ * The ranking's seven squares survive the trip. They are what makes a row
+ * readable as a shape rather than a list of names, and on paper — where there
+ * is no tooltip to fall back on — they are the only thing naming the coalition
+ * at all.
+ *
+ * @param {Object} options
+ * @param {Object} options.meta - as buildCaption
+ * @param {Object} options.data - the whole coalitions.json payload
+ * @param {number|string} options.mandate
+ * @param {string|null} options.subject - policy area, or null for the term
+ * @param {string|null} options.pivot - the family the panel has selected, or
+ *   null for the whole-chamber ranking
+ * @returns {string} a complete <svg> document
+ */
+export function exportCoalitionsSheetSVG({
+  meta,
+  data,
+  mandate,
+  subject = null,
+  pivot = null,
+} = {}) {
+  const view = viewFor(data, mandate, subject);
+  if (!view) {
+    throw new Error("exportCoalitionsSheetSVG: this scope decides no votes");
+  }
+  const rows = coalitionsFor(view, pivot);
+  const allies = pivot ? allyShares(view, data, pivot, "wonTogether") : null;
+  if (rows.length === 0 && !allies) {
+    throw new Error("exportCoalitionsSheetSVG: nothing to draw");
+  }
+
+  const caption = buildCaption(meta || {});
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+  const family = pivot ? FAMILIES[pivot] : null;
+
+  const header = sheetHeader(
+    caption,
+    M,
+    inner,
+    view.thin ? `${view.decided} decided votes — too few to read as a pattern` : null
+  );
+  const parts = [...header.parts];
+  let y = header.y;
+
+  if (allies) {
+    const head = sectionHead(
+      `Who stands with ${family.sentence}`,
+      `Of the ${thousandsSep(allies.wins)} votes ${family.sentence} won, how often each ` +
+        `other family was on the winning side too.`,
+      M,
+      inner
+    );
+    parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+    y += head.height + 8;
+
+    const nameWidth = 42;
+    const valueWidth = 26;
+    const trackX = M + nameWidth;
+    const trackWidth = inner - nameWidth - valueWidth;
+    const rowH = 13;
+    allies.rows.forEach((row) => {
+      const mid = y + rowH / 2;
+      parts.push(
+        svgText(M, mid + 2, FAMILIES[row.family].short, { size: 6.5, fill: SB_BODY })
+      );
+      // The track is the full 100%, as on screen, so a bar on this sheet can be
+      // compared with a bar on another family's.
+      parts.push(svgRect(trackX, y + 2.5, trackWidth, rowH - 5, "#f0f2f4", 'rx="1"'));
+      parts.push(
+        svgRect(
+          trackX,
+          y + 2.5,
+          Math.max(0.6, trackWidth * row.share),
+          rowH - 5,
+          FAMILIES[row.family].color,
+          'rx="1"'
+        )
+      );
+      parts.push(
+        svgText(M + inner, mid + 2, `${Math.round(row.share * 100)}%`, {
+          size: 6.5,
+          anchor: "end",
+          weight: 700,
+          monospaceDigits: true,
+        })
+      );
+      y += rowH;
+    });
+    y += 12;
+  }
+
+  if (rows.length > 0) {
+    const head = sectionHead(
+      `What wins in ${termShort(mandate)}`,
+      `The families on the winning side, on the ${thousandsSep(view.decided)} decided votes` +
+        `${subject ? ` in ${subject}` : " of this term"}.` +
+        (family ? ` Only the coalitions that include ${family.sentence}.` : ""),
+      M,
+      inner
+    );
+    parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+    y += head.height + 8;
+
+    const square = 6;
+    const gap = 2;
+    const marksWidth = FAMILY_ORDER.length * (square + gap);
+    const valueWidth = 30;
+    const barX = M + marksWidth + 8;
+    const barWidth = inner - marksWidth - 8 - valueWidth;
+    const widest = Math.max(...rows.map((row) => row.share), 0.01);
+    // As many rows as the page has left, and a line saying what was cut. A
+    // silently shortened ranking is the one failure this sheet must not have.
+    const rowH = 12;
+    const available = Math.max(0, H - M - 30 - y);
+    const shown = Math.min(rows.length, Math.max(1, Math.floor(available / rowH)));
+
+    rows.slice(0, shown).forEach((row) => {
+      const mid = y + rowH / 2;
+      FAMILY_ORDER.forEach((id, index) => {
+        const x = M + index * (square + gap);
+        const inside = row.groups.includes(id);
+        parts.push(
+          inside
+            ? svgRect(x, mid - square / 2, square, square, FAMILIES[id].color, 'rx="1.2"')
+            : `<rect x="${n1(x)}" y="${n1(
+                mid - square / 2
+              )}" width="${square}" height="${square}" rx="1.2" fill="none" stroke="${SB_RULE}" stroke-width="0.7"/>`
+        );
+      });
+      parts.push(svgRect(barX, mid - 2.5, barWidth, 5, "#f0f2f4", 'rx="1"'));
+      parts.push(
+        svgRect(
+          barX,
+          mid - 2.5,
+          Math.max(0.6, barWidth * (row.share / widest)),
+          5,
+          SB_BODY,
+          'rx="1"'
+        )
+      );
+      parts.push(
+        svgText(M + inner, mid + 2, `${(row.share * 100).toFixed(1)}%`, {
+          size: 6.5,
+          anchor: "end",
+          weight: 700,
+          monospaceDigits: true,
+        })
+      );
+      y += rowH;
+    });
+
+    y += 9;
+    const cut = rows.length - shown;
+    wrapText(
+      `Squares, seated left to right: ${FAMILY_ORDER.map((id) => FAMILIES[id].short).join(
+        ", "
+      )}. A filled square is in the winning coalition.` +
+        (cut > 0
+          ? ` ${cut} smaller coalition${cut === 1 ? "" : "s"} did not fit this page.`
+          : ""),
+      104
+    )
+      .slice(0, 2)
+      .forEach((line) => {
+        parts.push(svgText(M, y, line, { size: 6, fill: SB_MUTED }));
+        y += 7;
+      });
+  }
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="coalitions-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
+}
+
+/**
+ * One family's agreement with each of the other six, across the terms.
+ *
+ * The Lines form of the partners panel, which is the one of its three that
+ * carries a trajectory — the arrows drop the middle terms, and the house
+ * profile is read against a seating order that says little without the screen's
+ * axis under it.
+ *
+ * Drawn on a fixed 0–100 axis, as the panel is, so a sheet for one family can
+ * be laid beside a sheet for another.
+ *
+ * @param {Object} options
+ * @param {Object} options.meta - as buildCaption
+ * @param {Array} options.series - rows from loadTrendSeries
+ * @param {string} options.pivot - family id
+ * @returns {string} a complete <svg> document
+ */
+export function exportPartnersSheetSVG({ meta, series, pivot = "EPP" } = {}) {
+  const rows = (Array.isArray(series) ? series : []).filter(
+    (row) => row && !row.missing
+  );
+  if (rows.length < 2) {
+    throw new Error("exportPartnersSheetSVG: fewer than two terms to compare");
+  }
+  const family = FAMILIES[pivot];
+  const partners = FAMILY_ORDER.filter((id) => id !== pivot).map((id) => ({
+    id,
+    ...FAMILIES[id],
+    values: rows.map((row) => {
+      const score = row.familyPairs ? row.familyPairs[pairKey(pivot, id)] : undefined;
+      return Number.isFinite(score) ? score : null;
+    }),
+  }));
+  if (!partners.some((partner) => partner.values.some((value) => value !== null))) {
+    throw new Error("exportPartnersSheetSVG: no pair carries a figure at this scope");
+  }
+
+  const caption = buildCaption(meta || {});
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+
+  const header = sheetHeader(caption, M, inner);
+  const parts = [...header.parts];
+  let y = header.y;
+
+  const head = sectionHead(
+    `${openingCap(family.possessive)} partners`,
+    `Agreement between ${family.sentence} and each of the other families, term by term. ` +
+      `Groups are merged across renames.`,
+    M,
+    inner
+  );
+  parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+  y += head.height + 10;
+
+  const plot = { left: M + 20, right: M + inner, top: y, height: 230 };
+  const plotWidth = plot.right - plot.left;
+  const xAt = (index) =>
+    rows.length === 1
+      ? plot.left + plotWidth / 2
+      : plot.left + (plotWidth * index) / (rows.length - 1);
+  // Fixed 0–100, matching the panel: a fitted axis would make a sheet for one
+  // family incomparable with a sheet for another, which is the whole use of
+  // printing more than one.
+  const yAt = (value) => plot.top + plot.height * (1 - value);
+
+  [0, 0.25, 0.5, 0.75, 1].forEach((t) => {
+    const gy = yAt(t);
+    parts.push(svgRule(plot.left, gy, plotWidth, SB_RULE, 0.5));
+    parts.push(
+      svgText(plot.left - 5, gy + 2.5, Math.round(t * 100), {
+        size: 6.5,
+        anchor: "end",
+        fill: SB_MUTED,
+        monospaceDigits: true,
+      })
+    );
+  });
+
+  partners.forEach((partner) => {
+    const points = partner.values.map((value, index) =>
+      value === null ? null : { x: xAt(index), y: yAt(value) }
+    );
+    parts.push(trendPath(points, partner.color, "", 1.6));
+    points.forEach((point) => {
+      if (!point) return;
+      parts.push(
+        `<circle cx="${n1(point.x)}" cy="${n1(point.y)}" r="2" fill="${partner.color}"/>`
+      );
+    });
+  });
+
+  const axisY = plot.top + plot.height + 11;
+  rows.forEach((row, index) => {
+    parts.push(
+      svgText(xAt(index), axisY, row.short || `T${row.mandate}`, {
+        size: 7,
+        anchor: "middle",
+        weight: 700,
+      })
+    );
+    parts.push(
+      svgText(xAt(index), axisY + 7, row.years || "", {
+        size: 6,
+        anchor: "middle",
+        fill: SB_MUTED,
+      })
+    );
+  });
+  y = axisY + 24;
+
+  // A swatch legend carrying each family's last drawn figure, so the sheet can
+  // be read without tracing a line end back to the axis.
+  const columns = 2;
+  const columnWidth = inner / columns;
+  partners.forEach((partner, index) => {
+    const column = index % columns;
+    const line = Math.floor(index / columns);
+    const x = M + column * columnWidth;
+    const rowY = y + line * 11;
+    parts.push(svgRect(x, rowY - 4.5, 6, 6, partner.color, 'rx="1.2"'));
+    const last = [...partner.values].reverse().find((value) => value !== null);
+    parts.push(svgText(x + 10, rowY, partner.label, { size: 6.5, fill: SB_BODY }));
+    parts.push(
+      svgText(
+        x + columnWidth - 14,
+        rowY,
+        last === undefined || last === null ? "—" : `${(last * 100).toFixed(1)}%`,
+        { size: 6.5, anchor: "end", weight: 700, monospaceDigits: true }
+      )
+    );
+  });
+  y += Math.ceil(partners.length / columns) * 11 + 8;
+
+  const thin = rows.filter((row) => row.thin);
+  if (thin.length > 0) {
+    parts.push(
+      svgText(
+        M,
+        y,
+        `${thin
+          .map((row) => `${row.short} (${row.sessions} votes)`)
+          .join(", ")} rest on too few votes to carry a trend.`,
+        { size: 6, fill: SB_MUTED }
+      )
+    );
+  }
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="partners-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
 }

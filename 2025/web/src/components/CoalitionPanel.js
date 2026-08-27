@@ -89,10 +89,12 @@ export default function CoalitionPanel({
   mandate,
   selectedCountry = null,
   selectedSubject = null,
-}) {
   // null is a real state, not "nothing chosen yet": it means the whole chamber,
-  // and it is what the ranking below shows when no family is picked.
-  const [pivot, setPivot] = useState("EPP");
+  // and it is what the ranking below shows when no family is picked. Owned by
+  // the sidebar so the SVG export can draw the family actually on screen.
+  pivot = "EPP",
+  onPivotChange,
+}) {
   const [mode, setMode] = useState("wonTogether");
   const [data, setData] = useState(null);
   const [failed, setFailed] = useState(false);
@@ -159,7 +161,7 @@ export default function CoalitionPanel({
           type="button"
           className="coalitions-chip coalitions-chip--all"
           aria-pressed={pivot === null}
-          onClick={() => setPivot(null)}
+          onClick={() => onPivotChange && onPivotChange(null)}
           title="Every winning coalition in this term, whoever is in it"
         >
           All
@@ -172,7 +174,7 @@ export default function CoalitionPanel({
             aria-pressed={pivot === id}
             // Clicking the selected chip clears it, so the row works as a
             // filter rather than a radio group with no off switch.
-            onClick={() => setPivot((current) => (current === id ? null : id))}
+            onClick={() => onPivotChange && onPivotChange(pivot === id ? null : id)}
             title={`Show the coalitions that include ${FAMILIES[id].sentence}`}
           >
             <span

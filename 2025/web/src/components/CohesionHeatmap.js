@@ -73,11 +73,16 @@ export default function CohesionHeatmap({
 
   return (
     <div className="cohesion-heatmap">
-      <h3
+      {/* h4 like every other panel heading, and sentence case like every other
+          panel title: the sidebar's titles read as sentences ("Five terms
+          compared", "The EPP's winning coalitions"), and this was one of three
+          left in Title Case. It also sat at h3 among h4s, which put an h3 after
+          an h5 once this panel moved under the coalition ranking. */}
+      <h4
         className="cohesion-heatmap-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Inter-Group Voting Agreement</span>
+        <span>Inter-group voting agreement</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"
@@ -91,7 +96,7 @@ export default function CohesionHeatmap({
         >
           <path d="M6 9l6 6 6-6" />
         </svg>
-      </h3>
+      </h4>
       <div className="cohesion-heatmap-description">
         {inChangeMode
           ? `Change against ${baseline.label}, in percentage points`

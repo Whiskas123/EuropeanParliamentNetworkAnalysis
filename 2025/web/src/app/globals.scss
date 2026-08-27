@@ -2314,7 +2314,16 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 // Country Similarity
 // Ensure country title matches intragroup title exactly
 // Cohesion Heatmap
+// The rule and the space every panel puts between itself and what came before
+// it, as .coalitions-panel and .partners-panel carry it. This panel used to
+// have only a bottom margin and leant on whatever sat above it for separation,
+// which was invisible while it followed a stack of dial grids and became a
+// heatmap butted straight onto a bar chart the moment it moved under the
+// coalition ranking. .sidebar-tabpanel strips all three when it lands first.
 .cohesion-heatmap {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--sb-rule);
   margin-bottom: 30px;
 }
 

@@ -155,8 +155,11 @@ export default function PartnerTrends({
   mandate,
   selectedCountry = null,
   selectedSubject = null,
+  // Owned by the sidebar, so the SVG export draws the family on screen rather
+  // than whichever one this panel happened to open on.
+  pivot = "EPP",
+  onPivotChange,
 }) {
-  const [pivot, setPivot] = useState("EPP");
   const [form, setForm] = useState("lines");
   const [chosen, setChosen] = useState(() => TERMS.map((term) => term.mandate));
   const [loaded, setLoaded] = useState(null);
@@ -398,7 +401,7 @@ export default function PartnerTrends({
               type="button"
               className="partners-chip"
               aria-pressed={pivot === family}
-              onClick={() => setPivot(family)}
+              onClick={() => onPivotChange && onPivotChange(family)}
               title={`Draw ${FAMILIES[family].possessive} agreement with the other six families`}
             >
               <span

@@ -73,7 +73,7 @@ export default function CountrySimilarity({
         className="country-similarity-title collapsible-title"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <span>Country Agreement</span>
+        <span>Country agreement</span>
         <svg
           className={`collapse-icon ${isCollapsed ? "collapsed" : ""}`}
           width="16"

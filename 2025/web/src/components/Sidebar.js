@@ -21,10 +21,13 @@ import {
 } from "../lib/normalisedAgreement.js";
 import {
   downloadSVG,
+  exportCoalitionsSheetSVG,
   exportGroupMatrixSheetSVG,
+  exportPartnersSheetSVG,
   exportStatsSheetSVG,
   exportTrendsSheetSVG,
 } from "../lib/networkExport";
+import { loadCoalitions } from "../lib/coalitions.js";
 import { loadTrendSeries } from "../lib/trends.js";
 
 /**
@@ -73,6 +76,7 @@ import { loadTrendSeries } from "../lib/trends.js";
  * Cohesion as a sentence that is usually absent: see CohesionInsights.
  */
 const TABS = [
+  { id: "coalitions", label: "Coalitions" },
   { id: "cohesion", label: "Agreement" },
   { id: "history", label: "History" },
 ];
@@ -120,6 +124,15 @@ export default function Sidebar({
   const [searchResults, setSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(TABS[0].id);
+  // Which political family the two family-pivoted panels are showing. Held
+  // here rather than inside them because the export button has to draw what is
+  // on screen, and only one tab is mounted at a time — a sheet for the EPP
+  // printed while the panel showed the far right would be the one thing these
+  // sheets must never be. Kept as two: the coalition ranking has a real "no
+  // family" state that means the whole chamber, and the partner lines have no
+  // reading without one.
+  const [coalitionPivot, setCoalitionPivot] = useState("EPP");
+  const [partnerPivot, setPartnerPivot] = useState("EPP");
   // {status, missing}. The button reports its own outcome: these sheets are
   // printed, and a click that silently hands over two of the three charts is
   // worse than one that says which it could not draw.
@@ -384,18 +397,23 @@ export default function Sidebar({
   ) : null;
 
 
-  // Both tabs' charts, as two print sheets.
+  // All three tabs' charts, as five print sheets.
   //
-  // Neither panel is serialisable: Agreement is HTML bars and a CSS grid, and
-  // History is an SVG sized to whatever the sidebar happens to be that day, in
-  // colours that come from custom properties. So the sheets are drawn from the
-  // same numbers the panels are drawn from, by lib/networkExport.js, on the
-  // same paper as the network export — a network, its figures and its history
-  // print as one set.
+  // No panel is serialisable: Agreement and Coalitions are HTML bars and CSS
+  // grids, and History is an SVG sized to whatever the sidebar happens to be
+  // that day, in colours that come from custom properties. So the sheets are
+  // drawn from the same numbers the panels are drawn from, by
+  // lib/networkExport.js, on the same paper as the network export — a network,
+  // its figures and its history print as one set.
   //
-  // History is fetched rather than read off the screen: only the active tab is
-  // mounted, and the button has to work from either. loadTrendSeries caches per
-  // scope, so if the History tab has been opened this costs nothing.
+  // Everything is fetched rather than read off the screen: only the active tab
+  // is mounted, and the button has to work from any of them. loadTrendSeries
+  // and loadCoalitions both cache, so a tab already opened costs nothing, and
+  // the two sheets that read the five-term series share one fetch.
+  //
+  // The two family-pivoted sheets take their family from the sidebar's own
+  // state, not from a default, so what prints is what is on screen even though
+  // the panel that drew it may be unmounted.
   const handleExportCharts = async () => {
     if (exportState.status === "working") return;
     setExportState({ status: "working", missing: [] });
@@ -453,11 +471,41 @@ export default function Sidebar({
     }
 
     try {
+      const data = await loadCoalitions();
+      if (!data) throw new Error("no coalition data");
+      sheets.push([
+        `${stem}-coalitions.svg`,
+        exportCoalitionsSheetSVG({
+          meta: exportMeta,
+          data,
+          mandate,
+          // The roll-call classification has no country dimension, so a country
+          // filter is dropped here rather than silently applied. The panel says
+          // the same thing on screen.
+          subject: selectedSubject || null,
+          pivot: coalitionPivot,
+        }),
+      ]);
+    } catch (error) {
+      missing.push("the winning coalitions");
+      console.warn("Sidebar export: the coalitions sheet could not be drawn:", error);
+    }
+
+    // Both remaining sheets read the same five terms, so the fetch is shared.
+    let series = null;
+    let reference = null;
+    try {
       const scoped = Boolean(selectedCountry || selectedSubject);
-      const [series, reference] = await Promise.all([
+      [series, reference] = await Promise.all([
         loadTrendSeries({ country: selectedCountry, subject: selectedSubject }),
         scoped ? loadTrendSeries().catch(() => null) : Promise.resolve(null),
       ]);
+    } catch (error) {
+      console.warn("Sidebar export: the five-term series could not be read:", error);
+    }
+
+    try {
+      if (!series) throw new Error("no series");
       sheets.push([
         `${stem}-history.svg`,
         exportTrendsSheetSVG({ meta: exportMeta, series, reference }),
@@ -465,6 +513,17 @@ export default function Sidebar({
     } catch (error) {
       missing.push("the history");
       console.warn("Sidebar export: the History sheet could not be drawn:", error);
+    }
+
+    try {
+      if (!series) throw new Error("no series");
+      sheets.push([
+        `${stem}-partners.svg`,
+        exportPartnersSheetSVG({ meta: exportMeta, series, pivot: partnerPivot }),
+      ]);
+    } catch (error) {
+      missing.push("the partner lines");
+      console.warn("Sidebar export: the partners sheet could not be drawn:", error);
     }
 
     if (sheets.length === 0) {
@@ -484,6 +543,39 @@ export default function Sidebar({
   };
 
   const renderTabPanel = () => {
+    // Who wins together, and how close each pair of groups sits. Both answer
+    // "which blocs are there", where the Agreement tab answers "how tightly
+    // does each one hold" — the coalition and the matrix were previously three
+    // panels apart on one tab with the cohesion figures between them.
+    //
+    // First of the three because it is the question people arrive with. The
+    // ranking is also the only panel in the sidebar that names a bloc rather
+    // than measuring one, so it is the shortest path from the network on
+    // screen to a sentence about it.
+    if (activeTab === "coalitions") {
+      return (
+        <>
+          <CoalitionPanel
+            mandate={mandate}
+            selectedCountry={selectedCountry}
+            selectedSubject={selectedSubject}
+            pivot={coalitionPivot}
+            onPivotChange={setCoalitionPivot}
+          />
+          {intergroupCohesion ? (
+            <CohesionHeatmap
+              intergroupCohesion={intergroupCohesion}
+              mandate={mandate}
+              baseline={baseline}
+              onGroupClick={handleGroupClick}
+            />
+          ) : (
+            <p className="sb-status">Calculating agreement between groups…</p>
+          )}
+        </>
+      );
+    }
+
     if (activeTab === "cohesion") {
       const nothingReady =
         !intergroupCohesion && !intragroupCohesion && !countrySimilarity;
@@ -519,14 +611,6 @@ export default function Sidebar({
               onGroupClick={handleGroupClick}
             />
           )}
-          {intergroupCohesion && (
-            <CohesionHeatmap
-              intergroupCohesion={intergroupCohesion}
-              mandate={mandate}
-              baseline={baseline}
-              onGroupClick={handleGroupClick}
-            />
-          )}
           {countrySimilarity && (
             <CountrySimilarity
               countrySimilarity={countrySimilarity}
@@ -536,16 +620,6 @@ export default function Sidebar({
               baseline={baseline}
             />
           )}
-          {/* Last on the tab because it is the one panel here that does not
-              follow a country filter: a group's direction on a vote is its
-              members across the house. It says so itself rather than being
-              hidden, since the question it answers — who wins with whom — is
-              the one the panels above cannot reach at all. */}
-          <CoalitionPanel
-            mandate={mandate}
-            selectedCountry={selectedCountry}
-            selectedSubject={selectedSubject}
-          />
         </>
       );
     }
@@ -573,6 +647,8 @@ export default function Sidebar({
           mandate={mandate}
           selectedCountry={selectedCountry}
           selectedSubject={selectedSubject}
+          pivot={partnerPivot}
+          onPivotChange={setPartnerPivot}
         />
       </>
     );
@@ -717,12 +793,13 @@ export default function Sidebar({
                   : exportState.status === "partial"
                   ? `Downloaded all but ${exportState.missing.join(" and ")}, which this view does not carry.`
                   : exportState.status === "working"
-                  ? "Reading twenty years of votes for the history sheet…"
-                  : "Downloads both tabs as vector sheets: the agreement dials, the between-groups grid, and the history."}
+                  ? "Reading twenty years of votes for the history and partner sheets…"
+                  : "Downloads all three tabs as vector sheets: the winning coalitions, the agreement dials, the between-groups grid, the history and the partner lines."}
               </span>
               <span className="sidebar-tip-line">
-                Three SVG files, A4 and print-ready. Same dials, same grid,
-                same lines as the panels — redrawn for paper, not screenshotted.
+                Five SVG files, A4 and print-ready. Same dials, same grid, same
+                lines as the panels — redrawn for paper, not screenshotted. The
+                two family sheets draw whichever family the panels are showing.
               </span>
             </span>
           </span>
