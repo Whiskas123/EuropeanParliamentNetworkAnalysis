@@ -44,9 +44,21 @@ CURRENT_MANDATE = "10"
 # rather than a silently mis-weighted vote.
 VOTE_WEIGHTS = {"+": 1, "-": -1, "0": 0}
 
-# An MEP must have cast more than this share of the non-abstention votes in a
-# network to appear in it at all.
+# An MEP must have cast more than this share of a network's votes to appear in
+# it at all. Abstentions count towards the share: they are excluded from the
+# agreement measure (you cannot agree by abstaining) but they are still
+# attendance, and testing turnout on the abstention-stripped count dropped MEPs
+# who voted in 60-78% of divisions. Turnout and agreement are separate
+# questions - see `network.edges_from_matrix`.
 PARTICIPATION_THRESHOLD = 0.5
+
+# Warning line, not a filter. An MEP admitted on turnout is still *positioned*
+# using yes/no votes alone, so a habitual abstainer can clear the threshold on a
+# thin slice of usable votes - Paul van BUITENEN attended 70% of term 6 but
+# abstained on 93% of what he cast, leaving 286 votes to place him with. Below
+# this share the run says so rather than publishing a coordinate that looks as
+# confident as everyone else's.
+MIN_AGREEMENT_BASIS_SHARE = 0.20
 
 # --- political groups --------------------------------------------------------
 # Parltrack writes some groups as full names and uses "NA" for non-attached.
