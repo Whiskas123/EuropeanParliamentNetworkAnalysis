@@ -14,7 +14,8 @@ import LoadingSpinner from "./LoadingSpinner";
 import CohesionInsights from "./CohesionInsights";
 import PartnerTrends from "./PartnerTrends";
 import TrendsPanel from "./TrendsPanel";
-import { getGroupColor, getGroupAcronym, CountryFlag } from "../lib/utils";
+import { getGroupAcronym, CountryFlag } from "../lib/utils";
+import { groupSwatchStyle } from "../lib/groupColors";
 import {
   useNormalisedAgreement,
   readAgreement,
@@ -22,12 +23,13 @@ import {
 import {
   downloadSVG,
   exportCoalitionsSheetSVG,
+  exportGroupAlliesSheetSVG,
   exportGroupMatrixSheetSVG,
   exportPartnersSheetSVG,
   exportStatsSheetSVG,
   exportTrendsSheetSVG,
 } from "../lib/networkExport";
-import { loadCoalitions } from "../lib/coalitions.js";
+import { groupInfo, groupsIn, loadCoalitions } from "../lib/coalitions.js";
 import { loadTrendSeries } from "../lib/trends.js";
 
 /**
@@ -75,9 +77,14 @@ import { loadTrendSeries } from "../lib/trends.js";
  * or not anything had happened. What it was reaching for now sits at the top of
  * Cohesion as a sentence that is usually absent: see CohesionInsights.
  */
+// Agreement first, and so the tab a reader lands on. It is the measure the
+// other two are built out of — a coalition is a set of groups that agree, and
+// the History tab is the same number over five terms — so opening on it is
+// opening on the thing that has to be understood before either of the others
+// says anything.
 const TABS = [
-  { id: "coalitions", label: "Coalitions" },
   { id: "cohesion", label: "Agreement" },
+  { id: "coalitions", label: "Coalitions" },
   { id: "history", label: "History" },
 ];
 
@@ -131,8 +138,13 @@ export default function Sidebar({
   // sheets must never be. Kept as two: the coalition ranking has a real "no
   // family" state that means the whole chamber, and the partner lines have no
   // reading without one.
-  const [coalitionPivot, setCoalitionPivot] = useState("EPP");
+  const [coalitionPivot, setCoalitionPivot] = useState("PPE");
   const [partnerPivot, setPartnerPivot] = useState("EPP");
+  // Which reading the first History chart has open, held here for the same
+  // reason the two pivots are: the export draws what is on screen, and a sheet
+  // printing the chamber's averages while the panel showed the seven families
+  // is the same failure as printing the wrong family.
+  const [trendMeasure, setTrendMeasure] = useState("averages");
   // {status, missing}. The button reports its own outcome: these sheets are
   // printed, and a click that silently hands over two of the three charts is
   // worse than one that says which it could not draw.
@@ -328,7 +340,7 @@ export default function Sidebar({
                   <span className="sidebar-tip-row" key={node.id}>
                     <span
                       className="sidebar-tip-dot"
-                      style={{ backgroundColor: getGroupColor(node.groupId) }}
+                      style={groupSwatchStyle(node.groupId)}
                       aria-hidden="true"
                     />
                     <span className="sidebar-tip-flag">
@@ -397,7 +409,7 @@ export default function Sidebar({
   ) : null;
 
 
-  // All three tabs' charts, as five print sheets.
+  // All three tabs' charts, as twelve print sheets.
   //
   // No panel is serialisable: Agreement and Coalitions are HTML bars and CSS
   // grids, and History is an SVG sized to whatever the sidebar happens to be
@@ -414,6 +426,12 @@ export default function Sidebar({
   // The two family-pivoted sheets take their family from the sidebar's own
   // state, not from a default, so what prints is what is on screen even though
   // the panel that drew it may be unmounted.
+  //
+  // The Coalitions tab is the exception, and deliberately. Its ally bars are a
+  // chip row crossed with a two-state toggle — every group in the term, two
+  // readings — and neither control survives a print. Exporting what happens to
+  // be showing means exporting one sixteenth of the figure, so every group
+  // prints, each carrying both readings side by side.
   const handleExportCharts = async () => {
     if (exportState.status === "working") return;
     setExportState({ status: "working", missing: [] });
@@ -470,18 +488,26 @@ export default function Sidebar({
       console.warn("Sidebar export: the between-groups sheet could not be drawn:", error);
     }
 
+    // Read once for the eight sheets that classify roll-calls, and outside
+    // their try blocks: one unreadable sheet must not cost the other seven.
+    let coalitionData = null;
     try {
-      const data = await loadCoalitions();
-      if (!data) throw new Error("no coalition data");
+      coalitionData = await loadCoalitions();
+    } catch (error) {
+      console.warn("Sidebar export: the roll-call classification could not be read:", error);
+    }
+
+    try {
+      if (!coalitionData) throw new Error("no coalition data");
       sheets.push([
         `${stem}-coalitions.svg`,
         exportCoalitionsSheetSVG({
           meta: exportMeta,
-          data,
+          data: coalitionData,
           mandate,
           // The roll-call classification has no country dimension, so a country
           // filter is dropped here rather than silently applied. The panel says
-          // the same thing on screen.
+          // the same thing on screen, and so does the sheet's own caption.
           subject: selectedSubject || null,
           pivot: coalitionPivot,
         }),
@@ -489,6 +515,41 @@ export default function Sidebar({
     } catch (error) {
       missing.push("the winning coalitions");
       console.warn("Sidebar export: the coalitions sheet could not be drawn:", error);
+    }
+
+    // One sheet per political group in this term, in seating order, each with
+    // both readings. Seven sheets in most terms and eight in the two the far
+    // right sat as two groups in — read from the data rather than from a
+    // constant, because that count is a fact about the term.
+    if (coalitionData) {
+      // A group with no sheet is not a bug to swallow: in a thin policy area a
+      // group can carry no vote at all, and the export says which rather than
+      // handing over seven files where the reader counted on eight.
+      const absent = [];
+      const seating = groupsIn(coalitionData, mandate);
+      seating.forEach((id) => {
+        const info = groupInfo(id, mandate);
+        try {
+          sheets.push([
+            `${stem}-stands-with-${slug(info.short)}.svg`,
+            exportGroupAlliesSheetSVG({
+              meta: exportMeta,
+              data: coalitionData,
+              mandate,
+              subject: selectedSubject || null,
+              pivot: id,
+            }),
+          ]);
+        } catch (error) {
+          absent.push(info.sentence);
+          console.warn(`Sidebar export: the ${id} ally sheet could not be drawn:`, error);
+        }
+      });
+      if (absent.length > 0) {
+        missing.push(`who stands with ${absent.join(" and ")}`);
+      }
+    } else {
+      missing.push("the who-stands-with sheets");
     }
 
     // Both remaining sheets read the same five terms, so the fetch is shared.
@@ -508,7 +569,12 @@ export default function Sidebar({
       if (!series) throw new Error("no series");
       sheets.push([
         `${stem}-history.svg`,
-        exportTrendsSheetSVG({ meta: exportMeta, series, reference }),
+        exportTrendsSheetSVG({
+          meta: exportMeta,
+          series,
+          reference,
+          measure: trendMeasure,
+        }),
       ]);
     } catch (error) {
       missing.push("the history");
@@ -624,11 +690,13 @@ export default function Sidebar({
       );
     }
 
-    // Neither panel here wears a collapse chevron: opening the tab is the act
-    // that asks for the content, and a control that hides everything under it
-    // would leave the tab looking broken.
+    // Three charts, one per section, each folding away from its own heading —
+    // the same chevron the other sidebars give their sections. This tab used to
+    // argue against them, on the grounds that opening the tab is the act that
+    // asks for the content; that holds for a tab with one chart in it, and this
+    // one is a long scroll of three.
     //
-    // The two are the same five terms read at two altitudes. The first plots
+    // The two panels are the same five terms read at two altitudes. The first plots
     // the Parliament's averages, which is where its clearest story lives and
     // also where the more pointed questions go to die — the between-groups line
     // falls across the five terms, but drop the far right and the remaining
@@ -642,9 +710,12 @@ export default function Sidebar({
           onMandateChange={onMandateChange}
           selectedCountry={selectedCountry}
           selectedSubject={selectedSubject}
+          measure={trendMeasure}
+          onMeasureChange={setTrendMeasure}
         />
         <PartnerTrends
           mandate={mandate}
+          onMandateChange={onMandateChange}
           selectedCountry={selectedCountry}
           selectedSubject={selectedSubject}
           pivot={partnerPivot}
@@ -794,12 +865,14 @@ export default function Sidebar({
                   ? `Downloaded all but ${exportState.missing.join(" and ")}, which this view does not carry.`
                   : exportState.status === "working"
                   ? "Reading twenty years of votes for the history and partner sheets…"
-                  : "Downloads all three tabs as vector sheets: the winning coalitions, the agreement dials, the between-groups grid, the history and the partner lines."}
+                  : "Downloads all three tabs as vector sheets: the winning coalitions, who stands with each political group, the agreement dials, the between-groups grid, the history and the partner lines."}
               </span>
               <span className="sidebar-tip-line">
-                Five SVG files, A4 and print-ready. Same dials, same grid, same
-                lines as the panels — redrawn for paper, not screenshotted. The
-                two family sheets draw whichever family the panels are showing.
+                A4 and print-ready, one SVG each. Same dials, same grid, same
+                lines as the panels — redrawn for paper, not screenshotted. Who
+                stands together prints once per group in the term, both readings
+                on each sheet; the history and partner sheets draw whichever
+                family the panels are showing.
               </span>
             </span>
           </span>

@@ -8,15 +8,14 @@
 // The vocabulary is the sidebar's own, from reuse to the pixel: the 8px
 // coloured square with 2px radius that .leads-dot and .insights-swatch use for
 // a political group, a hairline track for a scale, a solid fill for a value.
-// The one thing invented here is the *row of seven squares* that names a
-// coalition — filled where a family is in it, hollow where it is not. That is a
-// new mark, and it earns its place by being the only way to make "everyone but
-// the right" legible as a shape rather than a sentence to be read.
+// The one thing invented here is the *row of squares* that names a coalition —
+// filled where a group is in it, hollow where it is not. That is a new mark,
+// and it earns its place by being the only way to make "everyone but the
+// right" legible as a shape rather than a sentence to be read.
 //
-// Flank colours are directional, not partisan. A flank is three or four
-// families pooled and has no group colour of its own, so the left is a red and
-// the right a navy — near the reds and navies already on the canvas without
-// claiming to be any one group's.
+// The row is one square per group in the term, so it is seven squares in most
+// terms and eight in the two where the far right sat as two groups. Nothing
+// here may size itself on a fixed seven.
 
 .coalitions-panel {
   margin-top: 30px;
@@ -36,7 +35,7 @@
   margin-top: 18px;
 }
 
-// --- family chips ---------------------------------------------------------
+// --- group chips ----------------------------------------------------------
 
 .coalitions-chips {
   display: flex;
@@ -83,13 +82,13 @@
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-// "All" carries no square: it is not a family, and giving it a grey one would
-// put an eighth political group in the row.
+// "All" carries no square: it is not a group, and giving it a grey one would
+// put one more political group in the row.
 .coalitions-chip--all {
   font-weight: 600;
 }
 
-// --- who stands with this family ------------------------------------------
+// --- who stands with this group -------------------------------------------
 
 // The section label and its mode switch on one line. The switch belongs to
 // this block rather than the panel: it changes what the bars count, not what
@@ -108,12 +107,22 @@
   padding: 0;
 }
 
+// Pointing at a row now dims the network to the groups it names, so the row
+// has to say which one is being read. Same wash the ranked MEP rows use, and
+// the negative margin lets it bleed past the text without moving anything.
 .coalitions-ally {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 2px 0;
+  margin: 0 -5px;
+  padding: 2px 5px;
+  border-radius: 3px;
   position: relative;
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background: var(--sb-wash);
+  }
 }
 
 .coalitions-ally-name {
@@ -123,7 +132,7 @@
   color: var(--sb-ink-soft);
 }
 
-// Full width is 100%, always — the bars are comparable between one family and
+// Full width is 100%, always — the bars are comparable between one group and
 // the next only if the scale does not follow the data.
 .coalitions-ally-track {
   flex: 1;
@@ -171,8 +180,17 @@
   transition: opacity 0.12s ease;
 }
 
-.coalitions-ally:hover .coalitions-ally-tip {
+.coalitions-ally:hover .coalitions-ally-tip,
+.coalitions-ranking-row:hover .coalitions-ally-tip {
   opacity: 1;
+}
+
+// A coalition of seven or eight groups named in full does not fit on one line,
+// so this one wraps where the ally card, which names a single group, does not.
+.coalitions-row-tip {
+  max-width: 250px;
+  white-space: normal;
+  line-height: 1.35;
 }
 
 // --- the ranking of winning coalitions ------------------------------------
@@ -187,7 +205,22 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 3px 0;
+  margin: 0 -5px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  position: relative;
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background: var(--sb-wash);
+  }
+
+  // The bar is the one mark in the row that carries no colour of its own, so
+  // it is what darkens: the squares beside it already say who is in, and
+  // recolouring those would be saying it twice.
+  &:hover .coalitions-ranking-fill {
+    background: var(--sb-ink);
+  }
 }
 
 .coalitions-ranking-marks {
@@ -196,8 +229,9 @@
   flex-shrink: 0;
 }
 
-// One square per family, always all seven. A hollow square is a family that
-// lost this vote, and it has to hold its place or the row stops being a shape.
+// One square per group in the term, always all of them. A hollow square is a
+// group that lost this vote, and it has to hold its place or the row stops
+// being a shape.
 .coalitions-mark {
   width: 8px;
   height: 8px;
@@ -223,12 +257,13 @@
 
 // One colour for every row. An earlier version painted right-only coalitions
 // navy, which meant the panel deciding for the reader which rows were the
-// interesting ones — on a classification the reader never saw. The seven
-// squares beside each bar already say exactly who is in it.
+// interesting ones — on a classification the reader never saw. The squares
+// beside each bar already say exactly who is in it.
 .coalitions-ranking-fill {
   display: block;
   height: 100%;
   background: var(--sb-ink-soft);
+  transition: background-color 0.12s ease;
 }
 
 .coalitions-ranking-value {
@@ -239,4 +274,22 @@
   font-variant-numeric: tabular-nums;
   color: var(--sb-ink);
   font-weight: 600;
+}
+
+// --- what the squares are -------------------------------------------------
+
+// The ranking's squares used to be seven every term, and a shape a reader
+// learned once needs no legend. The count now follows the term — eight where
+// the far right sat as two groups — so the row has to name itself, and the
+// legend repeats the marks at their own size rather than describing them.
+.coalitions-legend {
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+
+.coalitions-legend-marks {
+  display: inline-flex;
+  gap: 2px;
+  margin-right: 5px;
+  vertical-align: baseline;
 }

@@ -147,6 +147,57 @@ export const GROUP_FAMILY = {
   ESN: "FarRight",
 };
 
+/**
+ * Every spelling of one political group, across the site's two data sources.
+ *
+ * `data/final` — the roll-calls, and so the coalition panel — writes "The Left"
+ * and "Renew" where the precomputed networks write "GUE/NGL" and "RE". They are
+ * one group either way, and anything that matches a group id from one source
+ * against a node from the other has to know it: the coalition panel asks the
+ * canvas to light up "The Left" and no node in term 10 carries that id.
+ *
+ * Only true variants of one name are listed. ALDE and Renew are a real rename
+ * too, but no source spells one as the other, and they belong to different
+ * terms — so folding them here would buy nothing and assert more than the data
+ * does.
+ */
+const GROUP_SPELLINGS = [
+  ["GUE/NGL", "The Left"],
+  ["PSE", "S&D"],
+  ["PPE-DE", "PPE"],
+  ["RE", "Renew"],
+  ["Verts/ALE", "Greens/EFA"],
+];
+
+/** group id -> every id that names the same group, itself included. */
+const SPELLINGS_OF = GROUP_SPELLINGS.reduce((table, names) => {
+  names.forEach((name) => {
+    table[name] = names;
+  });
+  return table;
+}, {});
+
+/**
+ * Every id that names the same political group, itself included.
+ *
+ * @param {string} groupId
+ * @returns {string[]}
+ */
+export function groupSpellings(groupId) {
+  return SPELLINGS_OF[groupId] || [groupId];
+}
+
+/**
+ * Whether two group ids name the same political group.
+ *
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
+ */
+export function sameGroup(a, b) {
+  return a === b || groupSpellings(a).includes(b);
+}
+
 /** The flanks a pivot group is measured against; slices of the seating order. */
 export const LEFT_FLANK = ["Left", "Greens", "S&D"];
 export const RIGHT_FLANK = ["Conservatives", "FarRight"];
@@ -225,6 +276,47 @@ export function familyPairs(intergroup) {
     pairs[key] = total / count;
   });
   return pairs;
+}
+
+/**
+ * How cohesive each family's own groups are, from one term's intragroup list.
+ *
+ * The companion to `familyPairs`, on the other measure: that one averages the
+ * cells *between* two families, this one averages each family's constituent
+ * groups' internal agreement. Unweighted, one group one vote, for the same
+ * reason stated there — in term 10 the far right is the mean of PfE and ESN,
+ * not of their 3,403 and 351 pairs.
+ *
+ * Read it as *how tightly the groups in this family vote*, never as how united
+ * the family is. Those are different numbers whenever a family is more than one
+ * group: PfE and ESN each hold together well and agree with each other far
+ * less, and nothing in this average can see that. `familyPairs` deliberately
+ * refuses to return a family's pair with itself for exactly this reason, so a
+ * panel drawing this must say which families are merges — `familyMembers` is
+ * what names them.
+ *
+ * Non-attached members carry no family and drop out here, as they do
+ * everywhere else: they never vote as one and are not a group.
+ *
+ * @param {Array<{group?: string, score?: number}>|null|undefined} intragroup
+ * @returns {Object<string, number>} family id -> mean of its groups' cohesion
+ */
+export function familyCohesion(intragroup) {
+  const sums = {};
+  (intragroup || []).forEach((item) => {
+    if (!item || !Number.isFinite(item.score)) return;
+    const family = GROUP_FAMILY[item.group];
+    if (!family) return;
+    if (!sums[family]) sums[family] = { total: 0, count: 0 };
+    sums[family].total += item.score;
+    sums[family].count += 1;
+  });
+
+  const scores = {};
+  Object.entries(sums).forEach(([family, { total, count }]) => {
+    scores[family] = total / count;
+  });
+  return scores;
 }
 
 /**

@@ -4,9 +4,9 @@
  * A different measure from everything else in the sidebar. The agreement
  * figures are pairwise similarity over a term — how often two MEPs cast the
  * same ballot — which is dominated by the votes nobody contests. This file
- * carries the roll-call classification instead: on each vote, which families
- * were on the winning side, and for each family, who it shares that side with.
- * See pipeline/coalitions.py for how it is built.
+ * carries the roll-call classification instead: on each vote, which groups were
+ * on the winning side, and for each group, who it shares that side with. See
+ * pipeline/coalitions.py for how it is built.
  *
  * Nothing here needs a left/right axis, and that is deliberate: an earlier
  * version reported which *flank* a group had won with, which meant the site
@@ -14,8 +14,20 @@
  * Renew the centre. Those labels are contested, so the questions were changed
  * to ones the roll-calls answer on their own.
  *
- * One file, ~290 KB, all five terms and all policy areas. Small enough to
- * fetch whole rather than per scope, unlike the trend series.
+ * **The unit is a political group, not a family.** Everywhere else on the site
+ * that draws five terms at once has to merge groups into families, because
+ * PSE and S&D are one line and there is no chart across a term boundary
+ * otherwise. This panel is always inside one term, so it never needed the
+ * merge, and the merge cost it the two splits that matter: term 8 ran EFDD and
+ * ENF side by side, term 10 runs PfE and ESN, and pooling each pair into "the
+ * far right" drew one bar for two groups that vote twenty points apart. The
+ * term's own group names are read from `groups[mandate]`; `families.js` is
+ * still what the cross-term charts use.
+ *
+ * One file, ~395 KB, all five terms and all policy areas. Bigger than the
+ * family version because term 8 and term 10 now carry eight groups rather than
+ * seven, and the coalition strings are longer. Still small enough to fetch
+ * whole rather than per scope, unlike the trend series.
  *
  * **It has no country dimension, on purpose.** A group's direction on a vote is
  * the majority of its members across the house; filtering to one country's
@@ -24,6 +36,14 @@
  * selected rather than silently reporting the whole house, which is the trap
  * the trends panel was built to avoid.
  */
+
+import { GROUP_FAMILY, opening } from "./families.js";
+import { getGroupColor } from "./groupColors.js";
+import { getGroupAcronym, getGroupDisplayName } from "./utils.js";
+
+// Re-exported rather than redefined: a panel drawing groups then takes its
+// whole vocabulary from this module, and there is still one implementation.
+export { opening };
 
 const SOURCE = "/data/precomputed/coalitions.json";
 
@@ -54,6 +74,93 @@ export function loadCoalitions() {
 }
 
 /**
+ * The groups that sat in one term, seated left to right.
+ *
+ * The order is the pipeline's and is load-bearing on screen: it is the order of
+ * the squares that name a coalition, and a row of squares is only readable as a
+ * shape if every row seats them the same way.
+ *
+ * @param {Object|null} data - from `loadCoalitions`
+ * @param {number|string} mandate
+ * @returns {string[]} raw group ids, e.g. ["The Left", …, "PfE", "ESN"]
+ */
+export function groupsIn(data, mandate) {
+  return (data && data.groups && data.groups[String(mandate)]) || [];
+}
+
+/**
+ * How one group is named, coloured and written about in one term.
+ *
+ * The panel writes sentences about whichever group is selected — "of the votes
+ * PfE won", "who stands with the Greens" — and the raw ids are not what a
+ * reader should see: `Verts/ALE` is the dump's spelling of Greens/EFA and
+ * `PPE` of the EPP. The naming is `utils.js`'s, which is what the rest of the
+ * sidebar already prints, and the colour is `groupColors.js`'s, so a bar here
+ * is the same colour as the nodes it describes.
+ *
+ * `sentence` is what goes mid-sentence and `possessive` opens a heading.
+ * Political group names split between the plural ones that take "the" and the
+ * ones that do not: "the EPP won" but "PfE won", "the Greens' allies" but
+ * "ESN's allies". Getting that wrong reads as a broken template, so it is
+ * decided once here rather than at each of the dozen call sites.
+ *
+ * @param {string} groupId
+ * @param {number|string} mandate
+ * @returns {{id: string, label: string, short: string, sentence: string,
+ *            possessive: string, color: string, family: string|null,
+ *            fullName: string}}
+ */
+export function groupInfo(groupId, mandate) {
+  const acronym = getGroupAcronym(groupId, Number(mandate));
+  const sentence = sentenceName(acronym);
+  return {
+    id: groupId,
+    label: acronym,
+    // Greens/EFA is the only name too wide for a chip or an axis tick.
+    short: acronym === "Greens/EFA" ? "Greens" : acronym,
+    sentence,
+    // The apostrophe follows the sentence form and not the acronym, because
+    // they can end differently: "Greens/EFA" would take "'s" where "the
+    // Greens" takes a bare "'".
+    possessive: `${sentence}${sentence.endsWith("s") ? "'" : "'s"}`,
+    color: getGroupColor(groupId),
+    family: GROUP_FAMILY[groupId] || null,
+    fullName: getGroupDisplayName(groupId, Number(mandate)),
+  };
+}
+
+/**
+ * The group names an English sentence puts "the" in front of.
+ *
+ * Not a style preference: these are the names that read as a noun phrase
+ * rather than as a proper name. "The EPP won" and "PfE won" are both right,
+ * and swapping them is what makes generated prose read as generated. Listed by
+ * the acronym `getGroupAcronym` produces, since that is what the sentence will
+ * contain.
+ */
+const TAKES_THE = new Set(["EPP", "EPP-ED", "PES", "S&D"]);
+
+/**
+ * The two names that are not their acronym mid-sentence.
+ *
+ * `Greens/EFA` is the group's formal short name and it is what the chips and
+ * the legend say, but a sentence does not: "of the votes the Greens/EFA won"
+ * is a label dropped into prose. `The Left` arrives with its own article, so it
+ * is lower-cased rather than given a second one.
+ */
+const SENTENCE_NAME = {
+  "Greens/EFA": "the Greens",
+  "The Left": "the Left",
+};
+
+/** One group's name as it appears mid-sentence. */
+function sentenceName(acronym) {
+  if (SENTENCE_NAME[acronym]) return SENTENCE_NAME[acronym];
+  return TAKES_THE.has(acronym) ? `the ${acronym}` : acronym;
+}
+
+
+/**
  * One term at one policy area, or the whole term when no area is selected.
  *
  * Returns null when the file has no such view — a policy area that saw no
@@ -73,45 +180,69 @@ export function viewFor(data, mandate, subject = null) {
 }
 
 /**
- * Who one family shares a side with, in one view.
+ * Who one group shares a side with, in one view.
  *
  * Two readings of the same roll-calls, and the difference between them is the
- * point. `wonTogether` counts only the pivot's *wins* — of the votes this
- * family carried, how often was that one carrying it too — so its denominator
- * is `wins`. `sameSide` counts every decided vote, win or lose, so its
- * denominator is `votes`. A family can score high on the first and low on the
+ * point. `wonTogether` counts only the pivot's *wins* — of the votes this group
+ * carried, how often was that one carrying it too. `sameSide` counts every
+ * decided vote, win or lose. A group can score high on the first and low on the
  * second by rarely winning except in someone else's company, which is exactly
- * what the far right does: 94% of its wins are votes the EPP also won, while
- * the two are on the same side on 38% of all votes.
+ * what the far right does: 94% of PfE's wins are votes the EPP also won, while
+ * the two are on the same side on 39% of all votes.
  *
- * Sharing one denominator for both would make that difference invisible, so
- * each mode carries its own.
+ * **Each pair carries its own denominator**, published by the pipeline as
+ * `bothWins` and `bothVotes`. Two groups do not always sit at the same time:
+ * ENF was constituted eleven months into term 8, so 986 of that term's decided
+ * votes happened before it existed. Dividing by the pivot's own total would
+ * count those as votes ENF took the other side on, and understate every ENF
+ * figure in the term by about a tenth. Where both groups sat the whole term the
+ * pair denominator equals the pivot's total and nothing changes.
  *
  * @param {Object|null} view - from `viewFor`
- * @param {Object|null} data - from `loadCoalitions`, for the family order
- * @param {string} pivot - family id
+ * @param {Object|null} data - from `loadCoalitions`, for the term's group order
+ * @param {number|string} mandate
+ * @param {string} pivot - group id
  * @param {"wonTogether"|"sameSide"} mode
  * @returns {{votes: number, wins: number, denominator: number,
- *            rows: Array<{family: string, share: number, count: number}>}|null}
+ *            rows: Array<{group: string, share: number, count: number,
+ *                         denominator: number}>}|null}
  */
-export function allyShares(view, data, pivot, mode = "wonTogether") {
+export function allyShares(view, data, mandate, pivot, mode = "wonTogether") {
   const block = view && view.allies ? view.allies[pivot] : null;
   if (!block) return null;
-  const families = (data && data.families) || [];
-  const denominator = mode === "wonTogether" ? block.wins : block.votes;
-  if (!denominator) return null;
+  const groups = groupsIn(data, mandate);
   const counts = block[mode] || [];
-  const rows = families
-    .map((family, index) => ({ family, count: counts[index] }))
-    .filter((row) => row.family !== pivot && Number.isFinite(row.count))
-    .map((row) => ({ ...row, share: row.count / denominator }))
+  const denominators =
+    block[mode === "wonTogether" ? "bothWins" : "bothVotes"] || [];
+  const rows = groups
+    .map((group, index) => ({
+      group,
+      count: counts[index],
+      denominator: denominators[index],
+    }))
+    .filter(
+      (row) =>
+        row.group !== pivot &&
+        Number.isFinite(row.count) &&
+        Number.isFinite(row.denominator) &&
+        row.denominator > 0
+    )
+    .map((row) => ({ ...row, share: row.count / row.denominator }))
     .sort((a, b) => b.share - a.share);
-  return { votes: block.votes, wins: block.wins, denominator, rows };
+  if (rows.length === 0) return null;
+  return {
+    votes: block.votes,
+    wins: block.wins,
+    // The pivot's own total, for the lede sentence. Individual rows divide by
+    // their own pair denominator, which can be smaller.
+    denominator: mode === "wonTogether" ? block.wins : block.votes,
+    rows,
+  };
 }
 
 /**
  * The winning coalitions of one view, largest first, optionally only those the
- * pivot family was part of.
+ * pivot group was part of.
  *
  * Filtering by pivot is what makes the ranking answer "who does the EPP win
  * with" rather than "what wins": the coalitions the EPP is absent from are the
@@ -119,7 +250,7 @@ export function allyShares(view, data, pivot, mode = "wonTogether") {
  * they were the same thing.
  *
  * @param {Object|null} view
- * @param {string|null} pivot - family id, or null for every coalition
+ * @param {string|null} pivot - group id, or null for every coalition
  * @returns {Array<{groups: string[], votes: number, share: number}>}
  */
 export function coalitionsFor(view, pivot = null) {
@@ -129,14 +260,61 @@ export function coalitionsFor(view, pivot = null) {
 }
 
 /**
- * Which raw groups stood for each family in one term, e.g. `PfE, ESN`.
+ * The spellings folded into one group id in one term, e.g. `PSE, S&D`.
+ *
+ * A rename that landed inside a term, not a lineage: the dump calls term 7's
+ * Socialists PSE until July 2009 and S&D after, and they are one group with one
+ * membership. Returned so a panel can say so, since a reader who knows the
+ * term will wonder where PSE went.
  *
  * @param {Object|null} data
  * @param {number|string} mandate
- * @param {string} family
- * @returns {string[]}
+ * @param {string} group
+ * @returns {string[]} every spelling, or [] when the group was never renamed
  */
-export function lineageFor(data, mandate, family) {
-  const lineage = data && data.lineage ? data.lineage[String(mandate)] : null;
-  return (lineage && lineage[family]) || [];
+export function renamesFor(data, mandate, group) {
+  const renames = data && data.renames ? data.renames[String(mandate)] : null;
+  return (renames && renames[group]) || [];
+}
+
+/**
+ * When a group was actually in the chamber, when that is not the whole term.
+ *
+ * ENF was constituted in June 2015 and has no ballot before it. A panel
+ * reporting its shares has to be able to say that, or the reader reads a group
+ * that sat for four fifths of a term as one that sat for all of it.
+ *
+ * @param {Object|null} view - a whole-term view; policy-area views carry none
+ * @param {string} group
+ * @returns {{from: string, to: string}|null}
+ */
+export function sittingOf(view, group) {
+  return (view && view.sitting && view.sitting[group]) || null;
+}
+
+/**
+ * The group in `mandate` that best answers to a group selected in another term.
+ *
+ * The panel keeps a selected group across a change of term, and the raw ids do
+ * not survive one: picking PfE in term 10 and stepping back to term 9 has to
+ * land on ID, not on nothing. The family table is what carries that lineage, so
+ * it is used here and only here — to move a *selection*, never to merge a
+ * measurement.
+ *
+ * A family that split into two groups resolves to the first of them in seating
+ * order, since there is no better answer: term 9's ID going forward to term 10
+ * lands on PfE, the larger of the two successors.
+ *
+ * @param {Object|null} data
+ * @param {number|string} mandate - the term being moved to
+ * @param {string|null} group - the group selected in the term being left
+ * @returns {string|null} a group in `mandate`, or null
+ */
+export function carryPivot(data, mandate, group) {
+  if (!group) return null;
+  const groups = groupsIn(data, mandate);
+  if (groups.includes(group)) return group;
+  const family = GROUP_FAMILY[group];
+  if (!family) return null;
+  return groups.find((other) => GROUP_FAMILY[other] === family) || null;
 }
