@@ -1,3 +1,5 @@
+import { getGroupColor, normaliseGroupColors } from "./groupColors.js";
+
 // Cache for loaded data
 const dataCache = {};
 
@@ -240,6 +242,10 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
       return null;
     }
     const precomputed = await response.json();
+
+    // The file was written with whatever colour table the generator had at the
+    // time, and every one of them was missing `NonAttached`. See groupColors.js.
+    normaliseGroupColors(precomputed);
 
     // Load and merge MEP info, and how many of this view's votes each cast
     const [mepInfo, votesCast] = await Promise.all([
@@ -758,39 +764,6 @@ export async function loadMandateData(mandate, country = null, subject = null) {
     );
     throw error;
   }
-}
-
-/**
- * Get color for a GroupID
- * @param {string} groupId - Political group ID
- * @returns {string} Hex color code
- */
-function getGroupColor(groupId) {
-  const colorMap = {
-    "PPE-DE": "#3399CC",
-    PSE: "#FF0000",
-    ALDE: "#FFD700",
-    "Verts/ALE": "#009900",
-    "GUE/NGL": "#800080",
-    "The Left": "#800080", // Same as GUE/NGL (mandate 10)
-    ECR: "#000080",
-    EFD: "#24b9b9",
-    EFDD: "#24b9b9",
-    "IND/DEM": "#24b9b9", // Same as EFDD
-    ENF: "#000000",
-    NI: "#808080",
-    UEN: "#FFA500",
-    PPE: "#3399CC",
-    "S&D": "#FF0000",
-    Renew: "#FFD700",
-    RE: "#FFD700", // Renew Europe - yellow
-    "Greens/EFA": "#009900",
-    ID: "#000000",
-    PfE: "#000000", // Patriots for Europe - black
-    ESN: "#8B4513", // European Sovereign Nations - brown
-  };
-
-  return colorMap[groupId] || "#CCCCCC";
 }
 
 /**

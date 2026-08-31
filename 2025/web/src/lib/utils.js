@@ -240,34 +240,10 @@ export function getRedGreenColor(intensity) {
   };
 }
 
-// Helper function to get color for a GroupID
-export function getGroupColor(groupId) {
-  const colorMap = {
-    "PPE-DE": "#3399CC",
-    PSE: "#FF0000",
-    ALDE: "#FFD700",
-    "Verts/ALE": "#009900",
-    "GUE/NGL": "#800080",
-    "The Left": "#800080", // Same as GUE/NGL (mandate 10)
-    ECR: "#000080",
-    EFD: "#24b9b9",
-    EFDD: "#24b9b9",
-    "IND/DEM": "#24b9b9", // Same as EFDD
-    ENF: "#000000",
-    NI: "#808080",
-    UEN: "#FFA500",
-    PPE: "#3399CC",
-    "S&D": "#FF0000",
-    Renew: "#FFD700",
-    RE: "#FFD700", // Renew Europe - yellow
-    "Greens/EFA": "#009900",
-    ID: "#000000",
-    PfE: "#000000", // Patriots for Europe - black
-    ESN: "#8B4513", // European Sovereign Nations - brown
-  };
-
-  return colorMap[groupId] || "#CCCCCC";
-}
+// The colour of a group lives in one table now; see lib/groupColors.js for why
+// there were four of them. Re-exported from here because half the components
+// already import it from utils.
+export { getGroupColor } from "./groupColors.js";
 
 // Helper function to get flag emoji from country name (deprecated - use CountryFlag component instead)
 export function getCountryFlag(countryName) {

@@ -99,29 +99,44 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// Color mapping for groups
+// Color mapping for groups.
+//
+// A hand-kept copy of GROUP_COLORS in src/lib/groupColors.js, which is the
+// source of truth; this script runs under plain node and cannot import it.
+// Keep the two in step. The app overwrites whatever this writes when it loads
+// a file (normaliseGroupColors), so a copy that has drifted will not show up
+// as a wrong picture — it will just be a lie sitting in the data.
+//
+// This map is where `NonAttached` and `EFD` went missing: both fell through to
+// the fallback, so term 7 drew its 29 EFD members and its 32 non-attached in
+// the same #CCCCCC.
 function getGroupColor(groupId) {
   const colorMap = {
     "PPE-DE": "#3399CC",
-    PSE: "#FF0000",
-    ALDE: "#FFD700",
-    "Verts/ALE": "#009900",
-    "GUE/NGL": "#800080",
-    ECR: "#000080",
-    EFDD: "#87CEEB",
-    ENF: "#000000",
-    NI: "#808080",
-    UEN: "#FFA500",
     PPE: "#3399CC",
+    EPP: "#3399CC",
+    PSE: "#FF0000",
     "S&D": "#FF0000",
+    ALDE: "#FFD700",
     Renew: "#FFD700",
-    ECR: "#000080",
-    RE: "#FFD700", // Renew Europe - yellow
+    RE: "#FFD700",
+    "Verts/ALE": "#009900",
     "Greens/EFA": "#009900",
+    "GUE/NGL": "#800080",
+    "The Left": "#800080",
+    ECR: "#000080",
+    UEN: "#FFA500",
+    EFD: "#000000",
+    EFDD: "#24b9b9",
+    "IND/DEM": "#000000",
+    ENF: "#000000",
     ID: "#000000",
     PfE: "#000000",
-    "IND/DEM": "#000000", // Patriots for Europe - black
-    ESN: "#8B4513", // European Sovereign Nations - brown
+    ESN: "#8B4513",
+    // Not a group and drawn as a hatch, not a colour; this is the flat
+    // stand-in for anything too small to hold a texture.
+    NonAttached: "#767676",
+    NI: "#767676",
   };
   return colorMap[groupId] || "#CCCCCC";
 }

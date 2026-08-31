@@ -14,13 +14,24 @@ import {
   UNKNOWN_COLOR,
 } from "../lib/edgeStyle";
 import { listParties } from "../lib/parties";
+import { isNonAttached, NON_ATTACHED_HATCH } from "../lib/groupColors";
 import {
   exportNetworkSVG,
   downloadSVG,
   buildCaption,
   buildLegend,
 } from "../lib/networkExport";
-import { CountryFlag, getGroupAcronym, getGroupColor } from "../lib/utils";
+import {
+  CountryFlag,
+  getGroupAcronym,
+  getGroupColor,
+  getGroupDisplayName,
+} from "../lib/utils";
+import {
+  focusDim,
+  useHoverFocus,
+  useHoverFocusValue,
+} from "../lib/hoverFocus.js";
 import {
   buildCommunityShapes,
   COVERAGE_MAX,
@@ -39,8 +50,76 @@ import "../styles/canvas-controls.scss";
 const NODE_BORDER_BASE_LINE_WIDTH = 0.5;
 const SELECTED_BORDER_BASE_LINE_WIDTH = 3;
 
+/**
+ * What an MEP looks like while a dim is on and they are the subject of it.
+ *
+ * A dim leaves the fill to say who is lit, and the fill cannot always carry
+ * it. The non-attached are #CCCCCC and Renew is #FFD700: at the three to
+ * fifteen layout units a dot gets in a 700-MEP network, a pale circle at full
+ * opacity is barely darker than the same circle faded to 12%, and dimming to
+ * the non-attached turned the whole picture into one grey wash with no way to
+ * tell the answer from the background.
+ *
+ * So under a dim the ring does the work rather than the fill — dark, twice the
+ * usual weight, on a slightly larger dot — and the faded ones give their ring
+ * up entirely, which is what stops the background reading as grey speckle
+ * instead of as pale colour. Both halves matter; either alone leaves the pale
+ * groups unfindable.
+ *
+ * Size carries no meaning in this layout — the radius is a function of how
+ * many MEPs are on screen, nothing else — so borrowing it for a moment costs
+ * the reader nothing. Position, which is the meaning, never moves.
+ */
+const EMPHASIS_BORDER_BASE_LINE_WIDTH = 1.2;
+const EMPHASIS_BORDER_COLOR = "rgba(26, 26, 26, 0.8)";
+const EMPHASIS_NODE_SCALE = 1.25;
+
 /** Edges between groups, and any pair whose colouring says nothing. */
 const NEUTRAL_EDGE_COLOR = "#999999";
+
+/**
+ * One MEP's dot, filled with the non-attached hatch.
+ *
+ * Drawn per node rather than as a `createPattern` fill: a pattern lives in the
+ * context's user space, so it would stretch with the zoom and would have to be
+ * a bitmap sampled at whatever scale the frame happened to be at. Clipping to
+ * the circle and stroking the lines costs nothing at the twenty to sixty
+ * non-attached MEPs a term has, is crisp at every zoom, and is the same
+ * geometry the SVG exporter builds its `<pattern>` from.
+ *
+ * The caller has already filled the dot with the hatch's base colour, and has
+ * already decided the dot is big enough to be worth texturing.
+ *
+ * `pitchRadius` is the radius the stripe spacing is taken from, which is the
+ * view's plain node radius even when this particular dot has been swollen by a
+ * dim. One spacing for every non-attached MEP on the sheet, and the same one
+ * the SVG exporter puts in its `<pattern>`.
+ */
+function hatchLines(ctx, x, y, reach, pitchRadius) {
+  const pitch = pitchRadius * NON_ATTACHED_HATCH.pitch;
+  // Inside the clip the lines are horizontal and the frame is turned, which is
+  // shorter than solving for where each diagonal crosses the shape.
+  ctx.translate(x, y);
+  ctx.rotate(NON_ATTACHED_HATCH.angle);
+  ctx.strokeStyle = NON_ATTACHED_HATCH.line;
+  ctx.lineWidth = pitchRadius * NON_ATTACHED_HATCH.width;
+  ctx.lineCap = "butt";
+  ctx.beginPath();
+  for (let offset = -reach; offset <= reach; offset += pitch) {
+    ctx.moveTo(-reach, offset);
+    ctx.lineTo(reach, offset);
+  }
+  ctx.stroke();
+}
+
+function drawNodeHatch(ctx, x, y, radius, pitchRadius = radius) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, 2 * Math.PI);
+  ctx.clip();
+  hatchLines(ctx, x, y, radius, pitchRadius);
+  ctx.restore();
+}
 
 /**
  * A hairline floor for edge width. Whether an edge is drawn at all is the
@@ -389,6 +468,11 @@ function drawScene(ctx, params) {
     communities,
     communityFocusId,
     viewScale,
+    // Only the group colouring has a non-attached mark to draw: under the
+    // other three the non-attached carry a country, a party or a loyalty like
+    // everyone else, and hatching them there would answer a question nobody
+    // asked.
+    hatchNonAttached = false,
     // The turn the caller has already applied to the context, and the point it
     // was applied about. Only the names need them, to come back out of it.
     rotation = 0,
@@ -397,6 +481,19 @@ function drawScene(ctx, params) {
 
   const dimActive = Boolean(dim && dim.value);
   const nodeMap = graphData.nodeMap;
+
+  // How large a node lands on the output, which is what decides whether the
+  // hatch can be resolved or would come out as noise. Taken from the context's
+  // own matrix rather than from `viewScale`, because the two draw paths differ
+  // by more than the zoom: the screen context is scaled by the device pixel
+  // ratio and the export context by its own multiplier, and `lineWidthDivisor`
+  // is exactly the factor that tells them apart. Screen pixels on the canvas,
+  // output pixels in a PNG export.
+  const matrix =
+    typeof ctx.getTransform === "function" ? ctx.getTransform() : null;
+  const drawScale = matrix
+    ? Math.hypot(matrix.a, matrix.b) / lineWidthDivisor
+    : viewScale;
 
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
@@ -448,15 +545,22 @@ function drawScene(ctx, params) {
   const haloSize3 = selectedNodeSize * 1.4;
   const borderSize = selectedNodeSize * 1.1;
 
+  // A dot too small for the stripes falls back to the flat colour the node
+  // already carries, which is the average of the hatch and reads as the same
+  // grey. At the zoom a 700-MEP network opens at this is every node; zoom in
+  // and the texture appears.
+  const hatchVisible =
+    hatchNonAttached && nodeSize * drawScale >= NON_ATTACHED_HATCH.minRadius;
+
   ctx.globalAlpha = 1;
   for (let i = 0; i < nodes.length; i += 1) {
     const node = nodes[i];
     const isSelected = Boolean(selectedNode && node.id === selectedNode.id);
+    const lit = isEmphasised(node, dim);
+    const hatched = hatchVisible && isNonAttached(node.groupId);
     // A selected node stays fully opaque even when it is outside the dim
     // subject — you asked for it, you should be able to see it.
-    ctx.globalAlpha = isSelected
-      ? 1
-      : nodeOpacity(isEmphasised(node, dim), dimActive);
+    ctx.globalAlpha = isSelected ? 1 : nodeOpacity(lit, dimActive);
 
     if (isSelected) {
       ctx.fillStyle = "rgba(255, 215, 0, 0.2)";
@@ -480,21 +584,46 @@ function drawScene(ctx, params) {
       ctx.arc(node.x, node.y, borderSize, 0, 2 * Math.PI);
       ctx.stroke();
 
-      ctx.fillStyle = colorFor(node);
+      ctx.fillStyle = hatched ? NON_ATTACHED_HATCH.base : colorFor(node);
       ctx.beginPath();
       ctx.arc(node.x, node.y, selectedNodeSize, 0, 2 * Math.PI);
       ctx.fill();
+      if (hatched) {
+        drawNodeHatch(ctx, node.x, node.y, selectedNodeSize, nodeSize);
+      }
     } else {
-      ctx.fillStyle = colorFor(node);
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
-      ctx.fill();
+      // See EMPHASIS_NODE_SCALE: under a dim the subject is drawn a little
+      // larger with a dark ring, and everyone else keeps the plain dot.
+      const emphasised = dimActive && lit;
+      const size = emphasised ? nodeSize * EMPHASIS_NODE_SCALE : nodeSize;
 
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH / lineWidthDivisor;
+      ctx.fillStyle = hatched ? NON_ATTACHED_HATCH.base : colorFor(node);
       ctx.beginPath();
-      ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
-      ctx.stroke();
+      ctx.arc(node.x, node.y, size, 0, 2 * Math.PI);
+      ctx.fill();
+      // Not for the faded: a hatch is a lot of dark ink for something the
+      // reader has just asked to push into the background, and at 12% it would
+      // read as speckle rather than as texture.
+      if (hatched && (!dimActive || lit)) {
+        drawNodeHatch(ctx, node.x, node.y, size, nodeSize);
+      }
+
+      if (!dimActive || lit) {
+        // A pale base under stripes has no edge of its own; the ring is what
+        // keeps a hatched dot reading as a dot.
+        ctx.strokeStyle = emphasised
+          ? EMPHASIS_BORDER_COLOR
+          : hatched
+          ? NON_ATTACHED_HATCH.ringStroke
+          : "rgba(0, 0, 0, 0.2)";
+        ctx.lineWidth =
+          (emphasised
+            ? EMPHASIS_BORDER_BASE_LINE_WIDTH
+            : NODE_BORDER_BASE_LINE_WIDTH) / lineWidthDivisor;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, size, 0, 2 * Math.PI);
+        ctx.stroke();
+      }
     }
   }
 
@@ -758,6 +887,7 @@ function planCaptionBand(ctx, params) {
 
   const rows = entries.map((entry) => ({
     color: entry.color || NEUTRAL_EDGE_COLOR,
+    hatched: Boolean(entry.hatched),
     label: ellipsize(ctx, entry.label, labelWidth),
   }));
 
@@ -809,8 +939,29 @@ function drawCaptionBand(ctx, params) {
   // Colour key runs down the right-hand side of the band.
   plan.rows.forEach((row, index) => {
     const y = plan.pad + index * plan.lineHeight;
-    ctx.fillStyle = row.color;
+    ctx.fillStyle = row.hatched ? NON_ATTACHED_HATCH.base : row.color;
     ctx.fillRect(plan.columnX, y, plan.swatch, plan.swatch);
+    if (row.hatched) {
+      // The key has to carry the same mark as the dots, or the texture is
+      // something the reader has to guess the meaning of.
+      const half = plan.swatch / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(plan.columnX, y, plan.swatch, plan.swatch);
+      ctx.clip();
+      // Half the diagonal, so the turned stripes still cover the corners.
+      hatchLines(
+        ctx,
+        plan.columnX + half,
+        y + half,
+        half * Math.SQRT2,
+        half
+      );
+      ctx.restore();
+      ctx.strokeStyle = NON_ATTACHED_HATCH.ringStroke;
+      ctx.lineWidth = Math.max(1, plan.swatch * 0.08);
+      ctx.strokeRect(plan.columnX, y, plan.swatch, plan.swatch);
+    }
     ctx.fillStyle = "#1a1a1a";
     ctx.fillText(row.label, plan.columnX + plan.labelOffset, y);
   });
@@ -829,6 +980,7 @@ export default function NetworkCanvas({
   selectedSubject,
   renderSettings,
   onRenderSettingsChange,
+  onSelectGroup,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -866,6 +1018,11 @@ export default function NetworkCanvas({
   // has to remember "country" while nothing is selected yet, and a cleared dim
   // is null in the shared settings.
   const [dimKind, setDimKind] = useState("group");
+  // What the cursor is pointing at, anywhere on the page — a cell of the group
+  // matrix, a dial, a row of a list, or this canvas's own legend. See
+  // lib/hoverFocus.js.
+  const hoverFocus = useHoverFocusValue();
+  const focus = useHoverFocus();
   // Flipped the first time the SVG exporter throws, which is what it does
   // until lib/networkExport.js is implemented. Offering a button that cannot
   // work is worse than not offering it.
@@ -1194,22 +1351,34 @@ export default function NetworkCanvas({
    * dim plus a community hover leaves that country's members of that
    * community lit, which is the only reading that respects both controls.
    */
+  const hoverDim = useMemo(
+    () => focusDim(hoverFocus, graphData),
+    [hoverFocus, graphData]
+  );
+
+  // A hover replaces the chosen dim rather than narrowing it: a reader with
+  // "everything except the Greens" set who points at the EPP-Renew cell is
+  // asking about the EPP and Renew, and an intersection would answer with an
+  // empty network. The chosen dim comes straight back when the cursor leaves,
+  // and it is the one the exports and the URL keep carrying.
+  const activeDim = hoverDim || dim;
+
   const effectiveDim = useMemo(() => {
-    if (!focusedCommunity) return dim;
+    if (!focusedCommunity) return activeDim;
     const members =
-      dim && dim.value
+      activeDim && activeDim.value
         ? new Set(
             (graphData?.nodes || [])
               .filter(
                 (node) =>
                   focusedCommunity.memberSet.has(node.id) &&
-                  isEmphasised(node, dim)
+                  isEmphasised(node, activeDim)
               )
               .map((node) => node.id)
           )
         : focusedCommunity.memberSet;
     return { type: "members", value: `community-${focusedCommunity.id}`, members };
-  }, [focusedCommunity, dim, graphData]);
+  }, [focusedCommunity, activeDim, graphData]);
 
   /**
    * The figures under the switch.
@@ -1322,6 +1491,7 @@ export default function NetworkCanvas({
       communityFocusId: focusedCommunity ? focusedCommunity.id : null,
       labelBoxes: labelBoxes,
       viewScale: t.k,
+      hatchNonAttached: colorMode === "group",
       lineWidthDivisor: effectivePixelRatio,
       baseEdgeAlpha: isSafari ? 0.05 : 0.3,
       rotation,
@@ -1338,6 +1508,7 @@ export default function NetworkCanvas({
     rotation,
     drawnLinks,
     colorFor,
+    colorMode,
     widthMultiplier,
     effectiveDim,
     communityOverlay,
@@ -2027,6 +2198,7 @@ export default function NetworkCanvas({
       dim,
       communities: communityOverlay,
       viewScale: t.k,
+      hatchNonAttached: colorMode === "group",
       lineWidthDivisor: 1,
       baseEdgeAlpha: 0.3,
       rotation,
@@ -2648,12 +2820,63 @@ export default function NetworkCanvas({
         pinned={pinnedCommunityId !== null && focusedCommunity !== null}
         mandate={mandate}
       />
+      {/* Bottom left, opposite the legend. Both are things the canvas says
+          about itself rather than controls, and the legend is the one worth
+          the corner a reader's eye lands on. */}
       <div
         className="network-canvas-tip"
         title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps"
       >
         💡 Tip: Click MEP nodes or group names to explore more
       </div>
+      {/*
+        The groups on this network, always by their own colours.
+
+        Not the colour-mode legend from the display panel, which follows
+        whatever the nodes are painted by and lives behind a button. This one is
+        the standing key to the picture: which groups are in this view, how many
+        MEPs each has, and — because the same three facts are what a reader
+        wants to act on — a way to send everyone else back with the cursor and
+        to open a group by clicking it.
+      */}
+      {presentGroups.length > 0 && (
+        <div
+          className="network-legend"
+          role="group"
+          aria-label="Political groups in this network"
+        >
+          <ul className="network-legend-list">
+            {presentGroups.map((group) => (
+              <li key={group.id}>
+                <button
+                  type="button"
+                  className="network-legend-row"
+                  onClick={() => onSelectGroup && onSelectGroup(group.id)}
+                  title={`${getGroupDisplayName(group.id, mandate)} — ${
+                    group.count
+                  } MEP${group.count === 1 ? "" : "s"}${
+                    onSelectGroup ? ". Click to open the group." : ""
+                  }`}
+                  {...focus.on([{ group: group.id }])}
+                >
+                  <span
+                    className="network-legend-swatch"
+                    style={{ background: group.color }}
+                    aria-hidden="true"
+                  />
+                  {/* The full name, not the acronym on the nodes' own
+                      swatches: a legend that says "PfE" tells a reader who
+                      already knows what PfE is exactly what they already knew. */}
+                  <span className="network-legend-name">
+                    {getGroupDisplayName(group.id, mandate)}
+                  </span>
+                  <span className="network-legend-count">{group.count}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {!graphData && (
         <div className="network-canvas-empty">
           <div className="network-canvas-empty-content">

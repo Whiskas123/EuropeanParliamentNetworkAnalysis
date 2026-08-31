@@ -30,9 +30,14 @@ import {
   UNKNOWN_COLOR,
 } from "./edgeStyle.js";
 import { listParties } from "./parties.js";
+import {
+  isNonAttached,
+  NON_ATTACHED_COLOR,
+  NON_ATTACHED_HATCH,
+} from "./groupColors.js";
 import { MIN_TERM_SESSIONS } from "./trends.js";
 import { FAMILIES, FAMILY_ORDER, pairKey } from "./families.js";
-import { allyShares, coalitionsFor, viewFor } from "./coalitions.js";
+import { allyShares, coalitionsFor, lineageFor, viewFor } from "./coalitions.js";
 import {
   buildCommunityShapes,
   DEFAULT_COVERAGE,
@@ -447,6 +452,10 @@ export function buildLegend(graphData, colorMode = "group", mandate = null) {
       key: node.groupId,
       label: getGroupDisplayName(node.groupId, term),
       color: colorFn(node),
+      // The one entry whose swatch is a texture and not a colour. Renderers
+      // that cannot draw one fall back to `color`, which is the flat grey the
+      // hatch averages to.
+      hatched: isNonAttached(node.groupId),
       count: 1,
     });
   });
@@ -506,6 +515,49 @@ function planLegend(entries, contentWidth, du) {
 }
 
 /** Legend elements, drawn from a local origin at its top-left corner. */
+/**
+ * The non-attached hatch, as a tileable `<pattern>`.
+ *
+ * Two of them end up in a network sheet — one whose stripes are spaced off the
+ * node radius and one off the legend swatch — because a pattern in
+ * `userSpaceOnUse` is a fixed size in graph units, and a swatch is nowhere near
+ * the size of a dot. Same proportions in both: four stripes across the shape.
+ *
+ * Vector, so unlike the canvas it has no size below which it stops being drawn.
+ * A wall panel is printed at whatever the printer's resolution is, not the
+ * screen's.
+ *
+ * @param {string} id
+ * @param {number} r - radius of the shape the pattern will fill
+ */
+function hatchPattern(id, r) {
+  const pitch = r * NON_ATTACHED_HATCH.pitch;
+  const width = r * NON_ATTACHED_HATCH.width;
+  const degrees = round((NON_ATTACHED_HATCH.angle * 180) / Math.PI, 0);
+  return (
+    `<pattern id="${id}" width="${n2(pitch)}" height="${n2(pitch)}" ` +
+    `patternUnits="userSpaceOnUse" patternTransform="rotate(${degrees})">` +
+    // The tile's own background, written at full precision and a whisker
+    // oversized: svgRect rounds to one decimal, and at the pitch a legend
+    // swatch asks for that is enough to leave a hairline of paper between
+    // tiles.
+    `<rect x="0" y="0" width="${n2(pitch * 1.02)}" height="${n2(
+      pitch * 1.02
+    )}" fill="${NON_ATTACHED_HATCH.base}"/>` +
+    // A horizontal stripe down the middle of the tile, turned by the pattern
+    // transform. Down the middle rather than on the edge so that no part of
+    // the stroke has to be supplied by the neighbouring tile.
+    `<line x1="0" y1="${n2(pitch / 2)}" x2="${n2(pitch)}" y2="${n2(
+      pitch / 2
+    )}" stroke="${NON_ATTACHED_HATCH.line}" stroke-width="${n2(width)}"/>` +
+    `</pattern>`
+  );
+}
+
+/** Ids of the two patterns a network sheet defines. */
+const HATCH_NODE_ID = "hatch-non-attached";
+const HATCH_SWATCH_ID = "hatch-non-attached-swatch";
+
 function renderLegend(entries, plan, du) {
   if (!entries || entries.length === 0) return "";
   const parts = [];
@@ -552,7 +604,14 @@ function renderLegend(entries, plan, du) {
     parts.push(
       `<circle cx="${n1(x + plan.swatch / 2)}" cy="${n1(
         y + rowHeight * 0.42
-      )}" r="${n2(plan.swatch / 2)}" fill="${esc(entry.color)}"/>`
+      )}" r="${n2(plan.swatch / 2)}" ` +
+        (entry.hatched
+          ? `fill="url(#${HATCH_SWATCH_ID})" stroke="${NON_ATTACHED_HATCH.ring}" ` +
+            `stroke-opacity="${NON_ATTACHED_HATCH.ringOpacity}" stroke-width="${n2(
+              plan.swatch * 0.06
+            )}"`
+          : `fill="${esc(entry.color)}"`) +
+        `/>`
     );
     parts.push(
       svgText(
@@ -661,6 +720,15 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   const coordDecimals = Math.max(spanX, spanY) >= 200 ? 1 : 3;
   const c = (value) => round(value, coordDecimals);
 
+  // Only the group colouring has a non-attached mark to draw; under the other
+  // three they carry a country, a party or a loyalty like everyone else. The
+  // patterns are collected here because the caption block below adds a second
+  // one for the legend swatch, and both have to reach the <defs>.
+  const hatchNodes =
+    view.colorMode === "group" &&
+    nodes.some((node) => isNonAttached(node.groupId));
+  const defs = hatchNodes ? [hatchPattern(HATCH_NODE_ID, radius)] : [];
+
   const pad = du(40) + radius;
   let left = minX - pad;
   let width = spanX + pad * 2;
@@ -741,6 +809,9 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
       fy += lineSize * 1.6;
     });
     if (legendPlan.height > 0) {
+      if (legend.some((entry) => entry.hatched)) {
+        defs.push(hatchPattern(HATCH_SWATCH_ID, legendPlan.swatch / 2));
+      }
       fy += du(14);
       footerParts.push(
         `<g id="legend" transform="translate(${n1(margin)}, ${n1(fy)})">` +
@@ -862,11 +933,36 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     .map(([groupId, members]) => {
       const acronym = getGroupAcronym(groupId, info.mandate);
       const circles = members.map((node) => {
-        const fill = colorFn(node) || UNKNOWN_COLOR;
-        const alpha = nodeOpacity(emphasised.has(node.id), Boolean(dim));
+        const lit = emphasised.has(node.id);
+        const alpha = nodeOpacity(lit, Boolean(dim));
+        // Not a group, so not a colour: see NON_ATTACHED_HATCH. Faded nodes
+        // keep the flat fill — a hatch is a lot of dark ink for something the
+        // reader has just pushed into the background, and at 12% it reads as
+        // speckle rather than as texture. The `#767676` after the reference is
+        // the SVG paint fallback, so an editor that drops the pattern shows the
+        // grey the hatch averages to rather than an unfilled circle.
+        const hatched = hatchNodes && isNonAttached(node.groupId) && lit;
+        const fill = hatched
+          ? `url(#${HATCH_NODE_ID}) ${NON_ATTACHED_COLOR}`
+          : colorFn(node) || UNKNOWN_COLOR;
+        // The subject of a dim is drawn a little larger inside a dark ring,
+        // exactly as the canvas draws it — a pale fill (the non-attached are
+        // #CCCCCC, Renew is yellow) cannot carry "this one is lit" on its own
+        // against a field faded to 12%. See EMPHASIS_NODE_SCALE in
+        // components/NetworkCanvas.js.
+        const ringed = Boolean(dim) && lit;
+        const r = ringed ? radius * 1.25 : radius;
         const attrs =
-          `cx="${c(node.x)}" cy="${c(node.y)}" r="${n2(radius)}" ` +
+          `cx="${c(node.x)}" cy="${c(node.y)}" r="${n2(r)}" ` +
           `fill="${esc(fill)}"` +
+          (ringed
+            ? ` stroke="#1a1a1a" stroke-opacity="0.8" stroke-width="1.2"`
+            : hatched
+            ? // A pale base under stripes has no edge of its own.
+              ` stroke="${NON_ATTACHED_HATCH.ring}" stroke-opacity="${
+                NON_ATTACHED_HATCH.ringOpacity
+              }" stroke-width="${n2(radius * 0.12)}"`
+            : "") +
           (alpha < 1 ? ` opacity="${n2(alpha)}"` : "");
         // The MEP name rides along as <title>: it is what a vector editor
         // shows as the layer name, which is the whole point of annotating
@@ -1021,6 +1117,7 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
     `<desc>${esc(
       `${caption.lines.join(". ")}. ${caption.caveat} Render: ${describedSettings}.`
     )}</desc>` +
+    (defs.length > 0 ? `<defs>${defs.join("")}</defs>` : "") +
     svgRect(left, top, width, height, PAPER, 'id="background"') +
     `<g id="edges">${edgeParts.join("")}</g>` +
     (communityParts.length > 0
@@ -1531,17 +1628,47 @@ export function downloadSVG(svgString, filename = "network.svg") {
  * ---------------------------------------------------------------------- */
 
 /**
- * The three series the History tab plots, in the order it plots them.
+ * The two series the History tab plots at chamber level, in the order it plots
+ * them.
  *
  * Colour is not the separator here. These sheets are printed, sometimes in
  * greyscale, so each series carries a dash pattern and a marker shape as well
  * — exactly as TrendsPanel does on screen, and for the same reason.
  */
 const TREND_SERIES = [
-  { key: "withinGroup", label: "Within group", color: "#003399", dash: "", marker: "circle" },
-  { key: "withinCountry", label: "Within country", color: "#4a4a4a", dash: "5 3", marker: "square" },
-  { key: "crossGroup", label: "Between groups", color: "#8a8a8a", dash: "1.5 3", marker: "triangle" },
+  {
+    key: "withinGroup",
+    label: "Within group",
+    color: "#003399",
+    dash: "",
+    marker: "circle",
+    value: (row) => row.withinGroup,
+  },
+  {
+    key: "withinCountry",
+    label: "Within country",
+    color: "#4a4a4a",
+    dash: "5 3",
+    marker: "square",
+    value: (row) => row.withinCountry,
+  },
 ];
+
+/**
+ * The same chart's other reading: one line per political family.
+ *
+ * Coloured and nothing else, as on screen — seven dash patterns do not
+ * separate, and a party is not a measure. The legend names every line, and it
+ * wraps, because seven names do not fit the one row two did.
+ */
+const TREND_FAMILY_SERIES = FAMILY_ORDER.map((family) => ({
+  key: family,
+  label: FAMILIES[family].label,
+  color: FAMILIES[family].color,
+  dash: "",
+  marker: "circle",
+  value: (row) => (row.familyCohesion || {})[family],
+}));
 
 /** One series marker, centred on (x, y). Shapes, so greyscale still reads. */
 function trendMarker(shape, x, y, color, size = 2.6) {
@@ -1601,10 +1728,25 @@ function trendPath(points, color, dash, width = 1.4) {
  *   faintly behind when the open scope is a country or a policy area
  * @returns {string} a complete <svg> document
  */
-export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
+export function exportTrendsSheetSVG({
+  meta,
+  series,
+  reference = null,
+  // Which reading of the first chart the sidebar has open. The sheet prints
+  // what is on screen; a printed panel showing lines the reader never chose is
+  // the one thing these sheets must not do.
+  measure = "averages",
+} = {}) {
   const rows = Array.isArray(series) ? series : [];
   if (rows.length === 0) {
     throw new Error("exportTrendsSheetSVG: no terms to draw");
+  }
+  const byFamily = measure === "families";
+  const drawn = (byFamily ? TREND_FAMILY_SERIES : TREND_SERIES).filter((s) =>
+    rows.some((row) => Number.isFinite(s.value(row)))
+  );
+  if (drawn.length === 0) {
+    throw new Error("exportTrendsSheetSVG: no series carries a value at this scope");
   }
 
   const caption = buildCaption(meta || {});
@@ -1619,7 +1761,9 @@ export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
 
   const head = sectionHead(
     "Five terms compared",
-    "Agreement within groups, within countries, and between groups, at this scope since 2004.",
+    byFamily
+      ? "Agreement inside each political family, at this scope since 2004."
+      : "Agreement within groups and within countries, at this scope since 2004.",
     M,
     inner
   );
@@ -1631,8 +1775,9 @@ export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
   const values = [];
   const collect = (source) =>
     (source || []).forEach((row) =>
-      TREND_SERIES.forEach((s) => {
-        if (Number.isFinite(row && row[s.key])) values.push(row[s.key]);
+      drawn.forEach((s) => {
+        const value = row ? s.value(row) : undefined;
+        if (Number.isFinite(value)) values.push(value);
       })
     );
   collect(rows);
@@ -1668,12 +1813,11 @@ export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
   });
 
   const drawSeries = (source, faint) =>
-    TREND_SERIES.forEach((s) => {
-      const points = (source || []).map((row, index) =>
-        Number.isFinite(row && row[s.key])
-          ? { x: xAt(index), y: yAt(row[s.key]) }
-          : null
-      );
+    drawn.forEach((s) => {
+      const points = (source || []).map((row, index) => {
+        const value = row ? s.value(row) : undefined;
+        return Number.isFinite(value) ? { x: xAt(index), y: yAt(value) } : null;
+      });
       const color = faint ? "#c4c4c4" : s.color;
       parts.push(trendPath(points, color, s.dash, faint ? 0.9 : 1.4));
       if (faint) return;
@@ -1726,9 +1870,16 @@ export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
   });
   y = axisY + 24;
 
-  // Legend, one line, in the order the series were drawn.
+  // Legend, in the order the series were drawn, wrapping when a row is full:
+  // two measures fit one line and seven family names do not, and a legend that
+  // runs off the sheet names nothing.
   let legendX = plot.left;
-  TREND_SERIES.forEach((s) => {
+  drawn.forEach((s) => {
+    const itemWidth = 16 + estimateWidth(s.label, 7) + 14;
+    if (legendX > plot.left && legendX + itemWidth > plot.right) {
+      legendX = plot.left;
+      y += 11;
+    }
     parts.push(
       `<line x1="${n1(legendX)}" y1="${n1(y)}" x2="${n1(legendX + 12)}" y2="${n1(
         y
@@ -1738,7 +1889,7 @@ export function exportTrendsSheetSVG({ meta, series, reference = null } = {}) {
     );
     parts.push(trendMarker(s.marker, legendX + 6, y, s.color, 2.2));
     parts.push(svgText(legendX + 16, y + 2.5, s.label, { size: 7, fill: SB_BODY }));
-    legendX += 16 + estimateWidth(s.label, 7) + 14;
+    legendX += itemWidth;
   });
   if (reference && reference.length === rows.length) {
     y += 10;
@@ -2106,12 +2257,12 @@ export function exportCoalitionsSheetSVG({
     throw new Error("exportCoalitionsSheetSVG: this scope decides no votes");
   }
   const rows = coalitionsFor(view, pivot);
-  const allies = pivot ? allyShares(view, data, pivot, "wonTogether") : null;
+  const allies = pivot ? allyReadings(view, data, pivot) : null;
   if (rows.length === 0 && !allies) {
     throw new Error("exportCoalitionsSheetSVG: nothing to draw");
   }
 
-  const caption = buildCaption(meta || {});
+  const caption = coalitionCaption(meta, view);
   const W = 420;
   const H = 594;
   const M = 30;
@@ -2130,55 +2281,24 @@ export function exportCoalitionsSheetSVG({
   if (allies) {
     const head = sectionHead(
       `Who stands with ${family.sentence}`,
-      `Of the ${thousandsSep(allies.wins)} votes ${family.sentence} won, how often each ` +
-        `other family was on the winning side too.`,
+      allyReadingsLede(family),
       M,
       inner
     );
     parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
     y += head.height + 8;
 
-    const nameWidth = 42;
-    const valueWidth = 26;
-    const trackX = M + nameWidth;
-    const trackWidth = inner - nameWidth - valueWidth;
-    const rowH = 13;
-    allies.rows.forEach((row) => {
-      const mid = y + rowH / 2;
-      parts.push(
-        svgText(M, mid + 2, FAMILIES[row.family].short, { size: 6.5, fill: SB_BODY })
-      );
-      // The track is the full 100%, as on screen, so a bar on this sheet can be
-      // compared with a bar on another family's.
-      parts.push(svgRect(trackX, y + 2.5, trackWidth, rowH - 5, "#f0f2f4", 'rx="1"'));
-      parts.push(
-        svgRect(
-          trackX,
-          y + 2.5,
-          Math.max(0.6, trackWidth * row.share),
-          rowH - 5,
-          FAMILIES[row.family].color,
-          'rx="1"'
-        )
-      );
-      parts.push(
-        svgText(M + inner, mid + 2, `${Math.round(row.share * 100)}%`, {
-          size: 6.5,
-          anchor: "end",
-          weight: 700,
-          monospaceDigits: true,
-        })
-      );
-      y += rowH;
-    });
-    y += 12;
+    const block = allyColumns(allies, M, inner);
+    parts.push(`<g transform="translate(0 ${n1(y)})">${block.parts.join("")}</g>`);
+    y += block.height + 12;
   }
 
   if (rows.length > 0) {
     const head = sectionHead(
-      `What wins in ${termShort(mandate)}`,
-      `The families on the winning side, on the ${thousandsSep(view.decided)} decided votes` +
-        `${subject ? ` in ${subject}` : " of this term"}.` +
+      `What coalitions win in ${termShort(mandate)}`,
+      `The political groups on the winning side, on the ${thousandsSep(
+        view.decided
+      )} decided votes ${subject ? `in ${subject}` : "of this term"}.` +
         (family ? ` Only the coalitions that include ${family.sentence}.` : ""),
       M,
       inner
@@ -2256,6 +2376,377 @@ export function exportCoalitionsSheetSVG({
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
     svgRect(0, 0, W, H, PAPER),
     '<g id="coalitions-sheet">',
+    parts.join(""),
+    "</g>",
+    "</svg>",
+  ].join("");
+}
+
+/**
+ * The coalition sheets' own caption line.
+ *
+ * buildCaption counts MEPs and voting sessions, which is the *network's*
+ * sample. These sheets classify roll-calls, and their sample is the decided
+ * votes — a coalition sheet headed "705 MEPs" is answering a question it was
+ * not asked.
+ *
+ * It also drops the country, and says so. There is no country version of this
+ * figure: a group's direction on a vote is its members everywhere, so the
+ * classification is always the whole Parliament's. The panel says that on
+ * screen; a sheet headed "Portugal" would quietly deny it, and the sheet is
+ * the half that leaves the building.
+ */
+function coalitionCaption(meta, view) {
+  const base = buildCaption({ ...(meta || {}), country: null });
+  const country = meta && meta.country;
+  return {
+    title: base.title,
+    subtitle: base.subtitle,
+    lines: [
+      `${thousandsSep(view.decided)} decided roll-calls`,
+      country ? `whole Parliament — no ${country} version of this figure` : null,
+    ].filter(Boolean),
+  };
+}
+
+/** "PfE and ESN", "ALDE, PPE and UEN" — a list a sentence can end on. */
+function andList(items) {
+  const list = (items || []).filter(Boolean);
+  if (list.length < 2) return list.join("");
+  return `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]}`;
+}
+
+/** One family's row in one reading, or null when that reading has none. */
+function allyRow(shares, family) {
+  return shares ? shares.rows.find((row) => row.family === family) || null : null;
+}
+
+/**
+ * Both readings of one family's allies, on one shared row order.
+ *
+ * On screen these are a toggle: one chart, two states, and the reader flips
+ * between them. Paper has nothing to flip, so both are drawn — which is the
+ * better reading anyway, because the *difference* between them is the whole
+ * reason the block exists. A family that wins only in someone else's company
+ * scores high on the left and low on the right, and that is one glance rather
+ * than two prints laid side by side.
+ *
+ * The rows are ranked by "when it wins" and the second column keeps that
+ * order, so a family sits on the same line in both and the gap reads straight
+ * across. The panel ranks each mode on its own, which it can afford with only
+ * one of them on screen; two independently sorted columns would turn the
+ * comparison into a name hunt.
+ *
+ * Either reading can be empty on its own — a family that carried nothing in a
+ * policy area has no "when it wins" — so the order falls back to whichever
+ * exists and the missing cells are drawn as dashes rather than as zeroes,
+ * which would read as "stood with nobody" instead of "won nothing".
+ */
+function allyReadings(view, data, pivot) {
+  const won = allyShares(view, data, pivot, "wonTogether");
+  const same = allyShares(view, data, pivot, "sameSide");
+  if (!won && !same) return null;
+  return {
+    won,
+    same,
+    order: (won || same).rows.map((row) => row.family),
+    columns: [
+      {
+        label: "When it wins",
+        note: won
+          ? `of the ${thousandsSep(won.wins)} votes it won`
+          : "it won no vote in this view",
+        shares: won,
+      },
+      {
+        label: "Every vote",
+        note: same
+          ? `of all ${thousandsSep(same.votes)} decided votes`
+          : "it sat in no decided vote here",
+        shares: same,
+      },
+    ],
+  };
+}
+
+/** What the two columns are, in the panel's own words. */
+function allyReadingsLede(family) {
+  return (
+    `Two readings of the same roll-calls. Left: of the votes ${family.sentence} won, ` +
+    `who else won too. Right: of every decided vote, who took the same side, win or lose.`
+  );
+}
+
+/**
+ * The two readings as two columns of bars.
+ *
+ * Both tracks are the full 100%, as on screen, so a bar here can be compared
+ * with a bar on another family's sheet — a track scaled to the largest share
+ * would make seven sheets seven different rulers.
+ *
+ * @param {Object} readings - from allyReadings
+ * @param {number} M - page margin
+ * @param {number} inner - drawable width
+ * @param {Object} [options] - geometry; the defaults are the compact form that
+ *   shares a page with the ranking, `counts` the roomier one that does not
+ * @returns {{parts: string[], height: number}} drawn from y = 0
+ */
+function allyColumns(readings, M, inner, options = {}) {
+  const {
+    rowH = 13,
+    size = 6.5,
+    nameWidth = 42,
+    valueWidth = 26,
+    barH = 8,
+    gutter = 16,
+    counts = false,
+  } = options;
+  const parts = [];
+  const colWidth = (inner - gutter) / 2;
+  const headH = size * 2.4 + 5;
+
+  readings.columns.forEach((column, index) => {
+    const x = M + index * (colWidth + gutter);
+    const trackX = x + nameWidth;
+    const trackWidth = colWidth - nameWidth - valueWidth;
+
+    parts.push(svgText(x, size, column.label, { size, weight: 700, fill: SB_INK }));
+    parts.push(
+      svgText(x, size * 2.15, column.note, { size: size - 0.5, fill: SB_MUTED })
+    );
+
+    readings.order.forEach((id, rowIndex) => {
+      const row = allyRow(column.shares, id);
+      const top = headH + rowIndex * rowH;
+      // With a count line under it the bar sits high in the row; without one it
+      // sits on the row's centre.
+      const mid = counts ? top + rowH * 0.36 : top + rowH / 2;
+      parts.push(
+        svgText(x, mid + size * 0.35, FAMILIES[id].short, { size, fill: SB_BODY })
+      );
+      parts.push(
+        svgRect(trackX, mid - barH / 2, trackWidth, barH, "#f0f2f4", 'rx="1"')
+      );
+      if (row) {
+        parts.push(
+          svgRect(
+            trackX,
+            mid - barH / 2,
+            Math.max(0.6, trackWidth * row.share),
+            barH,
+            FAMILIES[id].color,
+            'rx="1"'
+          )
+        );
+      }
+      parts.push(
+        svgText(
+          x + colWidth,
+          mid + size * 0.35,
+          row ? `${Math.round(row.share * 100)}%` : "—",
+          {
+            size,
+            anchor: "end",
+            weight: 700,
+            monospaceDigits: true,
+            fill: row ? INK : SB_FAINT,
+          }
+        )
+      );
+      if (counts) {
+        // The tooltip's own line, which paper has no way to summon: the share
+        // is a fraction of a stated denominator, not a score out of nothing.
+        parts.push(
+          svgText(
+            trackX,
+            top + rowH * 0.82,
+            row
+              ? `${thousandsSep(row.count)} of ${thousandsSep(
+                  column.shares.denominator
+                )}`
+              : "no votes to count",
+            { size: size - 2.6, fill: SB_MUTED, monospaceDigits: true }
+          )
+        );
+      }
+    });
+  });
+
+  return { parts, height: headH + readings.order.length * rowH };
+}
+
+/**
+ * The one sentence to take off a family's sheet.
+ *
+ * The columns are drawn so the gap between them can be seen, but a sheet on a
+ * wall is read at a distance where 94 and 38 are two bars rather than two
+ * numbers. This names the widest gap in words and stops there: which family,
+ * both shares, and no reading of what it means.
+ *
+ * Written in the simple past throughout, and never with `to be`. Every family
+ * name here is a template hole, and "the EPP is" and "the Socialists are" have
+ * no present-tense form in common — the same reason families.js keeps a
+ * `sentence` field and tells its callers to avoid a present-tense verb. Past
+ * tense is invariant, and these are finished terms.
+ */
+function widestGapSentence(readings, family) {
+  if (!readings.won || !readings.same) return null;
+  let widest = null;
+  readings.order.forEach((id) => {
+    const won = allyRow(readings.won, id);
+    const same = allyRow(readings.same, id);
+    if (!won || !same) return;
+    const gap = won.share - same.share;
+    if (!widest || Math.abs(gap) > Math.abs(widest.gap)) {
+      widest = { id, gap, won: won.share, same: same.share };
+    }
+  });
+  if (!widest) return null;
+
+  const other = FAMILIES[widest.id];
+  const wonPct = `${Math.round(widest.won * 100)}%`;
+  const samePct = `${Math.round(widest.same * 100)}%`;
+  const points = Math.round(Math.abs(widest.gap) * 100);
+
+  // Under eight points the two columns are the same chart twice, and calling
+  // the largest of them "the widest gap" would dress a rounding difference up
+  // as a finding. That a family won with the families it voted with is itself
+  // the thing worth printing.
+  if (points < 8) {
+    // "no family sits more than 0 points apart" is what rounding produces on a
+    // twelve-vote policy area, and it reads as a broken template rather than as
+    // a finding.
+    const apart =
+      points === 0
+        ? "no family sits as much as a point apart"
+        : `no family sits more than ${points} point${points === 1 ? "" : "s"} apart`;
+    return (
+      `The two readings agree here: ${apart} between them, so ${family.sentence} ` +
+      `won with the families it voted with.`
+    );
+  }
+  return widest.gap > 0
+    ? `Widest gap: ${other.sentence} shared the winning side on ${wonPct} of the votes ` +
+        `${family.sentence} won, but took the same side on only ${samePct} of all decided votes.`
+    : `Widest gap: ${other.sentence} took the same side as ${family.sentence} on ${samePct} ` +
+        `of all decided votes, but shared the winning side on only ${wonPct} of the votes it won.`;
+}
+
+/**
+ * One family, both readings, one sheet.
+ *
+ * The panel answers "who stands with this family" for whichever family is
+ * selected, in whichever reading the toggle is on — one seventh of one half of
+ * the figure. Neither the chips nor the toggle survive a print, so the export
+ * draws the sheet seven times instead, and the caller asks for all seven.
+ *
+ * Roomier than the same block on the coalitions sheet, which shares its page
+ * with the ranking: bars at reading distance, and each one carrying the count
+ * and denominator the screen keeps in a tooltip.
+ *
+ * @param {Object} options
+ * @param {Object} options.meta - as buildCaption
+ * @param {Object} options.data - the whole coalitions.json payload
+ * @param {number|string} options.mandate
+ * @param {string|null} options.subject - policy area, or null for the term
+ * @param {string} options.pivot - the family this sheet is about
+ * @returns {string} a complete <svg> document
+ */
+export function exportFamilyAlliesSheetSVG({
+  meta,
+  data,
+  mandate,
+  subject = null,
+  pivot,
+} = {}) {
+  const family = FAMILIES[pivot];
+  if (!family) {
+    throw new Error(`exportFamilyAlliesSheetSVG: no family "${pivot}"`);
+  }
+  const view = viewFor(data, mandate, subject);
+  if (!view) {
+    throw new Error("exportFamilyAlliesSheetSVG: this scope decides no votes");
+  }
+  const readings = allyReadings(view, data, pivot);
+  if (!readings) {
+    throw new Error(`exportFamilyAlliesSheetSVG: ${family.label} did not sit here`);
+  }
+
+  const caption = coalitionCaption(meta, view);
+  const W = 420;
+  const H = 594;
+  const M = 30;
+  const inner = W - M * 2;
+
+  const header = sheetHeader(
+    caption,
+    M,
+    inner,
+    view.thin ? `${view.decided} decided votes — too few to read as a pattern` : null
+  );
+  const parts = [...header.parts];
+  let y = header.y;
+
+  const head = sectionHead(
+    `Who stands with ${family.sentence}`,
+    allyReadingsLede(family),
+    M,
+    inner
+  );
+  parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
+  y += head.height + 10;
+
+  const block = allyColumns(readings, M, inner, {
+    rowH: 40,
+    size: 10,
+    nameWidth: 54,
+    valueWidth: 32,
+    barH: 14,
+    gutter: 14,
+    counts: true,
+  });
+  parts.push(`<g transform="translate(0 ${n1(y)})">${block.parts.join("")}</g>`);
+  y += block.height + 20;
+
+  parts.push(svgRule(M, y, inner, SB_RULE, 1));
+  y += 14;
+
+  const finding = widestGapSentence(readings, family);
+  if (finding) {
+    wrapText(finding, 84)
+      .slice(0, 4)
+      .forEach((line) => {
+        parts.push(svgText(M, y, line, { size: 7.5, fill: SB_BODY }));
+        y += 10;
+      });
+    y += 8;
+  }
+
+  // What the reader has to be told rather than shown: why the right column is
+  // not in its own order, and which groups this family was in this term. The
+  // lineage is the one editorial claim on the sheet, so it is printed rather
+  // than assumed.
+  const lineage = lineageFor(data, mandate, pivot);
+  [
+    "Rows keep the left column's order, so a family is on the same line in both.",
+    `A group's position on a vote is the majority of its own members present.` +
+      (lineage.length > 0
+        ? ` In ${termShort(mandate)} this family is ${andList(lineage)}.`
+        : ""),
+  ].forEach((note) => {
+    wrapText(note, 96)
+      .slice(0, 2)
+      .forEach((line) => {
+        parts.push(svgText(M, y, line, { size: 6, fill: SB_MUTED }));
+        y += 7;
+      });
+    y += 3;
+  });
+
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT_STACK}">`,
+    svgRect(0, 0, W, H, PAPER),
+    '<g id="family-allies-sheet">',
     parts.join(""),
     "</g>",
     "</svg>",
