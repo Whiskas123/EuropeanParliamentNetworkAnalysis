@@ -2,35 +2,16 @@
 // network edges — a constellation. Geometry is the original from the
 // visualization header, kept exactly; only the gold was harmonised to the
 // EU yellow used everywhere else in the identity (#FFD700 -> #FFCC00).
+//
+// The point positions and the star outline now live in lib/constellation.js,
+// so the SVG export can draw the same mark for a printed panel without
+// importing a component. Nothing about what is drawn here changed.
 
-const RADIUS = 70;
-const CENTRE = 100;
-
-// Precomputed so the server and client render byte-identical markup.
-const POINTS = Array.from({ length: 12 }, (_, i) => {
-  const angle = ((i * 30 - 90) * Math.PI) / 180;
-  return {
-    x: Math.round((CENTRE + RADIUS * Math.cos(angle)) * 100) / 100,
-    y: Math.round((CENTRE + RADIUS * Math.sin(angle)) * 100) / 100,
-  };
-});
-
-// A small five-pointed star centred on (cx, cy), as in the original mark.
-function starPath(cx, cy) {
-  return [
-    `M ${cx} ${cy - 4}`,
-    `L ${cx + 1.2} ${cy - 1.2}`,
-    `L ${cx + 4} ${cy - 1.2}`,
-    `L ${cx + 1.8} ${cy + 1.2}`,
-    `L ${cx + 2.4} ${cy + 4}`,
-    `L ${cx} ${cy + 2.4}`,
-    `L ${cx - 2.4} ${cy + 4}`,
-    `L ${cx - 1.8} ${cy + 1.2}`,
-    `L ${cx - 4} ${cy - 1.2}`,
-    `L ${cx - 1.2} ${cy - 1.2}`,
-    "Z",
-  ].join(" ");
-}
+import {
+  CONSTELLATION_BOX,
+  CONSTELLATION_POINTS as POINTS,
+  starPath,
+} from "../lib/constellation.js";
 
 export default function ConstellationMark({
   size = 200,
@@ -42,7 +23,7 @@ export default function ConstellationMark({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 200 200"
+      viewBox={`0 0 ${CONSTELLATION_BOX} ${CONSTELLATION_BOX}`}
       className={className}
       role={title ? "img" : undefined}
       aria-label={title || undefined}
