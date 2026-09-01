@@ -9,8 +9,11 @@ import {
   getGroupFamily,
   getSubjectEmoji,
 } from "../lib/utils.js";
+import { groupSwatchStyle } from "../lib/groupColors.js";
 import RadialGauge, { RadialGrid } from "./RadialGauge";
 import SegmentedToggle from "./SegmentedToggle";
+import { useHoverFocus } from "../lib/hoverFocus.js";
+import "../styles/profile.scss";
 
 // One ordering control for the whole sidebar. This panel used to carry its own
 // - a labelled button with a rotating double arrow reporting its state as
@@ -214,12 +217,37 @@ export default function GroupInfoPanel({
       (a, b) => b.avgScore - a.avgScore
     );
 
+    // The delegations behind the group's size. Counted the same way the
+    // community card counts them, and reported with the same share: of the
+    // country, not of the group. A group's share of itself is the count over
+    // the total already printed above, whereas "all six of Malta" is a fact
+    // about Malta that no group-share number can carry.
+    const countryTotals = new Map();
+    graphData.nodes.forEach((node) => {
+      if (!node.country) return;
+      countryTotals.set(node.country, (countryTotals.get(node.country) || 0) + 1);
+    });
+    const countryCounts = new Map();
+    currentMEPs.forEach((mep) => {
+      if (!mep.country) return;
+      countryCounts.set(mep.country, (countryCounts.get(mep.country) || 0) + 1);
+    });
+    const countries = Array.from(countryCounts.entries())
+      .map(([country, count]) => ({
+        country,
+        count,
+        countryTotal: countryTotals.get(country) || count,
+        shareOfCountry: count / (countryTotals.get(country) || count),
+      }))
+      .sort((a, b) => b.count - a.count || a.country.localeCompare(b.country));
+
     return {
       currentCount: currentMEPs.length,
       avgSimilarity,
       entrances,
       exits,
       allMEPsSorted: sortedByScore,
+      countries,
     };
   }, [graphData, groupId, intragroupCohesion, mandate]);
 
@@ -227,6 +255,9 @@ export default function GroupInfoPanel({
   const exitsListRef = useRef(null);
   const subjectScoresListRef = useRef(null);
   const mepsListRef = useRef(null);
+  const countriesListRef = useRef(null);
+
+  const focus = useHoverFocus();
 
   const [sortDirection, setSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
   const [subjectSortDirection, setSubjectSortDirection] = useState("desc"); // "desc" = highest to lowest, "asc" = lowest to highest
@@ -236,6 +267,7 @@ export default function GroupInfoPanel({
   const [isEntrancesCollapsed, setIsEntrancesCollapsed] = useState(false);
   const [isExitsCollapsed, setIsExitsCollapsed] = useState(false);
   const [isMEPsCollapsed, setIsMEPsCollapsed] = useState(false);
+  const [isCountriesCollapsed, setIsCountriesCollapsed] = useState(false);
 
   // Calculate group similarity averages by subject using precomputed similarity scores
   const groupSubjectScores = useMemo(() => {
@@ -362,6 +394,7 @@ export default function GroupInfoPanel({
     checkScrollable(exitsListRef.current);
     checkScrollable(subjectScoresListRef.current);
     checkScrollable(mepsListRef.current);
+    checkScrollable(countriesListRef.current);
 
     // Also check on resize
     const handleResize = () => {
@@ -369,6 +402,7 @@ export default function GroupInfoPanel({
       checkScrollable(exitsListRef.current);
       checkScrollable(subjectScoresListRef.current);
       checkScrollable(mepsListRef.current);
+      checkScrollable(countriesListRef.current);
     };
 
     window.addEventListener("resize", handleResize);
@@ -386,6 +420,7 @@ export default function GroupInfoPanel({
     groupInfo?.exits.length,
     sortedSubjectScores,
     sortedMEPs,
+    isCountriesCollapsed,
   ]);
 
   if (!groupInfo) return null;
@@ -406,7 +441,7 @@ export default function GroupInfoPanel({
       <div className="group-info-header">
         <div
           className="group-info-color"
-          style={{ backgroundColor: groupColor }}
+          style={groupSwatchStyle(groupId, groupColor)}
         />
         <h3 className="group-info-title">
           {getGroupDisplayName(groupId, mandate)}
@@ -427,6 +462,79 @@ export default function GroupInfoPanel({
           </span>
         </div>
       </div>
+
+      {/* Where the group's MEPs come from. The size above is one number; the
+          delegations that add up to it are the next thing a reader asks for,
+          and they are already on the community card in exactly this form —
+          flag, count, and what share of that country's seats the group holds.
+          A country view has one delegation, and listing it would only restate
+          the size. */}
+      {groupInfo.countries.length > 1 && (
+        <div className="group-info-section">
+          <div className="group-info-section-header">
+            <h4
+              className="group-info-section-title collapsible-title"
+              onClick={() => setIsCountriesCollapsed(!isCountriesCollapsed)}
+            >
+              <span>MEPs by Country · {groupInfo.countries.length}</span>
+              <svg
+                className={`collapse-icon ${
+                  isCountriesCollapsed ? "collapsed" : ""
+                }`}
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </h4>
+          </div>
+          <div
+            className={`collapsible-content ${
+              !isCountriesCollapsed ? "expanded" : ""
+            }`}
+          >
+            <div className="group-info-countries-wrapper">
+              <ul className="group-info-countries-list" ref={countriesListRef}>
+                {groupInfo.countries.map((entry) => (
+                  <li
+                    className="group-info-country"
+                    key={entry.country}
+                    /* This row is the group's own members from one country, so
+                       that is what stays lit — not the whole delegation and not
+                       the whole group. */
+                    {...focus.on([{ group: groupId, country: entry.country }])}
+                  >
+                    <span
+                      className="group-info-country-flag"
+                      aria-hidden="true"
+                    >
+                      <CountryFlag country={entry.country} />
+                    </span>
+                    <span className="group-info-country-name">
+                      {entry.country}
+                    </span>
+                    <span className="group-info-country-count">
+                      {entry.count}
+                    </span>
+                    <span className="group-info-country-note">
+                      {/* Of the country's whole delegation, not of the group:
+                          six MEPs is never much of a group of 180 and can
+                          still be every seat a country has. */}
+                      {Math.round(entry.shareOfCountry * 100)}% of the country
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Group Similarity by Subject */}
       <div className="group-info-section">
@@ -536,39 +644,52 @@ export default function GroupInfoPanel({
             }`}
           >
             <div className="group-info-meps-wrapper">
-              <div className="group-info-meps-list" ref={mepsListRef}>
+              {/* The same ranked-row list the MEP profile uses for the
+                  counterparts someone votes closest to. It was a stack of
+                  two-line cards, which is two hundred and thirty rows of it in
+                  the EPP, and the sidebar already had one way to write "MEPs in
+                  an order, with a figure each". The group column that list
+                  carries is dropped: every member here is in the same group. */}
+              <ol className="mep-rank mep-rank--plain" ref={mepsListRef}>
                 {sortedMEPs.map((item, idx) => {
                   const rank =
                     sortDirection === "desc"
                       ? idx + 1
                       : sortedMEPs.length - idx;
                   return (
-                    <div
-                      key={item.mep.id}
-                      className="group-info-mep-item clickable"
-                      onClick={() => onSelectMEP && onSelectMEP(item.mep)}
-                    >
-                      <div className="group-info-mep-rank">{rank}</div>
-                      <div className="group-info-mep-content">
-                        <div className="group-info-mep-name">
-                          {item.mep.label}
-                        </div>
-                        <div className="group-info-mep-meta">
+                    <li key={item.mep.id}>
+                      <button
+                        type="button"
+                        className="mep-rank-row"
+                        onClick={() => onSelectMEP && onSelectMEP(item.mep)}
+                        title={`${item.mep.label} — ${(
+                          item.avgScore * 100
+                        ).toFixed(1)}% agreement with ${getGroupAcronym(
+                          groupId,
+                          mandate
+                        )}`}
+                        {...focus.on([{ mep: item.mep.id }])}
+                      >
+                        <span className="mep-rank-n">{rank}</span>
+                        <span className="mep-rank-name">{item.mep.label}</span>
+                        <span className="mep-rank-flag">
                           {item.mep.country && (
-                            <span className="group-info-mep-country">
-                              <CountryFlag country={item.mep.country} />{" "}
-                              {item.mep.country}
-                            </span>
+                            <>
+                              <CountryFlag country={item.mep.country} />
+                              <span className="mep-rank-country">
+                                {item.mep.country}
+                              </span>
+                            </>
                           )}
-                          <span className="group-info-mep-score">
-                            {(item.avgScore * 100).toFixed(1)}%
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                        </span>
+                        <span className="mep-rank-value">
+                          {(item.avgScore * 100).toFixed(1)}%
+                        </span>
+                      </button>
+                    </li>
                   );
                 })}
-              </div>
+              </ol>
             </div>
           </div>
         </div>
@@ -620,6 +741,7 @@ export default function GroupInfoPanel({
                               onSelectMEP(mepNode);
                             }
                           }}
+                          {...focus.on([{ mep: event.mepId }])}
                         >
                           <div className="group-info-event-type">→</div>
                           <div className="group-info-event-content">
@@ -637,11 +759,7 @@ export default function GroupInfoPanel({
                                 <span className="group-info-event-group">
                                   <span
                                     className="group-info-event-group-color"
-                                    style={{
-                                      backgroundColor: getGroupColor(
-                                        event.fromGroup
-                                      ),
-                                    }}
+                                    style={groupSwatchStyle(event.fromGroup)}
                                   />
                                   from{" "}
                                   {getGroupAcronym(event.fromGroup, mandate)}
@@ -706,6 +824,7 @@ export default function GroupInfoPanel({
                               onSelectMEP(mepNode);
                             }
                           }}
+                          {...focus.on([{ mep: event.mepId }])}
                         >
                           <div className="group-info-event-type">←</div>
                           <div className="group-info-event-content">
@@ -723,11 +842,7 @@ export default function GroupInfoPanel({
                                 <span className="group-info-event-group">
                                   <span
                                     className="group-info-event-group-color"
-                                    style={{
-                                      backgroundColor: getGroupColor(
-                                        event.toGroup
-                                      ),
-                                    }}
+                                    style={groupSwatchStyle(event.toGroup)}
                                   />
                                   to {getGroupAcronym(event.toGroup, mandate)}
                                 </span>

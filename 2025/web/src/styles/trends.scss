@@ -23,15 +23,33 @@
 // .trends-spark-title and .trends-spark-lede.
 //
 // This panel used to carry a Chart/Numbers switch over a table of the same five
-// terms, and a change badge on every readout row. Both are gone: the readout
-// stands under a chart that already draws the change as the slope between two
-// points, and a table restating the chart is a second thing to maintain and a
-// second place for the two to disagree.
+// terms, and a change badge on every readout row. Both are gone, and so is the
+// readout box that replaced them: a chart already draws the change as the slope
+// between two points, and the figures under the cursor are now on the plot
+// itself, which is where the two charts below this one keep theirs.
+//
+// Both plots here are sections in the sidebar's usual sense — a heading row with
+// a chevron on the right, content that folds away under it — separated by 50px
+// of space and nothing else. The three charts on this tab are three sections
+// spaced alike, whichever file they come from. They used to carry the hairline
+// rule the rest of the sidebar puts over a section; on a tab that is one long
+// scroll of charts, three rules read as a stack of boxes rather than as one
+// argument, and the space alone already says where each ends.
 
-.trends-panel {
+.trends-panel,
+.trends-spark-block {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid var(--sb-rule);
+}
+
+// .trends-title and .trends-spark-title reach .sb-panel-title through an
+// @extend in globals.scss, and @extend does not cross a stylesheet boundary:
+// the heading-row rule that zeroes a panel title's margin lives in profile.scss
+// and never sees either name. Stated here, where the two classes live.
+.trends-panel .sb-panel-head > h3 {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .trends-status {
@@ -171,81 +189,15 @@
   }
 }
 
-// --- readout --------------------------------------------------------------
-
-.trends-readout {
-  margin-top: 6px;
-  padding: 7px 9px;
-  background-color: var(--sb-wash);
-  border-radius: 3px;
-}
-
-.trends-readout-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  font-size: var(--sb-fs-sub);
-  font-weight: 600;
-  color: var(--sb-ink);
-  margin-bottom: 4px;
-}
-
-.trends-readout-sample {
-  font-weight: 400;
-  color: var(--sb-faint);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
-.trends-readout-empty {
-  font-size: var(--sb-fs-sub);
-  line-height: 1.5;
-  color: var(--sb-muted);
-}
-
-.trends-readout-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--sb-fs-sub);
-  line-height: 1.7;
-}
-
-.trends-readout-swatch {
-  width: 8px;
-  height: 2px;
-  flex-shrink: 0;
-  border-radius: 1px;
-}
-
-.trends-readout-label {
-  flex: 1 1 auto;
-  color: var(--sb-muted);
-}
-
-// A column to read down, not a sentence to read across: fixed-width and
-// right-aligned, so the three figures line up under each other.
-.trends-readout-value {
-  min-width: 42px;
-  text-align: right;
-  color: var(--sb-ink);
-  font-variant-numeric: tabular-nums;
-}
-
-// --- the lowest pair, on its own scale ------------------------------------
+// --- the lowest pair, on the same scale -----------------------------------
 //
-// A second plot, not a sparkline: it borrows the grid, the axis numbers, the
-// term ticks, the crosshair and the hit targets from the chart above, and the
-// only things it declares for itself are its line and the band of group chips
-// under its axis. A bare line with a sentence under it was the one thing on
-// this tab that looked like it came from somewhere else.
-
-.trends-spark-block {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--sb-rule);
-}
+// A second chart, not a sparkline: it borrows the grid, the axis numbers, the
+// axis itself, the term ticks and their years, the crosshair, the hit targets
+// and the floating value labels from the chart above, and the only things it
+// declares for itself are its line and the band of group chips under its axis.
+// It is drawn at the same height, under a title of the same tier, in a section
+// of the same shape. A short line with a small-caps label over it was the one
+// thing on this tab that looked like it came from somewhere else.
 
 // Near-black rather than a fourth hue: this is a different measure on a
 // different axis, and giving it a colour of its own would invite the reader to
@@ -253,21 +205,6 @@
 .trends-spark-line {
   stroke: var(--sb-ink);
   stroke-width: 2;
-}
-
-.trends-spark-title {
-  margin-bottom: 3px;
-}
-
-.trends-spark-lede {
-  margin-bottom: 6px;
-}
-
-.trends-spark-note {
-  font-size: var(--sb-fs-note);
-  line-height: 1.45;
-  color: var(--sb-muted);
-  margin: 4px 0 0;
 }
 
 // --- each term's pair, under the spark's axis ------------------------------
@@ -300,15 +237,11 @@
   fill: var(--sb-faint);
 }
 
-// --- honesty about the axis and the sample --------------------------------
-
-.trends-axis-note {
-  font-size: var(--sb-fs-note);
-  line-height: 1.45;
-  color: var(--sb-faint);
-  font-style: italic;
-  margin: 8px 0 0;
-}
+// --- honesty about the sample ---------------------------------------------
+//
+// The axis used to need a note of its own, because it was cropped and a reader
+// quoting a slope off it would have been quoting a magnified one. It runs
+// 0-100 now and says what it is.
 
 // Which points are thin and which terms are missing. Not a footnote in the
 // usual sense — nothing in the chart above is safe to quote without it — so it

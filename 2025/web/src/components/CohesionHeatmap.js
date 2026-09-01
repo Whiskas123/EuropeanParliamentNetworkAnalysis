@@ -7,7 +7,9 @@ import {
   getRedGreenColor,
   getDivergingColor,
 } from "../lib/utils.js";
+import { groupSwatchStyle } from "../lib/groupColors.js";
 import { baselineForGroupPair } from "../lib/dataLoader.js";
+import { useHoverFocus } from "../lib/hoverFocus.js";
 import SegmentedToggle from "./SegmentedToggle";
 
 // Special function for X-axis labels in heatmap - shows "Greens" instead of "Greens/EFA"
@@ -28,6 +30,12 @@ export default function CohesionHeatmap({
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showChange, setShowChange] = useState(false);
+  const focus = useHoverFocus();
+
+  // A cell is a figure about two groups, so pointing at it leaves exactly
+  // those two lit on the network. The diagonal is one group with itself.
+  const pairHover = (a, b) =>
+    focus.on(a === b ? [{ group: a }] : [{ group: a }, { group: b }]);
 
   // Deltas against the baseline, plus the largest one, which sets the scale.
   // Normalising to the largest change actually present rather than to a fixed
@@ -136,12 +144,13 @@ export default function CohesionHeatmap({
                       className="cohesion-heatmap-th-group clickable"
                       title={getGroupDisplayName(group, mandate)}
                       onClick={() => handleGroupClick(group)}
+                      {...focus.on([{ group }])}
                     >
                       <div className="cohesion-heatmap-th-group-content">
                         <span>{getHeatmapXAxisLabel(group, mandate)}</span>
                         <span
                           className="cohesion-heatmap-th-group-color"
-                          style={{ backgroundColor: groupColor }}
+                          style={groupSwatchStyle(group, groupColor)}
                         />
                       </div>
                     </th>
@@ -155,6 +164,7 @@ export default function CohesionHeatmap({
                   <td
                     className="cohesion-heatmap-td-label clickable"
                     onClick={() => handleGroupClick(group1)}
+                    {...focus.on([{ group: group1 }])}
                   >
                     <span className="cohesion-heatmap-td-label-text">
                       {getGroupAcronym(group1, mandate)}
@@ -162,10 +172,10 @@ export default function CohesionHeatmap({
                     {intergroupCohesion.groupColors?.get(group1) && (
                       <span
                         className="cohesion-heatmap-td-label-color"
-                        style={{
-                          backgroundColor:
-                            intergroupCohesion.groupColors.get(group1),
-                        }}
+                        style={groupSwatchStyle(
+                          group1,
+                          intergroupCohesion.groupColors.get(group1)
+                        )}
                       />
                     )}
                   </td>
@@ -196,6 +206,7 @@ export default function CohesionHeatmap({
                             key={j}
                             className="cohesion-heatmap-td-no-data"
                             title={`${pairLabel}: no baseline to compare against`}
+                            {...pairHover(group1, intergroupCohesion.groups[j])}
                           >
                             -
                           </td>
@@ -229,6 +240,7 @@ export default function CohesionHeatmap({
                             1
                           )}% in ${baseline.label} (${rounded} pp)`}
                           onClick={() => handleGroupClick(group1)}
+                          {...pairHover(group1, intergroupCohesion.groups[j])}
                         >
                           {rounded}
                         </td>
@@ -254,6 +266,7 @@ export default function CohesionHeatmap({
                             intergroupCohesion.groups[j],
                             mandate
                           )}: ${isNaN(score) ? "No data" : "0%"}`}
+                          {...pairHover(group1, intergroupCohesion.groups[j])}
                         >
                           -
                         </td>
@@ -293,6 +306,7 @@ export default function CohesionHeatmap({
                           mandate
                         )}: ${(score * 100).toFixed(1)}%`}
                         onClick={() => handleGroupClick(group1)}
+                        {...pairHover(group1, intergroupCohesion.groups[j])}
                       >
                         {(score * 100).toFixed(1)}%
                       </td>

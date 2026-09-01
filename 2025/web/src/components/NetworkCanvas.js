@@ -15,12 +15,28 @@ import {
 } from "../lib/edgeStyle";
 import { listParties } from "../lib/parties";
 import {
+  isNonAttached,
+  groupSwatchStyle,
+  ringInside,
+  NON_ATTACHED_RING,
+} from "../lib/groupColors";
+import {
   exportNetworkSVG,
   downloadSVG,
   buildCaption,
   buildLegend,
 } from "../lib/networkExport";
-import { CountryFlag, getGroupAcronym, getGroupColor } from "../lib/utils";
+import {
+  CountryFlag,
+  getGroupAcronym,
+  getGroupColor,
+  getGroupDisplayName,
+} from "../lib/utils";
+import {
+  focusDim,
+  useHoverFocus,
+  useHoverFocusValue,
+} from "../lib/hoverFocus.js";
 import {
   buildCommunityShapes,
   COVERAGE_MAX,
@@ -31,13 +47,52 @@ import {
   describeGeography,
   describeOrigin,
   labelCommunities,
-  stackLabels,
+  placeLabels,
 } from "../lib/communityShapes";
 import { defaultK, kBounds } from "../lib/networkAnalysis";
 import "../styles/canvas-controls.scss";
 
+/**
+ * The solid black ring.
+ *
+ * The non-attached always carry it: it is what says they are not a group, and
+ * their grey has no edge of its own. `nodeRings` in display settings puts the
+ * same ring on everyone else, which firms all 700 dots up and costs the
+ * colours some of their brightness — worth it in print, a lot of ink on
+ * screen. Off by default.
+ *
+ * Its weight is NODE_RING_FRACTION of the dot's radius, shared with the SVG
+ * exporter so a sheet cannot disagree with the screen it came from.
+ */
+const NODE_RING_COLOR = NON_ATTACHED_RING;
+/** What every other dot gets when the ring is off: a hairline, not an edge. */
 const NODE_BORDER_BASE_LINE_WIDTH = 0.5;
+const NODE_BORDER_COLOR = "rgba(0, 0, 0, 0.2)";
 const SELECTED_BORDER_BASE_LINE_WIDTH = 3;
+
+/**
+ * What an MEP looks like while a dim is on and they are the subject of it.
+ *
+ * A dim leaves the fill to say who is lit, and the fill cannot always carry
+ * it. The non-attached are #CCCCCC and Renew is #FFD700: at the three to
+ * fifteen layout units a dot gets in a 700-MEP network, a pale circle at full
+ * opacity is barely darker than the same circle faded to 12%, and dimming to
+ * the non-attached turned the whole picture into one grey wash with no way to
+ * tell the answer from the background.
+ *
+ * So under a dim the ring does the work rather than the fill — dark, twice the
+ * usual weight, on a slightly larger dot — and the faded ones give their ring
+ * up entirely, which is what stops the background reading as grey speckle
+ * instead of as pale colour. Both halves matter; either alone leaves the pale
+ * groups unfindable.
+ *
+ * Size carries no meaning in this layout — the radius is a function of how
+ * many MEPs are on screen, nothing else — so borrowing it for a moment costs
+ * the reader nothing. Position, which is the meaning, never moves.
+ */
+const EMPHASIS_BORDER_BASE_LINE_WIDTH = 1.2;
+const EMPHASIS_BORDER_COLOR = "rgba(26, 26, 26, 0.8)";
+const EMPHASIS_NODE_SCALE = 1.25;
 
 /** Edges between groups, and any pair whose colouring says nothing. */
 const NEUTRAL_EDGE_COLOR = "#999999";
@@ -79,21 +134,15 @@ const OUTLINE_MIN_PX = 1.1;
 const COMMUNITY_LABEL_PX = 17;
 
 /**
- * How far a name may be pushed off its own shape before it is not drawn.
+ * Placement is memoised on the things that actually move it.
  *
- * In multiples of the name's own height. Overlapping names are stacked
- * upwards, which is fine for the seven or eight communities the automatic k
- * produces — the worst push there is about three line-blocks. It stops being
- * fine once k is a control: at k=4 term 10 gives thirty-four communities whose
- * plates stack into a band 519 pixels tall over a network 310 pixels tall, and
- * the name furthest from home ends up 416 pixels above the shape it belongs
- * to, which is no longer a label but a caption for the wrong thing.
- *
- * Names are placed largest community first, so the ones that overflow are the
- * small ones, and they lose only the plate: the outline, the colour and the
- * hover card are all still there.
+ * Panning and selecting change nothing about where a name belongs, and the
+ * search behind placeLabels is far too expensive to repeat sixty times a
+ * second for no reason. Only the turn and the type size do move it, and the
+ * type size is quantised so that dragging the zoom recomputes a handful of
+ * times rather than every frame.
  */
-const MAX_LABEL_PUSH_BLOCKS = 5;
+const labelCache = new WeakMap();
 
 /** Parties smaller than this are folded into "others" in the legend. */
 const LEGEND_MIN_PARTY_MEMBERS = 2;
@@ -257,6 +306,91 @@ function roundedRect(ctx, x, y, width, height, radius) {
 }
 
 /**
+ * The centre of every name plate, in the upright frame.
+ *
+ * Everything the placement is decided against — the outlines, the dots — has
+ * to be turned first, because the names are read horizontally however the
+ * network is sitting, and it is the upright picture the collisions are seen
+ * in. Turning several thousand ring points is not a per-frame cost, so both
+ * halves are cached: the turned field on the rotation alone, the placement on
+ * the rotation and the type size, which are the only two things that move a
+ * name. Panning and selecting move nothing and hit the cache.
+ */
+function placedLabelCentres(
+  communities,
+  nodes,
+  plates,
+  titleSize,
+  rotation,
+  center
+) {
+  let entry = labelCache.get(communities);
+  if (!entry) {
+    entry = { fieldKey: null, field: null, placements: new Map() };
+    labelCache.set(communities, entry);
+  }
+
+  const fieldKey = `${rotation.toFixed(5)}|${nodes.length}`;
+  if (entry.fieldKey !== fieldKey) {
+    const turn = (x, y) =>
+      rotation ? rotatePoint(x, y, center, rotation) : { x, y };
+    const owner = new Map();
+    communities.forEach((community, index) => {
+      (community.members || []).forEach((id) => owner.set(id, index));
+    });
+    const points = new Float64Array(nodes.length * 2);
+    const owners = new Int32Array(nodes.length);
+    for (let i = 0; i < nodes.length; i += 1) {
+      const turned = turn(nodes[i].x, nodes[i].y);
+      points[i * 2] = turned.x;
+      points[i * 2 + 1] = turned.y;
+      owners[i] = owner.has(nodes[i].id) ? owner.get(nodes[i].id) : -1;
+    }
+    const ringsByShape = communities.map((community) =>
+      community.rings.map((ring) =>
+        ring.map((point) => {
+          const turned = turn(point[0], point[1]);
+          return [turned.x, turned.y];
+        })
+      )
+    );
+    entry.fieldKey = fieldKey;
+    entry.field = {
+      points,
+      owners,
+      rings: ringsByShape.flat(),
+      ringsByShape,
+    };
+    entry.placements.clear();
+  }
+
+  // Quantised, or a zoom drag recomputes on every frame for a type size a few
+  // hundredths of a pixel different from the last one.
+  const step = Math.max(titleSize * 0.02, 1e-6);
+  const quantised = Math.round(titleSize / step) * step;
+  const key = `${quantised.toFixed(3)}|${plates
+    .map((plate) => Math.round(plate.width))
+    .join(",")}`;
+  const hit = entry.placements.get(key);
+  if (hit) return hit;
+
+  const centres = placeLabels(
+    communities.map((community, index) => ({
+      ring: entry.field.ringsByShape[index][0],
+      width: plates[index].width,
+      height: plates[index].height,
+    })),
+    entry.field,
+    titleSize * 0.55
+  );
+  // The zoom is continuous, so this map would grow without a bound worth
+  // having; a handful of recent type sizes is all a reader ever goes back to.
+  if (entry.placements.size > 24) entry.placements.clear();
+  entry.placements.set(key, centres);
+  return centres;
+}
+
+/**
  * The community names, over the nodes.
  *
  * Drawn after the nodes rather than with the outlines: an outline is texture
@@ -271,6 +405,7 @@ function roundedRect(ctx, x, y, width, height, radius) {
 function drawCommunityLabels(
   ctx,
   communities,
+  nodes,
   nodeSize,
   viewScale,
   focusId,
@@ -291,9 +426,6 @@ function drawCommunityLabels(
     ctx.rotate(-rotation);
     ctx.translate(-center.x, -center.y);
   }
-  const anchors = communities.map((community) =>
-    rotatePoint(community.anchor.x, community.anchor.y, center, rotation)
-  );
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
   ctx.lineJoin = "round";
@@ -305,40 +437,40 @@ function drawCommunityLabels(
   const padX = titleSize * 0.42;
   const padY = titleSize * 0.3;
 
-  // Shapes overlap, so their names would too. Measured here and stacked in
-  // lib/communityShapes.js, on the rule the SVG export also follows.
-  const measured = communities.map((community, index) => {
+  // Shapes overlap, so their names would too. Measured here — only the canvas
+  // can measure its own type — and placed in lib/communityShapes.js, on the
+  // rule the SVG export also follows.
+  const plates = communities.map((community) => {
     ctx.font = canvasFont(titleSize);
     const titleWidth = ctx.measureText(community.label).width;
     ctx.font = canvasFont(countSize, 500);
     const countWidth = ctx.measureText(community.countLabel).width;
     return {
-      x: anchors[index].x,
-      y: anchors[index].y - titleSize * 0.75,
-      width: Math.max(titleWidth, countWidth),
-      height: blockHeight,
+      width: Math.max(titleWidth, countWidth) + padX * 2,
+      height: blockHeight + padY * 2,
     };
   });
-  const baselines = stackLabels(measured, titleSize * 0.55);
-  const maxPush = blockHeight * MAX_LABEL_PUSH_BLOCKS;
+  const centres = placedLabelCentres(
+    communities,
+    nodes,
+    plates,
+    titleSize,
+    rotation,
+    center
+  );
 
   for (let i = 0; i < communities.length; i += 1) {
     const community = communities[i];
-    // Measured against where this community actually ended up on screen, not
-    // against shape.anchor: at any rotation but zero the two are different
-    // points, and it is the on-screen distance that decides whether a reader
-    // can still tell what the name is pointing at.
-    if (measured[i].y - baselines[i] > maxPush) continue;
-    const x = anchors[i].x;
-    const countY = baselines[i];
-    const titleY = countY - countSize * 1.15;
+    const x = centres[i].x;
+    const titleY = centres[i].y - plates[i].height / 2 + titleSize - padY * 0.2;
+    const countY = titleY + countSize * 1.15;
     const faded = focusId !== null && focusId !== community.id;
     ctx.globalAlpha = faded ? 0.25 : 1;
 
-    const plateWidth = measured[i].width + padX * 2;
-    const plateHeight = blockHeight + padY * 2;
+    const plateWidth = plates[i].width;
+    const plateHeight = plates[i].height;
     const plateLeft = x - plateWidth / 2;
-    const plateTop = titleY - titleSize + padY * 0.2;
+    const plateTop = centres[i].y - plateHeight / 2;
     // The plate is the reliable way to reach a community: inside a group's
     // cloud almost every pixel is within hover range of an MEP, and an MEP
     // always wins. The name is a target nothing else covers.
@@ -389,6 +521,9 @@ function drawScene(ctx, params) {
     communities,
     communityFocusId,
     viewScale,
+    // The ring on everyone, not only on the non-attached. See
+    // NODE_RING_FRACTION.
+    nodeRings = false,
     // The turn the caller has already applied to the context, and the point it
     // was applied about. Only the names need them, to come back out of it.
     rotation = 0,
@@ -452,11 +587,11 @@ function drawScene(ctx, params) {
   for (let i = 0; i < nodes.length; i += 1) {
     const node = nodes[i];
     const isSelected = Boolean(selectedNode && node.id === selectedNode.id);
+    const lit = isEmphasised(node, dim);
+    const ringed = nodeRings || isNonAttached(node.groupId);
     // A selected node stays fully opaque even when it is outside the dim
     // subject — you asked for it, you should be able to see it.
-    ctx.globalAlpha = isSelected
-      ? 1
-      : nodeOpacity(isEmphasised(node, dim), dimActive);
+    ctx.globalAlpha = isSelected ? 1 : nodeOpacity(lit, dimActive);
 
     if (isSelected) {
       ctx.fillStyle = "rgba(255, 215, 0, 0.2)";
@@ -484,17 +619,47 @@ function drawScene(ctx, params) {
       ctx.beginPath();
       ctx.arc(node.x, node.y, selectedNodeSize, 0, 2 * Math.PI);
       ctx.fill();
+      // The gold selection ring sits a tenth of a radius clear of the fill,
+      // so the dot's own ring is still what gives it its edge.
+      if (ringed) {
+        const ring = ringInside(selectedNodeSize);
+        ctx.strokeStyle = NODE_RING_COLOR;
+        ctx.lineWidth = ring.width;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, ring.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+      }
     } else {
+      // See EMPHASIS_NODE_SCALE: under a dim the subject is drawn a little
+      // larger with a dark ring, and everyone else keeps the plain dot.
+      const emphasised = dimActive && lit;
+      const size = emphasised ? nodeSize * EMPHASIS_NODE_SCALE : nodeSize;
+
       ctx.fillStyle = colorFor(node);
       ctx.beginPath();
-      ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
+      ctx.arc(node.x, node.y, size, 0, 2 * Math.PI);
       ctx.fill();
 
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.lineWidth = NODE_BORDER_BASE_LINE_WIDTH / lineWidthDivisor;
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, nodeSize, 0, 2 * Math.PI);
-      ctx.stroke();
+      if (!dimActive || lit) {
+        // Not for the faded, which give up their ring entirely — see
+        // EMPHASIS_BORDER_BASE_LINE_WIDTH. The plain hairline and the emphasis
+        // ring both sit on the edge; only the black ring is drawn inside, so
+        // that switching it on does not make every dot a tenth wider.
+        const ring = ringed && !emphasised ? ringInside(size) : null;
+        ctx.strokeStyle = emphasised
+          ? EMPHASIS_BORDER_COLOR
+          : ring
+          ? NODE_RING_COLOR
+          : NODE_BORDER_COLOR;
+        ctx.lineWidth = ring
+          ? ring.width
+          : (emphasised
+              ? EMPHASIS_BORDER_BASE_LINE_WIDTH
+              : NODE_BORDER_BASE_LINE_WIDTH) / lineWidthDivisor;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, ring ? ring.radius : size, 0, 2 * Math.PI);
+        ctx.stroke();
+      }
     }
   }
 
@@ -502,6 +667,7 @@ function drawScene(ctx, params) {
   drawCommunityLabels(
     ctx,
     communities,
+    nodes,
     nodeSize,
     viewScale,
     communityFocusId ?? null,
@@ -580,7 +746,7 @@ function CommunityTooltip({ shape, pinned, mandate }) {
               <span className="community-tip-row">
                 <span
                   className="community-tip-dot"
-                  style={{ background: getGroupColor(part.groupId) }}
+                  style={groupSwatchStyle(part.groupId)}
                   aria-hidden="true"
                 />
                 <span className="community-tip-row-name">
@@ -758,6 +924,7 @@ function planCaptionBand(ctx, params) {
 
   const rows = entries.map((entry) => ({
     color: entry.color || NEUTRAL_EDGE_COLOR,
+    nonAttached: Boolean(entry.nonAttached),
     label: ellipsize(ctx, entry.label, labelWidth),
   }));
 
@@ -811,6 +978,20 @@ function drawCaptionBand(ctx, params) {
     const y = plan.pad + index * plan.lineHeight;
     ctx.fillStyle = row.color;
     ctx.fillRect(plan.columnX, y, plan.swatch, plan.swatch);
+    if (row.nonAttached) {
+      // The key has to carry the same mark as the dots, or a grey square is
+      // something the reader has to guess the meaning of. Inset by half the
+      // stroke so the ring sits inside the swatch rather than straddling it.
+      const w = Math.max(1, plan.swatch * 0.09);
+      ctx.strokeStyle = NON_ATTACHED_RING;
+      ctx.lineWidth = w;
+      ctx.strokeRect(
+        plan.columnX + w / 2,
+        y + w / 2,
+        plan.swatch - w,
+        plan.swatch - w
+      );
+    }
     ctx.fillStyle = "#1a1a1a";
     ctx.fillText(row.label, plan.columnX + plan.labelOffset, y);
   });
@@ -829,6 +1010,7 @@ export default function NetworkCanvas({
   selectedSubject,
   renderSettings,
   onRenderSettingsChange,
+  onSelectGroup,
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -866,6 +1048,11 @@ export default function NetworkCanvas({
   // has to remember "country" while nothing is selected yet, and a cleared dim
   // is null in the shared settings.
   const [dimKind, setDimKind] = useState("group");
+  // What the cursor is pointing at, anywhere on the page — a cell of the group
+  // matrix, a dial, a row of a list, or this canvas's own legend. See
+  // lib/hoverFocus.js.
+  const hoverFocus = useHoverFocusValue();
+  const focus = useHoverFocus();
   // Flipped the first time the SVG exporter throws, which is what it does
   // until lib/networkExport.js is implemented. Offering a button that cannot
   // work is worse than not offering it.
@@ -911,6 +1098,7 @@ export default function NetworkCanvas({
   const colorMode = renderSettings?.colorMode ?? "group";
   const dim = renderSettings?.dim ?? null;
   const showCommunities = renderSettings?.communities ?? false;
+  const nodeRings = renderSettings?.nodeRings ?? false;
   // null means "the rule decides" — see defaultK. Held as null rather than as
   // the computed number so that changing network keeps it automatic instead of
   // pinning whatever the last network happened to work out to.
@@ -925,6 +1113,7 @@ export default function NetworkCanvas({
     colorMode,
     dim,
     communities: showCommunities,
+    nodeRings,
     communityK,
     communityCoverage,
   };
@@ -1056,6 +1245,7 @@ export default function NetworkCanvas({
     if (colorMode === "group") {
       return presentGroups.map((group) => ({
         key: group.id,
+        groupId: group.id,
         label: group.label,
         color: group.color,
         count: group.count,
@@ -1194,22 +1384,34 @@ export default function NetworkCanvas({
    * dim plus a community hover leaves that country's members of that
    * community lit, which is the only reading that respects both controls.
    */
+  const hoverDim = useMemo(
+    () => focusDim(hoverFocus, graphData),
+    [hoverFocus, graphData]
+  );
+
+  // A hover replaces the chosen dim rather than narrowing it: a reader with
+  // "everything except the Greens" set who points at the EPP-Renew cell is
+  // asking about the EPP and Renew, and an intersection would answer with an
+  // empty network. The chosen dim comes straight back when the cursor leaves,
+  // and it is the one the exports and the URL keep carrying.
+  const activeDim = hoverDim || dim;
+
   const effectiveDim = useMemo(() => {
-    if (!focusedCommunity) return dim;
+    if (!focusedCommunity) return activeDim;
     const members =
-      dim && dim.value
+      activeDim && activeDim.value
         ? new Set(
             (graphData?.nodes || [])
               .filter(
                 (node) =>
                   focusedCommunity.memberSet.has(node.id) &&
-                  isEmphasised(node, dim)
+                  isEmphasised(node, activeDim)
               )
               .map((node) => node.id)
           )
         : focusedCommunity.memberSet;
     return { type: "members", value: `community-${focusedCommunity.id}`, members };
-  }, [focusedCommunity, dim, graphData]);
+  }, [focusedCommunity, activeDim, graphData]);
 
   /**
    * The figures under the switch.
@@ -1321,6 +1523,7 @@ export default function NetworkCanvas({
       communities: communityOverlay,
       communityFocusId: focusedCommunity ? focusedCommunity.id : null,
       labelBoxes: labelBoxes,
+      nodeRings,
       viewScale: t.k,
       lineWidthDivisor: effectivePixelRatio,
       baseEdgeAlpha: isSafari ? 0.05 : 0.3,
@@ -1338,10 +1541,12 @@ export default function NetworkCanvas({
     rotation,
     drawnLinks,
     colorFor,
+    colorMode,
     widthMultiplier,
     effectiveDim,
     communityOverlay,
     focusedCommunity,
+    nodeRings,
   ]);
 
   // Setup canvas (only once)
@@ -1848,6 +2053,10 @@ export default function NetworkCanvas({
           // the automatic split instead of the one on screen.
           communityK,
           communityCoverage,
+          // The ring is a drawing decision like the rest of them, and a sheet
+          // that disagreed with the screen it was exported from is a sheet
+          // nobody can check.
+          nodeRings,
           rotation,
           // The picture alone — no title, footnotes or colour key set around
           // it. These files go into Figma and onto printed panels, where the
@@ -2026,6 +2235,7 @@ export default function NetworkCanvas({
       widthMultiplier,
       dim,
       communities: communityOverlay,
+      nodeRings,
       viewScale: t.k,
       lineWidthDivisor: 1,
       baseEdgeAlpha: 0.3,
@@ -2389,7 +2599,7 @@ export default function NetworkCanvas({
                     >
                       <span
                         className="canvas-display-swatch"
-                        style={{ background: entry.color }}
+                        style={groupSwatchStyle(entry.groupId, entry.color)}
                         aria-hidden="true"
                       />
                       <span>{entry.label}</span>
@@ -2401,6 +2611,41 @@ export default function NetworkCanvas({
                 </ul>
               )
             )}
+          </div>
+
+          <div className="canvas-display-section">
+            <span className="canvas-display-label" id="canvas-outline-label">
+              Node outline
+            </span>
+            <div
+              className="canvas-display-modes"
+              role="group"
+              aria-labelledby="canvas-outline-label"
+            >
+              <button
+                type="button"
+                className="canvas-display-mode"
+                aria-pressed={!nodeRings}
+                onClick={() => updateSettings({ nodeRings: false })}
+              >
+                Non-attached only
+              </button>
+              <button
+                type="button"
+                className="canvas-display-mode"
+                aria-pressed={nodeRings}
+                onClick={() => updateSettings({ nodeRings: true })}
+              >
+                Every MEP
+              </button>
+            </div>
+            <p className="canvas-display-note">
+              The non-attached keep the black ring either way: they are not a
+              group, and their grey has no edge of its own. On everyone it
+              firms all 700 dots up and takes some of the brightness out of the
+              colours &mdash; worth it on a printed panel, a lot of ink on
+              screen. The export follows whichever is set here.
+            </p>
           </div>
 
           <div className="canvas-display-section">
@@ -2648,12 +2893,63 @@ export default function NetworkCanvas({
         pinned={pinnedCommunityId !== null && focusedCommunity !== null}
         mandate={mandate}
       />
+      {/* Bottom left, opposite the legend. Both are things the canvas says
+          about itself rather than controls, and the legend is the one worth
+          the corner a reader's eye lands on. */}
       <div
         className="network-canvas-tip"
         title="Click on nodes in the network to explore individual MEPs, or click on groups in the heatmaps"
       >
         💡 Tip: Click MEP nodes or group names to explore more
       </div>
+      {/*
+        The groups on this network, always by their own colours.
+
+        Not the colour-mode legend from the display panel, which follows
+        whatever the nodes are painted by and lives behind a button. This one is
+        the standing key to the picture: which groups are in this view, how many
+        MEPs each has, and — because the same three facts are what a reader
+        wants to act on — a way to send everyone else back with the cursor and
+        to open a group by clicking it.
+      */}
+      {presentGroups.length > 0 && (
+        <div
+          className="network-legend"
+          role="group"
+          aria-label="Political groups in this network"
+        >
+          <ul className="network-legend-list">
+            {presentGroups.map((group) => (
+              <li key={group.id}>
+                <button
+                  type="button"
+                  className="network-legend-row"
+                  onClick={() => onSelectGroup && onSelectGroup(group.id)}
+                  title={`${getGroupDisplayName(group.id, mandate)} — ${
+                    group.count
+                  } MEP${group.count === 1 ? "" : "s"}${
+                    onSelectGroup ? ". Click to open the group." : ""
+                  }`}
+                  {...focus.on([{ group: group.id }])}
+                >
+                  <span
+                    className="network-legend-swatch"
+                    style={groupSwatchStyle(group.id, group.color)}
+                    aria-hidden="true"
+                  />
+                  {/* The full name, not the acronym on the nodes' own
+                      swatches: a legend that says "PfE" tells a reader who
+                      already knows what PfE is exactly what they already knew. */}
+                  <span className="network-legend-name">
+                    {getGroupDisplayName(group.id, mandate)}
+                  </span>
+                  <span className="network-legend-count">{group.count}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {!graphData && (
         <div className="network-canvas-empty">
           <div className="network-canvas-empty-content">

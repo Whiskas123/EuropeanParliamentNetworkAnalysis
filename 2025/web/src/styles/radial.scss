@@ -24,6 +24,22 @@
   min-width: 0;
 }
 
+/**
+ * A dial that answers the cursor without being a button.
+ *
+ * The profile's dials cannot be clicked — there is nothing to open — but they
+ * do dim the network to the group or the delegation they measure, so they take
+ * the same wash the clickable ones do. Without the lift and without the
+ * pointer: neither would be telling the truth about what a click does.
+ */
+.radial--focusable {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--sb-wash);
+  }
+}
+
 .radial--clickable {
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.15s ease;

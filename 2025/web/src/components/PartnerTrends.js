@@ -10,6 +10,7 @@ import {
   profileFor,
 } from "../lib/families.js";
 import SegmentedToggle from "./SegmentedToggle";
+import "../styles/profile.scss";
 import "../styles/partners.scss";
 
 /**
@@ -38,14 +39,17 @@ import "../styles/partners.scss";
  *   S&D-to-Renew is now 0.87, the closest pair anywhere in the house, while
  *   S&D-to-far-right has collapsed from 0.46 to 0.27.
  *
- * Three forms, because the same six series answer three different shapes of
- * question and one chart cannot do all three. Lines carry trajectory and the
- * crossings between partners. Arrows drop the middle terms to rank *how far*
- * each partner moved, which is the summary a line chart makes you measure by
- * eye. The house profile puts the seven families on the x-axis in seating
- * order and draws one line per term, so what moves is the shape of the chamber
- * seen from one seat — the reading where the EPP's collapsing right shoulder
- * is a single visible fact rather than two series compared.
+ * Four forms, because the same six series answer different shapes of question
+ * and one chart cannot do them all. Lines carry trajectory and the crossings
+ * between partners. Arrows state *how far* each partner moved, first term to
+ * last, which is the summary a line chart makes you measure by eye; the terms
+ * in between sit on the same row as waypoints, so a saw is not read as a
+ * drift. The track spends a vertical step on each term instead, which is the
+ * one form where a reversal is a shape rather than a dot in an odd place. The
+ * house profile puts the seven families on the x-axis in seating order and
+ * draws one line per term, so what moves is the shape of the chamber seen from
+ * one seat — the reading where the EPP's collapsing right shoulder is a single
+ * visible fact rather than two series compared.
  *
  * Everything is drawn on *families*, never raw group ids: PSE and S&D are one
  * line, as are ALDE/Renew and the five-name far-right lineage. Without that
@@ -75,8 +79,46 @@ const ARROW_BOX = { top: 8, right: 40, bottom: 20, left: 52 };
 const ARROW_ROW = 19;
 const ARROW_DOT = 3.2;
 
-/** Clearance between two term names at the right edge of the house profile. */
+/**
+ * How faint and how small a waypoint is, by where its term sits in the run.
+ *
+ * A property of the *term*, not of the row it is drawn on. It was per row at
+ * first — each family's own first-to-last — which put two different shades on
+ * one term whenever a family was missing an end, and made the key under the
+ * chart impossible to draw truthfully. Now T6 looks the same on every row, so
+ * a reader can name a dot by matching it against the chips below.
+ */
+const waypointShade = (index, last) => ({
+  opacity: 0.35 + (0.45 * index) / Math.max(1, last),
+  r: 1.8 + (1 * index) / Math.max(1, last),
+});
+
+/**
+ * The track form: one vertical step per term inside a family's band, and the
+ * clearance between two bands.
+ *
+ * The arrow form draws a pair's whole history on one row, where a term is a
+ * position and nothing separates the middle ones except how faint they are.
+ * The track spends a second dimension on time — oldest at the top of the band,
+ * newest at the bottom — which is what makes a reversal legible: a pair that
+ * rose for three terms and fell back reads as a corner rather than as a dot
+ * sitting on the wrong side of its own arrow. It costs height, roughly four
+ * times the arrow form's, which is why both are here rather than one.
+ */
+const TRACK_STEP = 11;
+const TRACK_GAP = 14;
+
+/**
+ * Clearance between two labels sharing a column, and how far a value floats
+ * above the point it belongs to.
+ *
+ * One pair of numbers for the term names at the right edge of the house profile
+ * and for the figures over the partner lines: both are the same problem, a
+ * column of small text that must not pile up, and TrendsPanel resolves it the
+ * same way on the two charts above.
+ */
 const LABEL_GAP = 10;
+const LABEL_LIFT = 8;
 
 /**
  * Change is red or green, as it is on every DeltaBadge in the sidebar.
@@ -91,7 +133,16 @@ const APART = "#a32a1e";
 
 const FORMS = [
   { id: "lines", text: "Lines", title: "Agreement with each family, term by term" },
-  { id: "arrows", text: "Shift", title: "How far each partner moved, first term to last" },
+  {
+    id: "arrows",
+    text: "Shift",
+    title: "How far each partner moved, first term to last, with every term in between on the row",
+  },
+  {
+    id: "track",
+    text: "Track",
+    title: "The path each partner took through the terms, oldest at the top",
+  },
   { id: "profile", text: "House", title: "The whole chamber seen from this group's seat" },
 ];
 
@@ -130,6 +181,168 @@ function segments(pts) {
 }
 
 /**
+ * Value labels in one column, pushed apart so no two sit on each other, and
+ * which points carry one.
+ *
+ * The same two helpers TrendsPanel uses for the charts above — duplicated here
+ * rather than shared, as `segments` and `toPath` already are, because a chart
+ * file in this app carries its own drawing primitives. The rule is one rule
+ * across the whole History tab: each line's last drawn point, so the plot reads
+ * without a hover, plus every line at the term under the cursor. That replaced
+ * the value column this panel used to keep in its legend, which was a caption
+ * beside the chart rather than a number on it and did not survive a print.
+ */
+function spread(column, top, bottom) {
+  const order = [...column].sort((a, b) => a.base - b.base);
+  let floor = top;
+  order.forEach((mark) => {
+    mark.labelY = Math.max(mark.base, floor);
+    floor = mark.labelY + LABEL_GAP;
+  });
+  let ceiling = bottom;
+  for (let i = order.length - 1; i >= 0; i -= 1) {
+    order[i].labelY = Math.min(order[i].labelY, ceiling);
+    ceiling = order[i].labelY - LABEL_GAP;
+  }
+  return column;
+}
+
+function valueMarks(lines, activeIndex, top, bottom) {
+  const marks = [];
+  lines.forEach((line) => {
+    const end = [...line.points].reverse().find(Boolean);
+    const active = activeIndex !== null && activeIndex >= 0 ? line.points[activeIndex] : null;
+    [end, active].forEach((point) => {
+      if (!point) return;
+      if (marks.some((mark) => mark.key === line.key && mark.i === point.i)) return;
+      marks.push({
+        key: line.key,
+        color: line.color,
+        i: point.i,
+        x: point.x,
+        base: point.y - LABEL_LIFT,
+        value: point.value,
+        current: point.i === activeIndex,
+      });
+    });
+  });
+  const columns = new Map();
+  marks.forEach((mark) => {
+    if (!columns.has(mark.i)) columns.set(mark.i, []);
+    columns.get(mark.i).push(mark);
+  });
+  columns.forEach((column) => spread(column, top, bottom));
+  return marks;
+}
+
+/**
+ * Each partner's run of drawn terms, in seating order.
+ *
+ * Shared by the two change forms, which are the same six series read at two
+ * densities: the arrow lays the run out along one row, the track spends a
+ * vertical step per term on it. Both keep `partners` in the order it arrives —
+ * FAMILY_ORDER, which is the order of the chips above and of the house
+ * profile's x-axis. They used to rank by the size of the net move, which is a
+ * better answer to "who moved" and a worse chart: the rows reshuffled whenever
+ * the pivot or a term changed, so switching form or ticking a term moved every
+ * family under the reader, and the same group sat in a different place on each
+ * of the four forms. One order across the panel is worth more than a ranking
+ * the delta column already states.
+ *
+ * `present` is only the terms this pair actually reached — a family absent
+ * from either end shifts its own first and last, which are not always the
+ * first and last term ticked above.
+ */
+function movements(partners, rows) {
+  return partners
+    .map((partner, index) => {
+      const present = partner.values
+        .map((value, i) => (finite(value) ? { value, i, term: rows[i] } : null))
+        .filter(Boolean)
+        .map((point, rank) => ({ ...point, rank }));
+      if (present.length < 2) return null;
+      const from = present[0];
+      const to = present[present.length - 1];
+      return {
+        ...partner,
+        index,
+        present,
+        from,
+        to,
+        delta: to.value - from.value,
+        fromTerm: from.term,
+        toTerm: to.term,
+      };
+    })
+    .filter(Boolean);
+}
+
+// A number at either end of the axis leans inward rather than over the edge.
+const labelAnchor = (i, last) => (i === 0 ? "start" : i === last ? "end" : "middle");
+const labelX = (x, i, last) => (i === 0 ? x + 5 : i === last ? x - 5 : x);
+
+/**
+ * The mark one term wears on the Shift chart, drawn at chip size.
+ *
+ * The chips under that chart are its key as well as its control: a row there
+ * is five positions on one axis and the only thing telling T6 from T9 is how
+ * faint the dot is, which is unreadable without something to match it against.
+ * So each chip carries its own term's mark — the filled dot the arrows start
+ * from, the arrowhead they end on, the ringed circle in between at that term's
+ * exact shade. Ink grey, not the row's red or green: on the chart the colour
+ * says which direction the pair moved, and a key repeating it would claim
+ * every term had one.
+ *
+ * `index` is the term's place among the *ticked* terms, which is what the
+ * shading is keyed to. A term that is off is drawn as the middle mark at full
+ * strength, since it has no place in a run it is not part of.
+ */
+function TermMark({ index, last, on }) {
+  const shade = on ? waypointShade(index, last) : { opacity: 1, r: 2.4 };
+  const first = on && index === 0;
+  const final = on && index === last;
+  return (
+    <svg className="partners-term-mark" width="11" height="9" aria-hidden="true">
+      {final ? (
+        <path d="M 2 1 L 9.5 4.5 L 2 8 z" fill="currentColor" />
+      ) : first ? (
+        <circle cx="5.5" cy="4.5" r={ARROW_DOT} fill="currentColor" />
+      ) : (
+        <circle
+          cx="5.5"
+          cy="4.5"
+          r={shade.r}
+          fill="#ffffff"
+          stroke="currentColor"
+          strokeWidth="1.3"
+          opacity={shade.opacity}
+        />
+      )}
+    </svg>
+  );
+}
+
+/** The chevron every collapsing section in the sidebar wears. */
+function Chevron({ collapsed }) {
+  return (
+    <svg
+      className={`collapse-icon ${collapsed ? "collapsed" : ""}`}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+/**
  * The axis, fixed at 0–100% on every form.
  *
  * These charts used to scale to their own data, which reads better in
@@ -153,6 +366,9 @@ const AXIS_TICKS = [0, 0.25, 0.5, 0.75, 1];
 
 export default function PartnerTrends({
   mandate,
+  // Clicking a term column opens that term's network, as it does on the two
+  // charts above: a term tick on this tab is a way into the term, not a label.
+  onMandateChange,
   selectedCountry = null,
   selectedSubject = null,
   // Owned by the sidebar, so the SVG export draws the family on screen rather
@@ -164,6 +380,9 @@ export default function PartnerTrends({
   const [chosen, setChosen] = useState(() => TERMS.map((term) => term.mandate));
   const [loaded, setLoaded] = useState(null);
   const [hovered, setHovered] = useState(null);
+  // The third of the History tab's three sections, folding away from its own
+  // heading like the two above it and like every section in the other sidebars.
+  const [closed, setClosed] = useState(false);
   const [width, setWidth] = useState(ASSUMED_WIDTH);
   const panelRef = useRef(null);
   const titleId = useId();
@@ -230,38 +449,60 @@ export default function PartnerTrends({
     const all = partners.flatMap((partner) => partner.values);
     if (!all.some(finite)) return null;
 
-    if (form === "arrows") {
+    if (form === "arrows" || form === "track") {
       const domain = AXIS;
-      const height = ARROW_BOX.top + ARROW_BOX.bottom + partners.length * ARROW_ROW;
       const plotWidth = width - ARROW_BOX.left - ARROW_BOX.right;
       const x = (v) =>
         ARROW_BOX.left + plotWidth * ((v - domain[0]) / (domain[1] - domain[0] || 1));
-      // First and last *drawn* term for each family, which is not always the
-      // first and last ticked one: a family can be absent from either end.
-      const bars = partners
-        .map((partner, index) => {
-          const present = partner.values
-            .map((value, i) => (finite(value) ? { value, i } : null))
-            .filter(Boolean);
-          if (present.length < 2) return null;
-          const from = present[0];
-          const to = present[present.length - 1];
+      const moved = movements(partners, rows);
+
+      if (form === "arrows") {
+        const height = ARROW_BOX.top + ARROW_BOX.bottom + moved.length * ARROW_ROW;
+        const bars = moved.map((bar, rank) => {
+          const last = bar.present.length - 1;
+          const values = bar.present.map((point) => point.value);
           return {
-            ...partner,
-            index,
-            from,
-            to,
-            delta: to.value - from.value,
-            fromTerm: rows[from.i],
-            toTerm: rows[to.i],
+            ...bar,
+            y: ARROW_BOX.top + rank * ARROW_ROW + ARROW_ROW / 2,
+            // The whole span the pair covered, which is wider than the arrow
+            // whenever a middle term overshot either end of it.
+            lo: Math.min(...values),
+            hi: Math.max(...values),
+            // The terms between the two the arrow names. Older is fainter and
+            // smaller: on a row where every term is a position, the ramp is
+            // what says which way the row was walked, and the chips under the
+            // chart repeat it so a dot can be named rather than guessed at.
+            waypoints: bar.present
+              .slice(1, last)
+              .map((point) => ({ ...point, ...waypointShade(point.i, rows.length - 1) })),
           };
-        })
-        .filter(Boolean)
-        // Largest movement first, in either direction: the panel's question is
-        // who moved, not who is closest, and that ranking is the answer.
-        .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))
-        .map((bar, rank) => ({ ...bar, y: ARROW_BOX.top + rank * ARROW_ROW + ARROW_ROW / 2 }));
-      return { kind: "arrows", domain, height, x, bars };
+        });
+        return { kind: "arrows", domain, height, x, bars };
+      }
+
+      // One band per family, one step per *ticked* term rather than per term
+      // this pair reached, so a family missing a term leaves the hole where it
+      // belongs and every band reads on the same clock.
+      const band = Math.max(1, rows.length - 1) * TRACK_STEP;
+      const height =
+        ARROW_BOX.top +
+        ARROW_BOX.bottom +
+        moved.length * band +
+        Math.max(0, moved.length - 1) * TRACK_GAP;
+      const bars = moved.map((bar, rank) => {
+        const top = ARROW_BOX.top + rank * (band + TRACK_GAP);
+        return {
+          ...bar,
+          top,
+          mid: top + band / 2,
+          points: bar.values.map((value, i) =>
+            finite(value)
+              ? { x: x(value), y: top + i * TRACK_STEP, value, i, term: rows[i] }
+              : null
+          ),
+        };
+      });
+      return { kind: "track", domain, height, x, band, bars };
     }
 
     if (form === "profile") {
@@ -352,6 +593,13 @@ export default function PartnerTrends({
   }, [rows, partners, form, width, pivot]);
 
   const status = !series ? "loading" : rows.length === 0 ? "empty" : "ready";
+
+  // The column the chart is reading: whatever is under the cursor, and the term
+  // the canvas is showing when nothing is. The same rule the two charts above
+  // follow, which is what puts a crosshair and a set of figures on the open term
+  // on all three of them rather than on two.
+  const activeIndex =
+    hovered !== null ? hovered : rows.findIndex((row) => row.mandate === mandate);
   const thinRows = rows.filter((row) => row.thin);
 
   /** Which raw groups stood for each family, in the terms on screen. */
@@ -381,105 +629,146 @@ export default function PartnerTrends({
     });
   };
 
-  const hoveredRow = hovered !== null && rows[hovered] ? rows[hovered] : null;
 
   return (
     <section className="partners-panel" aria-labelledby={titleId} ref={panelRef}>
-      <h4 className="sb-panel-title" id={titleId}>
-        {opening(FAMILIES[pivot].possessive)} partners
-      </h4>
-      <p className="sb-panel-desc">
-        Agreement with each of the other families, term by term. Groups are
-        merged across renames, so a line can cross twenty years.
-      </p>
+      <div className="sb-panel-head">
+        <h3 className="sb-panel-title" id={titleId}>
+          {opening(FAMILIES[pivot].possessive)} partners
+        </h3>
+        <div className="sb-panel-controls">
+          <button
+            type="button"
+            className="sb-collapse"
+            aria-expanded={!closed}
+            onClick={() => setClosed(!closed)}
+            title={closed ? "Show this chart" : "Hide this chart"}
+          >
+            <Chevron collapsed={closed} />
+          </button>
+        </div>
+      </div>
 
-      <div className="partners-controls">
-        <div className="partners-chips" role="group" aria-label="Political family">
-          {FAMILY_ORDER.map((family) => (
-            <button
-              key={family}
-              type="button"
-              className="partners-chip"
-              aria-pressed={pivot === family}
-              onClick={() => onPivotChange && onPivotChange(family)}
-              title={`Draw ${FAMILIES[family].possessive} agreement with the other six families`}
-            >
-              <span
-                className="partners-chip-dot"
-                style={{ background: FAMILIES[family].color }}
-                aria-hidden="true"
-              />
-              {FAMILIES[family].short}
-            </button>
-          ))}
+      <div className={`collapsible-content ${!closed ? "expanded" : ""}`}>
+        <p className="sb-panel-desc">
+          Agreement with each of the other families, term by term. Groups are
+          merged across renames, so the lines can cross multiple terms.
+        </p>
+
+        <div className="partners-controls">
+          <div className="partners-chips" role="group" aria-label="Political family">
+            {FAMILY_ORDER.map((family) => (
+              <button
+                key={family}
+                type="button"
+                className="partners-chip"
+                aria-pressed={pivot === family}
+                onClick={() => onPivotChange && onPivotChange(family)}
+                title={`Draw ${FAMILIES[family].possessive} agreement with the other six families`}
+              >
+                <span
+                  className="partners-chip-dot"
+                  style={{ background: FAMILIES[family].color }}
+                  aria-hidden="true"
+                />
+                {FAMILIES[family].short}
+              </button>
+            ))}
+          </div>
+
+          <div className="partners-row">
+            <SegmentedToggle
+              value={form}
+              onChange={setForm}
+              options={FORMS}
+              label="Draw as"
+            />
+          </div>
         </div>
 
-        <div className="partners-row">
-          <SegmentedToggle
-            value={form}
-            onChange={setForm}
-            options={FORMS}
-            label="Draw as"
+        {status === "loading" && (
+          <p className="sb-status partners-status">Reading twenty years of votes…</p>
+        )}
+        {status === "empty" && (
+          <p className="sb-note partners-status">
+            None of the terms ticked above carry this view.
+          </p>
+        )}
+
+        {status === "ready" && geometry && geometry.kind === "lines" && (
+          <LineChart
+            geometry={geometry}
+            rows={rows}
+            width={width}
+            pivot={pivot}
+            mandate={mandate}
+            activeIndex={activeIndex}
+            setHovered={setHovered}
+            onMandateChange={onMandateChange}
           />
-          <div className="partners-terms" role="group" aria-label="Terms compared">
-            {TERMS.map((term) => (
+        )}
+        {status === "ready" && geometry && geometry.kind === "arrows" && (
+          <ArrowChart geometry={geometry} width={width} pivot={pivot} />
+        )}
+        {status === "ready" && geometry && geometry.kind === "track" && (
+          <TrackChart geometry={geometry} width={width} pivot={pivot} />
+        )}
+        {status === "ready" && geometry && geometry.kind === "profile" && (
+          <ProfileChart
+            geometry={geometry}
+            rows={rows}
+            width={width}
+            pivot={pivot}
+            mandate={mandate}
+          />
+        )}
+        {status === "ready" && !geometry && (
+          <p className="sb-note partners-status">
+            This view has no group pairs to compare — it holds one family.
+          </p>
+        )}
+
+        {/* Which terms are drawn, under the chart rather than over it: on the
+            Shift form this row is also the chart's key, and a key belongs
+            beside the marks it explains. Each chip is the term's own mark plus
+            its name and years, so the control and the legend are one thing
+            rather than two rows saying half of it each. */}
+        <div className="partners-terms" role="group" aria-label="Terms compared">
+          {TERMS.map((term) => {
+            const on = chosen.includes(term.mandate);
+            // Where this term sits among the ones actually drawn — not among
+            // the five, and not among the ticked ones either: a term ticked in
+            // a scope that never reached it is absent from the chart.
+            const index = rows.findIndex((row) => row.mandate === term.mandate);
+            return (
               <button
                 key={term.mandate}
                 type="button"
                 className="partners-term"
-                aria-pressed={chosen.includes(term.mandate)}
+                aria-pressed={on}
                 onClick={() => toggleTerm(term.mandate)}
                 title={`${term.short}, ${term.years}`}
               >
-                {term.short}
+                {form === "arrows" && index >= 0 && (
+                  <TermMark index={index} last={rows.length - 1} on={on} />
+                )}
+                <span className="partners-term-name">{term.short}</span>
+                <span className="partners-term-years">{term.years}</span>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </div>
 
-      {status === "loading" && (
-        <p className="sb-status partners-status">Reading twenty years of votes…</p>
-      )}
-      {status === "empty" && (
-        <p className="sb-note partners-status">
-          None of the terms ticked above carry this view.
-        </p>
-      )}
-
-      {status === "ready" && geometry && geometry.kind === "lines" && (
-        <LineChart
-          geometry={geometry}
-          rows={rows}
-          width={width}
-          pivot={pivot}
-          mandate={mandate}
-          hovered={hovered}
-          setHovered={setHovered}
-        />
-      )}
-      {status === "ready" && geometry && geometry.kind === "arrows" && (
-        <ArrowChart geometry={geometry} width={width} pivot={pivot} />
-      )}
-      {status === "ready" && geometry && geometry.kind === "profile" && (
-        <ProfileChart
-          geometry={geometry}
-          rows={rows}
-          width={width}
-          pivot={pivot}
-          mandate={mandate}
-        />
-      )}
-      {status === "ready" && !geometry && (
-        <p className="sb-note partners-status">
-          This view has no group pairs to compare — it holds one family.
-        </p>
-      )}
-
-      {status === "ready" && geometry && geometry.kind !== "arrows" && (
-        <ul className="partners-legend">
-          {(geometry.kind === "lines" ? partners : rows).map((entry) =>
-            geometry.kind === "lines" ? (
+        {/* Identity only, and only where colour carries it. The figures used to
+            live here too, in a value column that changed under a hover — a
+            caption beside the chart rather than a number on it, and the one
+            reading on this tab a printed sheet lost entirely. They are on the
+            lines now. The three forms that name terms rather than families
+            dropped their legend when the term chips above grew years: it was
+            the same five rows printed twice. */}
+        {status === "ready" && geometry && geometry.kind === "lines" && (
+          <ul className="partners-legend">
+            {partners.map((entry) => (
               <li className="partners-legend-item" key={entry.family}>
                 <span
                   className="partners-legend-dot"
@@ -487,58 +776,48 @@ export default function PartnerTrends({
                   aria-hidden="true"
                 />
                 {entry.label}
-                <span className="partners-legend-value">
-                  {pct(
-                    hoveredRow
-                      ? entry.values[rows.indexOf(hoveredRow)]
-                      : entry.values[entry.values.length - 1]
-                  )}
-                </span>
               </li>
-            ) : (
-              <li className="partners-legend-item" key={entry.mandate}>
-                <span className="partners-legend-term">{entry.short}</span>
-                {entry.years}
-              </li>
-            )
-          )}
-        </ul>
-      )}
+            ))}
+          </ul>
+        )}
 
-      {status === "ready" && geometry && geometry.kind === "lines" && (
-        <p className="sb-note partners-caveat">
-          Values are for {hoveredRow ? hoveredRow.short : rows[rows.length - 1].short}
-          {hoveredRow ? "" : " (latest ticked)"}. Hover a term to read the rest.
-        </p>
-      )}
 
-      {lineage.length > 0 && (
-        <p className="sb-note partners-caveat">
-          Merged across renames:{" "}
-          {lineage.map((entry, i) => (
-            <span key={entry.family}>
-              {i > 0 ? "; " : ""}
-              <strong>{entry.label}</strong> is {entry.groups.join(", ")}
-            </span>
-          ))}
-          . Pooling PfE with ESN, or UEN with ECR, is a judgement about lineage
-          rather than something the votes say.
-        </p>
-      )}
+        {lineage.length > 0 && (
+          <p className="sb-note partners-caveat">
+            Merged across renames:{" "}
+            {lineage.map((entry, i) => (
+              <span key={entry.family}>
+                {i > 0 ? "; " : ""}
+                <strong>{entry.label}</strong> is {entry.groups.join(", ")}
+              </span>
+            ))}
+            .
+          </p>
+        )}
 
-      {thinRows.length > 0 && (
-        <p className="sb-note partners-caveat">
-          {thinRows.map((row) => `${row.short} (${row.sessions} votes)`).join(", ")}{" "}
-          {thinRows.length === 1 ? "rests" : "rest"} on too few votes to carry a
-          trend on {thinRows.length === 1 ? "its" : "their"} own.
-        </p>
-      )}
+        {thinRows.length > 0 && (
+          <p className="sb-note partners-caveat">
+            {thinRows.map((row) => `${row.short} (${row.sessions} votes)`).join(", ")}{" "}
+            {thinRows.length === 1 ? "rests" : "rest"} on too few votes to carry a
+            trend on {thinRows.length === 1 ? "its" : "their"} own.
+          </p>
+        )}
+      </div>
     </section>
   );
 }
 
 /** Terms on the x-axis, one coloured line per partner family. */
-function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered }) {
+function LineChart({
+  geometry,
+  rows,
+  width,
+  pivot,
+  mandate,
+  activeIndex,
+  setHovered,
+  onMandateChange,
+}) {
   const { domain, height, x, y, lines, plotHeight } = geometry;
   const ticks = AXIS_TICKS;
 
@@ -562,7 +841,14 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
             y1={y(value)}
             y2={y(value)}
           />
-          <text className="partners-axis-label" x={2} y={y(value) + 3}>
+          {/* Right-aligned against the plot, as on the two charts above: a
+              column of numbers to read down, not a ragged edge. */}
+          <text
+            className="partners-axis-label"
+            x={LINE_BOX.left - 5}
+            y={y(value) + 3}
+            textAnchor="end"
+          >
             {Math.round(value * 100)}
           </text>
         </g>
@@ -570,7 +856,7 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
 
       {rows.map((row, i) => (
         <g key={row.mandate}>
-          {hovered === i && (
+          {activeIndex === i && (
             <line
               className="partners-crosshair"
               x1={x(i)}
@@ -579,13 +865,19 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
               y2={LINE_BOX.top + plotHeight}
             />
           )}
+          {/* Term over years, as on the two charts above. T6 means nothing on
+              its own, and the reader should not have to scroll up to the first
+              chart to find out that it is 2004-2009. */}
           <text
             className={`partners-tick ${row.mandate === mandate ? "current" : ""}`}
             x={x(i)}
-            y={height - 8}
+            y={height - 14}
             textAnchor="middle"
           >
             {row.short}
+          </text>
+          <text className="partners-tick-years" x={x(i)} y={height - 5} textAnchor="middle">
+            {row.years}
           </text>
         </g>
       ))}
@@ -621,6 +913,34 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
         </g>
       ))}
 
+      {/* Six families is the most crowded column on this tab, so the labels
+          are laid out rather than simply offset: each line's last drawn point
+          plus the whole column under the cursor, pushed apart to LABEL_GAP and
+          clamped inside the plot. Drawn after every line, so a label's halo
+          covers whichever line runs behind it. */}
+      {valueMarks(
+        lines.map((line) => ({ key: line.family, color: line.color, points: line.points })),
+        activeIndex,
+        LINE_BOX.top + LABEL_LIFT,
+        LINE_BOX.top + plotHeight
+      ).map((mark) => (
+        <text
+          key={`${mark.key}-${mark.i}`}
+          className={`partners-point-label ${mark.current ? "current" : ""}`}
+          x={labelX(mark.x, mark.i, rows.length - 1)}
+          y={mark.labelY}
+          textAnchor={labelAnchor(mark.i, rows.length - 1)}
+          fill={mark.color}
+        >
+          {Math.round(mark.value * 100)}
+        </text>
+      ))}
+
+      {/* One hit target per term, wider than the marks it covers, and clickable:
+          the same rect the two charts above carry, doing the same two jobs.
+          Every column here is a term this scope actually reached — rows drops
+          the ones it did not — so unlike TrendsPanel there is no absent case to
+          hold back from the click. */}
       {rows.map((row, i) => (
         <rect
           key={row.mandate}
@@ -631,19 +951,70 @@ function LineChart({ geometry, rows, width, pivot, mandate, hovered, setHovered 
           height={plotHeight}
           onMouseEnter={() => setHovered(i)}
           onMouseLeave={() => setHovered(null)}
-        />
+          onFocus={() => setHovered(i)}
+          onBlur={() => setHovered(null)}
+          onClick={onMandateChange ? () => onMandateChange(row.mandate) : undefined}
+          tabIndex={onMandateChange ? 0 : undefined}
+          role={onMandateChange ? "button" : "img"}
+          aria-label={`${row.short}, ${row.years}${
+            row.sessions ? `, ${row.sessions} votes` : ""
+          }${onMandateChange ? ". Open this term." : ""}`}
+        >
+          <title>
+            {`${row.short}, ${row.years}${
+              row.sessions ? `: ${row.sessions} votes` : ""
+            }`}
+          </title>
+        </rect>
       ))}
     </svg>
   );
 }
 
+/** The two arrowheads both change forms end on, red and green. */
+function ArrowHeads({ id }) {
+  return (
+    <defs>
+      {[CLOSER, APART].map((color) => (
+        <marker
+          key={color}
+          id={`${id}-head-${color.slice(1)}`}
+          viewBox="0 0 10 10"
+          refX="8"
+          refY="5"
+          markerWidth="5"
+          markerHeight="5"
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 1 L 9 5 L 0 9 z" fill={color} />
+        </marker>
+      ))}
+    </defs>
+  );
+}
+
+/** Every term this pair reached, named with its value, for a tooltip. */
+const walk = (bar) =>
+  bar.present.map((point) => `${point.term.short} ${pct(point.value)}`).join(" → ");
+
 /**
- * One row per partner, first drawn term to last.
+ * One row per partner, first drawn term to last, with the terms in between on
+ * the row as waypoints.
  *
  * The dot is where the pair started and the head is where it ended, so the
  * row's direction is the sign of the change and its length is the size — the
  * two things a line chart makes the reader estimate. Red and green are the
  * sidebar's own change colours, from DeltaBadge.
+ *
+ * The waypoints were added because the arrow answered its question and hid a
+ * second one: EPP-to-far-right runs 53, 57, 42, 55, 41, and an arrow from 53 to
+ * 41 says a twelve-point drift where the series is really a saw. They are drawn
+ * as the line chart draws a point it wants seen through — white with a coloured
+ * ring — because a solid dot in the row's own colour vanishes into the arrow it
+ * sits on, and faded by age, since on a single row nothing else can say which
+ * end of the walk a dot belongs to. Under all of it runs a hairline over the
+ * pair's whole range, so a term that overshot either end of the arrow is
+ * visibly still on the row rather than adrift beside it.
  */
 function ArrowChart({ geometry, width, pivot }) {
   const { domain, height, x, bars } = geometry;
@@ -661,22 +1032,7 @@ function ArrowChart({ geometry, width, pivot }) {
         .map((bar) => `${bar.label} ${points(bar.delta)} points`)
         .join(", ")}`}
     >
-      <defs>
-        {[CLOSER, APART].map((color) => (
-          <marker
-            key={color}
-            id={`${id}-head-${color.slice(1)}`}
-            viewBox="0 0 10 10"
-            refX="8"
-            refY="5"
-            markerWidth="5"
-            markerHeight="5"
-            orient="auto-start-reverse"
-          >
-            <path d="M 0 1 L 9 5 L 0 9 z" fill={color} />
-          </marker>
-        ))}
-      </defs>
+      <ArrowHeads id={id} />
 
       {ticks.map((value) => (
         <g key={value}>
@@ -705,6 +1061,15 @@ function ArrowChart({ geometry, width, pivot }) {
             <text className="partners-arrow-name" x={0} y={bar.y + 3}>
               {bar.short}
             </text>
+            {bar.hi > bar.lo && (
+              <line
+                className="partners-arrow-rail"
+                x1={x(bar.lo)}
+                x2={x(bar.hi)}
+                y1={bar.y}
+                y2={bar.y}
+              />
+            )}
             <line
               x1={x(bar.from.value)}
               x2={x(bar.to.value)}
@@ -715,6 +1080,22 @@ function ArrowChart({ geometry, width, pivot }) {
               markerEnd={`url(#${id}-head-${color.slice(1)})`}
             />
             <circle cx={x(bar.from.value)} cy={bar.y} r={ARROW_DOT} fill={color} />
+            {bar.waypoints.map((point) => (
+              <circle
+                key={point.i}
+                cx={x(point.value)}
+                cy={bar.y}
+                r={point.r}
+                fill="#ffffff"
+                stroke={color}
+                strokeWidth={1.3}
+                opacity={point.opacity}
+              >
+                <title>
+                  {`${FAMILIES[pivot].label} and ${bar.label}, ${point.term.short}: ${pct(point.value)}`}
+                </title>
+              </circle>
+            ))}
             <text
               className="partners-arrow-delta"
               x={width - 2}
@@ -725,7 +1106,148 @@ function ArrowChart({ geometry, width, pivot }) {
               {points(bar.delta)}
             </text>
             <title>
-              {`${FAMILIES[pivot].label} and ${bar.label}: ${pct(bar.from.value)} in ${bar.fromTerm.short}, ${pct(bar.to.value)} in ${bar.toTerm.short} (${points(bar.delta)} points)`}
+              {`${FAMILIES[pivot].label} and ${bar.label}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
+            </title>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/**
+ * One band per partner, one step per term: the same walk the arrow flattens,
+ * spent over a second dimension.
+ *
+ * x is agreement, exactly as on the arrow chart above; y inside a band is
+ * time, oldest at the top. A pair that only ever moved one way is a diagonal;
+ * one that turned is a corner, and the turn is the thing this form exists to
+ * show. The bands run in seating order, the same order the arrows and the
+ * chips above use, so switching between the forms does not reorder the
+ * families underneath the reader.
+ *
+ * The steps are per *ticked* term, not per term the pair reached, so all six
+ * bands share one clock and a missing term is a hole rather than a shortened
+ * band — the same rule `segments` enforces on the line: a term this scope
+ * never reached is a gap, not a value to interpolate across, so the path
+ * breaks there rather than cutting the corner.
+ *
+ * Only the first and last points are named. The terms are evenly spaced down
+ * a fixed grid and the legend under the chart carries the years, so labelling
+ * all five in all six bands would be thirty repetitions of one axis.
+ */
+function TrackChart({ geometry, width, pivot }) {
+  const { height, x, bars } = geometry;
+  const ticks = AXIS_TICKS;
+  const id = useId();
+
+  return (
+    <svg
+      className="partners-chart"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-label={`The path ${FAMILIES[pivot].label}'s agreement with each family took through the terms, ${bars
+        .map((bar) => `${bar.label} ${walk(bar)}`)
+        .join("; ")}`}
+    >
+      <ArrowHeads id={id} />
+
+      {ticks.map((value) => (
+        <g key={value}>
+          <line
+            className="partners-grid"
+            x1={x(value)}
+            x2={x(value)}
+            y1={ARROW_BOX.top - 2}
+            y2={height - ARROW_BOX.bottom + 2}
+          />
+          <text
+            className="partners-axis-label"
+            x={x(value)}
+            y={height - 6}
+            textAnchor="middle"
+          >
+            {Math.round(value * 100)}
+          </text>
+        </g>
+      ))}
+
+      {bars.map((bar) => {
+        const color = bar.delta >= 0 ? CLOSER : APART;
+        const runs = segments(bar.points);
+        const drawn = bar.points.filter(Boolean);
+        // The arrowhead lands on the last point only if something reaches it.
+        // A pair whose final term stands alone after a gap keeps its dot.
+        const headed = runs.length > 0 && runs[runs.length - 1].length > 1;
+        return (
+          <g key={bar.family}>
+            <text className="partners-arrow-name" x={0} y={bar.mid + 3}>
+              {bar.short}
+            </text>
+            {runs.map((run, i) => (
+              <path
+                key={i}
+                d={toPath(run)}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.6}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                markerEnd={
+                  i === runs.length - 1 && headed
+                    ? `url(#${id}-head-${color.slice(1)})`
+                    : undefined
+                }
+              />
+            ))}
+            {drawn.map((point, k) => {
+              const last = k === drawn.length - 1;
+              if (last && headed) return null;
+              return (
+                <circle
+                  key={point.i}
+                  cx={point.x}
+                  cy={point.y}
+                  r={k === 0 ? ARROW_DOT : 2}
+                  fill={k === 0 ? color : "#ffffff"}
+                  stroke={color}
+                  strokeWidth={1.3}
+                >
+                  <title>
+                    {`${FAMILIES[pivot].label} and ${bar.label}, ${point.term.short}: ${pct(point.value)}`}
+                  </title>
+                </circle>
+              );
+            })}
+            {[drawn[0], drawn[drawn.length - 1]].map((point, k) => {
+              // Left of the point, unless that would run the label into the
+              // family names down the left margin.
+              const flip = point.x - 8 < ARROW_BOX.left + 12;
+              return (
+                <text
+                  key={`${point.i}-${k}`}
+                  className="partners-track-term"
+                  x={flip ? point.x + 8 : point.x - 8}
+                  y={point.y + 3}
+                  textAnchor={flip ? "start" : "end"}
+                >
+                  {point.term.short}
+                </text>
+              );
+            })}
+            <text
+              className="partners-arrow-delta"
+              x={width - 2}
+              y={bar.mid + 3}
+              textAnchor="end"
+              fill={color}
+            >
+              {points(bar.delta)}
+            </text>
+            <title>
+              {`${FAMILIES[pivot].label} and ${bar.label}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
             </title>
           </g>
         );
@@ -766,7 +1288,12 @@ function ProfileChart({ geometry, rows, width, pivot, mandate }) {
             y1={y(value)}
             y2={y(value)}
           />
-          <text className="partners-axis-label" x={2} y={y(value) + 3}>
+          <text
+            className="partners-axis-label"
+            x={PROFILE_BOX.left - 5}
+            y={y(value) + 3}
+            textAnchor="end"
+          >
             {Math.round(value * 100)}
           </text>
         </g>

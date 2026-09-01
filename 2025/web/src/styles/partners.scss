@@ -18,10 +18,14 @@
 // (SegmentedToggle), and pressed-state chips built from the same 8px coloured
 // square that .leads-dot and .insights-swatch use for a political group.
 
+// The third of the History tab's three sections, on the same rhythm as the two
+// above it: 50px of space over it, a heading row with a chevron, and no rule.
+// All three carried one for a while, on the sidebar's usual convention; three
+// hairlines down one scroll drew the tab as a stack of separate boxes, and the
+// space between the headings already does the separating.
 .partners-panel {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid var(--sb-rule);
 }
 
 .partners-status {
@@ -93,13 +97,24 @@
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
+// Which terms are drawn, sitting under the chart. It used to be a strip of
+// five acronyms in the control row above; down here it is also the Shift
+// chart's key, so each chip carries the mark that term wears on the plot and
+// the years the acronym stands for. One row doing both jobs, on the same
+// pressed-chip grammar the family chips above use — a legend that is only a
+// legend would have been a third row saying half of this.
 .partners-terms {
   display: flex;
-  gap: 3px;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
 }
 
 .partners-term {
-  padding: 3px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
   border: 1px solid var(--sb-rule);
   border-radius: 4px;
   background: #ffffff;
@@ -110,6 +125,10 @@
   line-height: 1.2;
   cursor: pointer;
 
+  &:hover {
+    border-color: #c8ced6;
+  }
+
   &:focus-visible {
     outline: 2px solid var(--eu-blue);
     outline-offset: 1px;
@@ -119,8 +138,27 @@
     background: var(--sb-rule-soft);
     border-color: #c8ced6;
     color: var(--sb-ink);
-    font-weight: 600;
+
+    .partners-term-name {
+      font-weight: 600;
+    }
   }
+}
+
+// The term's own mark, in ink grey. `currentColor` is what makes an unticked
+// chip's mark recede with the rest of its text rather than staying black over
+// a chip that is off.
+.partners-term-mark {
+  display: block;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+// The years behind the acronym. T6 means nothing on its own, and on the two
+// line charts the axis says 2004-09 under every tick — this row is where the
+// forms that have no term axis get the same fact.
+.partners-term-years {
+  color: var(--sb-faint);
 }
 
 // --- chart ----------------------------------------------------------------
@@ -168,6 +206,34 @@
   }
 }
 
+// The years under a term number, a sub-line below a 9px label — the same
+// second row the two charts above put under their own term ticks.
+.partners-tick-years {
+  font-size: 8px;
+  fill: var(--sb-faint);
+}
+
+// A figure standing on the plot rather than in the legend beside it. Same mark
+// as .trends-point-label on the two charts above, halo and all: six family
+// lines can cross, and a number without one is unreadable wherever they do.
+// The colour is the line's, set on the element.
+.partners-point-label {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+
+  // The column under the cursor, on a plot where the crosshair is the only
+  // other thing naming it.
+  &.current {
+    font-weight: 700;
+  }
+}
+
 .partners-line-label {
   font-size: var(--sb-fs-micro);
   fill: var(--sb-muted);
@@ -184,6 +250,29 @@
   fill: var(--sb-ink-soft);
 }
 
+// The whole range a pair covered, under its arrow. A hairline in the scale's
+// own colour, as every rail in this sidebar is: it is the axis the row was
+// walked along, not a second value, and the only place it shows is where a
+// middle term overshot one end of the arrow drawn on top of it.
+.partners-arrow-rail {
+  stroke: var(--sb-rule);
+  stroke-width: 1;
+}
+
+// The first and last term of a track, beside its point. The two ends carry the
+// direction of the whole band, so they take the faint tier the axis numbers do
+// and the halo the value labels do — a track's own path runs behind them.
+.partners-track-term {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-faint);
+  font-variant-numeric: tabular-nums;
+
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+
 // The change in points, at the end of each row. Takes the arrow's own colour
 // rather than the ink grey: it is the same fact stated twice, and splitting the
 // colour would make the number look like a separate measure.
@@ -193,9 +282,23 @@
   font-variant-numeric: tabular-nums;
 }
 
+// One hit target per term, wider than the marks it covers, and a way into the
+// term as well as a hover — the same rect, the same cursor and the same tint
+// as .trends-hit on the two charts above. It used to be crosshair-only, which
+// said "read here" on a mark that is now also "open this".
 .partners-hit {
   fill: transparent;
-  cursor: crosshair;
+  cursor: pointer;
+
+  &:hover {
+    fill: rgba(0, 0, 0, 0.025);
+  }
+
+  &:focus-visible {
+    fill: rgba(0, 0, 0, 0.05);
+    outline: 2px solid var(--eu-blue);
+    outline-offset: -2px;
+  }
 }
 
 // --- legend and notes -----------------------------------------------------
@@ -223,12 +326,6 @@
   border-radius: 2px;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
-
-.partners-legend-value {
-  color: var(--sb-ink);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
 .partners-legend-term {

@@ -922,44 +922,297 @@ function regionsOf(countries) {
 }
 
 /**
- * Push overlapping labels upward until none of them sit on top of each other.
+ * How many directions out of a shape are tried, and how far along each.
  *
- * The anchor is the top of each shape, and shapes overlap — on term 10 the
- * Left, the Greens and S&D are three arcs of the same crescent, so their three
- * names land in the same half-inch of canvas. Moving a name off its own shape
- * is worse than moving it up, because up is still unambiguously above it.
- *
- * Boxes arrive in drawing order, largest community first, so the big blocs
- * keep the position they earned and the small ones are the ones that move.
- * Measuring the text is the caller's job: the canvas has measureText and the
- * SVG exporter has an estimate, and neither of them belongs in here.
- *
- * @param {Array<{x, y, width, height}>} boxes - x is the centre, y the bottom
- * @param {number} gap - clearance to leave, in the same units
- * @returns {number[]} the y to use for each box, in the order given
+ * The steps are in label heights beyond the outline: the first one is snug
+ * against the shape, the last is far enough to clear a neighbouring bloc.
  */
-export function stackLabels(boxes, gap = 0) {
-  const placed = [];
-  const result = [];
-  boxes.forEach((box) => {
-    let y = box.y;
-    for (let pass = 0; pass < 12; pass++) {
-      let moved = false;
-      placed.forEach((other) => {
-        const apart = (box.width + other.width) / 2 + gap;
-        if (Math.abs(box.x - other.x) >= apart) return;
-        const otherTop = other.y - other.height;
-        if (y - box.height < other.y + gap && y > otherTop - gap) {
-          y = otherTop - gap;
-          moved = true;
+const LABEL_DIRECTIONS = 24;
+const LABEL_STEPS = [0, 0.55, 1.3, 2.4, 4];
+
+/**
+ * What a candidate position is charged for, in the same currency as travel —
+ * one unit is one label height of distance from the shape being named.
+ *
+ * A dot belonging to the community being named is cheap: a name sitting on its
+ * own members is still saying the right thing, and on a splinter buried inside
+ * a bloc it is often the only honest place left. A dot belonging to somebody
+ * else costs four times as much, because that is the reading the plate breaks.
+ */
+const COST_FOREIGN_NODE = 0.9;
+const COST_OWN_NODE = 0.22;
+const COST_CROSSING = 3;
+const COST_COLLISION = 60;
+/** A nudge, not a rule: with the field clear, names sit above their shape. */
+const COST_BELOW = 0.6;
+
+function rectsOverlap(a, b) {
+  return !(a.x1 <= b.x0 || b.x1 <= a.x0 || a.y1 <= b.y0 || b.y1 <= a.y0);
+}
+
+/** Does a segment touch an axis-aligned rectangle? */
+function segHitsRect(x1, y1, x2, y2, r) {
+  if (x1 >= r.x0 && x1 <= r.x1 && y1 >= r.y0 && y1 <= r.y1) return true;
+  if (x2 >= r.x0 && x2 <= r.x1 && y2 >= r.y0 && y2 <= r.y1) return true;
+  if (Math.max(x1, x2) < r.x0 || Math.min(x1, x2) > r.x1) return false;
+  if (Math.max(y1, y2) < r.y0 || Math.min(y1, y2) > r.y1) return false;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  // Both rectangle corners on the same side of the line means no crossing.
+  const side = (x, y) => dx * (y - y1) - dy * (x - x1);
+  const a = side(r.x0, r.y0);
+  const b = side(r.x1, r.y0);
+  const c = side(r.x0, r.y1);
+  const d = side(r.x1, r.y1);
+  if (a > 0 && b > 0 && c > 0 && d > 0) return false;
+  if (a < 0 && b < 0 && c < 0 && d < 0) return false;
+  return true;
+}
+
+/**
+ * A uniform grid over the dots and the outlines, so asking "what is under this
+ * plate" costs the size of the plate rather than the size of the network.
+ *
+ * Without it the search is 15 shapes x 120 candidates x 700 dots x 5,000 ring
+ * segments every time the zoom changes the type size, which the canvas cannot
+ * afford in a frame.
+ */
+function buildField(points, owners, rings, cell) {
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  const note = (x, y) => {
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  };
+  for (let i = 0; i < points.length; i += 2) note(points[i], points[i + 1]);
+  rings.forEach((ring) => ring.forEach((p) => note(p[0], p[1])));
+  if (!Number.isFinite(minX)) {
+    return { nodesUnder: () => 0, crossings: () => 0 };
+  }
+
+  const size = Math.max(cell, (maxX - minX + maxY - minY) / 512, 1e-6);
+  const cols = Math.min(512, Math.max(1, Math.ceil((maxX - minX) / size) + 1));
+  const rows = Math.min(512, Math.max(1, Math.ceil((maxY - minY) / size) + 1));
+  const colOf = (x) =>
+    Math.min(cols - 1, Math.max(0, Math.floor((x - minX) / size)));
+  const rowOf = (y) =>
+    Math.min(rows - 1, Math.max(0, Math.floor((y - minY) / size)));
+
+  const pointCells = new Array(cols * rows);
+  for (let i = 0; i < points.length; i += 2) {
+    const key = rowOf(points[i + 1]) * cols + colOf(points[i]);
+    (pointCells[key] || (pointCells[key] = [])).push(i >> 1);
+  }
+
+  // Segments flattened once: x1, y1, x2, y2 per entry, with the ring each came
+  // from alongside, so a crossing can be counted per outline and not per edge.
+  const segs = [];
+  const segRing = [];
+  rings.forEach((ring, ringIndex) => {
+    for (let i = 0; i < ring.length; i += 1) {
+      const a = ring[i];
+      const b = ring[(i + 1) % ring.length];
+      segs.push(a[0], a[1], b[0], b[1]);
+      segRing.push(ringIndex);
+    }
+  });
+  const segCells = new Array(cols * rows);
+  for (let s = 0; s < segRing.length; s += 1) {
+    const i = s * 4;
+    const c0 = colOf(Math.min(segs[i], segs[i + 2]));
+    const c1 = colOf(Math.max(segs[i], segs[i + 2]));
+    const r0 = rowOf(Math.min(segs[i + 1], segs[i + 3]));
+    const r1 = rowOf(Math.max(segs[i + 1], segs[i + 3]));
+    for (let r = r0; r <= r1; r += 1) {
+      for (let c = c0; c <= c1; c += 1) {
+        const key = r * cols + c;
+        (segCells[key] || (segCells[key] = [])).push(s);
+      }
+    }
+  }
+
+  // Stamps rather than Sets: this is called a few thousand times per placement
+  // and a fresh Set per call is the whole budget.
+  const seenSeg = new Int32Array(segRing.length);
+  const seenRing = new Int32Array(rings.length);
+  let stamp = 0;
+
+  const forCells = (rect, fn) => {
+    const c0 = colOf(rect.x0);
+    const c1 = colOf(rect.x1);
+    const r0 = rowOf(rect.y0);
+    const r1 = rowOf(rect.y1);
+    for (let r = r0; r <= r1; r += 1) {
+      for (let c = c0; c <= c1; c += 1) fn(r * cols + c);
+    }
+  };
+
+  return {
+    /** Dots inside the rectangle, split into the community's own and the rest. */
+    nodesUnder(rect, owner) {
+      let own = 0;
+      let foreign = 0;
+      forCells(rect, (key) => {
+        const bucket = pointCells[key];
+        if (!bucket) return;
+        for (let i = 0; i < bucket.length; i += 1) {
+          const p = bucket[i];
+          const x = points[p * 2];
+          const y = points[p * 2 + 1];
+          if (x < rect.x0 || x > rect.x1 || y < rect.y0 || y > rect.y1) continue;
+          if (owners && owners[p] === owner) own += 1;
+          else foreign += 1;
         }
       });
-      if (!moved) break;
+      return { own, foreign };
+    },
+    /** How many distinct outlines the rectangle sits across. */
+    crossings(rect) {
+      stamp += 1;
+      let hit = 0;
+      forCells(rect, (key) => {
+        const bucket = segCells[key];
+        if (!bucket) return;
+        for (let i = 0; i < bucket.length; i += 1) {
+          const s = bucket[i];
+          if (seenSeg[s] === stamp) continue;
+          seenSeg[s] = stamp;
+          const ring = segRing[s];
+          if (seenRing[ring] === stamp) continue;
+          const j = s * 4;
+          if (segHitsRect(segs[j], segs[j + 1], segs[j + 2], segs[j + 3], rect)) {
+            seenRing[ring] = stamp;
+            hit += 1;
+          }
+        }
+      });
+      return hit;
+    },
+  };
+}
+
+/** The middle of a ring, and how far it reaches in a given direction. */
+function ringCentre(ring) {
+  let sx = 0;
+  let sy = 0;
+  for (let i = 0; i < ring.length; i += 1) {
+    sx += ring[i][0];
+    sy += ring[i][1];
+  }
+  return { x: sx / ring.length, y: sy / ring.length };
+}
+
+/**
+ * How far the ring extends from `centre` along `(dx, dy)`.
+ *
+ * A projection rather than a ray/edge intersection: these outlines are
+ * crescents and horseshoes, and the farthest point along the direction is what
+ * "outside the shape" has to mean for the plate to actually clear it.
+ */
+function reachAlong(ring, centre, dx, dy) {
+  let far = 0;
+  for (let i = 0; i < ring.length; i += 1) {
+    const t = (ring[i][0] - centre.x) * dx + (ring[i][1] - centre.y) * dy;
+    if (t > far) far = t;
+  }
+  return far;
+}
+
+/**
+ * Where each community's name goes.
+ *
+ * The old rule put every name at the top of its own shape and pushed
+ * overlapping ones straight up. That is right for a shape at the top of the
+ * picture and wrong everywhere else: on term 6 the country splinters sit
+ * *inside* the EPP-ED cloud, so "just above" is the middle of someone else's
+ * dots — 68 MEPs ended up under a plate — and on term 10 the pushing stacked
+ * four names a thousand units above the network, past the edge of the print.
+ *
+ * So a name is not given one position but a fan of them: twenty-four
+ * directions out of the middle of its own shape, each tried at five distances
+ * beyond the outline. Every candidate is charged for what it would cover —
+ * foreign dots most, its own dots barely, outlines and names already placed in
+ * between — and for how far it has travelled from the shape it names. The
+ * cheapest one wins.
+ *
+ * A name is always drawn. When a splinter is buried and every position is
+ * blocked, the least-bad one is still a better print than a shape with no name
+ * on it, and the costs above are what "least bad" means.
+ *
+ * Names are placed largest community first, so the big blocs take the good
+ * positions and the splinters take what is left. Measuring the text stays the
+ * caller's job — the canvas has measureText, the exporter has an estimate —
+ * and so does the rotation: everything in here is in the upright frame the
+ * names are read in.
+ *
+ * @param {Array<{ring, width, height}>} entries - drawing order, largest
+ *   first. `ring` is the outline to sit against, in the frame the name is
+ *   drawn in; `width`/`height` are the plate's, clearance included.
+ * @param {Object} field - what to keep off: `{points, owners, rings}`, where
+ *   `points` is a flat x, y list of every dot, `owners[i]` is the index in
+ *   `entries` of the community dot i belongs to (or -1), and `rings` is every
+ *   outline in the picture.
+ * @param {number} gap - clearance between a plate and anything else
+ * @returns {Array<{x, y}>} the centre of each plate, in the order given
+ */
+export function placeLabels(entries, field = {}, gap = 0) {
+  if (!entries || entries.length === 0) return [];
+  const points = field.points || [];
+  const owners = field.owners || null;
+  const rings = field.rings || [];
+  const cell = entries.reduce((m, e) => Math.max(m, e.height), 0) || 1;
+  const grid = buildField(points, owners, rings, cell);
+
+  const taken = [];
+  return entries.map((entry, index) => {
+    const ring = entry.ring && entry.ring.length > 0 ? entry.ring : null;
+    const halfW = entry.width / 2;
+    const halfH = entry.height / 2;
+    const centre = ring ? ringCentre(ring) : { x: entry.x || 0, y: entry.y || 0 };
+
+    let best = null;
+    for (let d = 0; d < LABEL_DIRECTIONS; d += 1) {
+      // Straight up first, so a tie is broken the way the old rule went.
+      const angle = -Math.PI / 2 + (d * 2 * Math.PI) / LABEL_DIRECTIONS;
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+      const reach = ring ? reachAlong(ring, centre, dx, dy) : 0;
+      // An axis-aligned plate's own half-extent along this direction, so the
+      // corner clears the outline and not just the middle of an edge.
+      const support = Math.abs(dx) * halfW + Math.abs(dy) * halfH;
+      for (let s = 0; s < LABEL_STEPS.length; s += 1) {
+        const out = reach + support + gap + LABEL_STEPS[s] * entry.height;
+        const cx = centre.x + dx * out;
+        const cy = centre.y + dy * out;
+        const rect = {
+          x0: cx - halfW,
+          y0: cy - halfH,
+          x1: cx + halfW,
+          y1: cy + halfH,
+        };
+        const under = grid.nodesUnder(rect, index);
+        let cost =
+          under.foreign * COST_FOREIGN_NODE +
+          under.own * COST_OWN_NODE +
+          grid.crossings(rect) * COST_CROSSING +
+          LABEL_STEPS[s] +
+          ((1 + dy) / 2) * COST_BELOW;
+        for (let t = 0; t < taken.length; t += 1) {
+          if (rectsOverlap(rect, taken[t])) cost += COST_COLLISION;
+        }
+        if (!best || cost < best.cost) best = { cost, x: cx, y: cy, rect };
+        if (cost === 0) break;
+      }
+      if (best && best.cost === 0) break;
     }
-    placed.push({ x: box.x, y, width: box.width, height: box.height });
-    result.push(y);
+
+    taken.push(best.rect);
+    return { x: best.x, y: best.y };
   });
-  return result;
 }
 
 /**

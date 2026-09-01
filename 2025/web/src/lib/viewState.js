@@ -24,6 +24,15 @@ export const DEFAULT_VIEW = {
   /** Draw the detected communities as outlines over the network. */
   communities: false,
   /**
+   * Put the black ring on every dot, not only on the non-attached.
+   *
+   * The non-attached keep theirs either way — it is what says they are not a
+   * group, and their grey has no edge of its own. This is whether everyone
+   * else gets the same edge, which firms the dots up and costs the colours
+   * some of their brightness.
+   */
+  nodeRings: false,
+  /**
    * How many partners each MEP keeps when the graph is thinned, or null for
    * the automatic round(sqrt(n)). It decides how many communities there are,
    * so a link that does not carry it opens a different picture.
@@ -48,6 +57,7 @@ const KEYS = {
   colorMode: "k",
   dim: "d",
   communities: "u",
+  nodeRings: "r",
   // "k" is already the colour mode, and these two only mean anything with
   // "u" set. Short because the whole string may end up as a printed QR code.
   communityK: "j",
@@ -83,6 +93,7 @@ export function encodeView(view) {
   put("edgeWidth", view.edgeWidth, DEFAULT_VIEW.edgeWidth);
   put("colorMode", view.colorMode, DEFAULT_VIEW.colorMode);
   if (view.communities) params.set(KEYS.communities, "1");
+  if (view.nodeRings) params.set(KEYS.nodeRings, "1");
   put("communityK", view.communityK, null);
   put(
     "communityCoverage",
@@ -149,6 +160,7 @@ export function decodeView(query) {
   }
 
   view.communities = params.get(KEYS.communities) === "1";
+  view.nodeRings = params.get(KEYS.nodeRings) === "1";
 
   const communityK = params.get(KEYS.communityK);
   if (communityK !== null) {

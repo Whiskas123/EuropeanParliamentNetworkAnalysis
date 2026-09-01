@@ -194,11 +194,7 @@ export default function SubjectSelector({
     return (
       <span className="subject-count">
         <span className="subject-count-value">{votingSessions}</span>
-        {width !== null && (
-          <span className="subject-count-bar">
-            <span className="subject-count-bar-fill" style={{ width }} />
-          </span>
-        )}
+
       </span>
     );
   }

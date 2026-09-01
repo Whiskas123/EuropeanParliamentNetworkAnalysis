@@ -95,6 +95,26 @@ export default function AgreementByGroup({
   const raw = subject ? rawSubjectScores : rawAgreementScores;
   const usingRaw = Boolean(reading?.reason) && Array.isArray(raw) && raw.length > 0;
 
+  // Why the normalised figure is missing, which is two different sentences and
+  // only one of them is about the MEP's politics. Saying the wrong one is not a
+  // rounding of the truth: it is the wrong fact about which side of the chamber
+  // somebody sat on, and Assita KANKO - ECR for the whole of term 10 - was
+  // being told she sat as Non-Attached.
+  //
+  // The term block settles it, because it is written only where the group an
+  // MEP sat in for *most* of their votes was a group. Someone who spent the
+  // bigger half of the term unattached has none, whatever colour their dot is:
+  // in term 10 that is Fernand KARTHEISER, 1,982 votes unattached against 1,471
+  // in ECR, and there is no single reference to normalise him against. Everyone
+  // else with a term block has a group, so a missing figure in a policy area is
+  // about how much of that area they voted on and nothing else.
+  const unattached = !reading?.entry?.all;
+  // Whether Non-Attached is the whole story or the larger half of it. Both are
+  // "no reference group"; only one can be written as a flat fact. Read off the
+  // file rather than the node's own spells, because a node picked out of the
+  // search box carries four fields and no membership history.
+  const alsoInAGroup = Boolean(reading?.entry?.group);
+
   // Always closest first. There are eight groups and they are all on screen at
   // once, so reversing them shows the same eight dials in the other direction -
   // a control that costs a heading row and answers a question the grid already
@@ -147,9 +167,12 @@ export default function AgreementByGroup({
   if (!file) return null;
   if (rows.length === 0 && !reading) return null;
 
-  const ownAcronym = reading?.group
-    ? getGroupAcronym(reading.group, mandate)
-    : null;
+  // The group they sat in while voting. Taken from the entry as well as the
+  // reading, so it is still nameable on the fallback path - where the reading
+  // carries a reason instead of a block, and naming the group is the whole
+  // point of the note.
+  const ownGroup = reading?.group ?? reading?.entry?.group ?? null;
+  const ownAcronym = ownGroup ? getGroupAcronym(ownGroup, mandate) : null;
   // The measure uses the group the MEP sat in while voting; the canvas colours
   // them by the group they ended the term in. Where those differ the panel has
   // to say so, or it silently contradicts the dot on screen.
@@ -235,17 +258,19 @@ export default function AgreementByGroup({
           </p>
         ) : reading?.reason && !usingRaw ? (
           <p className="sb-note sb-note--empty">
-            {reading.reason === "no-group" ? (
+            {unattached ? (
               <>
-                Not shown. {name} either sat as Non-Attached for these votes
-                &mdash; which is not a group, so there is nothing to measure
-                them against &mdash; or cast too few votes here to compare.
+                Not shown. {name} sat as Non-Attached
+                {alsoInAGroup ? " for most of these votes" : ""} &mdash; which
+                is not a group, so there is nothing to measure them against.
               </>
             ) : (
               <>
-                Not shown. {name} cast fewer than {file.minVotes} votes here,
-                and a figure drawn from a handful of votes is those
-                votes&rsquo; quirk rather than a position.
+                Not shown. {name} cast too few of the votes
+                {subject ? ` on ${subject}` : " here"}
+                {ownAcronym ? ` to be set against ${ownAcronym}` : ""}, and a
+                figure drawn from a handful of them is those votes&rsquo; quirk
+                rather than a position.
               </>
             )}
           </p>
@@ -281,10 +306,25 @@ export default function AgreementByGroup({
 
             {usingRaw && (
               <p className="sb-note sb-note--warn">
-                Not corrected for attendance. {name} sat as Non-Attached, which
-                is not a group, so there is no set of colleagues to measure them
-                against &mdash; these are the plain percentages, and two MEPs who
-                were in different rooms cannot be compared with them.
+                Not corrected for attendance.{" "}
+                {unattached ? (
+                  <>
+                    {name} sat as Non-Attached
+                    {alsoInAGroup ? " for most of these votes" : ""}, which is
+                    not a group, so there is no set of colleagues to measure
+                    them against
+                  </>
+                ) : (
+                  <>
+                    {name} cast too few of the votes
+                    {subject ? ` on ${subject}` : " this term"} for the
+                    correction, which sets an MEP against the
+                    {ownAcronym ? ` ${ownAcronym}` : ""} colleagues who were in
+                    the room with them
+                  </>
+                )}{" "}
+                &mdash; these are the plain percentages, and two MEPs who were
+                in different rooms cannot be compared with them.
               </p>
             )}
 
@@ -306,6 +346,15 @@ export default function AgreementByGroup({
                   floor={0}
                   color={groupColors?.get(row.groupId) || "#CCCCCC"}
                   label={getGroupAcronym(row.groupId, mandate)}
+                  // Pointing at a dial lights up the people it is a figure
+                  // about — and in the national reading that is this group's
+                  // members from one country, which is the room the dial is
+                  // measured in.
+                  hover={[
+                    showing === "country"
+                      ? { group: row.groupId, country: reading.country }
+                      : { group: row.groupId },
+                  ]}
                   // The badge reads "N pp below <label>", so the label only
                   // has to name the baseline: what a typical member of this
                   // MEP's own group manages toward the same target.

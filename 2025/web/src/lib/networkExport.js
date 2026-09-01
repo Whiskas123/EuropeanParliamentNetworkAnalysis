@@ -51,7 +51,7 @@ import {
   buildCommunityShapes,
   DEFAULT_COVERAGE,
   labelCommunities,
-  stackLabels,
+  placeLabels,
 } from "./communityShapes.js";
 import {
   getGroupDisplayName,
@@ -689,12 +689,183 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
   const coordDecimals = Math.max(spanX, spanY) >= 200 ? 1 : 3;
   const c = (value) => round(value, coordDecimals);
 
+  // --- communities --------------------------------------------------------
+  // Only when the screen is showing them, and drawn to the same multiples of
+  // the node radius, so the print is the picture the reader was looking at.
+  // Each community is its own <g> with its name on it: these files are opened
+  // in a vector editor to be annotated by hand, and a layer called "PPE" is
+  // the difference between that being possible and not.
+  let communityParts = [];
+  let communityLabelParts = [];
+  let communityNote = "no community outlines";
+  // Grows to hold every outline and every name plate, so the page below can be
+  // cut to what is drawn rather than to where the dots happen to stop.
+  let drawnBounds = null;
+  const include = (x, y) => {
+    if (!drawnBounds) {
+      drawnBounds = { minX: x, maxX: x, minY: y, maxY: y };
+      return;
+    }
+    if (x < drawnBounds.minX) drawnBounds.minX = x;
+    if (x > drawnBounds.maxX) drawnBounds.maxX = x;
+    if (y < drawnBounds.minY) drawnBounds.minY = y;
+    if (y > drawnBounds.maxY) drawnBounds.maxY = y;
+  };
+  if (view.communities) {
+    // The same k and coverage the screen used, or the print carries outlines
+    // of a partition the reader never saw.
+    const communities = tryCommunityShapes(graphData, {
+      k: view.communityK ?? null,
+      coverage: view.communityCoverage,
+    });
+    if (communities && communities.shapes.length > 0) {
+      const names = labelCommunities(communities.shapes, info.mandate);
+      // In design units, like the caption: the outline and its name are the
+      // same fraction of the picture whether the layout spans 400 units or
+      // 12,000, which is also what the canvas does with them on screen.
+      const outlineWidth = Math.max(radius * 0.3, du(1.1));
+      const dashOn = outlineWidth * 5;
+      const dashOff = outlineWidth * 3.6;
+      const titleSize = Math.max(radius * 2.2, du(17));
+      const countSize = titleSize * 0.62;
+      // The outlines are traced through the same turn as the MEPs inside them,
+      // and so is everything the names are placed against — a turned network is
+      // still read horizontally, so the plates are laid out in the upright
+      // frame, over an upright copy of the picture.
+      const turnedRings = communities.shapes.map((shape) =>
+        shape.rings.map((ring) =>
+          ring.map((point) => {
+            const turned = place(point[0], point[1]);
+            return [turned.x, turned.y];
+          })
+        )
+      );
+      communityParts = communities.shapes.map((shape, index) => {
+        const d = turnedRings[index]
+          .map(
+            (ring) =>
+              `M${ring
+                .map((point) => {
+                  include(point[0], point[1]);
+                  return `${c(point[0])} ${c(point[1])}`;
+                })
+                .join("L")}Z`
+          )
+          .join("");
+        const name = names[index];
+        return (
+          `<g data-community="${esc(name)}" data-size="${shape.size}">` +
+          `<title>${esc(`${name} — ${shape.size} MEPs`)}</title>` +
+          `<path fill="none" stroke="${esc(shape.color)}" stroke-width="${n2(
+            outlineWidth
+          )}" stroke-opacity="0.9" stroke-linejoin="round" ` +
+          `stroke-dasharray="${n2(dashOn)} ${n2(dashOff)}" d="${d}"/>` +
+          `</g>`
+        );
+      });
+      // Same placement rule as the canvas, on an estimate of the text width
+      // rather than a measurement of it — half a character of slack in a
+      // collision test, which is the safe direction.
+      const blockHeight = titleSize + countSize * 1.15;
+      const padX = titleSize * 0.42;
+      const padY = titleSize * 0.3;
+      const plateSizes = communities.shapes.map((shape, index) => ({
+        width:
+          Math.max(
+            estimateWidth(names[index], titleSize),
+            estimateWidth(`${shape.size} MEPs`, countSize)
+          ) +
+          padX * 2,
+        height: blockHeight + padY * 2,
+      }));
+      // Every dot in the picture, turned, tagged with the community it is in,
+      // so a name can be charged more for covering somebody else's members
+      // than for covering its own.
+      const memberOf = new Map();
+      communities.shapes.forEach((shape, index) => {
+        (shape.members || []).forEach((id) => memberOf.set(id, index));
+      });
+      const fieldPoints = new Float64Array(placed.length * 2);
+      const fieldOwners = new Int32Array(placed.length);
+      placed.forEach((node, i) => {
+        fieldPoints[i * 2] = node.x;
+        fieldPoints[i * 2 + 1] = node.y;
+        fieldOwners[i] = memberOf.has(node.id) ? memberOf.get(node.id) : -1;
+      });
+      const centres = placeLabels(
+        communities.shapes.map((shape, index) => ({
+          ring: turnedRings[index][0],
+          width: plateSizes[index].width,
+          height: plateSizes[index].height,
+        })),
+        {
+          points: fieldPoints,
+          owners: fieldOwners,
+          rings: turnedRings.flat(),
+        },
+        titleSize * 0.55
+      );
+      communityLabelParts = communities.shapes.flatMap((shape, index) => {
+        const { width: plateWidth, height: plateHeight } = plateSizes[index];
+        const plateLeft = centres[index].x - plateWidth / 2;
+        const plateTop = centres[index].y - plateHeight / 2;
+        const titleY = plateTop + titleSize - padY * 0.2;
+        const countY = titleY + countSize * 1.15;
+        const textX = centres[index].x;
+        include(plateLeft, plateTop);
+        include(plateLeft + plateWidth, plateTop + plateHeight);
+        return [
+          // A plate, not a halo: a stroke heavy enough to lift type off seven
+          // hundred dots eats the letterforms. Same reasoning as the canvas.
+          `<rect x="${n1(plateLeft)}" y="${n1(
+            plateTop
+          )}" width="${n1(plateWidth)}" height="${n1(
+            plateHeight
+          )}" rx="${n2(titleSize * 0.32)}" fill="${PAPER}" fill-opacity="0.9"/>`,
+          svgText(textX, titleY, names[index], {
+            size: titleSize,
+            weight: 600,
+            fill: shape.labelColor || shape.color,
+            anchor: "middle",
+          }),
+          svgText(textX, countY, `${shape.size} MEPs`, {
+            size: countSize,
+            weight: 500,
+            fill: SECONDARY,
+            anchor: "middle",
+          }),
+        ];
+      });
+      communityNote = `${communities.shapes.length} community outlines`;
+    } else {
+      communityNote = "community outlines requested, none could be drawn";
+    }
+  }
+
+  // --- the page ------------------------------------------------------------
+  // Cut to everything that gets drawn, not to the dots.
+  //
+  // A community outline is a density contour and reaches past the outermost
+  // MEP it encloses; a community's name is stacked *upwards* off the top of
+  // its shape, and on term 10 the last name in the stack lands five hundred
+  // units above the highest dot in the network. Framing on the node bounds
+  // alone therefore cuts the labels off — which is exactly what it did.
+  //
+  // The type size is deliberately still a function of the node span above:
+  // sizing the labels off a box the labels themselves widen is a loop, and a
+  // network with one far-flung name would come out set in smaller type than
+  // the same network without it.
+  const drawn = drawnBounds || { minX, maxX, minY, maxY };
+  const frameMinX = Math.min(minX, drawn.minX);
+  const frameMaxX = Math.max(maxX, drawn.maxX);
+  const frameMinY = Math.min(minY, drawn.minY);
+  const frameMaxY = Math.max(maxY, drawn.maxY);
 
   const pad = du(40) + radius;
-  let left = minX - pad;
-  let width = spanX + pad * 2;
-  const netTop = minY - pad;
-  const netHeight = spanY + pad * 2;
+  let left = frameMinX - pad;
+  let width = frameMaxX - frameMinX + pad * 2;
+  const netTop = frameMinY - pad;
+  const netHeight = frameMaxY - frameMinY + pad * 2;
 
   // --- caption ------------------------------------------------------------
   // Always built, not always drawn: it is what the document's <title> and
@@ -934,116 +1105,6 @@ export function exportNetworkSVG({ graphData, renderSettings, meta } = {}) {
         `</g>`
       );
     });
-
-  // --- communities --------------------------------------------------------
-  // Only when the screen is showing them, and drawn to the same multiples of
-  // the node radius, so the print is the picture the reader was looking at.
-  // Each community is its own <g> with its name on it: these files are opened
-  // in a vector editor to be annotated by hand, and a layer called "PPE" is
-  // the difference between that being possible and not.
-  let communityParts = [];
-  let communityLabelParts = [];
-  let communityNote = "no community outlines";
-  if (view.communities) {
-    // The same k and coverage the screen used, or the print carries outlines
-    // of a partition the reader never saw.
-    const communities = tryCommunityShapes(graphData, {
-      k: view.communityK ?? null,
-      coverage: view.communityCoverage,
-    });
-    if (communities && communities.shapes.length > 0) {
-      const names = labelCommunities(communities.shapes, info.mandate);
-      // In design units, like the caption: the outline and its name are the
-      // same fraction of the picture whether the layout spans 400 units or
-      // 12,000, which is also what the canvas does with them on screen.
-      const outlineWidth = Math.max(radius * 0.3, du(1.1));
-      const dashOn = outlineWidth * 5;
-      const dashOff = outlineWidth * 3.6;
-      const titleSize = Math.max(radius * 2.2, du(17));
-      const countSize = titleSize * 0.62;
-      // The outlines are traced through the same turn as the MEPs inside them,
-      // and the names are placed at where their community ended up — but drawn
-      // upright, because a turned network is still read horizontally.
-      const anchors = communities.shapes.map((shape) =>
-        place(shape.anchor.x, shape.anchor.y)
-      );
-      communityParts = communities.shapes.map((shape, index) => {
-        const d = shape.rings
-          .map(
-            (ring) =>
-              `M${ring
-                .map((point) => {
-                  const turned = place(point[0], point[1]);
-                  return `${c(turned.x)} ${c(turned.y)}`;
-                })
-                .join("L")}Z`
-          )
-          .join("");
-        const name = names[index];
-        return (
-          `<g data-community="${esc(name)}" data-size="${shape.size}">` +
-          `<title>${esc(`${name} — ${shape.size} MEPs`)}</title>` +
-          `<path fill="none" stroke="${esc(shape.color)}" stroke-width="${n2(
-            outlineWidth
-          )}" stroke-opacity="0.9" stroke-linejoin="round" ` +
-          `stroke-dasharray="${n2(dashOn)} ${n2(dashOff)}" d="${d}"/>` +
-          `</g>`
-        );
-      });
-      // Same stacking rule as the canvas, on an estimate of the text width
-      // rather than a measurement of it — half a character of slack in a
-      // collision test that only ever moves a label upwards.
-      const blockHeight = titleSize + countSize * 1.15;
-      const labelBaselines = stackLabels(
-        communities.shapes.map((shape, index) => ({
-          x: anchors[index].x,
-          y: anchors[index].y - titleSize * 0.75,
-          width: Math.max(
-            estimateWidth(names[index], titleSize),
-            estimateWidth(`${shape.size} MEPs`, countSize)
-          ),
-          height: blockHeight,
-        })),
-        titleSize * 0.55
-      );
-      const padX = titleSize * 0.42;
-      const padY = titleSize * 0.3;
-      communityLabelParts = communities.shapes.flatMap((shape, index) => {
-        const countY = labelBaselines[index];
-        const titleY = countY - countSize * 1.15;
-        const plateWidth =
-          Math.max(
-            estimateWidth(names[index], titleSize),
-            estimateWidth(`${shape.size} MEPs`, countSize)
-          ) + padX * 2;
-        const plateHeight = blockHeight + padY * 2;
-        return [
-          // A plate, not a halo: a stroke heavy enough to lift type off seven
-          // hundred dots eats the letterforms. Same reasoning as the canvas.
-          `<rect x="${n1(anchors[index].x - plateWidth / 2)}" y="${n1(
-            titleY - titleSize + padY * 0.2
-          )}" width="${n1(plateWidth)}" height="${n1(
-            plateHeight
-          )}" rx="${n2(titleSize * 0.32)}" fill="${PAPER}" fill-opacity="0.9"/>`,
-          svgText(anchors[index].x, titleY, names[index], {
-            size: titleSize,
-            weight: 600,
-            fill: shape.labelColor || shape.color,
-            anchor: "middle",
-          }),
-          svgText(anchors[index].x, countY, `${shape.size} MEPs`, {
-            size: countSize,
-            weight: 500,
-            fill: SECONDARY,
-            anchor: "middle",
-          }),
-        ];
-      });
-      communityNote = `${communities.shapes.length} community outlines`;
-    } else {
-      communityNote = "community outlines requested, none could be drawn";
-    }
-  }
 
   // --- document -----------------------------------------------------------
   const pixelWidth = 1600;

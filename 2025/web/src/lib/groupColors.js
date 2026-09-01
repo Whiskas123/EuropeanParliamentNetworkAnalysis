@@ -54,12 +54,16 @@ export const NON_ATTACHED_RING = "#000000";
  * MEP is read at. Shared so the canvas and the SVG sheet cannot drift.
  *
  * Drawn inside the dot — stroke the circle at `r - width / 2`, not at `r`. A
- * stroke straddles its path, so a ring on the edge grows the dot by a tenth of
- * its radius and eats another tenth of the fill; at the four or five pixels a
+ * stroke straddles its path, so a ring on the edge grows the dot by half its
+ * width and eats the other half out of the fill; at the four or five pixels a
  * dot gets in a 700-MEP network that is the difference between a dot with an
  * edge and a small hollow ring.
+ *
+ * 0.14 was picked by eye against 0.20 and 0.09 at the zoom the network opens
+ * at: 0.20 reads as a ring wearing a colour, 0.09 disappears into the dot and
+ * leaves the pale groups where they started.
  */
-export const NODE_RING_FRACTION = 0.09;
+export const NODE_RING_FRACTION = 0.14;
 
 /**
  * Where to stroke a ring of this weight so it lands inside a dot of radius r.

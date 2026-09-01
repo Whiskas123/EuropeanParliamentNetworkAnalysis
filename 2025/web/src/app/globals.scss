@@ -550,6 +550,12 @@ a {
 .group-info-section-title,
 .structure-title,
 .trends-title,
+// The lowest-agreeing pair used to be a section label inside the trends panel,
+// which is what it looked like: a small-caps line under a chart, reading as a
+// caption on the plot above rather than as the second of the History tab's
+// three charts. It carries its own axis, its own hover and its own collapse
+// chevron, so it takes a panel title like the two it sits between.
+.trends-spark-title,
 .insights-title {
   @extend .sb-panel-title;
 }
@@ -559,19 +565,18 @@ a {
 .cohesion-heatmap-description,
 .structure-description,
 .trends-description,
+.trends-spark-lede,
 .insights-desc,
 .deviation-lede,
 .deviation-empty {
   @extend .sb-panel-desc;
 }
 
-.structure-section-label,
-.trends-spark-title {
+.structure-section-label {
   @extend .sb-section-label;
 }
 
-.structure-section-lede,
-.trends-spark-lede {
+.structure-section-lede {
   @extend .sb-section-lede;
 }
 
@@ -1104,6 +1109,22 @@ a {
     &.collapsed {
       transform: rotate(-90deg);
     }
+  }
+}
+
+// The same chevron in the newer heading-row form: a .sb-collapse button beside a
+// .sb-panel-title, rather than the whole title being the control.
+//
+// It has never turned. The rotation above is written inside .collapsible-title
+// and a button is not one, so every panel built on .sb-panel-head — the closest
+// MEPs, group agreement, the group profile's four lists, and now the three
+// charts on the History tab — has shown a chevron pointing down whether its
+// content was open or shut. Stated once here rather than per panel.
+.sb-collapse .collapse-icon {
+  transition: transform 0.3s ease;
+
+  &.collapsed {
+    transform: rotate(-90deg);
   }
 }
 
@@ -1800,7 +1821,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .network-canvas-tip {
   position: absolute;
   bottom: 16px;
-  right: 16px;
+  left: 16px;
   padding: 8px 12px;
   font-size: 12px;
   color: #666;
@@ -2321,9 +2342,6 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 // heatmap butted straight onto a bar chart the moment it moved under the
 // coalition ranking. .sidebar-tabpanel strips all three when it lands first.
 .cohesion-heatmap {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid var(--sb-rule);
   margin-bottom: 30px;
 }
 
@@ -2404,6 +2422,20 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   display: inline;
 }
 
+// Both axes name a single group and dim the network to it, so both take the
+// sidebar's ordinary row wash to say the cursor is on them.
+.cohesion-heatmap-th-group.clickable,
+.cohesion-heatmap-td-label.clickable {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.12s ease, color 0.12s ease;
+
+  &:hover {
+    background-color: var(--sb-wash);
+    color: var(--sb-ink);
+  }
+}
+
 .cohesion-heatmap-td-label-color {
   display: inline-block;
   width: 8px;
@@ -2429,6 +2461,10 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color: var(--sb-muted);
   border-radius: 3px;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0 0 0 2px var(--sb-rule);
+  }
 }
 
 .cohesion-heatmap-td-score {
@@ -2441,10 +2477,14 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color: #000;
   border-radius: 3px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: box-shadow 0.15s ease;
 
+  // A ring rather than the fade this used to do. Pointing at a cell now dims
+  // the network to its two groups, and a cell going slightly paler among
+  // twenty-seven coloured neighbours reads as a rendering artefact rather than
+  // as an answer to the cursor.
   &:hover {
-    opacity: 0.8;
+    box-shadow: inset 0 0 0 2px var(--sb-ink);
   }
 }
 
@@ -3079,88 +3119,164 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
 
   // Show top gradient when scrolled down (not at top)
-  &:has(
-      .group-info-meps-list[data-scrollable="true"]:not([data-at-top="true"])
-    )::before {
+  &:has(.mep-rank[data-scrollable="true"]:not([data-at-top="true"]))::before {
     opacity: 1;
   }
 
   // Show bottom gradient when inner list is scrollable and not at bottom
+  &:has(.mep-rank[data-scrollable="true"]:not([data-at-bottom="true"]))::after {
+    opacity: 1;
+  }
+}
+
+/**
+ * The membership ranking scrolls inside the panel; the rows are the sidebar's
+ * shared ranked-row grammar (.mep-rank, styles/profile.scss), the same one the
+ * MEP profile uses for the counterparts someone votes closest to. It used to
+ * be a stack of two-line cards written only for this panel.
+ */
+.group-info-meps-wrapper .mep-rank {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+/**
+ * The delegations inside a group. Four columns, the same four the community
+ * card uses — flag, country, count, share of that country — because it is the
+ * same table read from the other side, and a reader who has learnt one layout
+ * for it should not have to learn a second.
+ */
+.group-info-countries-wrapper {
+  position: relative;
+
+  // Fades at the two edges, the same cue the MEP and event lists use to say a
+  // scrollable list carries on past its box.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
   &:has(
-      .group-info-meps-list[data-scrollable="true"]:not([data-at-bottom="true"])
+      .group-info-countries-list[data-scrollable="true"]:not(
+          [data-at-top="true"]
+        )
+    )::before {
+    opacity: 1;
+  }
+
+  &:has(
+      .group-info-countries-list[data-scrollable="true"]:not(
+          [data-at-bottom="true"]
+        )
     )::after {
     opacity: 1;
   }
 }
 
-.group-info-meps-list {
+.group-info-countries-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   max-height: 300px;
   overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.group-info-mep-item {
+.group-info-country {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px;
-  background-color: var(--sb-wash);
-  border-radius: 6px;
-  border: 1px solid var(--sb-rule);
-  transition: all 0.2s;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -4px;
+  padding: 6px 6px;
+  border-bottom: 1px solid var(--sb-rule-soft);
+  border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.12s ease;
 
-  &.clickable:hover {
-    background-color: var(--sb-wash-2);
-    border-color: var(--eu-blue);
+  // Pointing at a row leaves this group's members from that country lit on the
+  // network, so the row says it is the one being read.
+  &:hover {
+    background-color: var(--sb-wash);
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 }
 
-.group-info-mep-rank {
-  font-size: var(--sb-fs-sub);
-  font-weight: 600;
-  color: var(--sb-body);
-  min-width: 24px;
-  padding-top: 2px;
-}
-
-.group-info-mep-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.group-info-mep-name {
-  font-size: var(--sb-fs-lead);
-  font-weight: 500;
-  color: var(--sb-ink-soft);
-  margin-bottom: 4px;
-}
-
-.group-info-mep-meta {
-  display: flex;
+// country-flag-icons ships SVGs sized from the surrounding text, so the column
+// is fixed here instead and the flag drawn to it.
+.group-info-country-flag {
+  flex: 0 0 auto;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: var(--sb-fs-sub);
-  color: var(--sb-body);
-}
-
-.group-info-mep-country {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  width: 16px;
 
   svg {
-    width: 1em;
-    height: 1em;
+    width: 16px;
+    height: 12px;
+    border-radius: 1px;
     display: block;
   }
 }
 
-.group-info-mep-score {
-  margin-left: auto;
+.group-info-country-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--sb-fs-lead);
+  color: var(--sb-ink-soft);
+}
+
+.group-info-country-count {
+  flex: 0 0 auto;
+  font-size: var(--sb-fs-lead);
   font-weight: 600;
   color: var(--eu-blue);
+}
+
+.group-info-country-note {
+  flex: 0 0 auto;
+  width: 92px;
+  text-align: right;
+  font-size: var(--sb-fs-sub);
+  color: var(--sb-muted);
 }
 
 .group-info-back-button {
@@ -3501,7 +3617,7 @@ $mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 11px;
     padding: 6px 10px;
     bottom: 12px;
-    right: 12px;
+    left: 12px;
   }
 
   // Hide Y-axis group names in heatmap on mobile, show only colored squares

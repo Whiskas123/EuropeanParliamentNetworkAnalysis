@@ -9,6 +9,7 @@ import {
   CountryFlag,
   getGroupColor,
 } from "../lib/utils.js";
+import { groupSwatchStyle } from "../lib/groupColors.js";
 import MEPHeadlineDials from "./MEPHeadlineDials";
 
 export default function MEPInfoPanel({
@@ -243,10 +244,10 @@ export default function MEPInfoPanel({
           <div className="mep-info-group-content">
             <div
               className="mep-info-group-color mep-info-group-color-clickable"
-              style={{
-                backgroundColor:
-                  graphData?.nodeMap.get(node.id)?.color || "#CCCCCC",
-              }}
+              style={groupSwatchStyle(
+                node.groupId,
+                graphData?.nodeMap.get(node.id)?.color
+              )}
               onClick={() => onSelectGroup && onSelectGroup(node.groupId)}
               title="Click to view group details"
             />
@@ -296,7 +297,7 @@ export default function MEPInfoPanel({
                         <div key={idx} className="mep-info-group-tooltip-item">
                           <div
                             className="mep-info-group-tooltip-color"
-                            style={{ backgroundColor: groupColor }}
+                            style={groupSwatchStyle(groupId, groupColor)}
                           />
                           <div className="mep-info-group-tooltip-content">
                             <div className="mep-info-group-tooltip-name">

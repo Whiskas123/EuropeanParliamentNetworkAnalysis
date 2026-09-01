@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   CountryFlag,
   getGroupAcronym,
-  getGroupColor,
   getGroupDisplayName,
 } from "../lib/utils.js";
+import { groupSwatchStyle } from "../lib/groupColors.js";
 import { loadLeads, countLeads } from "../lib/leads.js";
 import DeltaBadge from "./DeltaBadge";
 import "../styles/leads.scss";
@@ -119,7 +119,7 @@ function GroupDot({ groupId }) {
   return (
     <span
       className="leads-dot"
-      style={{ backgroundColor: getGroupColor(groupId) }}
+      style={groupSwatchStyle(groupId)}
       aria-hidden="true"
     />
   );

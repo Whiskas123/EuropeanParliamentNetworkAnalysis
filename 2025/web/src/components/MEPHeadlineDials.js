@@ -45,6 +45,7 @@ export default function MEPHeadlineDials({
           baseline={own.level}
           color={groupColor || "#6B7C93"}
           label="Group"
+          hover={[{ group: own.groupId }]}
           // The badge reads "N pp below <label>" beside the figure it belongs
           // to, so the label names only the other side of the comparison: what
           // a typical member of the same group manages.
@@ -68,8 +69,13 @@ export default function MEPHeadlineDials({
           value={national.value}
           baseline={national.level}
           color="#6B7C93"
-          label="National"
+          // The country by name, with its flag before it. "National" named the
+          // measure rather than the delegation, and the flag alone asked the
+          // reader to know every one of twenty-seven — while the dial beside
+          // it names its group outright.
+          label={national.country}
           flag={<CountryFlag country={national.country} />}
+          hover={[{ country: national.country }]}
           baselineLabel={`the average ${national.country} MEP's agreement with the delegation`}
           title={
             `${name} votes with the rest of the ${national.country} ` +

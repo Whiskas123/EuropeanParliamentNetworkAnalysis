@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { loadMandateData, getBaseline } from "../../lib/dataLoader.js";
 import { DEFAULT_VIEW, decodeView, encodeView } from "../../lib/viewState.js";
 import { loadLeads, countLeads } from "../../lib/leads.js";
+import { HoverFocusProvider } from "../../lib/hoverFocus.js";
 import MandateSelector from "../../components/MandateSelector";
 import CountrySelector from "../../components/CountrySelector";
 import SubjectSelector from "../../components/SubjectSelector";
@@ -52,7 +53,7 @@ function readCountrySimilarity(graphData, mepId, selectedNodeData) {
   };
 }
 
-export default function VisualizationPage() {
+function VisualizationView() {
   const router = useRouter();
   const [mandate, setMandate] = useState(10);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -95,6 +96,7 @@ export default function VisualizationPage() {
     colorMode: DEFAULT_VIEW.colorMode,
     dim: DEFAULT_VIEW.dim,
     communities: DEFAULT_VIEW.communities,
+    nodeRings: DEFAULT_VIEW.nodeRings,
     communityK: DEFAULT_VIEW.communityK,
     communityCoverage: DEFAULT_VIEW.communityCoverage,
   });
@@ -505,6 +507,7 @@ export default function VisualizationPage() {
       colorMode: view.colorMode,
       dim: view.dim,
       communities: view.communities,
+      nodeRings: view.nodeRings,
       communityK: view.communityK,
       communityCoverage: view.communityCoverage,
     });
@@ -1016,6 +1019,7 @@ export default function VisualizationPage() {
               selectedSubject={selectedSubject}
               renderSettings={renderSettings}
               onRenderSettingsChange={setRenderSettings}
+              onSelectGroup={handleGroupClick}
             />
             {loading && <LoadingSpinner message="Loading network data..." />}
           </div>
@@ -1083,5 +1087,21 @@ export default function VisualizationPage() {
         onSelectSubject={setSelectedSubject}
       />
     </div>
+  );
+}
+
+/**
+ * Everything on this page shares one hover focus.
+ *
+ * The provider sits outside the view rather than inside it so that pointing at
+ * a row in the sidebar reaches the canvas without the page holding the cursor
+ * in state — see lib/hoverFocus.js for why that distinction is worth a
+ * component.
+ */
+export default function VisualizationPage() {
+  return (
+    <HoverFocusProvider>
+      <VisualizationView />
+    </HoverFocusProvider>
   );
 }

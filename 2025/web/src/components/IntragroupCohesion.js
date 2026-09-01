@@ -126,6 +126,7 @@ export default function IntragroupCohesion({
               }`}
               baselineLabel={comparable ? baseline.label : ""}
               sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
+              hover={[{ group: item.group }]}
               onClick={
                 onGroupClick ? () => onGroupClick(item.group) : undefined
               }

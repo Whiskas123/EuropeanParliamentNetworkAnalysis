@@ -1,6 +1,7 @@
 "use client";
 
 import DeltaBadge from "./DeltaBadge";
+import { useHoverFocus } from "../lib/hoverFocus.js";
 import "../styles/radial.scss";
 
 /**
@@ -96,6 +97,9 @@ function tickLine(fraction) {
  * @param {string} [baselineLabel] what the delta badge is measured against
  * @param {node}   [sub]           a sample size, shown under the delta
  * @param {func}   [onClick]       makes the whole cell a button
+ * @param {Object[]} [hover]       who on the network this dial is about, as
+ *                                 hover-focus selectors: pointing at the dial
+ *                                 dims everyone else. See lib/hoverFocus.js.
  */
 export default function RadialGauge({
   value,
@@ -109,7 +113,10 @@ export default function RadialGauge({
   onClick = null,
   disabled = false,
   floor = RADIAL_FLOOR,
+  hover = null,
 }) {
+  const focus = useHoverFocus();
+  const focusProps = hover && hover.length ? focus.on(hover) : null;
   const fraction = sweep(value, floor);
   const baselineFraction = sweep(baseline, floor);
   const hasValue = fraction !== null;
@@ -222,13 +229,21 @@ export default function RadialGauge({
         className="radial radial--clickable"
         onClick={onClick}
         title={title}
+        {...focusProps}
       >
         {dial}
       </button>
     );
   }
 
-  return <div className="radial">{dial}</div>;
+  return (
+    <div
+      className={`radial ${focusProps ? "radial--focusable" : ""}`}
+      {...focusProps}
+    >
+      {dial}
+    </div>
+  );
 }
 
 /**

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { CountryFlag, getGroupAcronym, getSubjectEmoji } from "../lib/utils.js";
+import { groupSwatchStyle } from "../lib/groupColors.js";
+import { useHoverFocus } from "../lib/hoverFocus.js";
 import SegmentedToggle from "./SegmentedToggle";
 import "../styles/profile.scss";
 
@@ -45,6 +47,7 @@ export default function ClosestMEPs({
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [order, setOrder] = useState("high");
+  const focus = useHoverFocus();
 
   const showing = order === "low" ? furthest : meps;
   const canReverse = Array.isArray(furthest) && furthest.length > 0;
@@ -126,16 +129,20 @@ export default function ClosestMEPs({
                   title={`${mep.label} — ${(mep.edgeWeight * 100).toFixed(
                     1
                   )}% agreement`}
+                  {...focus.on([{ mep: mep.id }])}
                 >
                   <span className="mep-rank-n">{index + 1}</span>
                   <span className="mep-rank-name">{mep.label}</span>
                   <span className="mep-rank-flag">
                     <CountryFlag country={mep.country} />
+                    {/* The flag alone asked a reader to know twenty-seven of
+                        them; the name is the fact, the flag is the cue. */}
+                    <span className="mep-rank-country">{mep.country}</span>
                   </span>
                   <span className="mep-rank-group">
                     <span
                       className="mep-rank-swatch"
-                      style={{ backgroundColor: mep.color || "#CCCCCC" }}
+                      style={groupSwatchStyle(mep.groupId, mep.color)}
                       aria-hidden="true"
                     />
                     {getGroupAcronym(mep.groupId, mandate)}

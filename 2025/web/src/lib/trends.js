@@ -18,7 +18,7 @@
  * Its one import, `families.js`, holds the same property.
  */
 
-import { familyMembers, familyPairs } from "./families.js";
+import { familyCohesion, familyMembers, familyPairs } from "./families.js";
 
 /** Group id used for MEPs who sit in no political group. */
 export const NON_ATTACHED = "NonAttached";
@@ -141,6 +141,7 @@ function missingTerm(term) {
     // up, and a gap in a chart is drawn from a row that exists and has nothing
     // in it, not from a row that has to be guarded against first.
     familyPairs: {},
+    familyCohesion: {},
     familyMembers: {},
   };
 }
@@ -198,6 +199,10 @@ export function summarizeTerm(mandate, cohesionData, nodeCount, sessions = null)
     // right as one line rather than five. The only form in which a series can
     // cross a term boundary; see families.js for what the merge asserts.
     familyPairs: familyPairs(cohesionData.intergroupCohesion),
+    // Each family's own groups' cohesion, for the by-family view of the first
+    // chart. Built from the same filtered `groups` the withinGroup average
+    // uses, so the two readings of this tab rest on one set of numbers.
+    familyCohesion: familyCohesion(groups),
     familyMembers: familyMembers(
       (cohesionData.intergroupCohesion || {}).groups || []
     ),

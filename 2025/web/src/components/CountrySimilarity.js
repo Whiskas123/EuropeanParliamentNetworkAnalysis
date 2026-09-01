@@ -114,6 +114,7 @@ export default function CountrySimilarity({
               }${navigable ? ". Click to open this delegation." : ""}`}
               baselineLabel={baseline?.label}
               sub={`${item.mepCount} MEP${item.mepCount === 1 ? "" : "s"}`}
+              hover={[{ country: item.country }]}
               onClick={
                 navigable ? () => onCountryClick(item.country) : undefined
               }
