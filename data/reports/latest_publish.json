@@ -2,10 +2,10 @@
   "run": "publish",
   "provenance": {
     "python": "3.14.5",
-    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-25T14:16:32.087078+00:00",
-    "seconds": 4.4,
-    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-29T16:50:24.724584+00:00",
+    "seconds": 2.5,
+    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -31,14 +31,13 @@
     {
       "name": "Step 4: publish to the website",
       "facts": {
-        "mandate 6: published": "346 MB",
-        "mandate 7: published": "308 MB",
+        "mandate 6: published": "347 MB",
+        "mandate 7: published": "309 MB",
         "mandate 8: published": "404 MB",
         "mandate 9: published": "351 MB",
-        "mandate 10: published": "272 MB",
         "voting-session counts written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/2025/web/public/data/voting_sessions.json (4 KB)"
       },
-      "seconds": 2.3
+      "seconds": 1.6
     }
   ],
   "checks": [

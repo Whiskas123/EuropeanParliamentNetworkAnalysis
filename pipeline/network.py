@@ -5,8 +5,12 @@ votes where *both* cast a yes or a no (abstentions are excluded entirely), and
 compute (agreements - disagreements) / (votes in common). That gives a score in
 [-1, 1], which is then rescaled to [0, 1] for the website.
 
-Only MEPs who voted in more than half of the votes enter a network, so someone
-who sat for three weeks does not get a position derived from a handful of votes.
+Only MEPs who took part in more than half of the votes enter a network, so
+someone who sat for three weeks does not get a position derived from a handful
+of votes. "Took part" counts abstentions: they say nothing about agreement, but
+an abstention is a position taken in the room, and measuring turnout on the
+abstention-stripped count quietly deleted people who plainly showed up - it cost
+Assita KANKO her term-10 node at 61% turnout, and Grzegorz BRAUN his at 78%.
 
 The 2025 notebook did this with a pandas pivot table, which for mandate 9 means
 a multi-gigabyte frame. Here the same arithmetic runs on an int8 matrix of votes
@@ -37,6 +41,7 @@ class VoteMatrix:
         self.duplicate_entries = 0
         self.entries_without_mepid = 0
         self.subject_of_row = []
+        self.abstentions = Counter()
 
     def add_session(self, session, subject):
         row = len(self.vote_ids)
@@ -46,8 +51,17 @@ class VoteMatrix:
         for vote_type, block in session["votes"].items():
             weight = config.VOTE_WEIGHTS[vote_type]
             if weight == 0:
-                # Abstentions carry no information about agreement and are
-                # excluded before anything else, as in the 2025 analysis.
+                # Abstentions carry no information about agreement, so they
+                # never enter the matrix. They *are* attendance, though: an MEP
+                # who abstains was in the room and chose a position. Counting
+                # them only here keeps the two questions apart - see
+                # `attendance_counts` and PARTICIPATION_THRESHOLD.
+                for entries in ((block or {}).get("groups") or {}).values():
+                    for entry in entries or []:
+                        if not isinstance(entry, dict) or "mepid" not in entry:
+                            self.entries_without_mepid += 1
+                            continue
+                        self.abstentions[f"M{entry['mepid']}"] += 1
                 continue
             groups = (block or {}).get("groups") or {}
             for entries in groups.values():
@@ -79,13 +93,27 @@ class VoteMatrix:
         # 2025 code used.
         matrix[rows[::-1], cols[::-1]] = weights[::-1]
         self.raw_counts = np.bincount(cols, minlength=n_cols)
+        # Votes cast, abstentions included: the attendance question. Only MEPs
+        # who cast at least one yes/no have a column at all, so someone who
+        # *only* ever abstained is still absent - there is no agreement to
+        # measure for them, and a node with no edges is not a position.
+        self.attendance_counts = self.raw_counts + np.array(
+            [self.abstentions.get(mep, 0) for mep in self.mep_ids], dtype=np.int64
+        )
         return matrix
 
 
-def edges_from_matrix(matrix, mep_ids, raw_counts=None, is_subject=False):
+def edges_from_matrix(matrix, mep_ids, attendance=None, is_subject=False):
     """Agreement index for every MEP pair that shares at least one vote.
 
     Returns (edges, kept_mep_ids, stats). Edge weights are still in [-1, 1].
+
+    `attendance` is the count the participation threshold is tested against.
+    Pass `VoteMatrix.attendance_counts` to count every vote cast; when it is
+    omitted the matrix's own non-zero counts are used, which excludes
+    abstentions. The two are deliberately separable: abstentions are evidence
+    of turnout but not of agreement, so they belong in the admission test and
+    nowhere else.
 
     `is_subject` opens the second door described in `config`: a policy area's
     votes are lumpy, so the share test alone deletes people who plainly took
@@ -97,7 +125,7 @@ def edges_from_matrix(matrix, mep_ids, raw_counts=None, is_subject=False):
     if total_votes == 0:
         return [], [], {"total_votes": 0, "meps_considered": 0, "meps_kept": 0}
 
-    counts = raw_counts if raw_counts is not None else (matrix != 0).sum(axis=0)
+    counts = attendance if attendance is not None else (matrix != 0).sum(axis=0)
     admitted = counts > total_votes * config.PARTICIPATION_THRESHOLD
     if is_subject:
         admitted = admitted | (
@@ -277,7 +305,8 @@ def build_mandate_payload(mandate, report, meps):
             f"{builder.entries_without_mepid} vote entries have no mepid and were dropped"
         )
 
-    edges, kept, stats = edges_from_matrix(matrix, builder.mep_ids, builder.raw_counts)
+    edges, kept, stats = edges_from_matrix(matrix, builder.mep_ids,
+                                           builder.attendance_counts)
     report.fact(f"mandate {mandate}: MEPs in network", stats["meps_kept"])
 
     # Membership of the network turns on a hard ">50% of votes" line. MEPs
@@ -286,12 +315,12 @@ def build_mandate_payload(mandate, report, meps):
     total_votes = stats["total_votes"]
     margin = 0.05
     borderline = [
-        (builder.mep_ids[i], int(builder.raw_counts[i]),
-         round(float(builder.raw_counts[i]) / total_votes, 3))
+        (builder.mep_ids[i], int(builder.attendance_counts[i]),
+         round(float(builder.attendance_counts[i]) / total_votes, 3))
         for i in range(len(builder.mep_ids))
         if total_votes
-        and abs(float(builder.raw_counts[i]) / total_votes - config.PARTICIPATION_THRESHOLD)
-        <= margin
+        and abs(float(builder.attendance_counts[i]) / total_votes
+                - config.PARTICIPATION_THRESHOLD) <= margin
     ]
     if borderline:
         report.fact(
@@ -302,6 +331,45 @@ def build_mandate_payload(mandate, report, meps):
             "borderline MEPs (id, votes, share): "
             + ", ".join(f"{m}:{s:.0%}" for m, _, s in sorted(borderline, key=lambda x: -x[2])[:12])
         )
+    # Admitted on turnout but positioned on far fewer votes. These MEPs pass
+    # the threshold only because their abstentions count, so their coordinates
+    # rest on the yes/no votes alone - a habitual abstainer can clear 70%
+    # turnout on a tenth of that in usable votes. Never let this be silent:
+    # the whole point of separating the two counts is that they can diverge.
+    thin_basis = []
+    for i, mep_id in enumerate(builder.mep_ids):
+        if not total_votes:
+            break
+        real = float(builder.raw_counts[i])
+        seated = float(builder.attendance_counts[i])
+        if (seated > total_votes * config.PARTICIPATION_THRESHOLD
+                and real <= total_votes * config.PARTICIPATION_THRESHOLD):
+            thin_basis.append((mep_id, int(real), round(real / total_votes, 3),
+                               round(seated / total_votes, 3)))
+    if thin_basis:
+        thin_basis.sort(key=lambda x: x[2])
+        report.fact(
+            f"mandate {mandate}: MEPs admitted because abstentions count as turnout",
+            len(thin_basis),
+        )
+        report.note(
+            "admitted on turnout, positioned on yes/no votes only "
+            "(id, yes/no share -> turnout): "
+            + ", ".join(f"{m}:{r:.0%}->{t:.0%}" for m, _, r, t in thin_basis[:12])
+        )
+        # A position built on a very thin slice of yes/no votes is the failure
+        # the threshold exists to prevent, and it survives this change.
+        fragile = [row for row in thin_basis
+                   if row[2] < config.MIN_AGREEMENT_BASIS_SHARE]
+        report.check(
+            f"mandate {mandate}: every admitted MEP has a usable agreement basis",
+            not fragile,
+            "positioned on under "
+            f"{config.MIN_AGREEMENT_BASIS_SHARE:.0%} of votes: "
+            + ", ".join(f"{m} ({n} votes, {r:.0%})" for m, n, r, _ in fragile),
+            fatal=False,
+        )
+
     report.fact(f"mandate {mandate}: edges", len(edges))
     report.check(
         f"mandate {mandate}: network is non-trivial",

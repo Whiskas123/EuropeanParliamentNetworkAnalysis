@@ -2,10 +2,10 @@
   "run": "layouts",
   "provenance": {
     "python": "3.14.5",
-    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-25T14:17:25.036332+00:00",
-    "seconds": 724.9,
-    "git_commit": "79d89bb330da5e8eacf68c4096a40fbf58ac7be0",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-08-29T16:56:32.542757+00:00",
+    "seconds": 226.2,
+    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -35,12 +35,11 @@
           "6",
           "7",
           "8",
-          "9",
-          "10"
+          "9"
         ],
-        "country x subject combinations": true
+        "country x subject combinations": "only"
       },
-      "seconds": 724.9
+      "seconds": 226.1
     }
   ],
   "checks": [

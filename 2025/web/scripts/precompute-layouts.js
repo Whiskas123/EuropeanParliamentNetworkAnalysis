@@ -99,29 +99,39 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// Color mapping for groups
+// Color mapping for groups.
+//
+// A hand-kept copy of src/lib/groupColors.js, which this script cannot import:
+// it runs under plain node with no bundler. The colours it bakes into the
+// precomputed files are overwritten on load by normaliseGroupColors, so the
+// app never depends on this table being right — but a file whose colours
+// disagree with the screen is a file nobody can debug from.
 function getGroupColor(groupId) {
   const colorMap = {
     "PPE-DE": "#3399CC",
-    PSE: "#FF0000",
-    ALDE: "#FFD700",
-    "Verts/ALE": "#009900",
-    "GUE/NGL": "#800080",
-    ECR: "#000080",
-    EFDD: "#87CEEB",
-    ENF: "#000000",
-    NI: "#808080",
-    UEN: "#FFA500",
     PPE: "#3399CC",
+    EPP: "#3399CC",
+    PSE: "#FF0000",
     "S&D": "#FF0000",
+    ALDE: "#FFD700",
     Renew: "#FFD700",
-    ECR: "#000080",
-    RE: "#FFD700", // Renew Europe - yellow
+    RE: "#FFD700",
+    "Verts/ALE": "#009900",
     "Greens/EFA": "#009900",
+    "GUE/NGL": "#800080",
+    "The Left": "#800080",
+    ECR: "#000080",
+    UEN: "#FFA500",
+    EFD: "#24b9b9",
+    EFDD: "#24b9b9",
+    "IND/DEM": "#000000",
+    ENF: "#000000",
     ID: "#000000",
     PfE: "#000000",
-    "IND/DEM": "#000000", // Patriots for Europe - black
     ESN: "#8B4513", // European Sovereign Nations - brown
+    // Not a group: grey, and drawn with a black ring wherever it is drawn.
+    NonAttached: "#BFBFBF",
+    NI: "#BFBFBF",
   };
   return colorMap[groupId] || "#CCCCCC";
 }

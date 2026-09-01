@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-27T00:07:05.112596+00:00",
-    "seconds": 33.0,
-    "git_commit": "c034513c0818e91aeeaad51963e4a92d66c253e3",
+    "started_utc": "2026-08-31T17:10:01.420599+00:00",
+    "seconds": 32.9,
+    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -13,8 +13,8 @@
     "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
   },
   "summary": {
-    "checks": 11,
-    "passed": 11,
+    "checks": 16,
+    "passed": 16,
     "warnings": 0,
     "failures": 0
   },
@@ -23,32 +23,45 @@
     {
       "name": "coalitions",
       "facts": {
+        "mandate 6: groups": "GUE/NGL, Verts/ALE, PSE, ALDE, PPE-DE, UEN, IND/DEM",
         "mandate 6: decided votes classified": "5817 of 5838",
-        "mandate 6: dropped for an absent family": "16 (0.27%)",
+        "mandate 6: dropped for an absent group": "16 (0.27%)",
         "mandate 6: winning coalitions above the floor": "20 of 88 (82% of votes)",
+        "mandate 7: groups": "GUE/NGL, Verts/ALE, S&D, ALDE, PPE, ECR, EFD",
         "mandate 7: decided votes classified": "4355 of 4360",
-        "mandate 7: dropped for an absent family": "3 (0.07%)",
+        "mandate 7: dropped for an absent group": "3 (0.07%)",
         "mandate 7: winning coalitions above the floor": "21 of 82 (82% of votes)",
+        "mandate 8: groups": "GUE/NGL, Verts/ALE, S&D, ALDE, PPE, ECR, EFDD, ENF",
         "mandate 8: decided votes classified": "11275 of 11286",
-        "mandate 8: dropped for an absent family": "0 (0.00%)",
-        "mandate 8: winning coalitions above the floor": "17 of 91 (85% of votes)",
+        "mandate 8: dropped for an absent group": "0 (0.00%)",
+        "mandate 8: votes decided before every group sat": "986 (8.7%) — ENF from 2015-06-24",
+        "mandate 8: winning coalitions above the floor": "25 of 166 (80% of votes)",
+        "mandate 9: groups": "The Left, Verts/ALE, S&D, Renew, PPE, ECR, ID",
         "mandate 9: decided votes classified": "18816 of 18827",
-        "mandate 9: dropped for an absent family": "0 (0.00%)",
+        "mandate 9: dropped for an absent group": "0 (0.00%)",
         "mandate 9: winning coalitions above the floor": "15 of 97 (87% of votes)",
+        "mandate 10: groups": "The Left, Verts/ALE, S&D, Renew, PPE, ECR, PfE, ESN",
         "mandate 10: decided votes classified": "4244 of 4245",
-        "mandate 10: dropped for an absent family": "0 (0.00%)",
-        "mandate 10: winning coalitions above the floor": "13 of 84 (91% of votes)",
-        "votes won by all seven families, first term to last": "11.0% -> 5.8%",
-        "written": "coalitions.json (294 KB)"
+        "mandate 10: dropped for an absent group": "0 (0.00%)",
+        "mandate 10: winning coalitions above the floor": "17 of 132 (86% of votes)",
+        "votes won by every group at once, first term to last": "11.0% (7 groups) -> 2.2% (8 groups)",
+        "written": "coalitions.json (395 KB)"
       },
       "seconds": 32.8
     }
   ],
   "checks": [
     {
+      "name": "mandate 6: every group has a seat",
+      "ok": true,
+      "detail": " is not in GROUP_SEATING, so it would be dropped from every coalition string while still being counted as present",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
       "name": "mandate 6: nearly every vote yields a coalition",
       "ok": true,
-      "detail": "0.3% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "detail": "0.3% of roll-calls had a group with no ballot cast, so the winning-coalition tally is not describing the whole term",
       "fatal": true,
       "step": "coalitions"
     },
@@ -60,9 +73,16 @@
       "step": "coalitions"
     },
     {
+      "name": "mandate 7: every group has a seat",
+      "ok": true,
+      "detail": " is not in GROUP_SEATING, so it would be dropped from every coalition string while still being counted as present",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
       "name": "mandate 7: nearly every vote yields a coalition",
       "ok": true,
-      "detail": "0.1% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "detail": "0.1% of roll-calls had a group with no ballot cast, so the winning-coalition tally is not describing the whole term",
       "fatal": true,
       "step": "coalitions"
     },
@@ -74,23 +94,37 @@
       "step": "coalitions"
     },
     {
+      "name": "mandate 8: every group has a seat",
+      "ok": true,
+      "detail": " is not in GROUP_SEATING, so it would be dropped from every coalition string while still being counted as present",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
       "name": "mandate 8: nearly every vote yields a coalition",
       "ok": true,
-      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "detail": "0.0% of roll-calls had a group with no ballot cast, so the winning-coalition tally is not describing the whole term",
       "fatal": true,
       "step": "coalitions"
     },
     {
       "name": "mandate 8: the listed coalitions cover the term",
       "ok": true,
-      "detail": "coalitions below the 1% floor hold 15% of decided votes",
+      "detail": "coalitions below the 1% floor hold 20% of decided votes",
       "fatal": false,
+      "step": "coalitions"
+    },
+    {
+      "name": "mandate 9: every group has a seat",
+      "ok": true,
+      "detail": " is not in GROUP_SEATING, so it would be dropped from every coalition string while still being counted as present",
+      "fatal": true,
       "step": "coalitions"
     },
     {
       "name": "mandate 9: nearly every vote yields a coalition",
       "ok": true,
-      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "detail": "0.0% of roll-calls had a group with no ballot cast, so the winning-coalition tally is not describing the whole term",
       "fatal": true,
       "step": "coalitions"
     },
@@ -102,23 +136,30 @@
       "step": "coalitions"
     },
     {
+      "name": "mandate 10: every group has a seat",
+      "ok": true,
+      "detail": " is not in GROUP_SEATING, so it would be dropped from every coalition string while still being counted as present",
+      "fatal": true,
+      "step": "coalitions"
+    },
+    {
       "name": "mandate 10: nearly every vote yields a coalition",
       "ok": true,
-      "detail": "0.0% of roll-calls had a family with no ballot cast, so the winning-coalition tally is not describing the whole term",
+      "detail": "0.0% of roll-calls had a group with no ballot cast, so the winning-coalition tally is not describing the whole term",
       "fatal": true,
       "step": "coalitions"
     },
     {
       "name": "mandate 10: the listed coalitions cover the term",
       "ok": true,
-      "detail": "coalitions below the 1% floor hold 9% of decided votes",
+      "detail": "coalitions below the 1% floor hold 14% of decided votes",
       "fatal": false,
       "step": "coalitions"
     },
     {
       "name": "unanimous voting fell across the five terms",
       "ok": true,
-      "detail": "all-seven wins ran 11.0% in the first term and 5.8% in the last, so the site's headline no longer holds",
+      "detail": "all-group wins ran 11.0% in the first term and 2.2% in the last, so the site's headline no longer holds",
       "fatal": false,
       "step": "coalitions"
     }

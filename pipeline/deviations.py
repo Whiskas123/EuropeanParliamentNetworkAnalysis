@@ -253,7 +253,7 @@ def country_group_cells(group_index, country_index, group_names, country_names):
     return out, names
 
 
-def kept_for_view(counts, total_votes, is_subject):
+def kept_for_view(counts, total_votes, is_subject, attendance=None):
     """The participation filter, matching what the published networks used.
 
     The subject rule is the two-door test in `config`: the old share threshold,
@@ -261,6 +261,18 @@ def kept_for_view(counts, total_votes, is_subject):
     subject's votes are lumpy - missing one sitting day can cost 30 points of
     share at a stroke - so the share test alone deletes people who plainly took
     part.
+
+    `attendance` is the count the term's door is tested against, and it is not
+    `counts`. Abstentions never enter the matrix, so `counts` answers "how much
+    evidence of agreement is there" - while the door asks "were they in the
+    room", which abstentions answer yes to. Reading turnout off the agreement
+    count is what kept Assita KANKO out of term 10: 2,606 votes cast, 503 of
+    them abstentions, leaving 2,103 against a bar of 2,123. `network.py` was
+    given the separate count in "Count abstentions as attendance, not as
+    agreement"; this file was not, so the map drew twelve MEPs the profile
+    panel had no figures for. Passed only for the term, because that is the
+    only view where the published networks use it - a per-subject abstention
+    count does not exist, so the subject networks still test the matrix's own.
 
     NOTE: `network.py` still applies only the share test. The published networks
     were built with both doors (term 10's women's rights network has 696 MEPs,
@@ -272,7 +284,8 @@ def kept_for_view(counts, total_votes, is_subject):
     `config.py` on some checkouts; the fallbacks are the published values.
     """
     if not is_subject:
-        return np.flatnonzero(counts > total_votes * config.PARTICIPATION_THRESHOLD)
+        seated = counts if attendance is None else attendance
+        return np.flatnonzero(seated > total_votes * config.PARTICIPATION_THRESHOLD)
     min_votes = getattr(config, "MIN_SUBJECT_PARTICIPATION_VOTES", 30)
     min_share = getattr(config, "MIN_SUBJECT_PARTICIPATION_SHARE", 0.25)
     enough = counts >= min_votes
@@ -284,7 +297,7 @@ def kept_for_view(counts, total_votes, is_subject):
 
 def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
                         not_a_bloc=None, min_target_peers=None,
-                        min_reference_peers=None):
+                        min_reference_peers=None, attendance=None):
     """Deviation from own bloc for every MEP in one view, matched per vote.
 
     `rows` are the matrix rows this view covers - a whole term, or one subject.
@@ -314,7 +327,9 @@ def deviations_for_view(matrix, rows, group_index, group_names, is_subject,
 
     view = matrix[rows]
     counts = (view != 0).sum(axis=0)
-    kept = kept_for_view(counts, len(rows), is_subject)
+    # Turnout decides who is in; the matrix decides what they are worth. See
+    # `kept_for_view` - every figure below is still built from `counts` alone.
+    kept = kept_for_view(counts, len(rows), is_subject, attendance)
     if kept.size < 2:
         return {}, {}, 0.0, 0
 
@@ -669,11 +684,18 @@ def run(report, mandates=None, meps=None):
         for row, subject in enumerate(builder.subject_of_row):
             subject_rows[subject].append(row)
 
+        # Turnout, which is what the term's participation door is tested
+        # against - see `kept_for_view`. Read defensively because it is newer
+        # than `network.py` on some checkouts; without it this falls back to
+        # the matrix's own counts, which is the behaviour that predates it.
+        seated = getattr(builder, "attendance_counts", None)
+
         per_view, per_view_levels = {}, {}
         per_view[None], per_view_levels[None], worst_excess, dropped_cells = (
             deviations_for_view(
             matrix, list(range(len(builder.vote_ids))), group_index,
             group_names, is_subject=False,
+            attendance=seated,
             )
         )
         report.fact(f"mandate {mandate}: MEPs with a term deviation",
@@ -712,6 +734,7 @@ def run(report, mandates=None, meps=None):
                 not_a_bloc=set(),
                 min_target_peers=MIN_COUNTRY_TARGET_PEERS,
                 min_reference_peers=MIN_COUNTRY_REFERENCE_PEERS,
+                attendance=None if view is not None else seated,
             )
             if not result:
                 continue
@@ -783,6 +806,10 @@ def run(report, mandates=None, meps=None):
                     not_a_bloc=set(),
                     min_target_peers=MIN_CELL_TARGET_PEERS,
                     min_reference_peers=MIN_CELL_REFERENCE_PEERS,
+                    # Sliced with the columns, since this pass runs on one
+                    # country's MEPs rather than on the whole House.
+                    attendance=(None if view is not None or seated is None
+                                else seated[columns]),
                 )
                 cell_dropped += view_dropped
                 if not result:
