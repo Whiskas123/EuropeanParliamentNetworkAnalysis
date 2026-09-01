@@ -122,9 +122,12 @@ function getGroupColor(groupId) {
     "The Left": "#800080",
     ECR: "#000080",
     UEN: "#FFA500",
+    // Two far-right lineages, two colours -- kept in step by hand with
+    // src/lib/groupColors.js, which explains the split.
+    "IND/DEM": "#24b9b9",
     EFD: "#24b9b9",
     EFDD: "#24b9b9",
-    "IND/DEM": "#000000",
+    ITS: "#000000",
     ENF: "#000000",
     ID: "#000000",
     PfE: "#000000",

@@ -154,12 +154,20 @@ export const GROUP_COLORS = {
   "The Left": "#800080",
   ECR: "#000080",
   UEN: "#FFA500",
-  // Term 7's EFD is the same teal as term 8's EFDD: one lineage, one colour,
-  // so a reader following it across the two terms is following a colour and
-  // not a legend. The rest of the far right stays black.
+  // Two lineages, two colours. The eurosceptic one — term 6's IND/DEM, term
+  // 7's EFD, term 8's EFDD — is teal in all three terms, so a reader following
+  // it across a term boundary is following a colour and not a legend. The
+  // identitarian one that runs beside it — term 6's ITS, then ENF, ID, PfE —
+  // is black. Term 6 is the first term where both are on the canvas at once,
+  // and drawing them the same colour is what hid that.
+  //
+  // `ITS` was in no map at all until then and fell through to `UNKNOWN_COLOR`:
+  // 2,751 group appearances across the term drawn in the same pale grey as an
+  // MEP the mode knows nothing about.
+  "IND/DEM": "#24b9b9",
   EFD: "#24b9b9",
   EFDD: "#24b9b9",
-  "IND/DEM": "#000000",
+  ITS: "#000000",
   ENF: "#000000",
   ID: "#000000",
   PfE: "#000000",
