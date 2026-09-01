@@ -1803,8 +1803,9 @@ export function exportTrendsSheetSVG({
   parts.push(`<g transform="translate(0 ${n1(y)})">${head.parts.join("")}</g>`);
   y += head.height + 10;
 
-  // The domain covers both the open series and the Parliament behind it, or
-  // the two are drawn at different scales and the comparison is a lie.
+  // Every value the sheet will draw — the open series and the Parliament
+  // behind it — collected first: it is what decides whether there is anything
+  // to draw at all, and where the by-family floor sits.
   const values = [];
   const collect = (source) =>
     (source || []).forEach((row) =>
@@ -1818,9 +1819,25 @@ export function exportTrendsSheetSVG({
   if (values.length === 0) {
     throw new Error("exportTrendsSheetSVG: the series carries no finite value");
   }
-  const lo = Math.max(0, Math.min(...values) - 0.05);
-  const hi = Math.min(1, Math.max(...values) + 0.05);
+  // Fixed at 0-100, as the panel is. The sheet used to fit its axis to the
+  // band the lines occupied, which reads better alone and is the wrong default
+  // for a print of a screen: the same six-point move filled the plot at one
+  // scope and vanished at the next, and a sheet could not be laid beside the
+  // panel it came from. The by-family reading is the panel's one exception and
+  // it is the exception here too — family cohesion lives between 85 and 96, so
+  // it floors at 50, dropping further only if a scope genuinely goes under.
+  const lo = byFamily ? Math.min(0.5, Math.floor(Math.min(...values) * 10) / 10) : 0;
+  const hi = 1;
   const span = hi - lo || 1;
+  // Quarters over a full axis, tenths over the short one: 50/63/75/88 are not
+  // numbers anybody reads off a percentage scale.
+  const tickStep = span > 0.6 ? 0.25 : 0.1;
+  const axisTicks = [];
+  for (let step = Math.ceil((lo - 1e-9) / tickStep); ; step += 1) {
+    const value = step * tickStep;
+    if (value > hi + 1e-9) break;
+    axisTicks.push(Math.round(value * 100) / 100);
+  }
 
   const plot = { left: M + 22, right: M + inner, top: y, height: 215 };
   const plotWidth = plot.right - plot.left;
@@ -1831,8 +1848,7 @@ export function exportTrendsSheetSVG({
   const yAt = (value) => plot.top + plot.height - ((value - lo) / span) * plot.height;
 
   // Gridlines and the percentage axis.
-  [0, 0.25, 0.5, 0.75, 1].forEach((t) => {
-    const value = lo + span * t;
+  axisTicks.forEach((value) => {
     const gy = yAt(value);
     parts.push(svgRule(plot.left, gy, plotWidth, SB_RULE, 0.5));
     parts.push(
@@ -1944,13 +1960,12 @@ export function exportTrendsSheetSVG({
     parts.push(svgRule(M, y, inner, SB_RULE));
     y += 16;
 
-    const scores = pairs.filter(Boolean).map((pair) => pair.score);
-    // Zero floor, as on screen: where the least-agreeing pair sits relative to
-    // never voting together is the reading, and a cropped floor would make an
-    // 18% pair look like a modest dip. Headroom above, because every point
-    // carries its figure on top of it.
+    // The plot above's axis, not a version of it, exactly as on screen: where
+    // the least-agreeing pair sits relative to never voting together is the
+    // reading, and seeing 18 down here under 53 up there only works if both
+    // are measured on the same scale.
     const sLo = 0;
-    const sHi = Math.min(1, Math.max(...scores) + 0.09);
+    const sHi = 1;
     const sSpan = sHi - sLo || 1;
     // Two lines of pair names hang under this plot's axis, and the footer rule
     // is fixed: take the height from what is left rather than from a constant,
@@ -1960,7 +1975,8 @@ export function exportTrendsSheetSVG({
     const sparkY = (value) =>
       spark.top + spark.height - ((value - sLo) / sSpan) * spark.height;
 
-    [0, 0.5, 1].forEach((t) => {
+    // The same quarters as the plot above, for the same reason.
+    [0, 0.25, 0.5, 0.75, 1].forEach((t) => {
       const value = sLo + sSpan * t;
       const gy = sparkY(value);
       parts.push(svgRule(plot.left, gy, plotWidth, SB_RULE, 0.5));
@@ -1983,18 +1999,25 @@ export function exportTrendsSheetSVG({
     sparkPoints.forEach((point, index) => {
       if (!point) return;
       parts.push(trendMarker("circle", point.x, point.y, INK, 2.4));
-      // The last term sits on the right margin, so its figure is hung from the
-      // point rather than centred on it, and dropped under the point rather
-      // than over it — the line arrives at that point from above and the label
-      // sat on top of it.
+      // A figure at either end of the axis leans inward rather than over the
+      // edge, as the panel's does: centred, the first one sat on top of the
+      // axis numbers and the last one hung off the right margin. The last is
+      // also dropped under its point — the line arrives there from above and
+      // the label sat on it.
+      const first = index === 0;
       const last = index === pairs.length - 1;
       parts.push(
-        svgText(point.x + (last ? -4 : 0), point.y + (last ? 9 : -6), fmtPct(pairs[index].score), {
-          size: 6,
-          anchor: last ? "end" : "middle",
-          fill: SB_BODY,
-          monospaceDigits: true,
-        })
+        svgText(
+          point.x + (last ? -4 : first ? 4 : 0),
+          point.y + (last ? 9 : -6),
+          fmtPct(pairs[index].score),
+          {
+            size: 6,
+            anchor: last ? "end" : first ? "start" : "middle",
+            fill: SB_BODY,
+            monospaceDigits: true,
+          }
+        )
       );
     });
 
