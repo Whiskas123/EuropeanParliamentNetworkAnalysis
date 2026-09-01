@@ -148,9 +148,7 @@ oldstuff/webpage/fullhemicicle.svg
 
 # Mandate data directories (too large for git)
 2025/web/public/data/mandate_*/
-# package-lock.json is tracked on purpose: without it Vercel resolves every
-# ^ range fresh on each build, so the deployed sass and d3 drift away from
-# the ones the site was developed against.
+2025/web/package-lock.json
 2025/web/PASSWORD_MANAGEMENT.md
 TODO
 2025/web/scripts/add-cohesion-to-mandate-9-subjects.py
