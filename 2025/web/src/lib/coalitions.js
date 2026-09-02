@@ -182,13 +182,19 @@ export function viewFor(data, mandate, subject = null) {
 /**
  * Who one group shares a side with, in one view.
  *
- * Two readings of the same roll-calls, and the difference between them is the
- * point. `wonTogether` counts only the pivot's *wins* — of the votes this group
- * carried, how often was that one carrying it too. `sameSide` counts every
- * decided vote, win or lose. A group can score high on the first and low on the
- * second by rarely winning except in someone else's company, which is exactly
- * what the far right does: 94% of PfE's wins are votes the EPP also won, while
- * the two are on the same side on 39% of all votes.
+ * Two readings of the same roll-calls. `wonTogether` counts only the pivot's
+ * *wins* — of the votes this group carried, how often was that one carrying it
+ * too. `sameSide` counts every decided vote, win or lose.
+ *
+ * **Only `wonTogether` is drawn.** `sameSide` measures alignment, and so does
+ * the pairwise agreement the whole rest of the site is built from, and the two
+ * disagree by three to six points because this one gives a group a single
+ * position per vote and counts a bloc abstention as a side. Publishing both put
+ * two answers to one question on one screen — the Greens and The Left at 79%
+ * here and 85% in the grid below it. Alignment now comes from `pairwiseShares`
+ * alone. The counts stay in the payload and this function still returns them,
+ * because they are the honest roll-call answer and worth having; nothing draws
+ * them.
  *
  * **Each pair carries its own denominator**, published by the pipeline as
  * `bothWins` and `bothVotes`. Two groups do not always sit at the same time:
@@ -238,6 +244,79 @@ export function allyShares(view, data, mandate, pivot, mode = "wonTogether") {
     denominator: mode === "wonTogether" ? block.wins : block.votes,
     rows,
   };
+}
+
+/**
+ * The two files describe the same term with two spellings for two groups.
+ *
+ * `coalitions.json` takes its names from the pipeline's seating table, which
+ * calls term 9 and 10's left group "The Left" and the liberals "Renew". The
+ * network's cohesion matrix is built from the vote dump's own group ids, which
+ * still say "GUE/NGL" and "RE". They are the same groups. Checked across all
+ * five terms: these two are the only ids that ever disagree, and no term
+ * carries both spellings at once, so the map is unambiguous in both directions.
+ */
+const COHESION_ALIAS = { "The Left": "GUE/NGL", Renew: "RE" };
+
+/**
+ * How much one group's members actually vote like every other group's.
+ *
+ * The pairwise agreement the rest of the site is built from, read off the
+ * cohesion matrix the heatmap draws, and ranked for one pivot group. A cell is
+ * the mean, over every pair of members with one from each group, of the share
+ * of their common votes the two cast the same ballot on — which is exactly the
+ * figure `pipeline/network.py` puts on an edge, and exactly what the printed
+ * tutorial teaches a visitor to compute by hand.
+ *
+ * **Why this and not `allyShares(..., "sameSide")`.** Both answer "how much do
+ * these two groups align" and they disagree by three to six points, because
+ * the roll-call reading gives a group one position per vote — the majority of
+ * its members — and counts a bloc abstention as a side. When 42 of 49 Greens
+ * abstained and The Left voted for, that reads as opposition there and as
+ * silence here. Neither is wrong, but the site published both under the same
+ * word and the same pair of names, so the same question had two answers on one
+ * screen. This is the one that matches the network the reader is looking at.
+ *
+ * **Scope follows the view.** The matrix passed in is whichever one the sidebar
+ * is showing, so under a country or policy-area filter these bars narrow with
+ * it — unlike the roll-call readings beside them, which are always the whole
+ * chamber. The panel says so.
+ *
+ * No counts come back. A cell is a mean of per-pair shares, not a fraction of
+ * one denominator, so there is no "N of M" to print under it; callers that draw
+ * a count line have to leave it blank rather than invent one.
+ *
+ * @param {Object|null} intergroup - `cohesionData.intergroupCohesion`
+ * @param {Object|null} data - from `loadCoalitions`, for the term's group order
+ * @param {number|string} mandate
+ * @param {string} pivot - group id, in `coalitions.json`'s spelling
+ * @returns {{rows: Array<{group: string, share: number}>}|null}
+ */
+export function pairwiseShares(intergroup, data, mandate, pivot) {
+  const axis = intergroup && intergroup.groups;
+  const matrix = intergroup && intergroup.matrix;
+  if (!axis || !matrix || !pivot) return null;
+
+  const columnOf = (id) => {
+    const direct = axis.indexOf(id);
+    if (direct !== -1) return direct;
+    const alias = COHESION_ALIAS[id];
+    return alias ? axis.indexOf(alias) : -1;
+  };
+
+  const row = columnOf(pivot);
+  if (row === -1 || !matrix[row]) return null;
+
+  const rows = groupsIn(data, mandate)
+    .filter((group) => group !== pivot)
+    .map((group) => ({ group, share: matrix[row][columnOf(group)] }))
+    // A pair with no members in common in this view lands as NaN, which JSON
+    // carries as null. Dropped rather than drawn as zero, which would read as
+    // "these two never agreed" instead of "there was nobody to compare".
+    .filter((entry) => typeof entry.share === "number" && isFinite(entry.share))
+    .sort((a, b) => b.share - a.share);
+
+  return rows.length > 0 ? { rows } : null;
 }
 
 /**

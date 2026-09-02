@@ -510,6 +510,10 @@ export default function Sidebar({
           // the same thing on screen, and so does the sheet's own caption.
           subject: selectedSubject || null,
           pivot: coalitionPivot,
+          // The ally block's second column, on the other hand, *is* the
+          // pairwise matrix and does follow every filter — same split as on
+          // screen, and the sheet's own column note says which is which.
+          intergroup: intergroupCohesion,
         }),
       ]);
     } catch (error) {
@@ -538,6 +542,7 @@ export default function Sidebar({
               mandate,
               subject: selectedSubject || null,
               pivot: id,
+              intergroup: intergroupCohesion,
             }),
           ]);
         } catch (error) {
@@ -627,6 +632,10 @@ export default function Sidebar({
             selectedSubject={selectedSubject}
             pivot={coalitionPivot}
             onPivotChange={setCoalitionPivot}
+            /* Its "how they vote" reading is this same matrix, ranked for one
+               group. Passed in rather than re-derived so the panel and the grid
+               under it can never print two numbers for one pair. */
+            intergroupCohesion={intergroupCohesion}
           />
           {intergroupCohesion ? (
             <CohesionHeatmap

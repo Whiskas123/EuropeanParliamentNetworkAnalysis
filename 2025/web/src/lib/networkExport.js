@@ -41,6 +41,7 @@ import { FAMILIES, FAMILY_ORDER, pairKey } from "./families.js";
 import {
   allyShares,
   coalitionsFor,
+  pairwiseShares,
   groupInfo,
   groupsIn,
   renamesFor,
@@ -2303,6 +2304,8 @@ function openingCap(text) {
  * @param {string|null} options.subject - policy area, or null for the term
  * @param {string|null} options.pivot - the family the panel has selected, or
  *   null for the whole-chamber ranking
+ * @param {Object|null} options.intergroup - `cohesionData.intergroupCohesion`
+ *   for this scope; required whenever `pivot` is set
  * @returns {string} a complete <svg> document
  */
 export function exportCoalitionsSheetSVG({
@@ -2311,14 +2314,28 @@ export function exportCoalitionsSheetSVG({
   mandate,
   subject = null,
   pivot = null,
+  intergroup = null,
 } = {}) {
   const view = viewFor(data, mandate, subject);
   if (!view) {
     throw new Error("exportCoalitionsSheetSVG: this scope decides no votes");
   }
+  // Refused rather than defaulted. The ally block's right-hand column is the
+  // site's pairwise agreement and there is nowhere else to get it; falling back
+  // to the retired roll-call measure would put a number on paper that the grid
+  // on screen contradicts, which is the exact failure this column was changed
+  // to end. A caller that wants the ranking alone can pass no pivot.
+  if (pivot && !intergroup) {
+    throw new Error(
+      "exportCoalitionsSheetSVG: a pivot sheet needs `intergroup` " +
+        "(cohesionData.intergroupCohesion for this scope)"
+    );
+  }
   const seating = groupsIn(data, mandate);
   const rows = coalitionsFor(view, pivot);
-  const allies = pivot ? allyReadings(view, data, mandate, pivot) : null;
+  const allies = pivot
+    ? allyReadings(view, data, mandate, pivot, intergroup)
+    : null;
   if (rows.length === 0 && !allies) {
     throw new Error("exportCoalitionsSheetSVG: nothing to draw");
   }
@@ -2533,9 +2550,9 @@ function renameNote(data, mandate, seating) {
  * exists and the missing cells are drawn as dashes rather than as zeroes,
  * which would read as "stood with nobody" instead of "won nothing".
  */
-function allyReadings(view, data, mandate, pivot) {
+function allyReadings(view, data, mandate, pivot, intergroup) {
   const won = allyShares(view, data, mandate, pivot, "wonTogether");
-  const same = allyShares(view, data, mandate, pivot, "sameSide");
+  const same = pairwiseShares(intergroup, data, mandate, pivot);
   if (!won && !same) return null;
   return {
     won,
@@ -2550,10 +2567,10 @@ function allyReadings(view, data, mandate, pivot) {
         shares: won,
       },
       {
-        label: "Every vote",
+        label: "How they vote",
         note: same
-          ? `of all ${thousandsSep(same.votes)} decided votes`
-          : "it sat in no decided vote here",
+          ? "share of common votes cast the same way"
+          : "no members to compare in this view",
         shares: same,
       },
     ],
@@ -2563,8 +2580,10 @@ function allyReadings(view, data, mandate, pivot) {
 /** What the two columns are, in the panel's own words. */
 function allyReadingsLede(group) {
   return (
-    `Two readings of the same roll-calls. Left: of the votes ${group.sentence} won, ` +
-    `who else won too. Right: of every decided vote, who took the same side, win or lose.`
+    `Two questions, two denominators. Left: of the votes ${group.sentence} won, ` +
+    `who else won too. Right: how often the two groups' members cast the same ` +
+    `ballot. A group that wins only in someone else's company scores high on ` +
+    `the left and low on the right.`
   );
 }
 
@@ -2648,16 +2667,23 @@ function allyColumns(readings, mandate, M, inner, options = {}) {
       if (counts) {
         // The tooltip's own line, which paper has no way to summon: the share
         // is a fraction of a stated denominator, not a score out of nothing.
-        parts.push(
-          svgText(
-            trackX,
-            top + rowH * 0.82,
-            row
-              ? `${thousandsSep(row.count)} of ${thousandsSep(row.denominator)}`
-              : "no votes to count",
-            { size: size - 2.6, fill: SB_MUTED, monospaceDigits: true }
-          )
-        );
+        // Only a roll-call reading has a denominator to name. An agreement is
+        // a mean of per-pair shares, so the line stays blank rather than
+        // borrowing a number from the column beside it.
+        const denom = row && Number.isFinite(row.denominator)
+          ? `${thousandsSep(row.count)} of ${thousandsSep(row.denominator)}`
+          : row
+            ? ""
+            : "no votes to count";
+        if (denom) {
+          parts.push(
+            svgText(trackX, top + rowH * 0.82, denom, {
+              size: size - 2.6,
+              fill: SB_MUTED,
+              monospaceDigits: true,
+            })
+          );
+        }
       }
     });
   });
@@ -2741,6 +2767,8 @@ function widestGapSentence(readings, group, mandate) {
  * @param {number|string} options.mandate
  * @param {string|null} options.subject - policy area, or null for the term
  * @param {string} options.pivot - the group this sheet is about
+ * @param {Object} options.intergroup - `cohesionData.intergroupCohesion` for
+ *   this scope, which the right-hand column is read from
  * @returns {string} a complete <svg> document
  */
 export function exportGroupAlliesSheetSVG({
@@ -2749,16 +2777,23 @@ export function exportGroupAlliesSheetSVG({
   mandate,
   subject = null,
   pivot,
+  intergroup = null,
 } = {}) {
   if (!groupsIn(data, mandate).includes(pivot)) {
     throw new Error(`exportGroupAlliesSheetSVG: no group "${pivot}" in T${mandate}`);
+  }
+  if (!intergroup) {
+    throw new Error(
+      "exportGroupAlliesSheetSVG: needs `intergroup` " +
+        "(cohesionData.intergroupCohesion for this scope)"
+    );
   }
   const group = groupInfo(pivot, mandate);
   const view = viewFor(data, mandate, subject);
   if (!view) {
     throw new Error("exportGroupAlliesSheetSVG: this scope decides no votes");
   }
-  const readings = allyReadings(view, data, mandate, pivot);
+  const readings = allyReadings(view, data, mandate, pivot, intergroup);
   if (!readings) {
     throw new Error(`exportGroupAlliesSheetSVG: ${group.label} did not sit here`);
   }
