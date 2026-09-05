@@ -215,6 +215,36 @@ async function loadMEPInfo(mandate) {
 }
 
 /**
+ * The agreement-by-subject scores for one scope, as {mepId: {...}}.
+ *
+ * These are keyed by (MEP, subject, group) and so do not depend on which
+ * subject the view is filtered to: term 8's blob is the same whether you are
+ * looking at Legal Affairs or Fisheries. It used to be written into all
+ * twenty-one layout files of a scope, byte for byte the same 7.8 MB each
+ * time — 1.08 GB of duplication across the 2,775 files, more than half of
+ * everything under precomputed/. It now lives in one file per scope, which
+ * the layout loader merges back in.
+ *
+ * Held as the in-flight promise so that the twenty-one views sharing a scope
+ * share one request.
+ */
+const similarityPromises = {};
+
+function loadSimilarityScores(mandate, country = null) {
+  const countryKey = country ? country.replace(/\s+/g, "_") : null;
+  const key = countryKey ? `${mandate}_${countryKey}` : `${mandate}`;
+  if (similarityPromises[key] === undefined) {
+    similarityPromises[key] = fetch(`/data/precomputed/similarity_${key}.json`)
+      .then((response) => (response.ok ? response.json() : null))
+      .catch((error) => {
+        console.warn(`Similarity scores not available for ${key}:`, error);
+        return null;
+      });
+  }
+  return similarityPromises[key];
+}
+
+/**
  * Load precomputed layout data for a mandate
  * @param {number} mandate - Mandate number
  * @param {string|null} country - Country name (optional, for country-filtered network)
@@ -247,11 +277,20 @@ async function loadPrecomputedLayout(mandate, country = null, subject = null) {
     // time, and every one of them was missing `NonAttached`. See groupColors.js.
     normaliseGroupColors(precomputed);
 
-    // Load and merge MEP info, and how many of this view's votes each cast
-    const [mepInfo, votesCast] = await Promise.all([
+    // Load and merge MEP info, how many of this view's votes each cast, and
+    // the scope's agreement-by-subject scores. The last of these is only
+    // fetched when the layout file does not carry its own copy, so a file
+    // written before the scores were hoisted still works unchanged.
+    const [mepInfo, votesCast, sharedSimilarity] = await Promise.all([
       loadMEPInfo(mandate),
       getVotesCast(mandate, subject),
+      precomputed.similarityScores
+        ? null
+        : loadSimilarityScores(mandate, country),
     ]);
+    if (sharedSimilarity) {
+      precomputed.similarityScores = sharedSimilarity;
+    }
     if ((mepInfo || votesCast) && precomputed.nodes) {
       precomputed.nodes = precomputed.nodes.map((node) => {
         const info = mepInfo && mepInfo[node.id];
@@ -329,235 +368,8 @@ async function countVotingSessions(mandate, subject = null) {
 }
 
 /**
- * Load data from JSON format (includes all edges, normalized to [0,1])
- * Also tries to load positions from precomputed layout if available
- * @param {number} mandate - Mandate number
- * @param {string|null} country - Country name (optional, for country-filtered network)
- * @param {string|null} subject - Subject name (optional, for subject-filtered network)
- * @returns {Promise<Object|null>} Data object or null if not found
- */
-async function loadJsonData(mandate, country = null, subject = null) {
-  try {
-    const url = `/data/mandate_${mandate}/data.json`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      return null;
-    }
-    const data = await response.json();
-
-    // Try to load positions, similarity scores, agreement scores, and cohesion data from precomputed layout
-    const precomputed = await loadPrecomputedLayout(mandate, country, subject);
-    const positionMap = new Map();
-    let similarityScores = null;
-    let agreementScores = null;
-    let cohesionData = null;
-    if (precomputed && precomputed.nodes) {
-      precomputed.nodes.forEach((node) => {
-        if (node.x !== undefined && node.y !== undefined) {
-          positionMap.set(node.id, { x: node.x, y: node.y });
-        }
-      });
-    }
-    if (precomputed && precomputed.similarityScores) {
-      similarityScores = precomputed.similarityScores;
-    }
-    // Load agreement scores from precomputed layout
-    // If subject is selected, also load all-subjects agreement scores (for "All Subjects" dropdown option)
-    // Always prefer all-subjects agreement scores to ensure they're calculated from all edges
-    if (subject && !country) {
-      const allSubjectsPrecomputed = await loadPrecomputedLayout(
-        mandate,
-        null,
-        null
-      );
-      if (allSubjectsPrecomputed && allSubjectsPrecomputed.agreementScores) {
-        // Use all-subjects agreement scores to ensure "All Subjects" shows correct values
-        agreementScores = allSubjectsPrecomputed.agreementScores;
-      } else if (precomputed && precomputed.agreementScores) {
-        // Fallback to subject-specific agreement scores if all-subjects not available
-        agreementScores = precomputed.agreementScores;
-      }
-    } else if (precomputed && precomputed.agreementScores) {
-      agreementScores = precomputed.agreementScores;
-    }
-    // Load cohesion data from precomputed layout
-    if (precomputed && precomputed.cohesionData) {
-      cohesionData = {
-        ...precomputed.cohesionData,
-        intergroupCohesion: precomputed.cohesionData.intergroupCohesion
-          ? {
-              ...precomputed.cohesionData.intergroupCohesion,
-              groupColors: new Map(
-                Object.entries(
-                  precomputed.cohesionData.intergroupCohesion.groupColors || {}
-                )
-              ),
-            }
-          : null,
-      };
-    }
-
-    // Same counts the precomputed path merges in; see getVotesCast.
-    const votesCast = await getVotesCast(mandate, subject);
-
-    // Convert JSON format to expected format
-    let nodes = data.nodes.map((node) => {
-      const nodeData = {
-        id: node.Id,
-        label: node.FullName,
-        country: node.Country,
-        groupId: node.GroupID,
-        color: getGroupColor(node.GroupID),
-        // Include additional MEP information
-        partyNames: node.PartyNames || [],
-        photoURL: node.PhotoURL || null,
-        groups: node.Groups || [], // Array of {groupid, start, end}
-      };
-
-      if (votesCast) {
-        nodeData.votesCast = votesCast[node.Id] ?? null;
-      }
-
-      // Add positions from precomputed layout if available
-      const positions = positionMap.get(node.Id);
-      if (positions) {
-        nodeData.x = positions.x;
-        nodeData.y = positions.y;
-      }
-
-      return nodeData;
-    });
-
-    // Get edges - either from subject or all edges
-    let edges;
-    if (subject && data.edgesBySubject && data.edgesBySubject[subject]) {
-      edges = data.edgesBySubject[subject].map((edge) => ({
-        source: edge.Source,
-        target: edge.Target,
-        weight: parseFloat(edge.Weight) || 0,
-      }));
-    } else {
-      edges = data.edges.map((edge) => ({
-        source: edge.Source,
-        target: edge.Target,
-        weight: edge.Weight, // Already normalized to [0,1]
-      }));
-    }
-
-    // Extract metadata if available
-    let metadata = data.metadata || {};
-
-    // If subject is specified, count unique voting sessions for that subject
-    if (subject) {
-      const subjectVotingSessions = await countVotingSessions(mandate, subject);
-      metadata = {
-        ...metadata,
-        votingSessions: subjectVotingSessions,
-      };
-    } else if (!metadata.votingSessions) {
-      // For general case, count all unique voting sessions if not in metadata
-      const allVotingSessions = await countVotingSessions(mandate, null);
-      if (allVotingSessions !== null) {
-        metadata = {
-          ...metadata,
-          votingSessions: allVotingSessions,
-        };
-      }
-    }
-
-    // Filter nodes to only include those present in the edges when subject is selected
-    // This ensures the network only shows MEPs that actually participated in the selected subject
-    if (subject && edges.length > 0) {
-      const nodeIdsInEdges = new Set();
-      edges.forEach((edge) => {
-        nodeIdsInEdges.add(edge.source);
-        nodeIdsInEdges.add(edge.target);
-      });
-      nodes = nodes.filter((node) => nodeIdsInEdges.has(node.id));
-      
-      // Filter similarity scores to only include nodes in the network
-      if (similarityScores) {
-        const filteredSimilarityScores = {};
-        nodes.forEach((node) => {
-          if (similarityScores[node.id]) {
-            filteredSimilarityScores[node.id] = similarityScores[node.id];
-          }
-        });
-        similarityScores = filteredSimilarityScores;
-      }
-      
-      // Filter agreement scores to only include nodes in the network
-      if (agreementScores) {
-        const filteredAgreementScores = {};
-        nodes.forEach((node) => {
-          if (agreementScores[node.id]) {
-            filteredAgreementScores[node.id] = agreementScores[node.id];
-          }
-        });
-        agreementScores = filteredAgreementScores;
-      }
-    }
-
-    // Filter by country if requested
-    if (country) {
-      const countryNodes = nodes.filter((node) => node.country === country);
-      const countryNodeIds = new Set(countryNodes.map((n) => n.id));
-      const countryEdges = edges.filter(
-        (edge) =>
-          countryNodeIds.has(edge.source) && countryNodeIds.has(edge.target)
-      );
-      // Filter similarity scores to only include country nodes
-      let filteredSimilarityScores = null;
-      if (similarityScores) {
-        filteredSimilarityScores = {};
-        countryNodes.forEach((node) => {
-          if (similarityScores[node.id]) {
-            filteredSimilarityScores[node.id] = similarityScores[node.id];
-          }
-        });
-      }
-      // Filter agreement scores to only include country nodes
-      let filteredAgreementScores = null;
-      if (agreementScores) {
-        filteredAgreementScores = {};
-        countryNodes.forEach((node) => {
-          if (agreementScores[node.id]) {
-            filteredAgreementScores[node.id] = agreementScores[node.id];
-          }
-        });
-      }
-      return {
-        nodes: countryNodes,
-        edges: countryEdges,
-        metadata,
-        similarityScores: filteredSimilarityScores,
-        agreementScores: filteredAgreementScores,
-        cohesionData: cohesionData,
-      };
-    }
-
-    return {
-      nodes,
-      edges,
-      metadata,
-      similarityScores,
-      agreementScores,
-      cohesionData,
-    };
-  } catch (error) {
-    console.warn(
-      `JSON data not found for mandate ${mandate}${
-        country ? ` - ${country}` : ""
-      }${subject ? ` - ${subject}` : ""}:`,
-      error
-    );
-    return null;
-  }
-}
-
-/**
- * Load both nodes and edges for a mandate
- * Tries JSON format first (all edges), then precomputed layout
+ * Load both nodes and edges for a mandate, from the precomputed layout for
+ * the requested scope. There is one for every mandate x country x subject.
  * @param {number} mandate - Mandate number
  * @param {string|null} country - Country name (optional, for country-filtered network)
  * @param {string|null} subject - Subject name (optional, for subject-filtered network)
@@ -580,7 +392,17 @@ export async function loadMandateData(mandate, country = null, subject = null) {
     // per-MEP country similarity. Verified before the switch: agreement scores
     // match the full set exactly, and no MEP's five closest neighbours change.
     const precomputed = await loadPrecomputedLayout(mandate, country, subject);
-    if (precomputed && precomputed.nodes && precomputed.edges) {
+    // `edges` is checked for being an array rather than for being truthy: a
+    // scope small enough to have no pair above the 0.6 cut — Estonia on
+    // Parliamentary Procedure is five MEPs — has a legitimately empty edge
+    // list, and treating that as a miss used to send the browser after the
+    // 370 MB data.json to draw a network that has no edges either.
+    if (
+      precomputed &&
+      Array.isArray(precomputed.nodes) &&
+      precomputed.nodes.length > 0 &&
+      Array.isArray(precomputed.edges)
+    ) {
       console.log(
         `Using precomputed layout for mandate ${mandate}${
           country ? ` - ${country}` : ""
@@ -685,6 +507,10 @@ export async function loadMandateData(mandate, country = null, subject = null) {
               label: node.label,
               groupId: node.groupId,
               country: node.country,
+              // Carried so the Overview panel can say *how far* short each one
+              // fell rather than only that they were dropped. Null when the
+              // per-MEP counts have not been merged.
+              votesCast: node.votesCast ?? null,
             }));
           nodes = kept;
           const pick = (source) =>
@@ -732,28 +558,19 @@ export async function loadMandateData(mandate, country = null, subject = null) {
       };
     }
 
-    // Fallback: the full data.json. Reached when a view has no precomputed
-    // file of its own — chiefly a country x subject combination that was never
-    // generated. Correct but slow, so it is the exception rather than, as
-    // before, the default path for every view.
-    console.warn(
+    // There is no longer a fallback. Every mandate x country x subject scope
+    // has a precomputed file — all 2,754 of them — so the only way to get
+    // here is a genuinely absent or malformed file, which is worth failing
+    // loudly for rather than papering over. The raw per-term data.json that
+    // used to back this path was 1.6 GB across the five terms and, being
+    // shipped inside every deployment, was the largest single item in the
+    // hosting bill for something no reader ever fetched.
+    throw new Error(
       `No precomputed layout for mandate ${mandate}${
         country ? ` - ${country}` : ""
-      }${subject ? ` - ${subject}` : ""}; falling back to data.json`
-    );
-    const jsonData = await loadJsonData(mandate, country, subject);
-    if (jsonData && jsonData.nodes && jsonData.edges) {
-      return {
-        ...jsonData,
-        countrySimilarityByMep: await getCountrySimilarity(mandate, subject),
-      };
-    }
-
-    // No data found - throw error instead of falling back to CSV
-    throw new Error(
-      `No data found for mandate ${mandate}${country ? ` - ${country}` : ""}${
+      }${
         subject ? ` - ${subject}` : ""
-      }. Please ensure data.json or precomputed layout files exist.`
+      }. Run \`npm run precompute\` to regenerate it.`
     );
   } catch (error) {
     console.error(

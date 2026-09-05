@@ -95,27 +95,11 @@ export default function SubjectSelector({
           }
         }
 
-        // Fallback: load from data.json
-        const response = await fetch(
-          `/data/mandate_${currentMandate}/data.json`
-        );
-        if (cancelled) return;
-        if (!response.ok) {
-          commit([], null);
-          return;
-        }
-        const data = await response.json();
-        if (cancelled) return;
-
-        // Get subjects from edgesBySubject
-        if (data.edgesBySubject) {
-          const subjectList = Object.keys(data.edgesBySubject)
-            .map((name) => ({ name, votingSessions: null }))
-            .sort(byName);
-          commit(subjectList, null);
-        } else {
-          commit([], null);
-        }
+        // Nothing else to try. This used to reach for the term's data.json and
+        // read its subject list off `edgesBySubject`, which meant downloading
+        // ~300 MB to populate a dropdown of twenty strings. Both sources above
+        // already carry the list, so the file earned its removal.
+        commit([], null);
       } catch (error) {
         console.error("Error loading subjects:", error);
         commit([], null);

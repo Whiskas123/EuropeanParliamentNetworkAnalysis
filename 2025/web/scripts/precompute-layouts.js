@@ -99,6 +99,36 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
+// Scopes whose agreement-by-subject scores have already been written this run.
+const similarityWritten = new Set();
+
+/**
+ * Write one layout file, with the agreement-by-subject scores hoisted out.
+ *
+ * Those scores are keyed by (MEP, subject, group), so every layout file of a
+ * scope — the term itself and each of its twenty subjects — used to carry the
+ * identical blob: 7.8 MB apiece for a whole term. Across the 2,775 files that
+ * came to 1.14 GB of which only 58 MB was distinct, and all of it shipped
+ * inside every Vercel deployment. They now go to one `similarity_<scope>.json`
+ * that the loader merges back in, written on first sight of the scope.
+ *
+ * The object handed in is left alone; only what reaches disk is trimmed.
+ */
+async function writeLayout(outputPath, data, mandate, country = null) {
+  const scope = country
+    ? `${mandate}_${country.replace(/\s+/g, "_")}`
+    : `${mandate}`;
+  if (data.similarityScores && !similarityWritten.has(scope)) {
+    similarityWritten.add(scope);
+    await fsPromises.writeFile(
+      path.join(OUTPUT_DIR, `similarity_${scope}.json`),
+      JSON.stringify(data.similarityScores)
+    );
+  }
+  const { similarityScores, ...layout } = data;
+  await fsPromises.writeFile(outputPath, JSON.stringify(layout));
+}
+
 // Color mapping for groups.
 //
 // A hand-kept copy of src/lib/groupColors.js, which this script cannot import:
@@ -836,10 +866,7 @@ async function precomputeLayoutForCountry(
     };
 
     console.log(`    Writing to file...`);
-    await fsPromises.writeFile(
-      countryOutputPath,
-      JSON.stringify(precomputedData) // No pretty printing to save memory
-    );
+    await writeLayout(countryOutputPath, precomputedData, mandate, country);
     console.log(`    ✓ Saved to ${countryOutputPath}`);
 
     return precomputedData;
@@ -1124,10 +1151,7 @@ async function precomputeLayoutForSubject(
     };
 
     console.log(`    Writing to file...`);
-    await fsPromises.writeFile(
-      outputPath,
-      JSON.stringify(precomputedData) // No pretty printing to save memory
-    );
+    await writeLayout(outputPath, precomputedData, mandate);
     console.log(`    ✓ Saved to ${outputPath}`);
 
     return precomputedData;
@@ -1452,10 +1476,7 @@ async function precomputeLayoutForCountryAndSubject(
     };
 
     console.log(`    Writing to file...`);
-    await fsPromises.writeFile(
-      outputPath,
-      JSON.stringify(precomputedData) // No pretty printing to save memory
-    );
+    await writeLayout(outputPath, precomputedData, mandate, country);
     console.log(`    ✓ Saved to ${outputPath}`);
 
     return precomputedData;
@@ -1764,10 +1785,7 @@ async function precomputeLayout(
     };
 
     console.log(`  Writing to file...`);
-    await fsPromises.writeFile(
-      outputPath,
-      JSON.stringify(precomputedData) // No pretty printing to save memory
-    );
+    await writeLayout(outputPath, precomputedData, mandate);
     console.log(`  ✓ Saved to ${outputPath}`);
 
     return precomputedData;
