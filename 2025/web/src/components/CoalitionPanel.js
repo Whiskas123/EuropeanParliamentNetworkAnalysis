@@ -9,6 +9,7 @@ import {
   groupsIn,
   loadCoalitions,
   opening,
+  pairwiseShares,
   renamesFor,
   sittingOf,
   viewFor,
@@ -21,22 +22,39 @@ import "../styles/coalitions.scss";
 /**
  * Who actually wins votes together.
  *
- * Every other figure in this tab is pairwise similarity: over a term, how often
- * two MEPs cast the same ballot. That measure cannot answer "who governs with
+ * The rest of this tab measures pairwise similarity: over a term, how often two
+ * MEPs cast the same ballot. That measure cannot answer "who governs with
  * whom", because it is dominated by the roll-calls nobody contests — a group
  * can look like everyone's friend while losing consistently to a coalition it
- * is not in. This panel classifies whole roll-calls instead; see
+ * is not in. So this panel also classifies whole roll-calls; see
  * pipeline/coalitions.py.
+ *
+ * It used to answer the alignment question *as well*, with its own roll-call
+ * measure, and that was the mistake. "How often were these two groups on the
+ * same side" and "how often do their members vote alike" are close enough to
+ * wear the same word and far enough apart to disagree by three to six points,
+ * and the panel printed one while the grid directly beneath printed the other,
+ * for the same pair, under the same two names. A reader who noticed was right
+ * to call it incoherent. Alignment now comes from one place — the pairwise
+ * matrix, `pairwiseShares` — and this panel keeps only the question its own
+ * classification is the sole way to answer.
  *
  * Two questions, and with no group selected only the second.
  *
  * **Who does this group share a side with**, in two readings whose *difference*
- * is the finding. "When it wins" counts only the votes the group carried, and
- * asks who was carrying them too. "Every vote" counts all decided roll-calls,
- * win or lose. For PfE in term 10 those read 94% and 39% for the EPP: it almost
- * never wins except on votes the EPP is already winning. A group with its own
- * majority — the EPP, 92% and 88% with Renew — scores alike on both. One number
- * cannot say that, which is why the toggle is not a convenience.
+ * is the finding. "When it wins" counts only the votes the group carried and
+ * asks who was carrying them too — a roll-call count, from this panel's own
+ * data. "How they vote" is the pairwise agreement between the two groups'
+ * members, read off the same matrix the grid below draws.
+ *
+ * The two have different denominators on purpose, and the gap between them is
+ * the whole point. Term 10's PfE: on 93% of the votes it won, the EPP won too
+ * — but PfE and EPP members vote the same way only 44% of the time. It almost
+ * never wins except on votes the EPP was already winning. The gap tracks how
+ * little a group wins on its own terms, without exception across term 10: EPP
+ * +8 points, S&D +10, Greens +11, ECR +39, PfE +49, ESN +56. A group with its
+ * own majority scores alike on both; a passenger does not. One number cannot
+ * say that, which is why the toggle is not a convenience.
  *
  * **What wins**, ranked. Every coalition taking at least 1% of the term's
  * decided votes, so the list is as long as the term was fragmented.
@@ -84,9 +102,13 @@ const MODES = [
     title: "Of the votes this group won, how often each other group won too",
   },
   {
-    id: "sameSide",
-    text: "Every vote",
-    title: "Of all decided votes, how often each other group took the same side",
+    // Not a roll-call count like its neighbour: this is the site's pairwise
+    // agreement, the same figure the grid below and the network's own edges
+    // carry. See `pairwiseShares` for why the roll-call version was retired.
+    id: "agreement",
+    text: "How they vote",
+    title:
+      "How often members of the two groups cast the same ballot, averaged over every pair",
   },
 ];
 
@@ -119,6 +141,10 @@ export default function CoalitionPanel({
   mandate,
   selectedCountry = null,
   selectedSubject = null,
+  // The cohesion matrix for whatever the sidebar is currently showing, so the
+  // agreement reading narrows with a country or policy-area filter exactly as
+  // the grid below it does. The roll-call readings never do; the panel says so.
+  intergroupCohesion = null,
   // null is a real state, not "nothing chosen yet": it means the whole chamber,
   // and it is what the ranking below shows when no group is picked. Owned by
   // the sidebar so the SVG export can draw the group actually on screen.
@@ -175,13 +201,16 @@ export default function CoalitionPanel({
     [data, mandate]
   );
 
-  const allies = useMemo(
-    () =>
-      data && view && group
-        ? allyShares(view, data, mandate, group.id, mode)
-        : null,
-    [data, view, mandate, group, mode]
-  );
+  // Two sources, deliberately. "When it wins" is this panel's own roll-call
+  // classification, the one question nothing else on the page can answer. "How
+  // they vote" is the site's pairwise agreement, so that figure has exactly one
+  // origin and cannot contradict the grid below it.
+  const allies = useMemo(() => {
+    if (!data || !view || !group) return null;
+    return mode === "agreement"
+      ? pairwiseShares(intergroupCohesion, data, mandate, group.id)
+      : allyShares(view, data, mandate, group.id, "wonTogether");
+  }, [data, view, mandate, group, mode, intergroupCohesion]);
 
   const ranking = useMemo(
     () => (view ? coalitionsFor(view, group ? group.id : null) : []),
@@ -210,8 +239,9 @@ export default function CoalitionPanel({
         {group ? `${opening(group.possessive)} winning coalitions` : "Winning coalitions"}
       </h4>
       <p className="sb-panel-desc">
-        Which political groups win together in {termShort}. Every group&rsquo;s
-        position on a vote is the majority of its own members.
+        Who wins with whom in {termShort}, and how much their members actually
+        vote alike. For the coalitions, a group&rsquo;s position on a vote is the
+        majority of its own members.
       </p>
 
       <div className="coalitions-chips" role="group" aria-label="Political group">
@@ -254,16 +284,22 @@ export default function CoalitionPanel({
 
       {selectedCountry && (
         <p className="sb-note coalitions-caveat">
-          Coalitions are counted across the whole Parliament. A group&rsquo;s
-          direction on a vote is its members everywhere, so there is no{" "}
-          {selectedCountry} version of this figure — unlike the agreement
-          numbers above, which do follow the filter.
+          Coalitions and &ldquo;when it wins&rdquo; are counted across the whole
+          Parliament. A group&rsquo;s direction on a vote is its members
+          everywhere, so there is no {selectedCountry} version of those figures.
+          &ldquo;How they vote&rdquo; does follow the filter, and compares only{" "}
+          {selectedCountry}&rsquo;s members of each group — on a small delegation
+          that can be a handful of people.
         </p>
       )}
 
       {!data && <p className="sb-status coalitions-status">Reading the roll-calls…</p>}
 
-      {data && group && allies && (
+      {/* Rendered even when this reading is empty, because the toggle lives
+          inside it: dropping the block on a missing figure used to strand the
+          reader in the mode with no data and no way back. AllyBars says what is
+          missing instead. */}
+      {data && group && (
         <AllyBars
           allies={allies}
           mode={mode}
@@ -272,12 +308,6 @@ export default function CoalitionPanel({
           mandate={mandate}
           termShort={termShort}
         />
-      )}
-
-      {data && group && !allies && (
-        <p className="sb-note coalitions-status">
-          {opening(group.sentence)} did not sit in this view.
-        </p>
       )}
 
       {data && group && <LateSeat view={term} group={group} termShort={termShort} />}
@@ -364,20 +394,31 @@ function AllyBars({ allies, mode, onMode, group, mandate, termShort }) {
 
       <p className="sb-section-lede" id={`${id}-lede`}>
         {mode === "wonTogether" ? (
+          allies ? (
+            <>
+              Of the <strong>{thousands(allies.wins)}</strong> votes{" "}
+              {group.sentence} won in {termShort} — {whole(allies.wins / allies.votes)} of
+              all votes — how often each other group was on the winning side too.
+            </>
+          ) : (
+            <>{opening(group.sentence)} carried no vote in this view.</>
+          )
+        ) : allies ? (
           <>
-            Of the <strong>{thousands(allies.wins)}</strong> votes{" "}
-            {group.sentence} won in {termShort} — {whole(allies.wins / allies.votes)} of
-            all votes — how often each other group was on the winning side too.
+            How often a member of {group.sentence} and a member of each other
+            group cast the same ballot, counted over the votes both took part in
+            and averaged across every such pair. The same measure as the grid
+            below, and as the distance between them on the network.
           </>
         ) : (
           <>
-            Of all <strong>{thousands(allies.votes)}</strong> decided votes{" "}
-            {group.sentence} sat in {termShort}, how often each other group took
-            the same side, win or lose.
+            No agreement figure for {group.sentence} here — too few of its
+            members cleared this view&rsquo;s participation threshold.
           </>
         )}
       </p>
 
+      {allies && (
       <ul className="coalitions-allies" aria-describedby={`${id}-lede`}>
         {allies.rows.map((row) => {
           const other = groupInfo(row.group, mandate);
@@ -402,14 +443,20 @@ function AllyBars({ allies, mode, onMode, group, mandate, termShort }) {
               </span>
               <span className="coalitions-ally-value">{whole(row.share)}</span>
               <span className="coalitions-ally-tip" role="tooltip">
-                {`${thousands(row.count)} of ${thousands(row.denominator)} votes — ${pct(
-                  row.share
-                )}`}
+                {/* A roll-call reading is a fraction of a stated denominator; an
+                    agreement is a mean of per-pair shares and has none, so it
+                    says what it is rather than inventing an "N of M". */}
+                {Number.isFinite(row.denominator)
+                  ? `${thousands(row.count)} of ${thousands(row.denominator)} votes — ${pct(
+                      row.share
+                    )}`
+                  : `${pct(row.share)} of the votes each pair had in common`}
               </span>
             </li>
           );
         })}
       </ul>
+      )}
     </div>
   );
 }
