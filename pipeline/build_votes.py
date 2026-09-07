@@ -15,6 +15,23 @@ from .report import PipelineError
 from .subjects import SubjectResolver, session_reference
 
 
+def iter_raw_sessions():
+    """Every raw session: the Parltrack dump, then anything newer fetched from
+    the EP directly. The dump wins on a duplicate vote id, so if a later dump
+    ever covers these sittings the supplement quietly stops contributing."""
+    seen = set()
+    for path in (config.RAW_VOTES, config.RAW_VOTES_EXTRA):
+        if not path.exists():
+            continue
+        for session in iter_json_array(str(path)):
+            vid = session.get("voteid")
+            if vid is not None:
+                if vid in seen:
+                    continue
+                seen.add(vid)
+            yield session
+
+
 def _mandate_ranges():
     return {
         key: (datetime.strptime(a, "%Y-%m-%d"), datetime.strptime(b, "%Y-%m-%d"))
@@ -58,7 +75,7 @@ def scan_raw_votes(report):
         report.fact("subjects already in cache", len(resolver.by_voteid.data))
 
     total = 0
-    for session in iter_json_array(str(config.RAW_VOTES)):
+    for session in iter_raw_sessions():
         total += 1
         vid = session.get("voteid")
         if vid in seen_voteids:
@@ -181,7 +198,7 @@ def write_mandate_files(report, resolver, expected_counts):
             path = config.FINAL_DIR / f"ep_votes_{mandate}.json"
             writers[mandate] = JsonArrayWriter(str(path)).__enter__()
 
-        for session in iter_json_array(str(config.RAW_VOTES)):
+        for session in iter_raw_sessions():
             if not _has_votes(session):
                 continue
             mandate = assign_mandate(session.get("ts") or session.get("TS"), ranges)

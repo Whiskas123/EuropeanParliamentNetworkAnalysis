@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-29T16:50:33.789157+00:00",
-    "seconds": 45.8,
-    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
+    "started_utc": "2026-09-02T11:11:28.298120+00:00",
+    "seconds": 45.1,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -13,8 +13,8 @@
     "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
   },
   "summary": {
-    "checks": 18,
-    "passed": 18,
+    "checks": 22,
+    "passed": 22,
     "warnings": 0,
     "failures": 0
   },
@@ -33,18 +33,21 @@
       "facts": {
         "mandate 6: voting sessions": 5838,
         "mandate 6: MEPs casting any vote": 941,
-        "mandate 6: written": "mep_votes_6.json (119 KB)",
+        "mandate 6: written": "mep_votes_6.json (118 KB)",
         "mandate 7: voting sessions": 4360,
         "mandate 7: MEPs casting any vote": 850,
-        "mandate 7: written": "mep_votes_7.json (107 KB)",
+        "mandate 7: written": "mep_votes_7.json (104 KB)",
         "mandate 8: voting sessions": 11286,
         "mandate 8: MEPs casting any vote": 855,
-        "mandate 8: written": "mep_votes_8.json (116 KB)",
+        "mandate 8: written": "mep_votes_8.json (112 KB)",
         "mandate 9: voting sessions": 18827,
         "mandate 9: MEPs casting any vote": 867,
-        "mandate 9: written": "mep_votes_9.json (121 KB)"
+        "mandate 9: written": "mep_votes_9.json (117 KB)",
+        "mandate 10: voting sessions": 5568,
+        "mandate 10: MEPs casting any vote": 738,
+        "mandate 10: written": "mep_votes_10.json (102 KB)"
       },
-      "seconds": 45.7
+      "seconds": 45.0
     }
   ],
   "checks": [
@@ -169,6 +172,34 @@
     },
     {
       "name": "mandate 9: counted over the same votes as the published network",
+      "ok": true,
+      "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: votes were counted",
+      "ok": true,
+      "detail": "5568 sessions, 738 MEPs",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: nobody voted more often than there were votes",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: per-subject counts sum to the total",
+      "ok": true,
+      "detail": "0 MEP(s), e.g. []",
+      "fatal": true,
+      "step": "Step 4b: per-MEP vote counts"
+    },
+    {
+      "name": "mandate 10: counted over the same votes as the published network",
       "ok": true,
       "detail": "data/final has moved since the last publish - re-run `networks` and `publish` before this step, or these counts will describe votes the site does not draw",
       "fatal": true,

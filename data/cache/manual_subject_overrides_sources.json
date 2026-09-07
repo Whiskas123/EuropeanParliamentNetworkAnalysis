@@ -1,0 +1,38 @@
+{
+  "_comment": "Evidence for every entry in manual_subject_overrides.json. Title as returned by data.europarl.europa.eu.",
+  "RC-B10-0146/2025": {
+    "title": "JOINT MOTION FOR A RESOLUTION on the white paper on the future of European defence",
+    "codes_predicted": "Foreign Affairs",
+    "why": "A defence white paper is a SEDE file, not a general foreign-affairs one. 106 votes - the largest single affected procedure in term 10."
+  },
+  "B10-0174/2024": {
+    "title": "MOTION FOR A RESOLUTION on the Council's recommendation on smoke- and aerosol-free environments",
+    "codes_predicted": "Civil Liberties, Justice and Home Affairs",
+    "why": "Tobacco control is public health. The codes carry 4.20.03 'Drug addiction, alcoholism, smoking', which the learned table sends to LIBE because most files with that code are narcotics-enforcement files."
+  },
+  "RC-B10-0123/2024": {
+    "title": "JOINT MOTION FOR A RESOLUTION on the urgent need to revise the Medical Devices Regulation",
+    "codes_predicted": "Internal Market and Consumer Protection",
+    "why": "Medical devices sit with public health in term 10, where SANT is a standing committee."
+  },
+  "B10-0215/2024": {
+    "title": "PROPOSAL FOR A DECISION on setting up a standing committee on Security and Defence and a standing committee on Public Health",
+    "codes_predicted": "Petitions",
+    "why": "A decision on Parliament's own committee structure is constitutional affairs. The 8.40 institutional codes are dropped as procedural, leaving a petition-shaped remainder."
+  },
+  "B10-0216/2024": {
+    "title": "PROPOSAL FOR A DECISION on setting up a special committee on the European Democracy Shield, and defining its responsibilities, numerical strength and term of office",
+    "codes_predicted": "Petitions",
+    "why": "Same class as B10-0215/2024."
+  },
+  "RC-B10-0064/2026": {
+    "title": "JOINT MOTION FOR A RESOLUTION on the presidential elections in Honduras, the non-recognition of the outcome by the incumbent administration",
+    "codes_predicted": "Culture and Education",
+    "why": "A third-country election resolution is foreign affairs; the culture prediction comes from a stray information-policy code."
+  },
+  "RC-B10-0371/2025": {
+    "title": "JOINT MOTION FOR A RESOLUTION on the detention of EU citizens in the occupied areas of Cyprus",
+    "codes_predicted": "Civil Liberties, Justice and Home Affairs",
+    "why": "Detention in the occupied north is a Tuerkiye/Cyprus external-relations matter rather than an EU justice one."
+  }
+}

@@ -1,11 +1,13 @@
 """Command line entry point.
 
     python -m pipeline.run all              # everything, stopping on any failure
+    python -m pipeline.run rcv              # roll-call votes newer than the dump
     python -m pipeline.run votes            # subjects only
     python -m pipeline.run networks         # rebuild networks from data/final
     python -m pipeline.run compare          # diff against the 2025 output
     python -m pipeline.run publish          # copy into the site
     python -m pipeline.run participation    # per-MEP vote counts -> the site
+    python -m pipeline.run topics           # what each subject is made of -> the site
     python -m pipeline.run deviations       # distance from own group -> the site
     python -m pipeline.run coalitions       # who wins votes together -> the site
     python -m pipeline.run layouts          # ForceAtlas2 positions (node)
@@ -20,11 +22,12 @@ import subprocess
 import sys
 
 from . import (build_networks, build_votes, coalitions, config, deviations,
-               llm_subjects, participation, verify_site)
+               llm_subjects, participation, rcv, subject_topics, verify_site)
 from .network import load_meps
 from .report import PipelineError, Report, atomic_write_json
 
-STEPS = ["votes", "networks", "compare", "publish", "participation",
+STEPS = ["rcv", "votes", "networks", "compare", "publish", "participation",
+         "topics",
          "deviations", "coalitions", "layouts",
          "verify"]
 
@@ -181,6 +184,11 @@ def main(argv=None):
         if args.step == "classify":
             return run_classify(report, mandates, args)
         check_inputs(report)
+        if "rcv" in steps:
+            # The Parltrack dump stopped on 2026-03-28; this reaches the EP for
+            # anything newer. Never fatal on its own - a failure here leaves the
+            # dump's own coverage intact rather than stopping the run.
+            rcv.run(report, offline=args.offline)
         if "votes" in steps:
             build_votes.run(report, offline=args.offline)
         if "networks" in steps:
@@ -208,6 +216,10 @@ def main(argv=None):
             # voting_sessions.json that publish has just written, so a run that
             # skipped publish cannot leave the two describing different votes.
             participation.run(report, mandates)
+        if "topics" in steps:
+            # What each subject is made of. After publish, because it reads the
+            # same final files the site does and writes beside the layouts.
+            subject_topics.run(report, mandates, offline=args.offline)
         if "deviations" in steps:
             # After publish, because it reproduces the participation filter the
             # published networks use and should describe the same membership.

@@ -164,6 +164,30 @@ def run(report, mandates=None, expect_combinations=None):
         # voting sessions ("2,873 votes in 4,245 voting sessions"), so a file
         # counted over a different set of votes than the published network is
         # a wrong number rather than a missing one.
+        topics = PRECOMPUTED / f"subject_topics_{mandate}.json"
+        if report.check(
+            f"mandate {mandate}: subject breakdown published",
+            topics.exists(),
+            f"{topics} - run `python3 -m pipeline.run topics`",
+            fatal=False,
+        ):
+            try:
+                broken = json.loads(topics.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                broken = None
+                report.check(f"mandate {mandate}: subject breakdown parses", False, str(exc))
+            if broken:
+                subjects = broken.get("subjects") or {}
+                report.check(
+                    f"mandate {mandate}: every subject's dossiers add up",
+                    all(
+                        sum(d["votes"] for d in s.get("top", []))
+                        + s.get("votesWithoutADocument", 0) == s.get("votes")
+                        for s in subjects.values()
+                    ),
+                    "a subject's dossier votes do not sum to its own total",
+                )
+
         mep_votes = PRECOMPUTED / f"mep_votes_{mandate}.json"
         if report.check(
             f"mandate {mandate}: per-MEP vote counts published",

@@ -346,6 +346,41 @@ def fetch_subject(http, epref):
     return NOT_FOUND
 
 
+SUBJECT_CODE = re.compile(r"^\s*(\d+(?:\.\d+)*)\s+(.*?)\s*(?:\(\d+\))?\s*$")
+
+
+def fetch_subject_codes(http, epref):
+    """Every OEIL subject code on a procedure, deepest included.
+
+    The tree comes back as labels like "6.10.04 Third-country political
+    situation, local and regional conflicts (1)"; this returns the codes alone,
+    e.g. ["6", "6.10", "6.10.04"]. `config.subject_from_oeil_codes` reads them.
+
+    This is the evidence that was always there and never used: `fetch_subject`
+    took the tree's *first* top-level heading and returned it as though a
+    committee had said it. Heading 4 sorts before heading 6, so a resolution on
+    Gaza that mentions children and women was labelled with heading 4's name,
+    "Economic, social and territorial cohesion" -> Regional Development.
+    """
+    data, _ = _oeil_query(http, epref)
+    if data is None:
+        return NOT_FOUND
+    codes = []
+    for field in data.get("fields", []):
+        if field.get("name") == "subject" and field.get("type") == "tree":
+
+            def walk(values):
+                for value in values or []:
+                    label = (value.get("label") or "").replace("\n", " ").strip()
+                    m = SUBJECT_CODE.match(label)
+                    if m:
+                        codes.append(m.group(1))
+                    walk(value.get("children"))
+
+            walk(field.get("availableValues"))
+    return codes
+
+
 def fetch_second_level_subject(http, epref):
     """Fallback used when the primary label does not map to a canonical subject:
     the first second-level policy area, e.g. '3.45 Enterprise policy' ->

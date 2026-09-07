@@ -41,6 +41,7 @@ from .remote import (
     fetch_second_level_subject,
     fetch_sitting_code_map,
     fetch_subject,
+    fetch_subject_codes,
 )
 from .report import atomic_write_json
 from .jsonstream import iter_json_array
@@ -166,6 +167,8 @@ class SubjectResolver:
         self.code_epref = JsonCache(c / "code_to_epref.json", seed=b / "code_to_epref_cache.json")
         self.code_committees = JsonCache(c / "code_to_committees.json")
         self.epref_label = JsonCache(c / "epref_to_label.json", seed=b / "epref_cache.json")
+        self.epref_codes = JsonCache(c / "epref_to_codes.json")
+        self.epref_ambiguous = JsonCache(c / "epref_ambiguous.json")
         self.epref_label2 = JsonCache(c / "epref_to_second_level.json")
         self.committee_names = JsonCache(c / "committee_names.json")
         self.sitting_codes = JsonCache(c / "sitting_code_maps.json")
@@ -264,21 +267,57 @@ class SubjectResolver:
         return epref, committees
 
     def committee_to_subject(self, abbr):
-        name = self._cached_lookup(self.committee_names, abbr, fetch_committee_name)
+        # config.COMMITTEE_NAMES first: the on-disk cache is populated lazily and
+        # was missing AFCO, SEDE, JURI, CULT, TRAN, DEVE, PETI and SANT, so this
+        # returned None for them and the caller fell through without saying so.
+        name = config.COMMITTEE_NAMES.get(str(abbr).upper())
+        if not name:
+            name = self._cached_lookup(self.committee_names, abbr, fetch_committee_name)
         if not name:
             return None
         subject = config.canonical_subject(name)
         return subject if subject != config.FALLBACK_SUBJECT else None
 
     def epref_to_subject(self, epref):
-        """OEIL label -> canonical subject, with the second-level fallback the
-        2025 run used for anything that did not map."""
+        """Canonical subject for a procedure, plus how confident the route is.
+
+        Returns (subject, quality) where quality is one of "committee",
+        "codes", "label" or None - the caller needs it, because only
+        "committee" is authoritative enough to outrank the committee that
+        actually tabled the document.
+
+        Order matters and used to be wrong. `fetch_subject` answers with the
+        committee responsible when there is one, but otherwise falls back to a
+        Commission directorate-general or to the first top-level heading of the
+        subject tree, and both were read as if a committee had said them. The
+        subject codes are a far better answer than either, so they now come
+        second and the guesses come last.
+        """
         label = self._cached_lookup(self.epref_label, epref, fetch_subject)
         subject = config.canonical_subject(label)
+        if label in config.COMMITTEE_LABELS and subject != config.FALLBACK_SUBJECT:
+            # A committee name is only authoritative when OEIL's search matched
+            # this procedure alone. When it matched several, the committee facet
+            # is aggregated across all of them and any of the listed committees
+            # may belong to another file. 2025/2028 is Gimenez Larraz's AFCO
+            # report on the European Electoral Act, and the aggregate listed
+            # "Security and Defence" first, which is what got cached. Marking
+            # those as merely a label lets the committee that actually tabled
+            # the document overrule them.
+            if self.epref_ambiguous.get(epref) is True:
+                return subject, "ambiguous-committee"
+            return subject, "committee"
+
+        codes = self._cached_lookup(self.epref_codes, epref, fetch_subject_codes)
+        from_codes = config.subject_from_oeil_codes(codes or [])
+        if from_codes:
+            return from_codes, "codes"
+
         if subject != config.FALLBACK_SUBJECT:
-            return subject
+            return subject, "label"
         label2 = self._cached_lookup(self.epref_label2, epref, fetch_second_level_subject)
-        return config.canonical_subject(label2)
+        subject2 = config.canonical_subject(label2)
+        return subject2, ("label" if subject2 != config.FALLBACK_SUBJECT else None)
 
     # -- top level ------------------------------------------------------------
     def resolve(self, session):
@@ -306,15 +345,27 @@ class SubjectResolver:
         try:
             if kind == "code":
                 epref, committees = self.code_to_epref_and_committees(value, sitting_date)
+                quality = None
                 if epref:
-                    subject = self.epref_to_subject(epref)
+                    subject, quality = self.epref_to_subject(epref)
                     via = f"code:{value}->epref:{epref}"
                     if subject != config.FALLBACK_SUBJECT:
                         self.stats["resolved_via_epref"] += 1
-                if (subject is None or subject == config.FALLBACK_SUBJECT) and committees:
-                    # No procedure, or the procedure had no usable label: fall
-                    # back to the committee that authored the document.
+                # The committee that tabled the document outranks everything
+                # except OEIL naming a committee responsible outright. An
+                # A-report *is* that committee's report. This used to run only
+                # when the procedure produced nothing at all, so a wrong answer
+                # from OEIL was never reconsidered: 2025/2028 is Gimenez Larraz's
+                # AFCO report on the European Electoral Act, and its cached label
+                # said "Security and Defence" because OEIL's text search matched
+                # two procedures and aggregated both committees into the facet.
+                # 13 term-10 votes went into a 59-vote subject that way.
+                if quality != "committee" and committees:
                     for abbr in committees:
+                        if str(abbr).upper() not in config.COMMITTEE_NAMES:
+                            # Motions for resolution are tabled by political
+                            # groups; "PPE" is not a committee.
+                            continue
                         from_cttee = self.committee_to_subject(abbr)
                         if from_cttee:
                             subject = from_cttee
@@ -322,7 +373,7 @@ class SubjectResolver:
                             self.stats["resolved_via_committee"] += 1
                             break
             elif kind == "epref":
-                subject = self.epref_to_subject(value)
+                subject, _ = self.epref_to_subject(value)
                 via = f"epref:{value}"
                 if subject != config.FALLBACK_SUBJECT:
                     self.stats["resolved_via_epref"] += 1
@@ -358,6 +409,8 @@ class SubjectResolver:
             "code_to_epref": self.code_epref.save(),
             "code_to_committees": self.code_committees.save(),
             "epref_to_label": self.epref_label.save(),
+            "epref_to_codes": self.epref_codes.save(),
+            "epref_ambiguous": self.epref_ambiguous.save(),
             "epref_to_second_level": self.epref_label2.save(),
             "committee_names": self.committee_names.save(),
             "sitting_code_maps": self.sitting_codes.save(),

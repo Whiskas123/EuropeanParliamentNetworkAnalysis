@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-29T16:56:32.542757+00:00",
-    "seconds": 226.2,
-    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
+    "started_utc": "2026-09-02T11:19:19.904975+00:00",
+    "seconds": 118.3,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -32,14 +32,11 @@
       "name": "Step 5: precompute layouts",
       "facts": {
         "mandates to lay out": [
-          "6",
-          "7",
-          "8",
-          "9"
+          "10"
         ],
-        "country x subject combinations": "only"
+        "country x subject combinations": true
       },
-      "seconds": 226.1
+      "seconds": 118.2
     }
   ],
   "checks": [

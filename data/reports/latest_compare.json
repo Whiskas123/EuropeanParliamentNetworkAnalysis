@@ -2,10 +2,10 @@
   "run": "compare",
   "provenance": {
     "python": "3.14.5",
-    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-22T16:24:48.387514+00:00",
-    "seconds": 6.5,
-    "git_commit": "06b759896b46cdd5ca096f9200d4e76470a6b884",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-09-02T11:11:19.060918+00:00",
+    "seconds": 4.9,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -14,8 +14,8 @@
   },
   "summary": {
     "checks": 20,
-    "passed": 20,
-    "warnings": 0,
+    "passed": 12,
+    "warnings": 8,
     "failures": 0
   },
   "facts": {},
@@ -33,58 +33,58 @@
       "facts": {
         "mandate 6 vs 2025": {
           "nodes_2025": 658,
-          "nodes_now": 658,
-          "nodes_added_count": 0,
+          "nodes_now": 678,
+          "nodes_added_count": 20,
           "nodes_removed_count": 0,
           "group_changes_count": 0,
           "edges_2025": 216153,
-          "edges_now": 216153,
+          "edges_now": 229503,
           "edges_differing": 0,
           "max_weight_delta": 0.0
         },
         "mandate 7 vs 2025": {
           "nodes_2025": 714,
-          "nodes_now": 714,
-          "nodes_added_count": 0,
+          "nodes_now": 727,
+          "nodes_added_count": 13,
           "nodes_removed_count": 0,
           "group_changes_count": 0,
           "edges_2025": 254541,
-          "edges_now": 254541,
+          "edges_now": 263901,
           "edges_differing": 0,
           "max_weight_delta": 0.0
         },
         "mandate 8 vs 2025": {
           "nodes_2025": 694,
-          "nodes_now": 694,
-          "nodes_added_count": 0,
+          "nodes_now": 708,
+          "nodes_added_count": 14,
           "nodes_removed_count": 0,
           "group_changes_count": 0,
           "edges_2025": 240471,
-          "edges_now": 240471,
+          "edges_now": 250278,
           "edges_differing": 0,
           "max_weight_delta": 0.0
         },
         "mandate 9 vs 2025": {
           "nodes_2025": 697,
-          "nodes_now": 697,
-          "nodes_added_count": 0,
+          "nodes_now": 700,
+          "nodes_added_count": 3,
           "nodes_removed_count": 0,
           "group_changes_count": 0,
           "edges_2025": 242556,
-          "edges_now": 242556,
+          "edges_now": 244650,
           "edges_differing": 0,
           "max_weight_delta": 0.0
         },
         "mandate 10 vs 2025": {
           "nodes_2025": 702,
-          "nodes_now": 696,
-          "nodes_added_count": 3,
-          "nodes_removed_count": 9,
+          "nodes_now": 703,
+          "nodes_added_count": 11,
+          "nodes_removed_count": 10,
           "group_changes_count": 13,
           "edges_2025": 246051,
-          "edges_now": 241860,
-          "edges_differing": 235539,
-          "max_weight_delta": 0.402
+          "edges_now": 246753,
+          "edges_differing": 235851,
+          "max_weight_delta": 0.517
         }
       },
       "seconds": 3.8
@@ -114,15 +114,15 @@
     },
     {
       "name": "mandate 6: same MEPs in the network as 2025",
-      "ok": true,
-      "detail": "added [], removed []",
+      "ok": false,
+      "detail": "added ['M23873', 'M28111', 'M28195', 'M28200', 'M28210'], removed []",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
     {
       "name": "mandate 6: same edge set as 2025",
-      "ok": true,
-      "detail": "0 lost, 0 gained",
+      "ok": false,
+      "detail": "0 lost, 13350 gained",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
@@ -142,15 +142,15 @@
     },
     {
       "name": "mandate 7: same MEPs in the network as 2025",
-      "ok": true,
-      "detail": "added [], removed []",
+      "ok": false,
+      "detail": "added ['M115868', 'M117119', 'M117477', 'M2212', 'M23792'], removed []",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
     {
       "name": "mandate 7: same edge set as 2025",
-      "ok": true,
-      "detail": "0 lost, 0 gained",
+      "ok": false,
+      "detail": "0 lost, 9360 gained",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
@@ -170,15 +170,15 @@
     },
     {
       "name": "mandate 8: same MEPs in the network as 2025",
-      "ok": true,
-      "detail": "added [], removed []",
+      "ok": false,
+      "detail": "added ['M111024', 'M124879', 'M124945', 'M124957', 'M125051'], removed []",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
     {
       "name": "mandate 8: same edge set as 2025",
-      "ok": true,
-      "detail": "0 lost, 0 gained",
+      "ok": false,
+      "detail": "0 lost, 9807 gained",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
@@ -198,15 +198,15 @@
     },
     {
       "name": "mandate 9: same MEPs in the network as 2025",
-      "ok": true,
-      "detail": "added [], removed []",
+      "ok": false,
+      "detail": "added ['M124809', 'M197438', 'M197935'], removed []",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
     {
       "name": "mandate 9: same edge set as 2025",
-      "ok": true,
-      "detail": "0 lost, 0 gained",
+      "ok": false,
+      "detail": "0 lost, 2094 gained",
       "fatal": false,
       "step": "Step 3: compare against the 2025 results"
     },
@@ -227,7 +227,7 @@
     {
       "name": "mandate 10: network grew, as expected for the sitting term",
       "ok": true,
-      "detail": "696 nodes, 241860 edges",
+      "detail": "703 nodes, 246753 edges",
       "fatal": true,
       "step": "Step 3: compare against the 2025 results"
     }

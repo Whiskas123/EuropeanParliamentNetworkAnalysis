@@ -19,11 +19,13 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m pipeline.run all
 
 # Or one stage at a time:
+python3 -m pipeline.run rcv        # roll-call votes newer than the dump
 python3 -m pipeline.run votes      # split by mandate + assign subjects
 python3 -m pipeline.run networks   # similarity networks  -> data/networks/
 python3 -m pipeline.run compare    # diff against the previous published run
 python3 -m pipeline.run publish    # copy into 2025/web/public/data/
 python3 -m pipeline.run participation  # per-MEP vote counts -> the site
+python3 -m pipeline.run topics         # what each subject is made of -> the site
 python3 -m pipeline.run layouts    # ForceAtlas2 positions (node)
 python3 -m pipeline.run verify     # check what is on disk for the site
 
@@ -54,6 +56,8 @@ produced, and the result of every check.
 
 ```
 data/raw/ep_votes.json ─┐
+        (+ EP roll-call ├─► [0b rcv] ─► data/raw/ep_votes_recent.json
+         XML, newer)    │
                         ├─► [1 votes]    ─► data/final/ep_votes_{6..10}.json
 data/raw/ep_meps.json ──┤                   (each vote tagged with a subject)
                         │
@@ -71,6 +75,33 @@ data/raw/ep_meps.json ──┤                   (each vote tagged with a subje
                             [6 verify]   ─► re-reads everything the browser
                                             will fetch
 ```
+
+**0b. Recent roll-call votes** (`rcv.py`)
+Parltrack's `ep_votes` dump stopped on **2026-03-28** while its other dumps kept
+updating, so the dump alone now ends five months short. This stage fetches what
+is missing straight from the EP and writes `data/raw/ep_votes_recent.json`
+beside the dump; `build_votes` reads both, the dump first, so a vote id present
+in a future dump silently supersedes the copy fetched here.
+
+The dump is not stale because the data moved. The per-sitting roll-call XML is
+unchanged in structure and still served. What broke is *discovery*: Parltrack
+finds the files through `europarl.europa.eu/RegistreWeb/services/search`, and
+that endpoint now answers `202` with `x-amzn-waf-action: challenge`. So sittings
+come from the EP's open-data meetings API instead, and the XML URL is derived
+from the date.
+
+Two things worth knowing before touching this:
+
+* **The member id is `PersId`, not `MepId`.** The XML carries both. Every
+  network in this repo keys on `PersId`; reading `MepId` yields a corpus that
+  matches nobody.
+* **The WAF flags incoherent browser impersonation, not scrapers.** `curl`'s own
+  agent is served, python-requests' default is served, and a complete browser
+  header set is served. A bare `User-Agent: Mozilla/5.0` with no other browser
+  headers is challenged — and so is this repo's own polite custom agent, which
+  is why `rcv.py` sets its own headers rather than using the shared default.
+
+Needs `lxml`. Runs inside `all`, and is skipped by `--offline`.
 
 **1. Votes** (`build_votes.py`, `subjects.py`, `remote.py`)
 Splits the dump by parliamentary term and gives every voting session a policy
@@ -110,6 +141,33 @@ It runs after **publish** on purpose. It checks its session totals against the
 votes the site does not draw fails the run instead of quietly putting a wrong
 number in the sidebar. A country filter never changes these counts: restricting
 a network to one delegation removes MEPs, not votes.
+
+**4c. Subject topics** (`subject_topics.py`)
+What each policy area is actually made of: per mandate, the dossiers behind
+every subject — document, title, who carried it, when, and how many roll calls
+it produced. Writes `precomputed/subject_topics_<mandate>.json`; the sidebar's
+"What's in this subject" panel reads it.
+
+The rows are documents because they do not aggregate: documents map essentially
+one-to-one onto procedures (term 10's Foreign Affairs has 147 of each), and
+documents are also the level a reader recognises — "Gaza at breaking point"
+rather than "Third-country political situation". Two axes do group them, and
+both are written as a second view:
+
+* **Geography**, from OEIL's `geographicalArea` facet. For foreign affairs this
+  is the roll-up a reader wants: term 10's 141 procedures collapse onto 62
+  areas, led by Ukraine (321 votes) and Russia (149).
+* **OEIL subject codes**, for subjects with no geography. Coarser, but still
+  halves the list.
+
+Only Foreign Affairs really needs either — its top eight dossiers are 27% of the
+subject, against 57–97% everywhere else. `themeBasis` records which of the two a
+subject used, so the panel can say so rather than implying one.
+
+Titles come from `data/cache/code_to_title.json` (EP Open Data, keyed by
+document code) and areas from `data/cache/epref_to_geo.json`. Both are plain
+caches: a missing title shows the bare document code, which is honest, and is
+the normal case for terms 6 and 7 — the open-data API barely covers those years.
 
 **5. Layouts** Runs `2025/web/scripts/precompute-layouts.js` for the mandates
 whose networks actually changed. Four kinds of network are produced per mandate:

@@ -9,3 +9,4 @@
 numpy>=1.26
 requests>=2.31
 anthropic>=1.0
+lxml           # parses the EP roll-call XML in pipeline/rcv.py

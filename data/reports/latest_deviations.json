@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-30T17:41:29.685420+00:00",
-    "seconds": 43.2,
-    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
+    "started_utc": "2026-09-02T11:12:14.194748+00:00",
+    "seconds": 390.5,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -13,38 +13,336 @@
     "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
   },
   "summary": {
-    "checks": 8,
-    "passed": 8,
-    "warnings": 0,
+    "checks": 42,
+    "passed": 40,
+    "warnings": 2,
     "failures": 0
   },
   "facts": {},
   "steps": [
     {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
+    {
       "name": "Step 4c: deviation from own group",
       "facts": {
-        "mandate 10: voting sessions": 4245,
+        "mandate 6: voting sessions": 5838,
+        "mandate 6: political groups": "ALDE, GUE/NGL, IND/DEM, ITS, PPE-DE, PSE, UEN, Verts/ALE",
+        "mandate 6: MEPs with a term deviation": 653,
+        "mandate 6: national group cells": 125,
+        "mandate 6: MEPs with any deviation": 866,
+        "mandate 6: median |deviation|": "1.65 pp",
+        "mandate 6: figures dropped as unmatched": "13 of 113573 (0.01%)",
+        "mandate 6: worst kept excess past [0, 1]": "4.1 pp",
+        "mandate 6: national-group figures published": 69630,
+        "mandate 6: national-group figures with no block to write to": 1003,
+        "mandate 6: median |national-group deviation|": "0.77 pp",
+        "mandate 6: national-group figures dropped as unmatched": "9 (0.01%)",
+        "mandate 6: written": "mep_deviations_6.json (3886 KB)",
+        "mandate 7: voting sessions": 4360,
+        "mandate 7: political groups": "ALDE, ECR, EFD, GUE/NGL, PPE, S&D, Verts/ALE",
+        "mandate 7: MEPs with a term deviation": 697,
+        "mandate 7: national group cells": 127,
+        "mandate 7: MEPs with any deviation": 804,
+        "mandate 7: median |deviation|": "1.30 pp",
+        "mandate 7: figures dropped as unmatched": "1 of 88305 (0.00%)",
+        "mandate 7: worst kept excess past [0, 1]": "3.6 pp",
+        "mandate 7: national-group figures published": 57992,
+        "mandate 7: national-group figures with no block to write to": 140,
+        "mandate 7: median |national-group deviation|": "0.69 pp",
+        "mandate 7: national-group figures dropped as unmatched": "4 (0.01%)",
+        "mandate 7: written": "mep_deviations_7.json (3146 KB)",
+        "mandate 8: voting sessions": 11286,
+        "mandate 8: political groups": "ALDE, ECR, EFDD, ENF, GUE/NGL, PPE, S&D, Verts/ALE",
+        "mandate 8: MEPs with a term deviation": 692,
+        "mandate 8: national group cells": 147,
+        "mandate 8: MEPs with any deviation": 804,
+        "mandate 8: median |deviation|": "1.29 pp",
+        "mandate 8: figures dropped as unmatched": "2 of 126336 (0.00%)",
+        "mandate 8: worst kept excess past [0, 1]": "4.8 pp",
+        "mandate 8: national-group figures published": 89584,
+        "mandate 8: national-group figures with no block to write to": 500,
+        "mandate 8: median |national-group deviation|": "0.55 pp",
+        "mandate 8: national-group figures dropped as unmatched": "34 (0.04%)",
+        "mandate 8: written": "mep_deviations_8.json (4266 KB)",
+        "mandate 9: voting sessions": 18827,
+        "mandate 9: political groups": "ECR, GUE/NGL, ID, PPE, RE, S&D, Verts/ALE",
+        "mandate 9: MEPs with a term deviation": 665,
+        "mandate 9: national group cells": 141,
+        "mandate 9: MEPs with any deviation": 750,
+        "mandate 9: median |deviation|": "1.42 pp",
+        "mandate 9: figures dropped as unmatched": "0 of 100226 (0.00%)",
+        "mandate 9: worst kept excess past [0, 1]": "2.5 pp",
+        "mandate 9: national-group figures published": 78045,
+        "mandate 9: national-group figures with no block to write to": 1293,
+        "mandate 9: median |national-group deviation|": "0.34 pp",
+        "mandate 9: national-group figures dropped as unmatched": "5 (0.01%)",
+        "mandate 9: written": "mep_deviations_9.json (3652 KB)",
+        "mandate 10: voting sessions": 5568,
         "mandate 10: political groups": "ECR, ESN, GUE/NGL, PPE, PfE, RE, S&D, Verts/ALE",
-        "mandate 10: MEPs with a term deviation": 678,
+        "mandate 10: MEPs with a term deviation": 673,
         "mandate 10: national group cells": 144,
-        "mandate 10: MEPs with any deviation": 697,
-        "mandate 10: median |deviation|": "1.68 pp",
-        "mandate 10: figures dropped as unmatched": "0 of 94848 (0.00%)",
-        "mandate 10: worst kept excess past [0, 1]": "1.4 pp",
-        "mandate 10: national-group figures published": 66513,
-        "mandate 10: national-group figures with no block to write to": 114,
-        "mandate 10: median |national-group deviation|": "0.44 pp",
-        "mandate 10: national-group figures dropped as unmatched": "14 (0.02%)",
-        "mandate 10: written": "mep_deviations_10.json (3202 KB)"
+        "mandate 10: MEPs with any deviation": 700,
+        "mandate 10: median |deviation|": "1.64 pp",
+        "mandate 10: figures dropped as unmatched": "0 of 101304 (0.00%)",
+        "mandate 10: worst kept excess past [0, 1]": "0.2 pp",
+        "mandate 10: national-group figures published": 72433,
+        "mandate 10: national-group figures with no block to write to": 171,
+        "mandate 10: median |national-group deviation|": "0.45 pp",
+        "mandate 10: national-group figures dropped as unmatched": "7 (0.01%)",
+        "mandate 10: written": "mep_deviations_10.json (3427 KB)"
       },
-      "seconds": 36.3
+      "seconds": 385.4
     }
   ],
   "checks": [
     {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "mandate 6: most (MEP, vote) pairs resolve to a group",
+      "ok": false,
+      "detail": "only 82.2% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: deviations were produced",
+      "ok": true,
+      "detail": "only 866 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.65 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: the level and the deviation share a footing",
+      "ok": true,
+      "detail": "0.0% of figures had to be dropped, so the level and the deviation are not describing the same votes",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: national-group figures were produced",
+      "ok": true,
+      "detail": "only 69630 national-group figures across every view",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: national-group deviations are centred",
+      "ok": true,
+      "detail": "median |deviation| is 0.77 pp against the reference group's own footing with the same national cell",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 6: every published national-group figure has a notch",
+      "ok": true,
+      "detail": "0 of 69630 published figures have no level to be read against",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 89.0% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: deviations were produced",
+      "ok": true,
+      "detail": "only 804 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.30 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: the level and the deviation share a footing",
+      "ok": true,
+      "detail": "0.0% of figures had to be dropped, so the level and the deviation are not describing the same votes",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: national-group figures were produced",
+      "ok": true,
+      "detail": "only 57992 national-group figures across every view",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: national-group deviations are centred",
+      "ok": true,
+      "detail": "median |deviation| is 0.69 pp against the reference group's own footing with the same national cell",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 7: every published national-group figure has a notch",
+      "ok": true,
+      "detail": "0 of 57992 published figures have no level to be read against",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: most (MEP, vote) pairs resolve to a group",
+      "ok": true,
+      "detail": "only 87.6% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: deviations were produced",
+      "ok": true,
+      "detail": "only 804 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.29 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: the level and the deviation share a footing",
+      "ok": true,
+      "detail": "0.0% of figures had to be dropped, so the level and the deviation are not describing the same votes",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: national-group figures were produced",
+      "ok": true,
+      "detail": "only 89584 national-group figures across every view",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: national-group deviations are centred",
+      "ok": true,
+      "detail": "median |deviation| is 0.55 pp against the reference group's own footing with the same national cell",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 8: every published national-group figure has a notch",
+      "ok": true,
+      "detail": "0 of 89584 published figures have no level to be read against",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: most (MEP, vote) pairs resolve to a group",
+      "ok": false,
+      "detail": "only 81.4% resolve - group spans may not cover this term",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: every published group column has data",
+      "ok": true,
+      "detail": "no MEP has a figure for []",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: deviations were produced",
+      "ok": true,
+      "detail": "only 750 MEPs got a figure",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: deviations are centred on the peer group",
+      "ok": true,
+      "detail": "median |deviation| is 1.42 pp, which suggests the baseline is not the MEP's own group",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: the level and the deviation share a footing",
+      "ok": true,
+      "detail": "0.0% of figures had to be dropped, so the level and the deviation are not describing the same votes",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: national-group figures were produced",
+      "ok": true,
+      "detail": "only 78045 national-group figures across every view",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: national-group deviations are centred",
+      "ok": true,
+      "detail": "median |deviation| is 0.34 pp against the reference group's own footing with the same national cell",
+      "fatal": false,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
+      "name": "mandate 9: every published national-group figure has a notch",
+      "ok": true,
+      "detail": "0 of 78045 published figures have no level to be read against",
+      "fatal": true,
+      "step": "Step 4c: deviation from own group"
+    },
+    {
       "name": "mandate 10: most (MEP, vote) pairs resolve to a group",
       "ok": true,
-      "detail": "only 98.0% resolve - group spans may not cover this term",
+      "detail": "only 97.2% resolve - group spans may not cover this term",
       "fatal": false,
       "step": "Step 4c: deviation from own group"
     },
@@ -58,14 +356,14 @@
     {
       "name": "mandate 10: deviations were produced",
       "ok": true,
-      "detail": "only 697 MEPs got a figure",
+      "detail": "only 700 MEPs got a figure",
       "fatal": true,
       "step": "Step 4c: deviation from own group"
     },
     {
       "name": "mandate 10: deviations are centred on the peer group",
       "ok": true,
-      "detail": "median |deviation| is 1.68 pp, which suggests the baseline is not the MEP's own group",
+      "detail": "median |deviation| is 1.64 pp, which suggests the baseline is not the MEP's own group",
       "fatal": false,
       "step": "Step 4c: deviation from own group"
     },
@@ -79,21 +377,21 @@
     {
       "name": "mandate 10: national-group figures were produced",
       "ok": true,
-      "detail": "only 66513 national-group figures across every view",
+      "detail": "only 72433 national-group figures across every view",
       "fatal": true,
       "step": "Step 4c: deviation from own group"
     },
     {
       "name": "mandate 10: national-group deviations are centred",
       "ok": true,
-      "detail": "median |deviation| is 0.44 pp against the reference group's own footing with the same national cell",
+      "detail": "median |deviation| is 0.45 pp against the reference group's own footing with the same national cell",
       "fatal": false,
       "step": "Step 4c: deviation from own group"
     },
     {
       "name": "mandate 10: every published national-group figure has a notch",
       "ok": true,
-      "detail": "0 of 66513 published figures have no level to be read against",
+      "detail": "0 of 72433 published figures have no level to be read against",
       "fatal": true,
       "step": "Step 4c: deviation from own group"
     }

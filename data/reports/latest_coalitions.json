@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-31T17:10:01.420599+00:00",
-    "seconds": 32.9,
-    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
+    "started_utc": "2026-09-02T11:18:45.629593+00:00",
+    "seconds": 33.2,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -13,13 +13,21 @@
     "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
   },
   "summary": {
-    "checks": 16,
-    "passed": 16,
+    "checks": 18,
+    "passed": 18,
     "warnings": 0,
     "failures": 0
   },
   "facts": {},
   "steps": [
+    {
+      "name": "Step 0: check inputs",
+      "facts": {
+        "raw votes size": "651 MB",
+        "raw MEPs size": "211 MB"
+      },
+      "seconds": 0.0
+    },
     {
       "name": "coalitions",
       "facts": {
@@ -41,16 +49,30 @@
         "mandate 9: dropped for an absent group": "0 (0.00%)",
         "mandate 9: winning coalitions above the floor": "15 of 97 (87% of votes)",
         "mandate 10: groups": "The Left, Verts/ALE, S&D, Renew, PPE, ECR, PfE, ESN",
-        "mandate 10: decided votes classified": "4244 of 4245",
+        "mandate 10: decided votes classified": "5567 of 5568",
         "mandate 10: dropped for an absent group": "0 (0.00%)",
-        "mandate 10: winning coalitions above the floor": "17 of 132 (86% of votes)",
-        "votes won by every group at once, first term to last": "11.0% (7 groups) -> 2.2% (8 groups)",
-        "written": "coalitions.json (395 KB)"
+        "mandate 10: winning coalitions above the floor": "16 of 144 (85% of votes)",
+        "votes won by every group at once, first term to last": "11.0% (7 groups) -> 2.4% (8 groups)",
+        "written": "coalitions.json (385 KB)"
       },
-      "seconds": 32.8
+      "seconds": 33.0
     }
   ],
   "checks": [
+    {
+      "name": "raw votes present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_votes.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
+    {
+      "name": "raw MEPs present",
+      "ok": true,
+      "detail": "missing /Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/raw/ep_meps.json",
+      "fatal": true,
+      "step": "Step 0: check inputs"
+    },
     {
       "name": "mandate 6: every group has a seat",
       "ok": true,
@@ -152,14 +174,14 @@
     {
       "name": "mandate 10: the listed coalitions cover the term",
       "ok": true,
-      "detail": "coalitions below the 1% floor hold 14% of decided votes",
+      "detail": "coalitions below the 1% floor hold 15% of decided votes",
       "fatal": false,
       "step": "coalitions"
     },
     {
       "name": "unanimous voting fell across the five terms",
       "ok": true,
-      "detail": "all-group wins ran 11.0% in the first term and 2.2% in the last, so the site's headline no longer holds",
+      "detail": "all-group wins ran 11.0% in the first term and 2.4% in the last, so the site's headline no longer holds",
       "fatal": false,
       "step": "coalitions"
     }

@@ -3,9 +3,9 @@
   "provenance": {
     "python": "3.14.5",
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
-    "started_utc": "2026-08-29T16:46:47.030405+00:00",
-    "seconds": 166.4,
-    "git_commit": "180962a515776f420c7d9a4e5d4d73faed450e44",
+    "started_utc": "2026-09-02T11:08:15.974915+00:00",
+    "seconds": 180.5,
+    "git_commit": "9a13523f7e44e9cc1559c0f49ab7d417620c03ef",
     "git_dirty": true,
     "raw_votes_bytes": 651231920,
     "raw_votes_mtime": "2026-08-22T15:16:22+00:00",
@@ -13,8 +13,8 @@
     "raw_meps_mtime": "2026-08-22T15:16:27+00:00"
   },
   "summary": {
-    "checks": 30,
-    "passed": 29,
+    "checks": 37,
+    "passed": 36,
     "warnings": 1,
     "failures": 0
   },
@@ -38,7 +38,7 @@
         "mandate 6: MEPs admitted because abstentions count as turnout": 20,
         "mandate 6: edges": 229503,
         "mandate 6: nodes": 678,
-        "mandate 6: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_6/data.json (347 MB)",
+        "mandate 6: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_6/data.json (349 MB)",
         "mandate 7: voting sessions": 4360,
         "mandate 7: MEPs casting any vote": 850,
         "mandate 7: MEPs in network": 727,
@@ -46,7 +46,7 @@
         "mandate 7: MEPs admitted because abstentions count as turnout": 13,
         "mandate 7: edges": 263901,
         "mandate 7: nodes": 727,
-        "mandate 7: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_7/data.json (309 MB)",
+        "mandate 7: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_7/data.json (310 MB)",
         "mandate 8: voting sessions": 11286,
         "mandate 8: MEPs casting any vote": 855,
         "mandate 8: MEPs in network": 708,
@@ -54,7 +54,7 @@
         "mandate 8: MEPs admitted because abstentions count as turnout": 14,
         "mandate 8: edges": 250278,
         "mandate 8: nodes": 708,
-        "mandate 8: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_8/data.json (404 MB)",
+        "mandate 8: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_8/data.json (391 MB)",
         "mandate 9: voting sessions": 18827,
         "mandate 9: MEPs casting any vote": 867,
         "mandate 9: MEPs in network": 700,
@@ -62,9 +62,17 @@
         "mandate 9: MEPs admitted because abstentions count as turnout": 3,
         "mandate 9: edges": 244650,
         "mandate 9: nodes": 700,
-        "mandate 9: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_9/data.json (351 MB)"
+        "mandate 9: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_9/data.json (340 MB)",
+        "mandate 10: voting sessions": 5568,
+        "mandate 10: MEPs casting any vote": 738,
+        "mandate 10: MEPs in network": 703,
+        "mandate 10: MEPs within 5% of the participation cut-off": 10,
+        "mandate 10: MEPs admitted because abstentions count as turnout": 9,
+        "mandate 10: edges": 246753,
+        "mandate 10: nodes": 703,
+        "mandate 10: written": "/Users/joao.narciso/pessoal/EuropeanParliamentNetworkAnalysis/data/networks/mandate_10/data.json (294 MB)"
       },
-      "seconds": 160.8
+      "seconds": 175.3
     }
   ],
   "checks": [
@@ -275,6 +283,55 @@
       "name": "mandate 9: edge weights are within [0, 1]",
       "ok": true,
       "detail": "range is [0.1895, 0.9995]",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every admitted MEP has a usable agreement basis",
+      "ok": true,
+      "detail": "positioned on under 20% of votes: ",
+      "fatal": false,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: network is non-trivial",
+      "ok": true,
+      "detail": "703 MEPs, 246753 edges",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every edge connects two known nodes",
+      "ok": true,
+      "detail": "0 edges reference an MEP missing from the node list",
+      "fatal": false,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every node has a political group",
+      "ok": true,
+      "detail": "some nodes have an empty GroupID",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: every node has a country",
+      "ok": true,
+      "detail": "some nodes have an empty Country",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: all edge weights are real numbers",
+      "ok": true,
+      "detail": "some weights are NaN or infinite, which would produce invalid JSON",
+      "fatal": true,
+      "step": "Step 2: build networks"
+    },
+    {
+      "name": "mandate 10: edge weights are within [0, 1]",
+      "ok": true,
+      "detail": "range is [0.1295, 1.0]",
       "fatal": true,
       "step": "Step 2: build networks"
     }

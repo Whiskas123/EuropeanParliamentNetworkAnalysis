@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "Hand-verified subjects, keyed by plenary document code, taking precedence",
+    "over every automatic route in pipeline/subjects.py resolve().",
+    "Each entry was checked against the document's own English title from the",
+    "EP Open Data API; the title is recorded in",
+    "manual_subject_overrides_sources.json next to this file.",
+    "Added 2026-09-02 while correcting the subject-classification bug: these are",
+    "the cases where the OEIL subject codes still pick the wrong policy area."
+  ],
+  "RC-B10-0146/2025": "Security and Defence",
+  "B10-0174/2024": "Public Health",
+  "RC-B10-0123/2024": "Public Health",
+  "B10-0215/2024": "Constitutional Affairs",
+  "B10-0216/2024": "Constitutional Affairs",
+  "RC-B10-0064/2026": "Foreign Affairs",
+  "RC-B10-0371/2025": "Foreign Affairs",
+  "B9-0178/2019": "Civil Liberties, Justice and Home Affairs",
+  "B9-0166/2021": "Civil Liberties, Justice and Home Affairs",
+  "RC-B9-0349/2021": "Foreign Affairs",
+  "RC-B9-0124/2024": "Foreign Affairs",
+  "B9-0166/2019": "Civil Liberties, Justice and Home Affairs",
+  "RC-B9-0262/2024": "Civil Liberties, Justice and Home Affairs",
+  "RC-B9-0530/2021": "Economic and Monetary Affairs",
+  "B9-0104/2023": "Industry, Research and Energy",
+  "B9-0428/2020": "Budgets",
+  "B9-0172/2020": "Employment and Social Affairs",
+  "B9-0099/2022": "Women’s Rights and Gender Equality",
+  "RC-B9-0490/2021": "Women’s Rights and Gender Equality",
+  "B9-0299/2022": "Women’s Rights and Gender Equality",
+  "B9-0190/2020": "Foreign Affairs",
+  "B9-0234/2019": "Civil Liberties, Justice and Home Affairs"
+}
