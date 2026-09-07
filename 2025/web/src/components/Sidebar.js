@@ -14,6 +14,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import CohesionInsights from "./CohesionInsights";
 import PartnerTrends from "./PartnerTrends";
 import TrendsPanel from "./TrendsPanel";
+import SubjectTopics from "./SubjectTopics";
 import { getGroupAcronym, CountryFlag } from "../lib/utils";
 import { groupSwatchStyle } from "../lib/groupColors";
 import {
@@ -82,7 +83,19 @@ import { loadTrendSeries } from "../lib/trends.js";
 // the History tab is the same number over five terms — so opening on it is
 // opening on the thing that has to be understood before either of the others
 // says anything.
+// A `subjectOnly` tab is offered only while a policy area is selected. Topics
+// is the one of those: it describes what the selected subject is made of, and
+// with no subject there is no question for it to answer. That is a different
+// case from Agreement, whose panels are full even on the unfiltered
+// Parliament — absence of content here is structural, not incidental.
+//
+// First in the strip because the dossiers are what the rest is read against. A
+// policy area is usually two or three debates, and the shape on the canvas
+// means something else once you know term 10's Security and Defence is one
+// white paper voted on one day. Appearing does not steal the view: the tab
+// already selected stays selected, the strip just grows a first entry.
 const TABS = [
+  { id: "topics", label: "Topics", subjectOnly: true },
   { id: "cohesion", label: "Agreement" },
   { id: "coalitions", label: "Coalitions" },
   { id: "history", label: "History" },
@@ -130,7 +143,22 @@ export default function Sidebar({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(TABS[0].id);
+  // The tab last asked for, which is not always one that can be seen: clearing
+  // the subject takes Topics away underneath the reader. Held as the request
+  // rather than the answer, so selecting another subject returns them to it
+  // instead of stranding them wherever the fallback landed. Seeded by id and
+  // not by TABS[0], which is now a tab that is usually not there.
+  const [requestedTab, setRequestedTab] = useState("cohesion");
+  const visibleTabs = useMemo(
+    () => TABS.filter((tab) => !tab.subjectOnly || Boolean(selectedSubject)),
+    [selectedSubject]
+  );
+  // Derived rather than corrected in an effect: the strip and the panel below
+  // it are then incapable of disagreeing, not even for the single render an
+  // effect would take to catch up.
+  const activeTab = visibleTabs.some((tab) => tab.id === requestedTab)
+    ? requestedTab
+    : visibleTabs[0].id;
   // Which political family the two family-pivoted panels are showing. Held
   // here rather than inside them because the export button has to draw what is
   // on screen, and only one tab is mounted at a time — a sheet for the EPP
@@ -274,19 +302,22 @@ export default function Sidebar({
     if (!keys.includes(event.key)) return;
     event.preventDefault();
 
-    const index = TABS.findIndex((item) => item.id === activeTab);
+    // Over the visible list, not TABS: with no subject selected the first
+    // entry is not on screen, and arrowing onto it would move focus to a
+    // button that does not exist.
+    const index = visibleTabs.findIndex((item) => item.id === activeTab);
     let next = index;
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      next = (index + 1) % TABS.length;
+      next = (index + 1) % visibleTabs.length;
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      next = (index - 1 + TABS.length) % TABS.length;
+      next = (index - 1 + visibleTabs.length) % visibleTabs.length;
     } else if (event.key === "Home") {
       next = 0;
     } else if (event.key === "End") {
-      next = TABS.length - 1;
+      next = visibleTabs.length - 1;
     }
 
-    setActiveTab(TABS[next].id);
+    setRequestedTab(visibleTabs[next].id);
     const buttons = event.currentTarget.querySelectorAll('[role="tab"]');
     if (buttons && buttons[next]) buttons[next].focus();
   };
@@ -614,6 +645,15 @@ export default function Sidebar({
   };
 
   const renderTabPanel = () => {
+    // What the policy area is made of, before anything is claimed about its
+    // shape. Unreachable without a subject, so it needs no empty state of its
+    // own — the tab it lives on is gone in that case.
+    if (activeTab === "topics") {
+      return (
+        <SubjectTopics mandate={mandate} selectedSubject={selectedSubject} />
+      );
+    }
+
     // Who wins together, and how close each pair of groups sits. Both answer
     // "which blocs are there", where the Agreement tab answers "how tightly
     // does each one hold" — the coalition and the matrix were previously three
@@ -820,7 +860,7 @@ export default function Sidebar({
             aria-label="Network sidebar sections"
             onKeyDown={handleTabKeyDown}
           >
-            {TABS.map((tab) => (
+            {visibleTabs.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
@@ -832,7 +872,7 @@ export default function Sidebar({
                 className={`sidebar-tab ${
                   activeTab === tab.id ? "sidebar-tab--active" : ""
                 }`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setRequestedTab(tab.id)}
               >
                 {tab.label}
               </button>
