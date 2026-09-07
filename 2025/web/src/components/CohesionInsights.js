@@ -140,15 +140,31 @@ function baselinePhrase(label) {
   return label.replace(/,\s*all policy areas$/, " across all policy areas");
 }
 
-export default function CohesionInsights({
-  graphData,
+/**
+ * The rows this panel draws, as a plain function of its inputs.
+ *
+ * Split out from the component so the selection can be read and tested without
+ * rendering: this is the half with the thresholds in it, and the half most
+ * likely to be argued with.
+ *
+ * It is deliberately *not* used to decide whether the Agreement tab is offered.
+ * Coming back empty is the ordinary case — two thirds of views have nothing
+ * extraordinary to report, and the unfiltered Parliament has no baseline to be
+ * extraordinary against, so on the view the site opens on this returns nothing
+ * every time. But the tab is not this strip. IntragroupCohesion and
+ * CountrySimilarity sit underneath, and on that same landing view they carry
+ * nine groups and twenty-seven countries. Hiding the tab on an empty result
+ * would take both down with it. The tab that really has nothing in it — no
+ * cohesion data at all — is already caught where it is rendered.
+ */
+export function insightRows({
   baseline,
-  mandate,
-  intergroupCohesion,
+  graphData,
   intragroupCohesion,
   countrySimilarity,
+  intergroupCohesion,
+  mandate,
 }) {
-  const rows = useMemo(() => {
     if (!baseline || !graphData) return [];
     const found = [];
     const against = baselinePhrase(baseline.label);
@@ -264,14 +280,28 @@ export default function CohesionInsights({
     // to prevent. Dividing by the threshold makes the three commensurable,
     // and it is that same division that lets them share one axis below.
     return found.sort((x, y) => y.excess - x.excess);
-  }, [
-    baseline,
-    graphData,
-    intragroupCohesion,
-    countrySimilarity,
-    intergroupCohesion,
-    mandate,
-  ]);
+}
+
+export default function CohesionInsights({
+  graphData,
+  baseline,
+  mandate,
+  intergroupCohesion,
+  intragroupCohesion,
+  countrySimilarity,
+}) {
+  const rows = useMemo(
+    () =>
+      insightRows({
+        baseline,
+        graphData,
+        intragroupCohesion,
+        countrySimilarity,
+        intergroupCohesion,
+        mandate,
+      }),
+    [baseline, graphData, intragroupCohesion, countrySimilarity, intergroupCohesion, mandate]
+  );
 
   if (!graphData) return null;
 
