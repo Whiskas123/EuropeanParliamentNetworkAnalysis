@@ -1,0 +1,959 @@
+<title>Vinte Anos de Câmara</title>
+<style>
+  :root{
+    --paper:#F1F2F5; --card:#FBFBFC; --ink:#191D23; --accent:#0F3557;
+    --rule:#CDD1D8; --rule-soft:#E1E4E9; --muted:#5C646F; --flag:#8E2F38;
+    --rail:#D8DBE1; --grid:#E1E4E9; --shadow:0 1px 0 rgba(25,29,35,.04);
+    --closer:#1A6B3C; --apart:#A32A1E;
+    --g-left:#800080; --g-green:#009900; --g-sd:#FF0000; --g-renew:#C9A200;
+    --g-epp:#3399CC; --g-ecr:#000080; --g-pfe:#181818; --g-esn:#8B4513;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#14171B; --card:#1B1F25; --ink:#E4E7EB; --accent:#8FB4DC;
+      --rule:#2E353E; --rule-soft:#252B33; --muted:#939CA8; --flag:#D4949B;
+      --rail:#2E353E; --grid:#252B33; --shadow:none;
+      --closer:#4EA373; --apart:#D97B6C;
+      --g-left:#B26BB2; --g-green:#3FB13F; --g-sd:#F2564F; --g-renew:#FFD700;
+      --g-epp:#5FB4E0; --g-ecr:#6579CC; --g-pfe:#C9CCD2; --g-esn:#B87333;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14171B; --card:#1B1F25; --ink:#E4E7EB; --accent:#8FB4DC;
+    --rule:#2E353E; --rule-soft:#252B33; --muted:#939CA8; --flag:#D4949B;
+    --rail:#2E353E; --grid:#252B33; --shadow:none;
+      --closer:#4EA373; --apart:#D97B6C;
+    --g-left:#B26BB2; --g-green:#3FB13F; --g-sd:#F2564F; --g-renew:#FFD700;
+    --g-epp:#5FB4E0; --g-ecr:#6579CC; --g-pfe:#C9CCD2; --g-esn:#B87333;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper); color:var(--ink); font-family:var(--sans);
+    margin:0; padding:0 1.5rem 6rem; line-height:1.55; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:64rem; margin:0 auto}
+
+  header.top{padding:3rem 0 2rem; border-bottom:2px solid var(--ink);
+    display:flex; flex-direction:column; gap:1.1rem}
+  .eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted)}
+  h1{font-family:var(--serif); font-weight:400; font-size:clamp(2.4rem,6vw,3.9rem);
+    line-height:1.02; margin:0; letter-spacing:-.015em; text-wrap:balance}
+  .standfirst{font-family:var(--serif); font-size:1.15rem; line-height:1.6;
+    color:var(--muted); max-width:54ch; margin:0}
+  .counts{font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:1rem}
+  .counts b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
+
+  .section-head{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); font-weight:600;
+    margin:3.5rem 0 1.5rem; padding-bottom:.6rem; border-bottom:1px solid var(--rule)}
+
+  .badge{font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+    font-weight:600; padding:.2rem .5rem; border-radius:2px; border:1px solid var(--rule);
+    color:var(--muted); white-space:nowrap}
+  .badge.proposta{border-color:var(--flag); color:var(--flag)}
+
+  .note{margin:2.5rem 0 0; padding:1.1rem 1.25rem; background:var(--card);
+    border:1px solid var(--rule-soft); box-shadow:var(--shadow)}
+  .note h3{font-family:var(--mono); font-size:.67rem; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 .8rem; font-weight:600}
+  .note p{margin:0 0 .7rem; font-size:.9rem; line-height:1.55}
+  .note p:last-child{margin-bottom:0}
+  .note b{font-variant-numeric:tabular-nums}
+
+  .anno{margin-bottom:3rem}
+  .anno-head{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap; margin-bottom:1rem}
+  .anno-head h2{font-family:var(--serif); font-weight:400; font-size:clamp(1.55rem,3.2vw,2.1rem);
+    line-height:1.12; margin:0; letter-spacing:-.01em; text-wrap:balance}
+  .anno-for{font-family:var(--mono); font-size:.63rem; letter-spacing:.11em;
+    text-transform:uppercase; color:var(--flag)}
+  .walltext{max-width:40em; border-left:2px solid var(--accent); padding-left:1.15rem}
+  .walltext p{font-family:var(--serif); font-size:1.1rem; line-height:1.68; margin:0 0 1em}
+  .walltext p:last-child{margin-bottom:0}
+  .walltext em{font-style:normal; font-variant-numeric:tabular-nums; font-weight:600}
+
+  .fig{padding:2.5rem 0; border-top:1px solid var(--rule-soft)}
+  .fig:first-of-type{border-top:none; padding-top:.5rem}
+  .fig-num{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:.4rem}
+  .fig h3{font-family:var(--serif); font-weight:400; font-size:clamp(1.35rem,2.8vw,1.8rem);
+    line-height:1.15; margin:0 0 .35rem; letter-spacing:-.01em; text-wrap:balance}
+  .fig .sub{font-family:var(--mono); font-size:.7rem; color:var(--muted);
+    letter-spacing:.03em; margin:0 0 1.5rem}
+  .chart{width:100%; overflow-x:auto; margin-bottom:1.4rem}
+  .chart svg{display:block; width:100%; height:auto; min-width:34rem}
+  .cap{max-width:42em; font-family:var(--serif); font-size:1.02rem; line-height:1.62; margin:0 0 1em}
+  .cap:last-child{margin-bottom:0}
+  .cap b{font-weight:600; font-variant-numeric:tabular-nums}
+  .caveat{max-width:42em; margin:1.1rem 0 0; padding-left:.9rem;
+    border-left:2px solid var(--flag); font-size:.86rem; line-height:1.55; color:var(--muted)}
+  .caveat b{color:var(--ink); font-weight:600}
+
+  .legend{display:flex; flex-wrap:wrap; gap:.35rem 1.15rem; margin:0 0 1rem;
+    font-size:.78rem; color:var(--muted)}
+  .legend span{display:inline-flex; align-items:center; gap:.4rem; white-space:nowrap}
+  .swatch{width:.85rem; height:0; border-top-width:3px; border-top-style:solid; flex:none}
+  .swatch.dash{border-top-style:dashed}
+
+  table.tbl{border-collapse:collapse; width:100%; font-size:.8rem; margin-top:1rem}
+  table.tbl th,table.tbl td{text-align:right; padding:.32rem .55rem; border-bottom:1px solid var(--rule-soft);
+    font-variant-numeric:tabular-nums}
+  table.tbl th:first-child,table.tbl td:first-child{text-align:left}
+  table.tbl th{font-family:var(--mono); font-size:.63rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); font-weight:600}
+  details.data{margin-top:1.2rem; font-size:.85rem}
+  details.data summary{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); cursor:pointer; font-weight:600}
+  details.data summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .tblwrap{overflow-x:auto}
+
+  ul.kill{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1.1rem}
+  ul.kill li{padding-left:1rem; border-left:2px solid var(--flag); max-width:44em}
+  ul.kill .claim{font-family:var(--serif); font-size:1.05rem; line-height:1.4; margin:0 0 .35rem}
+  ul.kill .why{font-size:.87rem; line-height:1.55; color:var(--muted); margin:0}
+  ul.kill .why b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
+
+  footer{margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--rule);
+    font-size:.8rem; color:var(--muted); max-width:44em}
+  footer p{margin:0 0 .6rem}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Painel 8 · Evolução <span class="badge proposta">proposta</span></div>
+  <h1>Vinte Anos de Câmara</h1>
+  <p class="standfirst">Cinco mandatos do Parlamento Europeu, das eleições de 2004 até hoje.
+  Duas anotações para as imagens que já tens, e nove gráficos novos — todos calculados
+  a partir das mesmas votações que desenham as redes.</p>
+  <div class="counts">
+    <span><b>45 879</b> votações nominais</span>
+    <span><b>5 703</b> delas votações finais</span>
+    <span><b>5</b> mandatos</span>
+    <span><b>2004–2026</b></span>
+    <span>10.ª legislatura ainda a decorrer</span>
+  </div>
+</header>
+
+<h2 class="section-head">Parte I — as duas anotações</h2>
+
+<section class="anno">
+  <div class="anno-head">
+    <span class="anno-for">Imagem 1</span>
+    <h2>Os dois grupos mais afastados</h2>
+  </div>
+  <div class="walltext">
+    <p>Em cada mandato, esta linha mede a distância máxima do Parlamento: a percentagem
+    de votações em que os dois grupos que menos concordam um com o outro ainda assim
+    tomaram a mesma posição.</p>
+    <p>Durante quinze anos o valor quase não se mexeu — entre <em>43%</em> e <em>36%</em>.
+    Mesmo os dois extremos da câmara votavam juntos em mais de um terço das vezes,
+    porque muita coisa que se decide em Estrasburgo não é de esquerda nem de direita.</p>
+    <p>No mandato actual cai para <em>17,6%</em>. Não é uma descida, é um corte. Os Verdes
+    e a Europa das Nações Soberanas votam do mesmo lado em menos de uma votação em cinco.</p>
+    <p>Reparem numa coisa: a linha não segue sempre o mesmo par. São dois grupos diferentes
+    em cada mandato, e é isso que ela diz de mais interessante. Em 2004 os dois extremos
+    eram a esquerda radical e o PPE — o eixo clássico esquerda-direita. Desde 2009 é sempre
+    um grupo de esquerda contra um grupo da direita radical. Mudou a distância, mas mudou
+    sobretudo quem está nas pontas.</p>
+    <p>E não é só o par do fundo. Nos quatro primeiros mandatos não houve um único par de
+    grupos a votar junto em menos de <em>35%</em> das votações — nem um, em vinte anos.
+    Neste há <em>dez</em>. E metade de todos os pares de grupos está abaixo dos 50%, contra
+    um terço em 2004 e nunca mais de 39% até agora. O fundo da tabela deixou de ser uma
+    excepção e passou a ser metade da câmara.</p>
+  </div>
+  <div class="note">
+    <h3>Os cinco pares, para a legenda</h3>
+    <p><b>2004–09</b> GUE/NGL ~ PPE-DE, 43,0% · <b>2009–14</b> Verdes ~ ECR, 39,8% ·
+    <b>2014–19</b> S&amp;D ~ ENF, 36,2% · <b>2019–24</b> GUE/NGL ~ ECR, 36,0% ·
+    <b>2024–26</b> Verdes ~ ESN, 17,6%</p>
+    <p><b>Pares de grupos abaixo de 50% de concordância:</b> 7 de 21 · 7 de 21 · 11 de 28 ·
+    7 de 21 · <b>14 de 28</b>. Abaixo de 35%: 0 · 0 · 0 · 0 · <b>10</b>.</p>
+  </div>
+</section>
+
+<section class="anno">
+  <div class="anno-head">
+    <span class="anno-for">Imagem 2</span>
+    <h2>Cinco retratos, um por mandato</h2>
+  </div>
+  <div class="walltext">
+    <p>As duas manchas grandes do primeiro quadro são o PPE e os socialistas. Em 2004 os
+    dois maiores grupos tinham <em>435</em> dos 678 deputados — quase dois terços da
+    câmara. Hoje têm <em>310</em> em 703, menos de metade. O que se partiu nestes vinte
+    anos não foi a esquerda nem a direita: foi o centro que aqueles dois ocupavam sozinhos.</p>
+    <p>Vejam quem está no meio de cada quadro. Em cada mandato há um grupo que concorda
+    com toda a gente mais do que qualquer outro — é por ele que a casa tem de passar para
+    decidir seja o que for. Foram os socialistas em 2004–09, os liberais em 2009–14 e
+    outra vez em 2019–24, quando chegaram aos <em>68%</em>, o valor mais alto dos vinte
+    anos. Hoje é um empate a três — liberais, PPE e socialistas, todos nos <em>60%</em>.
+    O centro de gravidade da câmara nunca foi o maior grupo, e nunca esteve tão baixo.</p>
+    <p>Vejam depois os pontos que estão do lado errado: deputados desenhados dentro do
+    grupo dos outros, porque é com esses que votam mais. Em 2004–09 são <em>dezanove</em>,
+    e catorze vêm da direita eurocéptica — seis deputados da UEN votam mais como o PPE do
+    que como o seu próprio grupo. Em 2014–19 são <em>cinquenta e cinco</em>, o máximo dos
+    vinte anos, e trinta e seis pertencem todos ao mesmo grupo, o EFDD. Esse grupo parte-se
+    exactamente pela nacionalidade: os <em>catorze</em> italianos do Movimento 5 Estrelas
+    votam mais como a extrema-esquerda, e vinte colegas seus — catorze deles britânicos do
+    UKIP — votam mais como a extrema-direita identitária. Sentavam-se no mesmo grupo e
+    estavam em pontas opostas da sala.</p>
+    <p>No último quadro há <em>vinte e sete</em> casos e estão todos do mesmo lado. Sete
+    conservadores votam mais como os Patriotas; sete Patriotas votam mais como a ESN. Do
+    outro lado da câmara, A Esquerda, os Verdes, os socialistas e os liberais trocam seis
+    deputados entre si e não perdem nenhum para fora do bloco.</p>
+    <p>É essa a diferença entre o primeiro quadro e o último. Em 2004, quem transbordava do
+    seu grupo transbordava para o centro. Hoje transborda para a ponta.</p>
+  </div>
+  <div class="note">
+    <h3>Como ler os quadros — e o que não comparar</h3>
+    <p>Cada ponto é um eurodeputado, cada linha liga dois que votaram igual em mais de 60%
+    das votações, e a posição resulta de deixar essas linhas puxarem os pontos uns para os
+    outros até tudo parar. Ninguém pôs os grupos onde estão.</p>
+    <p><strong>Leiam cada quadro por dentro, nunca uns contra os outros.</strong> O
+    algoritmo arranca de posições aleatórias, por isso a escala e a orientação de cada
+    desenho são arbitrárias e um mandato parecer mais espalhado do que outro não quer dizer
+    nada. Tudo o que a anotação compara entre mandatos é contado sobre os deputados, sem
+    passar pelo desenho. O <strong>gráfico 6</strong> é a versão dos cinco quadros que se
+    pode comparar.</p>
+    <p><b>Pivô, por mandato:</b> PSE 63,6 · ALDE 63,2 · S&amp;D 61,7 · RE 68,0 · RE 61,0.
+    <b>Deputados do lado errado:</b> 19 · 29 · 55 · 26 · 27.</p>
+  </div>
+</section>
+
+<h2 class="section-head">Parte II — nove gráficos novos</h2>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 1</div>
+  <h3>O centro fechou fileiras enquanto as pontas se afastavam</h3>
+  <p class="sub">Concordância entre grupos, por mandato · % de votações do mesmo lado</p>
+  <div class="legend" id="lg1"></div>
+  <div class="chart" id="c1"></div>
+  <p class="cap">A leitura fácil da imagem 1 — «o Parlamento está a polarizar-se» — esconde
+  que são dois movimentos opostos ao mesmo tempo. Enquanto a distância às pontas abria,
+  o centro apertava: o PPE, os socialistas e os liberais concordam hoje entre si em
+  <b>83%</b> das votações, contra <b>72%</b> em 2004. É o valor mais alto dos vinte anos,
+  e sobe em todos os mandatos sem excepção.</p>
+  <p class="cap">A grande coligação não se desfez. Ficou mais unida e ficou mais sozinha.</p>
+  <p class="caveat"><b>Não dizer</b> que «o centro deixou de se entender». Diz-se muitas
+  vezes e os números dizem exactamente o contrário.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 2</div>
+  <h3>O PPE não foi para a direita. Os conservadores é que foram</h3>
+  <p class="sub">Concordância entre famílias políticas, por mandato · % de votações do mesmo lado</p>
+  <div class="legend" id="lg2"></div>
+  <div class="chart" id="c2"></div>
+  <p class="cap">O PPE tem dois parceiros possíveis e as duas linhas afastaram-se uma da
+  outra durante vinte anos. Com os socialistas subiu de <b>67%</b> para <b>78%</b> — o
+  valor mais alto que este par alguma vez teve. Com a direita radical desceu de <b>51%</b>
+  para <b>41%</b>, o mais baixo. O intervalo entre as duas opções do PPE passou de
+  <b>15</b> para <b>37</b> pontos.</p>
+  <p class="cap">Quem fez o caminho contrário foram os conservadores. Em 2004–09 votavam
+  com a direita radical em <b>54%</b> das votações; hoje em <b>78%</b> — exactamente o
+  mesmo número que liga o PPE aos socialistas. As duas metades da câmara têm agora
+  coligações igualmente apertadas, e não falam uma com a outra.</p>
+  <p class="caveat"><b>Atenção à linha do meio.</b> A concordância entre o PPE e a direita
+  radical sobe e desce conforme o mandato (51 · 56 · 41 · 55 · 41): não é uma descida
+  contínua, é um vaivém que acaba no ponto mais baixo. Mostrar os cinco pontos, nunca
+  só as pontas.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 3</div>
+  <h3>A extrema-direita aprendeu a votar em conjunto</h3>
+  <p class="sub">Disciplina interna · % dos deputados que votam com a maioria do seu próprio grupo</p>
+  <div class="legend" id="lg3"></div>
+  <div class="chart" id="c3"></div>
+  <p class="cap">Seis famílias políticas quase não se mexem em vinte anos: andam todas
+  entre 88% e 97%, onde já andavam. A sétima atravessa o gráfico de baixo para cima.
+  Em 2004–09 a extrema-direita mal existia como grupo — os seus deputados votavam com a
+  maioria do próprio grupo em <b>63%</b> das vezes, quando no PPE eram 88% e nos Verdes 94%.
+  Hoje está em <b>91%</b>, ao nível de toda a gente.</p>
+  <p class="cap">Ganhou disciplina sem ganhar companhia. É hoje um dos blocos mais coesos
+  da câmara e, ao mesmo tempo, aquele com quem menos gente vota.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 4</div>
+  <h3>Sete em cada dez adopções eram quase unânimes. Hoje são três</h3>
+  <p class="sub">Votações finais — o texto no seu conjunto, não as alterações · % por margem</p>
+  <div class="legend" id="lg4"></div>
+  <div class="chart" id="c4"></div>
+  <p class="cap">Quando o Parlamento vota um texto inteiro — aprovar ou chumbar, no fim do
+  debate — em 2004–09 <b>71%</b> dessas votações passavam com mais de 90% da casa do mesmo
+  lado. Hoje são <b>31%</b>. A margem mediana de uma adopção caiu de <b>95%</b> para
+  <b>82%</b>.</p>
+  <p class="cap">Mas o Parlamento não passou a decidir por um fio, e nem sequer é perto
+  disso: as adopções ganhas por menos de 55–45 eram <b>0,9%</b> e são <b>1,9%</b>. Quase
+  nunca, então como agora. O que se perdeu foi a folga, não a maioria.</p>
+  <p class="caveat"><b>Não é uma descida contínua, e o meio da série tem duas explicações
+  que não são políticas.</b> A série é 71 · 52 · 33 · 51 · 31: o mandato de 2014–19 já
+  estava no nível de hoje, e o seguinte voltou a subir. Uma parte grande da descida inicial
+  é a delegação britânica, que votava contra sistematicamente — refeitas as contas sem os
+  britânicos na sala, a série passa a <b>76 · 73 · 43 · 51 · 31</b>, e a queda de 2009–14
+  desaparece quase toda. E o mandato de 2009–14 assenta em <b>59</b> dias de sessão com
+  votações nominais, contra 190 e 230 nos vizinhos. Os dois pontos seguros são as pontas.</p>
+  <p class="caveat"><b>O salto de 2019–24, explicado.</b> Metade é mecânica: os britânicos
+  saíram em Fevereiro de 2020 e levaram com eles o maior bloco de votos contra — o mandato
+  anterior, recalculado sem eles, sobe de 33% para <b>43%</b>. A outra metade é real e é
+  ampla: não é um dossiê nem uma área, são <b>nove das dezasseis</b> áreas a subir mais de
+  20 pontos, e a composição temática não explica coisa nenhuma (o mandato refeito com a
+  distribuição de assuntos do anterior dá 52%, contra os 51% que dá sozinho). E não é a
+  pandemia: a série sobe ano após ano e o máximo é <b>2023</b> (55,6%), muito depois das
+  resoluções de urgência. É o mesmo que o gráfico 1 diz por outro caminho — descontando a
+  direita radical, 2019–24 é o mandato em que os grupos mais concordaram entre si em vinte
+  anos.</p>
+  <p class="caveat"><b>Porque é que este gráfico só conta as votações finais.</b> Uma
+  votação só fica registada por nome se alguém a pedir, e o que se pede mudou muito: as
+  finais eram <b>23%</b> do registo em 2004–09 e são <b>9,5%</b> hoje — o resto são
+  alterações, três a quatro vezes menos consensuais. Sobre todas as votações esta linha
+  cairia de 30% para 10% e ninguém saberia dizer quanto disso é a câmara e quanto é o que os
+  grupos escolheram mandar registar. O conjunto das finais é estável: entre 5 e 7 por dia de
+  sessão em todos os mandatos.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 5</div>
+  <h3>Quanto mais dividida a câmara, mais o PPE decide</h3>
+  <p class="sub">% das votações decididas em que a maioria do grupo ficou do lado vencedor</p>
+  <div class="legend" id="lg5"></div>
+  <div class="chart" id="c5"></div>
+  <p class="cap">A fragmentação do Parlamento não distribuiu o poder — concentrou-o.
+  O PPE está em <b>93,7%</b>, a marca mais alta de qualquer grupo em vinte anos. Das
+  <b>5 567</b> votações decididas deste mandato, só <b>348</b> se ganharam sem ele.</p>
+  <p class="cap">Do outro lado, os três grupos à direita do PPE perdem mais do que ganham:
+  os conservadores estão em <b>50%</b>, os Patriotas em 38%, a ESN em 31%. Ter deputados
+  e ter votos são coisas diferentes.</p>
+  <p class="caveat"><b>Uma família, dois grupos.</b> Nos mandatos em que a direita radical
+  tem dois grupos (2014–19, 2024–26) a linha é a média dos dois. Se o painel for impresso
+  com nomes de grupos e não de famílias, os números do último mandato são
+  PfE 38,1% e ESN 31,1%.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 6</div>
+  <h3>O eixo do Parlamento mudou de pontas — e ficou só um</h3>
+  <p class="sub">Mapa dos grupos por concordância (MDS clássico) · cinco mandatos à mesma escala</p>
+  <div class="chart" id="c6"></div>
+  <p class="cap">Este é o desenho que se pode comparar. Arruma os grupos num mapa a partir
+  da mesma matriz de concordâncias, sem nenhum passo aleatório: dois grupos que votam
+  igual ficam perto, dois que votam ao contrário ficam longe, e os cinco mandatos estão à
+  mesma escala. É a versão honesta dos cinco quadros da imagem 2.</p>
+  <p class="cap">Em 2004–09 os grupos formam uma bola. Uma linha só explicava <b>48%</b>
+  do que se passava, e o grupo eurocéptico de então saía dela por uma segunda direcção
+  que não era esquerda-direita. Em 2024–26 o mapa é praticamente uma recta: uma linha só
+  explica <b>85%</b>, e com duas chega-se a <b>98%</b>. O Parlamento passou a ter um eixo
+  em vez de dois.</p>
+  <p class="cap">E esse eixo mudou de pontas. Em 2004 ia da esquerda radical ao PPE. Hoje
+  vai dos Verdes à ESN, e o maior intervalo entre dois grupos vizinhos deixou de estar
+  dentro da esquerda para estar <b>entre o PPE e o ECR</b>: sozinho, vale <b>metade</b>
+  do eixo inteiro. É o cordão sanitário, medido.</p>
+  <details class="data">
+    <summary>Posições e variância explicada</summary>
+    <div class="tblwrap"><table class="tbl" id="t6"></table></div>
+  </details>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 7</div>
+  <h3>Vinte e um pares, e a fronteira cai toda no mesmo sítio</h3>
+  <p class="sub">Deslocação de cada par de famílias entre 2004–09 e 2024–26 · % de votações do mesmo lado</p>
+  <div class="chart" id="cp1"></div>
+  <p class="cap">Sete famílias fazem <b>21</b> pares, e isto são todos. Um gráfico por
+  família — sete gráficos — mostraria cada par duas vezes: o do PPE desenha PPE ~ socialistas
+  e o dos socialistas desenha o mesmo par outra vez. Sem a repetição cabe tudo numa página.
+  Cada linha é um par: o ponto cheio é 2004–09, a seta é 2024–26, e os três círculos pelo
+  meio são os mandatos intermédios, do mais claro ao mais escuro.</p>
+  <p class="cap">Ordenados pela deslocação, os vinte e um partem-se em dois blocos sem uma
+  única excepção. Os <b>dez</b> pares formados entre a esquerda radical, os Verdes, os
+  socialistas, os liberais e o PPE sobem <em>todos</em>, de <b>+7,9</b> a <b>+20,0</b>
+  pontos. Os <b>dez</b> pares que envolvem os conservadores ou a direita radical descem
+  <em>todos</em>, de <b>−10,6</b> a <b>−24,4</b>. Sobra um: conservadores ~ direita radical,
+  <b>+24,0</b>, a maior deslocação da câmara em vinte anos.</p>
+  <p class="cap">Onde o verde acaba e o vermelho começa não foi escolhido por quem desenhou
+  o gráfico. É exactamente a linha que separa as duas metades da câmara, e sai da ordenação
+  sozinha. A câmara não se espalhou ao longo de um eixo: partiu-se em dois, e cada metade
+  apertou por dentro.</p>
+  <p class="caveat"><b>Atenção: isto é o sentido da viagem, não um corte no nível.</b> O PPE
+  continua hoje mais perto dos conservadores (<b>57,3%</b>) do que da esquerda radical
+  (<b>54,8%</b>) — o par que desceu 17,6 pontos ainda está acima do par que subiu 11,8. O
+  que se partiu em dois foi a direcção, não a distância.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 8</div>
+  <h3>Os mesmos vinte e um, na ordem em que se sentam</h3>
+  <p class="sub">Um trajecto por par · cinco mandatos de cima para baixo, a seta é hoje</p>
+  <div class="chart" id="cp2"></div>
+  <p class="cap">A mesma matéria do gráfico anterior com o tempo desdobrado: dentro de cada
+  célula os cinco mandatos correm de cima para baixo, e a ponta da seta é onde o par está
+  hoje. As famílias estão nos dois eixos pela ordem em que se sentam, da esquerda para a
+  direita, e é essa ordem que faz o desenho — o vermelho não anda espalhado pela matriz.
+  Ocupa as duas últimas linhas, conservadores e direita radical, e mais nada.</p>
+  <p class="cap">A única célula verde nessas duas linhas é a que as liga uma à outra, no
+  canto — e é a mais forte de toda a matriz.</p>
+  <p class="caveat"><b>Um trajecto não é uma linha recta.</b> O PPE com a direita radical
+  sobe a 56,2 em 2009–14, cai a 41,3, volta a 55,1 e acaba em 40,6. Na célula isso é um
+  canto; no gráfico 7 são dois círculos do lado errado da seta. É a razão para as duas
+  formas existirem, e a razão para nunca mostrar só as pontas.</p>
+</section>
+
+<section class="fig">
+  <div class="fig-num">Gráfico 9</div>
+  <h3>Sem um único número: o que subiu, por cima; o que desceu, por baixo</h3>
+  <p class="sub">As sete famílias na ordem em que se sentam · um arco por par, mais grosso quanto maior a deslocação</p>
+  <div class="chart" id="cp3"></div>
+  <p class="cap">Os mesmos 21 pares outra vez, agora só como forma. Tudo o que liga entre si
+  as cinco famílias da esquerda ao PPE passa por cima da linha. Tudo o que atravessa para os
+  conservadores ou para a direita radical passa por baixo. E o arco mais grosso de todos,
+  por cima e encostado à direita, é o que liga esses dois um ao outro.</p>
+  <p class="caveat"><b>Não se lê um valor nenhum aqui.</b> É uma imagem para abrir a
+  secção, não um gráfico para consultar; os números estão nos dois anteriores. Se só couber
+  um destes três na parede, deve ser o <b>gráfico 7</b> — é o único que se lê sem legenda
+  e sem quem o explique.</p>
+</section>
+
+<h2 class="section-head">Parte III — o que não vamos dizer</h2>
+
+<ul class="kill">
+  <li>
+    <p class="claim">«O Parlamento polarizou-se.»</p>
+    <p class="why">A concordância média entre grupos anda aos saltos: <b>58,3 · 58,0 · 55,6 ·
+    60,8 · 53,2</b>. Retirem-se os pares que envolvem um grupo de direita radical e a série
+    fica <b>62,5 · 60,4 · 63,1 · 65,8 · 64,4</b> — plana, se não a subir. A queda inteira é
+    um bloco a separar-se de uma câmara que, no resto, está a convergir. É a mesma coisa
+    que os gráficos 1 e 3 dizem por dois caminhos diferentes.</p>
+  </li>
+  <li>
+    <p class="claim">«Hoje decide-se tudo por escassos votos.»</p>
+    <p class="why">Das votações em que o Parlamento adopta ou chumba um texto, as ganhas por
+    menos de 55–45 são <b>1,9%</b> — e eram <b>0,9%</b> em 2004–09. Uma adopção renhida é
+    rara hoje e era rara então. Gráfico 4.</p>
+  </li>
+  <li>
+    <p class="claim">«Os grupos ficaram todos mais disciplinados.»</p>
+    <p class="why">Só um ficou. Sem contar a direita radical, a disciplina média dos grupos
+    mexe-se dois ou três pontos em vinte anos. Gráfico 3.</p>
+  </li>
+  <li>
+    <p class="claim">«Há muito mais votações do que havia, logo o Parlamento trabalha mais.»</p>
+    <p class="why">As votações nominais passaram de cerca de <b>1 200</b> por ano em 2004–09
+    para mais de <b>3 700</b> em 2019–24, mas isso é regimento e não política: mudou a regra
+    sobre quando se pede votação por chamada. Todos os números deste painel são
+    percentagens, precisamente por isso.</p>
+  </li>
+</ul>
+
+<footer>
+  <p><b>Método.</b> Tudo o que está aqui sai das 45 879 votações nominais dos cinco
+  mandatos. «Concordância» entre dois grupos é a percentagem de votações em que os dois
+  tomaram a mesma posição; entre dois deputados, a percentagem de votações em que votaram
+  o mesmo — a mesma medida que desenha as redes. «Disciplina» é a percentagem de deputados
+  de um grupo que vota com a maioria do seu grupo. Uma votação está «decidida» quando há
+  votos a favor e contra, e a «margem» é a percentagem desses votos que ficou do lado
+  vencedor — as abstenções são uma posição, mas não são um lado.</p>
+  <p><b>Só o gráfico 4 restringe a amostra.</b> Os outros cinco usam todas as votações
+  nominais, e podem: concordância é um rácio por par de pessoas sobre as votações que
+  existem, por isso a selecção muda a mistura mas afecta os dois membros do par da mesma
+  maneira. «Que percentagem das votações é folgada» é uma afirmação sobre a população de
+  votações, e aí a selecção <em>é</em> a medição — por isso esse gráfico conta só as
+  votações finais, que é o conjunto cuja composição não se desfez em vinte anos.</p>
+  <p><b>O último mandato ainda vai a meio</b> (Julho de 2024 a Julho de 2026, 5 568
+  votações). Todos os números que lhe dizem respeito são percentagens e comparam-se com os
+  outros mandatos; um teste feito sobre a mesma janela de 722 dias do mandato anterior
+  devolveu os mesmos valores que o mandato inteiro.</p>
+  <p><b>Cores.</b> Cada linha usa a cor do grupo ou da família a que se refere, a mesma do
+  site e das redes. Como algumas dessas cores são difíceis de separar (o vermelho dos
+  socialistas e o verde dos Verdes, para quem não distingue as duas), todas as séries estão
+  também escritas ao lado da linha e todos os números estão nas tabelas.</p>
+</footer>
+
+</div>
+
+<script type="module">
+const TERMS = [
+  {k:"2004–09"},{k:"2009–14"},{k:"2014–19"},{k:"2019–24"},{k:"2024–26"}
+];
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a={}) => { const e = document.createElementNS(NS, n);
+  for (const [k,v] of Object.entries(a)) e.setAttribute(k, v); return e; };
+const fmt = v => v.toFixed(1).replace(".", ",");
+
+/* One line chart. Fixed slots per term so a gap breaks the line rather than
+   sliding it along the axis. Every series is direct-labelled at its right end,
+   which is what carries identity for readers who cannot separate the hues. */
+function lineChart(mount, {series, min, max, ticks, valueFmt = fmt}) {
+  const W = 860, H = 330, L = 46, R = 236, T = 28, B = 44;
+  const iw = W - L - R, ih = H - T - B;
+  const svg = el("svg", {viewBox:"0 0 " + W + " " + H, role:"img"});
+  const x = i => L + (iw * i) / (TERMS.length - 1);
+  const y = v => T + ih - ((v - min) / (max - min)) * ih;
+
+  ticks.forEach(t => {
+    svg.appendChild(el("line", {x1:L, x2:L+iw, y1:y(t), y2:y(t),
+      stroke:"var(--grid)", "stroke-width":1}));
+    const lab = el("text", {x:L-9, y:y(t)+4, "text-anchor":"end",
+      fill:"var(--muted)", "font-size":11, "font-family":"var(--mono)"});
+    lab.textContent = t; svg.appendChild(lab);
+  });
+  TERMS.forEach((t,i) => {
+    svg.appendChild(el("line", {x1:x(i), x2:x(i), y1:T+ih, y2:T+ih+5,
+      stroke:"var(--rule)", "stroke-width":1}));
+    const lab = el("text", {x:x(i), y:T+ih+22, "text-anchor":"middle",
+      fill:"var(--muted)", "font-size":12, "font-family":"var(--mono)"});
+    lab.textContent = t.k; svg.appendChild(lab);
+  });
+
+  /* Right-edge labels, pushed apart so two series ending close together stay
+     readable. Walk down from the top, then back up if the run overflows. */
+  const ends = series.map((s,si) => ({si, v:s.values[s.values.length-1]}))
+    .sort((a,b) => b.v - a.v);
+  const GAP = 17; let prev = -1e9;
+  ends.forEach(e => { let py = y(e.v); if (py - prev < GAP) py = prev + GAP; prev = py; e.py = py; });
+  const over = prev - (T + ih);
+  if (over > 0) { let last = 1e9; for (let i = ends.length-1; i >= 0; i--) {
+    if (last - ends[i].py < GAP) ends[i].py = last - GAP; last = ends[i].py; } }
+
+  series.forEach((s, si) => {
+    const pts = s.values.map((v,i) => v == null ? null : [x(i), y(v)]);
+    let d = "", pen = false;
+    pts.forEach(p => { if (!p) { pen = false; return; }
+      d += (pen ? " L " : " M ") + p[0] + " " + p[1]; pen = true; });
+    const attrs = {d, fill:"none", stroke:s.color, "stroke-width":2.5,
+      "stroke-linejoin":"round", "stroke-linecap":"round"};
+    if (s.dash) attrs["stroke-dasharray"] = "7 5";
+    svg.appendChild(el("path", attrs));
+    pts.forEach((p,i) => { if (!p) return;
+      const dot = el("circle", {cx:p[0], cy:p[1], r:4.5, fill:s.color,
+        stroke:"var(--paper)", "stroke-width":1.5});
+      const tip = el("title");
+      tip.textContent = s.name + " · " + TERMS[i].k + ": " + valueFmt(s.values[i]) + "%";
+      dot.appendChild(tip); svg.appendChild(dot);
+      if (i === 0 || i === pts.length - 1) {
+        const n = el("text", {x:p[0], y:p[1]-11, "text-anchor": i === 0 ? "start" : "middle",
+          fill:"var(--muted)", "font-size":11, "font-family":"var(--mono)",
+          "font-variant-numeric":"tabular-nums"});
+        n.textContent = valueFmt(s.values[i]); svg.appendChild(n);
+      }
+    });
+    const e = ends.find(o => o.si === si);
+    svg.appendChild(el("line", {x1:x(TERMS.length-1)+7, x2:L+iw+18,
+      y1:y(s.values[s.values.length-1]), y2:e.py, stroke:s.color,
+      "stroke-width":1, opacity:.45}));
+    const lab = el("text", {x:L+iw+23, y:e.py+4, fill:"var(--ink)", "font-size":12.5});
+    lab.textContent = s.name; svg.appendChild(lab);
+  });
+  mount.appendChild(svg);
+}
+
+function legend(mount, series) {
+  series.forEach(s => {
+    const w = document.createElement("span");
+    const sw = document.createElement("i");
+    sw.className = "swatch" + (s.dash ? " dash" : "");
+    sw.style.borderTopColor = s.color;
+    w.appendChild(sw); w.appendChild(document.createTextNode(s.name));
+    mount.appendChild(w);
+  });
+}
+
+function draw(id, lgId, opts) {
+  const m = document.getElementById(id);
+  if (lgId) legend(document.getElementById(lgId), opts.series);
+  lineChart(m, opts);
+}
+
+/* 1 — the centre against the floor of the chamber. */
+draw("c1", "lg1", {min:0, max:100, ticks:[0,25,50,75,100], series:[
+  {name:"Centro: PPE · S&D · liberais", color:"var(--accent)",
+   values:[71.9,74.6,77.5,78.6,83.0]},
+  {name:"Os dois grupos mais afastados", color:"var(--flag)",
+   values:[43.0,39.8,36.2,36.0,17.6]},
+]});
+
+/* 2 — the EPP's two options, and the ECR going the other way. */
+draw("c2", "lg2", {min:30, max:90, ticks:[30,45,60,75,90], series:[
+  {name:"PPE ~ socialistas", color:"var(--g-epp)", values:[66.6,72.1,73.3,72.8,77.9]},
+  {name:"conservadores ~ direita radical", color:"var(--g-ecr)",
+   values:[53.9,66.4,53.9,72.3,77.9]},
+  {name:"PPE ~ direita radical", color:"var(--g-epp)", dash:true,
+   values:[51.2,56.2,41.3,55.1,40.6]},
+]});
+
+/* 3 — internal discipline. Axis starts at 55: six families sit in a 10-point
+   band at the top and would be one thick line on a 0-100 axis. */
+draw("c3", "lg3", {min:55, max:100, ticks:[55,70,85,100], series:[
+  {name:"Verdes", color:"var(--g-green)", values:[94.2,95.6,97.2,97.3,96.4]},
+  {name:"esquerda radical", color:"var(--g-left)", values:[92.1,88.0,91.0,93.2,94.5]},
+  {name:"socialistas", color:"var(--g-sd)", values:[91.7,91.9,93.5,93.8,94.3]},
+  {name:"liberais", color:"var(--g-renew)", values:[89.4,89.3,89.7,89.9,92.4]},
+  {name:"PPE", color:"var(--g-epp)", values:[88.2,92.4,93.5,91.0,91.8]},
+  {name:"conservadores", color:"var(--g-ecr)", values:[78.7,88.7,82.4,84.5,88.5]},
+  {name:"direita radical", color:"var(--g-pfe)", values:[63.3,64.6,69.4,84.4,91.3]},
+]});
+
+/* 4 — the margin distribution, on final votes only. Axis to 75 because the
+   high line starts at 71.3; the low line's whole point is that it hugs zero. */
+draw("c4", "lg4", {min:0, max:75, ticks:[0,25,50,75], series:[
+  {name:"mais de 90% do mesmo lado", color:"var(--accent)",
+   values:[71.3,52.2,33.0,51.2,30.9]},
+  {name:"ganhas por menos de 55–45", color:"var(--flag)",
+   values:[0.9,1.3,1.5,1.1,1.9]},
+]});
+
+/* 5 — who ends up on the winning side. */
+draw("c5", "lg5", {min:25, max:100, ticks:[25,50,75,100], series:[
+  {name:"PPE", color:"var(--g-epp)", values:[87.5,90.6,85.2,83.9,93.7]},
+  {name:"liberais", color:"var(--g-renew)", values:[87.4,84.8,88.4,93.4,90.7]},
+  {name:"socialistas", color:"var(--g-sd)", values:[82.4,83.3,86.8,88.5,85.3]},
+  {name:"Verdes", color:"var(--g-green)", values:[60.3,67.6,65.7,76.2,73.8]},
+  {name:"esquerda radical", color:"var(--g-left)", values:[52.3,51.8,53.1,65.1,59.5]},
+  {name:"conservadores", color:"var(--g-ecr)", values:[77.0,52.7,61.1,53.1,50.4]},
+  {name:"direita radical", color:"var(--g-pfe)", values:[45.1,53.6,35.7,39.8,34.6]},
+]});
+
+/* 6 — classical MDS on the group agreement matrix, five terms, one scale.
+   Deterministic up to a sign per axis, which is fixed by convention (seating
+   order left to right, Greens above), so unlike the force layouts these five
+   frames genuinely compare. */
+const MDS = [
+ {y:"2004–09", v1:48, v2:83, g:[
+   ["GUE/NGL",-0.290,-0.090,"--g-left"],["Verts/ALE",-0.258,0.021,"--g-green"],
+   ["PSE",-0.077,0.153,"--g-sd"],["ALDE",0.070,0.146,"--g-renew"],
+   ["IND/DEM",0.133,-0.366,"--g-esn"],["UEN",0.194,0.033,"--g-ecr"],
+   ["PPE-DE",0.228,0.102,"--g-epp"]]},
+ {y:"2009–14", v1:55, v2:83, g:[
+   ["Verts/ALE",-0.248,0.038,"--g-green"],["GUE/NGL",-0.195,0.249,"--g-left"],
+   ["S&D",-0.167,-0.099,"--g-sd"],["ALDE",-0.036,-0.168,"--g-renew"],
+   ["PPE",0.051,-0.184,"--g-epp"],["EFD",0.268,0.156,"--g-esn"],
+   ["ECR",0.328,0.009,"--g-ecr"]]},
+ {y:"2014–19", v1:49, v2:88, g:[
+   ["S&D",-0.226,0.037,"--g-sd"],["ALDE",-0.203,-0.102,"--g-renew"],
+   ["PPE",-0.162,-0.220,"--g-epp"],["Verts/ALE",-0.147,0.218,"--g-green"],
+   ["GUE/NGL",-0.011,0.303,"--g-left"],["ECR",0.080,-0.292,"--g-ecr"],
+   ["EFDD",0.282,0.103,"--g-esn"],["ENF",0.387,-0.048,"--g-pfe"]]},
+ {y:"2019–24", v1:75, v2:94, g:[
+   ["GUE/NGL",-0.258,0.175,"--g-left"],["Verts/ALE",-0.250,0.025,"--g-green"],
+   ["S&D",-0.165,-0.053,"--g-sd"],["RE",-0.084,-0.107,"--g-renew"],
+   ["PPE",0.063,-0.154,"--g-epp"],["ECR",0.330,-0.063,"--g-ecr"],
+   ["ID",0.363,0.177,"--g-pfe"]]},
+ {y:"2024–26", v1:85, v2:98, g:[
+   ["Verts/ALE",-0.346,0.029,"--g-green"],["GUE/NGL",-0.318,0.235,"--g-left"],
+   ["S&D",-0.272,-0.049,"--g-sd"],["RE",-0.204,-0.101,"--g-renew"],
+   ["PPE",-0.090,-0.158,"--g-epp"],["ECR",0.336,-0.133,"--g-ecr"],
+   ["PfE",0.422,0.057,"--g-pfe"],["ESN",0.471,0.121,"--g-esn"]]},
+];
+
+(function mds() {
+  const PW = 168, PH = 190, GAP = 4, TOP = 30, BOT = 34;
+  const W = MDS.length * PW + (MDS.length - 1) * GAP;
+  const H = TOP + PH + BOT;
+  const svg = el("svg", {viewBox:"0 0 " + W + " " + H, role:"img"});
+  const XR = [-0.40, 0.53], YR = [-0.40, 0.36];
+  MDS.forEach((t, ti) => {
+    const ox = ti * (PW + GAP);
+    const px = v => ox + 10 + ((v - XR[0]) / (XR[1] - XR[0])) * (PW - 20);
+    const py = v => TOP + PH - 12 - ((v - YR[0]) / (YR[1] - YR[0])) * (PH - 24);
+    svg.appendChild(el("rect", {x:ox, y:TOP, width:PW, height:PH,
+      fill:"var(--card)", stroke:"var(--rule-soft)", "stroke-width":1}));
+    const head = el("text", {x:ox+PW/2, y:TOP-14, "text-anchor":"middle",
+      fill:"var(--ink)", "font-size":12.5, "font-family":"var(--mono)"});
+    head.textContent = t.y; svg.appendChild(head);
+    t.g.forEach(function(row) {
+      const name = row[0], gx = row[1], gy = row[2], col = row[3];
+      const c = el("circle", {cx:px(gx), cy:py(gy), r:5.5, fill:"var(" + col + ")",
+        stroke:"var(--card)", "stroke-width":1.5});
+      const tip = el("title"); tip.textContent = name + " · " + t.y;
+      c.appendChild(tip); svg.appendChild(c);
+      const lab = el("text", {x:px(gx), y:py(gy)-9, "text-anchor":"middle",
+        fill:"var(--muted)", "font-size":8.5, "font-family":"var(--mono)"});
+      lab.textContent = name; svg.appendChild(lab);
+    });
+    const foot = el("text", {x:ox+PW/2, y:TOP+PH+18, "text-anchor":"middle",
+      fill:"var(--muted)", "font-size":10, "font-family":"var(--mono)"});
+    foot.textContent = "1 eixo = " + t.v1 + "%"; svg.appendChild(foot);
+    const foot2 = el("text", {x:ox+PW/2, y:TOP+PH+30, "text-anchor":"middle",
+      fill:"var(--muted)", "font-size":10, "font-family":"var(--mono)"});
+    foot2.textContent = "2 eixos = " + t.v2 + "%"; svg.appendChild(foot2);
+  });
+  document.getElementById("c6").appendChild(svg);
+})();
+
+(function table6() {
+  const t = document.getElementById("t6");
+  const head = document.createElement("tr");
+  head.innerHTML = "<th>Mandato</th><th>Grupos, da esquerda para a direita do eixo</th>" +
+    "<th>1 eixo</th><th>2 eixos</th>";
+  t.appendChild(head);
+  MDS.forEach(m => {
+    const tr = document.createElement("tr");
+    const names = m.g.slice().sort((a,b) => a[1]-b[1])
+      .map(g => g[0] + " " + (g[1] > 0 ? "+" : "−") +
+        Math.abs(g[1]).toFixed(2).replace(".", ","))
+      .join(" · ");
+    tr.innerHTML = "<td>" + m.y + "</td><td style=\"text-align:left;font-size:.74rem\">" +
+      names + "</td><td>" + m.v1 + "%</td><td>" + m.v2 + "%</td>";
+    t.appendChild(tr);
+  });
+})();
+
+/* ---------------------------------------------------------------------------
+   7, 8 e 9 — os 21 pares de famílias.
+
+   Sete famílias fazem 21 pares, e os sete gráficos que se poderiam desenhar —
+   um por família, cada um contra as outras seis — mostram cada par duas vezes.
+   Uma vez retirada a repetição, o conjunto inteiro cabe num desenho, e é a
+   ordenação que faz o trabalho: os pares que sobem e os que descem separam-se
+   exactamente na fronteira entre as duas metades da câmara, sem uma excepção.
+
+   Três formas dos mesmos números porque respondem a perguntas diferentes. O
+   gráfico 7 diz *quanto* cada par se mexeu e deixa ler o valor. O 8 gasta uma
+   segunda dimensão no tempo, que é o que torna um vaivém legível — o PPE com a
+   direita radical sobe, cai, sobe e cai, e numa seta isso são dois círculos no
+   sítio errado. O 9 não tem números nenhuns e serve só para a forma.
+
+   Eixo 15–90 nos dois primeiros, e não 0–100: a concordância entre duas
+   famílias nunca sai desse intervalo nos cinco mandatos (mínimo 20,1, máximo
+   87,3), e num eixo completo um terço do desenho ficava vazio com 21 linhas a
+   dividir o resto. Os dois usam o mesmo eixo para se poderem ler um contra o
+   outro. */
+
+const PAIRS = [
+  {a:"Left", b:"Greens", v:[77.1,73.3,81.7,84.9,85.0]},
+  {a:"Left", b:"S&D", v:[64.5,62.4,65.9,75.1,74.6]},
+  {a:"Left", b:"Liberals", v:[52.8,53.1,53.9,66.0,65.8]},
+  {a:"Left", b:"EPP", v:[43.0,48.3,44.0,53.1,54.8]},
+  {a:"Left", b:"Conservatives", v:[47.9,41.4,39.0,36.0,24.9]},
+  {a:"Left", b:"FarRight", v:[47.4,47.9,51.6,37.9,23.0]},
+  {a:"Greens", b:"S&D", v:[70.4,75.8,78.0,84.4,87.1]},
+  {a:"Greens", b:"Liberals", v:[61.4,67.2,65.6,76.0,79.9]},
+  {a:"Greens", b:"EPP", v:[48.7,59.5,55.4,62.4,68.7]},
+  {a:"Greens", b:"Conservatives", v:[50.3,39.8,43.3,41.0,31.4]},
+  {a:"Greens", b:"FarRight", v:[43.8,44.2,45.1,36.2,20.1]},
+  {a:"S&D", b:"Liberals", v:[74.4,76.0,78.6,83.9,87.3]},
+  {a:"S&D", b:"EPP", v:[66.6,72.1,73.3,72.8,77.9]},
+  {a:"S&D", b:"Conservatives", v:[62.3,45.1,54.3,49.5,40.3]},
+  {a:"S&D", b:"FarRight", v:[43.1,47.5,40.8,41.8,26.2]},
+  {a:"Liberals", b:"EPP", v:[74.6,75.7,80.7,79.1,83.9]},
+  {a:"Liberals", b:"Conservatives", v:[68.9,56.2,63.2,56.4,46.8]},
+  {a:"Liberals", b:"FarRight", v:[47.1,51.1,41.0,46.3,31.6]},
+  {a:"EPP", b:"Conservatives", v:[74.9,59.6,69.7,66.9,57.3]},
+  {a:"EPP", b:"FarRight", v:[51.2,56.2,41.3,55.1,40.6]},
+  {a:"Conservatives", b:"FarRight", v:[53.9,66.4,53.9,72.3,77.9]},
+];
+
+/* Ordem de assento, da esquerda para a direita. É carga útil: é o eixo do
+   gráfico 8 e a linha do gráfico 9, e é o que faz o vermelho juntar-se num
+   canto em vez de andar espalhado. */
+const FAM_ORDER = ["Left","Greens","S&D","Liberals","EPP","Conservatives","FarRight"];
+const FAM = {
+  Left:          {n:"esquerda radical", s:"esq. radical",   c:"var(--g-left)"},
+  Greens:        {n:"Verdes",           s:"Verdes",         c:"var(--g-green)"},
+  "S&D":         {n:"socialistas",      s:"socialistas",    c:"var(--g-sd)"},
+  Liberals:      {n:"liberais",         s:"liberais",       c:"var(--g-renew)"},
+  EPP:           {n:"PPE",              s:"PPE",            c:"var(--g-epp)"},
+  Conservatives: {n:"conservadores",    s:"conserv.",       c:"var(--g-ecr)"},
+  FarRight:      {n:"direita radical",  s:"dir. radical",   c:"var(--g-pfe)"},
+};
+
+/* Verde aproxima, vermelho afasta — a mesma convenção que o site usa nas
+   variações do painel lateral. Só as três formas seguintes lhes tocam: nos
+   gráficos de linhas a cor diz *qual* família, e nenhuma marca pode carregar
+   dois sentidos na mesma página. */
+const CLOSER = "var(--closer)";
+const APART  = "var(--apart)";
+
+const PMIN = 15, PMAX = 90, PTICKS = [15,30,45,60,75,90];
+const sgn = v => (v >= 0 ? "+" : "−") + fmt(Math.abs(v));
+
+/* Quanto um mandato do meio está desbotado, e o seu tamanho. É propriedade do
+   *mandato*, não da linha em que é desenhado, para que 2009–14 tenha o mesmo
+   tom nas 21 linhas e possa ser nomeado em vez de adivinhado. */
+const shade = i => ({o: 0.35 + 0.45 * i / 4, r: 1.8 + i / 4});
+
+const pairsSorted = PAIRS.map(p => ({...p, d: p.v[4] - p.v[0]}))
+  .sort((x, y) => y.d - x.d);
+
+const tipText = p => FAM[p.a].n + " ~ " + FAM[p.b].n + ": " +
+  p.v.map((v, i) => TERMS[i].k + " " + fmt(v) + "%").join(" · ") +
+  " (" + sgn(p.d) + ")";
+
+/* 7 — uma linha por par, ordenadas da maior subida à maior descida. */
+(function shiftChart() {
+  const W = 860, L = 208, R = 60, T = 24, ROW = 20, B = 30;
+  const rows = pairsSorted, iw = W - L - R;
+  const H = T + rows.length * ROW + B;
+  const svg = el("svg", {viewBox:"0 0 " + W + " " + H, role:"img"});
+  const x = v => L + (iw * (v - PMIN)) / (PMAX - PMIN);
+
+  PTICKS.forEach(t => {
+    svg.appendChild(el("line", {x1:x(t), x2:x(t), y1:T - 8, y2:T + rows.length * ROW,
+      stroke:"var(--grid)", "stroke-width":1}));
+    const lab = el("text", {x:x(t), y:H - 12, "text-anchor":"middle",
+      fill:"var(--muted)", "font-size":11, "font-family":"var(--mono)"});
+    lab.textContent = t + "%"; svg.appendChild(lab);
+  });
+
+  rows.forEach((p, i) => {
+    const cy = T + i * ROW + ROW / 2, col = p.d >= 0 ? CLOSER : APART;
+    const g = el("g", {});
+    const tip = el("title"); tip.textContent = tipText(p); g.appendChild(tip);
+
+    const name = el("text", {x:L - 12, y:cy + 4, "text-anchor":"end",
+      fill:"var(--ink)", "font-size":12});
+    name.textContent = FAM[p.a].n + " ~ " + FAM[p.b].n; g.appendChild(name);
+
+    /* A amplitude inteira por baixo da seta: sempre que um mandato do meio
+       passa das pontas, a seta é mais curta do que o caminho percorrido. */
+    g.appendChild(el("line", {x1:x(Math.min(...p.v)), x2:x(Math.max(...p.v)),
+      y1:cy, y2:cy, stroke:col, "stroke-width":1, opacity:.22}));
+    g.appendChild(el("line", {x1:x(p.v[0]), x2:x(p.v[4]), y1:cy, y2:cy,
+      stroke:col, "stroke-width":1.6, opacity:.8}));
+    g.appendChild(el("circle", {cx:x(p.v[0]), cy:cy, r:3.2, fill:col}));
+    p.v.slice(1, 4).forEach((v, k) => {
+      const sh = shade(k + 1);
+      g.appendChild(el("circle", {cx:x(v), cy:cy, r:sh.r, fill:"var(--paper)",
+        stroke:col, "stroke-width":1.3, opacity:sh.o}));
+    });
+    const dir = p.v[4] >= p.v[0] ? 1 : -1, tipX = x(p.v[4]);
+    g.appendChild(el("path", {d:"M " + tipX + " " + cy + " L " + (tipX - dir * 7) +
+      " " + (cy - 3.8) + " L " + (tipX - dir * 7) + " " + (cy + 3.8) + " z", fill:col}));
+
+    const d = el("text", {x:W - 6, y:cy + 4, "text-anchor":"end", fill:col,
+      "font-size":11.5, "font-family":"var(--mono)", "font-weight":600,
+      "font-variant-numeric":"tabular-nums"});
+    d.textContent = sgn(p.d); g.appendChild(d);
+    svg.appendChild(g);
+  });
+  document.getElementById("cp1").appendChild(svg);
+})();
+
+/* 8 — a matriz triangular: uma célula por par, ordem de assento nos dois eixos.
+   Colunas são as seis primeiras famílias, linhas as seis últimas, de modo que
+   cada par aparece uma vez e a diagonal fica de fora — a concordância de uma
+   família consigo própria é disciplina interna, que é o gráfico 3. */
+(function trackMatrix() {
+  const W = 860, L = 128, T = 44, B = 34, CW = (W - L - 8) / 6, CH = 92;
+  const cols = FAM_ORDER.slice(0, 6), rows = FAM_ORDER.slice(1);
+  const H = T + rows.length * CH + B;
+  const svg = el("svg", {viewBox:"0 0 " + W + " " + H, role:"img"});
+  const find = (a, b) => pairsSorted.find(p =>
+    (p.a === a && p.b === b) || (p.a === b && p.b === a));
+
+  cols.forEach((c, i) => {
+    const lab = el("text", {x:L + i * CW + CW / 2, y:T - 15, "text-anchor":"middle",
+      fill:FAM[c].c, "font-size":11.5, "font-family":"var(--mono)", "font-weight":600});
+    lab.textContent = FAM[c].s; svg.appendChild(lab);
+  });
+  rows.forEach((r, j) => {
+    const lab = el("text", {x:L - 14, y:T + j * CH + CH / 2 + 4, "text-anchor":"end",
+      fill:FAM[r].c, "font-size":11.5, "font-family":"var(--mono)", "font-weight":600});
+    lab.textContent = FAM[r].s; svg.appendChild(lab);
+  });
+
+  rows.forEach((r, j) => cols.forEach((c, i) => {
+    if (FAM_ORDER.indexOf(c) >= FAM_ORDER.indexOf(r)) return;
+    const p = find(r, c), x0 = L + i * CW, y0 = T + j * CH;
+    const col = p.d >= 0 ? CLOSER : APART;
+    const g = el("g", {});
+    const tip = el("title"); tip.textContent = tipText(p); g.appendChild(tip);
+
+    /* O fundo é a mesma cor da seta, tão fraco quanto a deslocação é pequena:
+       é o que faz as duas últimas linhas lerem-se como bloco antes de se ler
+       uma única célula. */
+    g.appendChild(el("rect", {x:x0 + 3, y:y0 + 3, width:CW - 6, height:CH - 6,
+      fill:col, opacity:(0.03 + Math.abs(p.d) / 100 * 0.9).toFixed(3)}));
+
+    const px = v => x0 + 14 + (CW - 34) * (v - PMIN) / (PMAX - PMIN);
+    /* O trajecto pára bem acima do rodapé da célula: com a seta a acabar
+       à direita e os dois números aí, encostados, a ponta caía em cima
+       do valor. */
+    const py = k => y0 + 14 + k * ((CH - 46) / 4);
+    /* Meio do eixo, para que uma célula tenha uma referência sem eixo próprio. */
+    g.appendChild(el("line", {x1:px(52.5), x2:px(52.5), y1:y0 + 9, y2:y0 + CH - 26,
+      stroke:"var(--grid)", "stroke-width":1}));
+    g.appendChild(el("path", {fill:"none", stroke:col, "stroke-width":1.8,
+      "stroke-linejoin":"round", opacity:.85,
+      d:p.v.map((v, k) => (k ? "L " : "M ") + px(v).toFixed(1) + " " + py(k).toFixed(1)).join(" ")}));
+    g.appendChild(el("circle", {cx:px(p.v[0]), cy:py(0), r:2.8, fill:col}));
+    const dir = p.v[4] >= p.v[0] ? 1 : -1;
+    g.appendChild(el("path", {fill:col, d:"M " + px(p.v[4]) + " " + py(4) + " L " +
+      (px(p.v[4]) - dir * 6) + " " + (py(4) - 3.4) + " L " +
+      (px(p.v[4]) - dir * 6) + " " + (py(4) + 3.4) + " z"}));
+
+    const now = el("text", {x:x0 + 10, y:y0 + CH - 9, fill:"var(--muted)",
+      "font-size":10, "font-family":"var(--mono)", "font-variant-numeric":"tabular-nums"});
+    now.textContent = fmt(p.v[4]); g.appendChild(now);
+    const d = el("text", {x:x0 + CW - 10, y:y0 + CH - 9, "text-anchor":"end", fill:col,
+      "font-size":10.5, "font-family":"var(--mono)", "font-weight":600,
+      "font-variant-numeric":"tabular-nums"});
+    d.textContent = sgn(p.d); g.appendChild(d);
+    svg.appendChild(g);
+  }));
+
+  const key = el("text", {x:L, y:H - 12, fill:"var(--muted)", "font-size":10.5,
+    "font-family":"var(--mono)"});
+  key.textContent = "em cada célula: o valor de hoje à esquerda, a deslocação desde 2004–09 à direita";
+  svg.appendChild(key);
+  document.getElementById("cp2").appendChild(svg);
+})();
+
+/* 9 — os arcos. Sete famílias na ordem de assento; o que subiu arqueia por
+   cima da linha, o que desceu por baixo. Nenhum eixo e nenhum número: separar
+   as subidas das descidas em dois lados é a única leitura que esta forma dá, e
+   é toda a conclusão. */
+(function arcs() {
+  /* O arco mais alto sobe 98 e o mais fundo desce 137 — a distância entre
+     as duas famílias na ordem de assento é que a decide, e os pares que
+     descem atravessam a câmara toda. A caixa é assimétrica por isso: uma
+     caixa simétrica deixava um terço do desenho vazio em cima. */
+  const W = 860, MID = 126, H = MID + 165;
+  const PAD = 66, step = (W - PAD * 2) / (FAM_ORDER.length - 1);
+  const nx = i => PAD + i * step;
+  const maxd = Math.max(...pairsSorted.map(p => Math.abs(p.d)));
+  const svg = el("svg", {viewBox:"0 0 " + W + " " + H, role:"img"});
+
+  svg.appendChild(el("line", {x1:26, x2:W - 26, y1:MID, y2:MID,
+    stroke:"var(--rule)", "stroke-width":1}));
+
+  pairsSorted.forEach(p => {
+    const i = FAM_ORDER.indexOf(p.a), j = FAM_ORDER.indexOf(p.b);
+    const up = p.d >= 0, col = up ? CLOSER : APART;
+    /* A altura do arco vem da distância entre as duas famílias na ordem de
+       assento, não do valor: é o que impede vinte e um arcos de se sobreporem
+       e o que faz os vizinhos ficarem rentes à linha. */
+    const h = (up ? -1 : 1) * (28 + Math.abs(j - i) * 30) * 1.32;
+    const g = el("g", {});
+    const tip = el("title"); tip.textContent = tipText(p); g.appendChild(tip);
+    g.appendChild(el("path", {fill:"none", stroke:col,
+      "stroke-width":(1 + 5.2 * Math.abs(p.d) / maxd).toFixed(2),
+      opacity:(0.3 + 0.55 * Math.abs(p.d) / maxd).toFixed(2),
+      d:"M " + nx(i) + " " + MID + " Q " + ((nx(i) + nx(j)) / 2) + " " +
+        (MID + h) + " " + nx(j) + " " + MID}));
+    svg.appendChild(g);
+  });
+
+  FAM_ORDER.forEach((f, i) => {
+    /* Um prato da cor do papel por baixo do nome: os arcos passam por aqui e
+       um nome com um arco a atravessá-lo não se lê. */
+    const w = FAM[f].s.length * 6.9 + 10;
+    svg.appendChild(el("rect", {x:nx(i) - w / 2, y:MID + 13, width:w, height:17,
+      fill:"var(--paper)"}));
+    svg.appendChild(el("circle", {cx:nx(i), cy:MID, r:6, fill:FAM[f].c,
+      stroke:"var(--paper)", "stroke-width":2.5}));
+    const lab = el("text", {x:nx(i), y:MID + 25, "text-anchor":"middle",
+      fill:"var(--ink)", "font-size":11.5, "font-family":"var(--mono)"});
+    lab.textContent = FAM[f].s; svg.appendChild(lab);
+  });
+
+  [["aproximaram-se", 16, CLOSER], ["afastaram-se", H - 6, APART]].forEach(([t, y, c]) => {
+    const lab = el("text", {x:26, y:y, fill:c, "font-size":11,
+      "font-family":"var(--mono)", "font-weight":600, "letter-spacing":"0.1em"});
+    lab.textContent = t.toUpperCase(); svg.appendChild(lab);
+  });
+  document.getElementById("cp3").appendChild(svg);
+})();
+</script>
