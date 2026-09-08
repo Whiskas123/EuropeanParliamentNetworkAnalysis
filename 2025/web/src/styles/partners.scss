@@ -97,6 +97,15 @@
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
+// The eighth chip is not a family, so its mark cannot be a party colour — a
+// square in any one of the seven hues would read as an eighth group. It takes
+// the panel's two change colours instead, split, which is what the three forms
+// behind it actually colour by: this chip drops the pivot and everything after
+// it is coloured by direction rather than by party.
+.partners-chip-dot-all {
+  background: linear-gradient(135deg, #1a6b3c 0 50%, #a32a1e 50% 100%);
+}
+
 // Which terms are drawn, sitting under the chart. It used to be a strip of
 // five acronyms in the control row above; down here it is also the Shift
 // chart's key, so each chip carries the mark that term wears on the plot and
@@ -336,4 +345,55 @@
 
 .partners-caveat {
   margin: 8px 0 0;
+}
+
+// --- all 21 pairs ---------------------------------------------------------
+//
+// Three forms that have no pivot, and so no family colour to name a series
+// with. Everything below is either the sidebar's smallest type tier or a mark
+// borrowed from the forms above: the matrix's cells draw the Track form's own
+// path and arrowhead, and the arcs' seat dots are the same coloured mark the
+// family chips wear. Nothing here invents a convention the panel did not
+// already have.
+
+// Row and column names on the triangle. The family's own colour, because here
+// a name is the only thing saying which family a row or column is — inside the
+// cells colour has been given over to direction.
+.partners-matrix-head {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+}
+
+// The change, in the corner of its cell. Sits over a tinted wash rather than
+// the panel's white, so it takes a plate the way the track's term names do.
+.partners-matrix-delta {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+// Where each family sits, under the arcs' baseline. The arcs pass straight
+// through this row, so the name gets a plate of the panel's background: a
+// halo on the glyphs alone leaves the gaps between letters full of arc.
+.partners-arc-plate {
+  fill: #ffffff;
+}
+
+.partners-arc-seat {
+  font-size: var(--sb-fs-micro);
+  fill: var(--sb-ink-soft);
+}
+
+// Which half of the chart is which, once. The arcs carry no axis and no
+// numbers, so these two words are the whole key.
+.partners-arc-side {
+  font-size: var(--sb-fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }

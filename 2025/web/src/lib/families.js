@@ -331,6 +331,32 @@ export function pairKey(a, b) {
 }
 
 /**
+ * Stands in for a family id where a panel is drawing every pair at once.
+ *
+ * Not a family, and deliberately not spelled like one: anything that indexes
+ * `FAMILIES` by it should fail loudly rather than quietly render an eighth
+ * blank group. The partners panel uses it as the eighth chip in its family row.
+ */
+export const ALL_PAIRS = "AllPairs";
+
+/**
+ * Every unordered pair of families, once each, in seating order.
+ *
+ * Seven families make 21 pairs, and a chart drawn per family shows each of them
+ * twice — the EPP's chart draws EPP-to-Socialists and the Socialists' chart
+ * draws the same pair again. This is the deduplicated set, which is what lets
+ * the whole comparison fit in one drawing instead of seven.
+ *
+ * The order is `FAMILY_ORDER` walked as an upper triangle, so `a` is always the
+ * one seated further left and the list runs Left-Greens, Left-S&D, ... A form
+ * that wants a ranking sorts its own copy; this order is what the matrix's two
+ * axes and the arcs' baseline are indexed by, and it must not move.
+ */
+export const FAMILY_PAIRS = FAMILY_ORDER.flatMap((a, i) =>
+  FAMILY_ORDER.slice(i + 1).map((b) => ({ a, b, key: pairKey(a, b) }))
+);
+
+/**
  * One family's agreement with each of the others, in seating order.
  *
  * @param {Object<string, number>} pairs - from `familyPairs`

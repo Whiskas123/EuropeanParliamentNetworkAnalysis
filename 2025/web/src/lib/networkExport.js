@@ -2925,6 +2925,17 @@ export function exportPartnersSheetSVG({ meta, series, pivot = "EPP" } = {}) {
   if (rows.length < 2) {
     throw new Error("exportPartnersSheetSVG: fewer than two terms to compare");
   }
+  // This sheet is the Lines form, and Lines needs a family to be about. With
+  // the panel's "all pairs" chip selected there is no such family and no lines
+  // chart on screen either, so there is nothing to print rather than something
+  // to print differently. Named rather than left to fail on FAMILIES[pivot]:
+  // the caller reports the sheet as missing, and the reason should say why.
+  if (!FAMILIES[pivot]) {
+    throw new Error(
+      `exportPartnersSheetSVG: "${pivot}" is not a family — the sheet draws the ` +
+        "Lines form, which the all-pairs view does not have"
+    );
+  }
   const family = FAMILIES[pivot];
   const partners = FAMILY_ORDER.filter((id) => id !== pivot).map((id) => ({
     id,

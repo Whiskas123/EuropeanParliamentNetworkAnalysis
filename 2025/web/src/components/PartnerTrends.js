@@ -3,8 +3,10 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { loadTrendSeries, TERMS } from "../lib/trends.js";
 import {
+  ALL_PAIRS,
   FAMILIES,
   FAMILY_ORDER,
+  FAMILY_PAIRS,
   opening,
   pairKey,
   profileFor,
@@ -145,6 +147,66 @@ const FORMS = [
   },
   { id: "profile", text: "House", title: "The whole chamber seen from this group's seat" },
 ];
+
+/**
+ * The forms that survive having no pivot.
+ *
+ * Lines and House both draw *one family against the rest*, so neither has a
+ * subject once the pivot is dropped — Lines would be 21 series in seven colours
+ * that each name two families at once, and House is explicitly the chamber seen
+ * from one seat. Shift and Track carry over unchanged: they were already one
+ * row per pair, and 21 rows is only more rows. Arcs takes the slot House had,
+ * because it is the seatless version of the same question.
+ */
+const ALL_FORMS = [
+  {
+    id: "arrows",
+    text: "Shift",
+    title: "How far every pair of families moved, first term to last, ranked",
+  },
+  {
+    id: "track",
+    text: "Track",
+    title: "All 21 pairs as a triangle, in seating order, each with its own path through the terms",
+  },
+  {
+    id: "arcs",
+    text: "Arcs",
+    title: "Pairs that converged arc above the seating line, pairs that separated below",
+  },
+];
+
+/** Whichever set of forms the current pivot can actually draw. */
+const formsFor = (pivot) => (pivot === ALL_PAIRS ? ALL_FORMS : FORMS);
+
+/**
+ * Row label column on the Shift form, which has to hold two family names.
+ *
+ * "Liberal ~ Far right" at the micro tier is about 96px, and the sidebar is 30%
+ * of the window — 344px of content on a 1280 screen and half again as much on a
+ * wide one. Fixed at 96 the labels clipped on the narrow end and left a gutter
+ * on the wide one, so it takes a share of the measured width inside bounds, the
+ * same way `ratio` sizes the plots.
+ */
+const PAIR_LABEL = (width) => ratio(width, 0.3, 96, 132);
+
+/** The triangle: label gutters, and the shape of one cell. */
+const MATRIX_BOX = { top: 22, right: 2, bottom: 16, left: 52 };
+const MATRIX_CELL_H = 52;
+
+/**
+ * The arcs' baseline, and how far the deepest arc reaches from it.
+ *
+ * Arc height comes from how far apart the two families sit, not from the value,
+ * which is what keeps 21 arcs off each other. The pairs that separated are the
+ * ones that cross the chamber, so they need more room below the line than the
+ * ones that converged need above it — a symmetric box wastes a third of the
+ * panel. `ARC_RISE` is the span for adjacent families and `ARC_STEP` what each
+ * further seat adds.
+ */
+const ARC_RISE = 14;
+const ARC_STEP = 15;
+const ARC_PAD = 26;
 
 const finite = (value) => typeof value === "number" && isFinite(value);
 const pct = (value) => (finite(value) ? `${(value * 100).toFixed(1)}%` : "—");
@@ -376,7 +438,7 @@ export default function PartnerTrends({
   pivot = "EPP",
   onPivotChange,
 }) {
-  const [form, setForm] = useState("lines");
+  const [chosenForm, setForm] = useState("lines");
   const [chosen, setChosen] = useState(() => TERMS.map((term) => term.mandate));
   const [loaded, setLoaded] = useState(null);
   const [hovered, setHovered] = useState(null);
@@ -388,6 +450,20 @@ export default function PartnerTrends({
   const titleId = useId();
 
   const scopeKey = `${selectedCountry || ""}|${selectedSubject || ""}`;
+
+  /**
+   * The form actually drawn, which is the one picked unless this pivot cannot
+   * draw it.
+   *
+   * Derived rather than corrected after the fact. Lines and House need a family
+   * to be about and Arcs needs there not to be one, so the two sets overlap in
+   * Shift and Track only, and a pivot change can leave the stored choice
+   * illegal. Repairing that in an effect would render the dead form once and
+   * replace it, and would also forget the choice: this way Lines is still
+   * waiting when you come back to a family from the all-pairs view.
+   */
+  const forms = formsFor(pivot);
+  const form = forms.some((entry) => entry.id === chosenForm) ? chosenForm : "arrows";
 
   // Measured so the charts can be drawn at 1:1 — a 9px font in the SVG is the
   // same 9px the ranks and units use elsewhere in the sidebar. See TrendsPanel,
@@ -430,35 +506,160 @@ export default function PartnerTrends({
       .filter((row) => row && !row.missing);
   }, [series, chosen]);
 
-  /** The other six families, and this pivot's agreement with each, per term. */
-  const partners = useMemo(
-    () =>
-      FAMILY_ORDER.filter((family) => family !== pivot).map((family) => ({
-        family,
-        ...FAMILIES[family],
-        values: rows.map((row) => {
-          const score = row.familyPairs ? row.familyPairs[pairKey(pivot, family)] : undefined;
-          return finite(score) ? score : null;
-        }),
-      })),
-    [rows, pivot]
-  );
+  /**
+   * The series the forms draw: this pivot's six partners, or all 21 pairs.
+   *
+   * One shape either way — `family` is a key, `short` goes in the left margin,
+   * `label` names the series in a tooltip — so `movements` and the two change
+   * forms take the 21 without knowing which case they are in. What differs is
+   * that a pair has no colour of its own: two families cannot share one hue,
+   * and the forms that draw all 21 colour by direction rather than by party.
+   */
+  const partners = useMemo(() => {
+    const valuesFor = (key) =>
+      rows.map((row) => {
+        const score = row.familyPairs ? row.familyPairs[key] : undefined;
+        return finite(score) ? score : null;
+      });
+
+    if (pivot === ALL_PAIRS) {
+      return FAMILY_PAIRS.map(({ a, b, key }) => ({
+        family: key,
+        a,
+        b,
+        short: `${FAMILIES[a].short} ~ ${FAMILIES[b].short}`,
+        label: `${FAMILIES[a].label} and ${FAMILIES[b].label}`,
+        color: null,
+        values: valuesFor(key),
+      }));
+    }
+
+    return FAMILY_ORDER.filter((family) => family !== pivot).map((family) => ({
+      family,
+      ...FAMILIES[family],
+      values: valuesFor(pairKey(pivot, family)),
+    }));
+  }, [rows, pivot]);
 
   const geometry = useMemo(() => {
     if (rows.length === 0) return null;
     const all = partners.flatMap((partner) => partner.values);
     if (!all.some(finite)) return null;
 
+    const everyPair = pivot === ALL_PAIRS;
+
+    if (form === "arcs") {
+      // Seven seats across the panel, and one arc per pair. There is no value
+      // axis at all: the only reading is which side of the line an arc is on.
+      const domain = AXIS;
+      const moved = movements(partners, rows);
+      const seat = (i) =>
+        ARC_PAD + ((width - ARC_PAD * 2) * i) / Math.max(1, FAMILY_ORDER.length - 1);
+      const reach = (span) => ARC_RISE + span * ARC_STEP;
+      // The box is only as deep as the arcs actually go, measured rather than
+      // guessed, so a term selection that drops a pair does not leave a band of
+      // empty panel behind it.
+      const spanOf = (bar) =>
+        Math.abs(FAMILY_ORDER.indexOf(bar.b) - FAMILY_ORDER.indexOf(bar.a));
+      const up = moved.filter((bar) => bar.delta >= 0);
+      const down = moved.filter((bar) => bar.delta < 0);
+      const most = (list) => (list.length > 0 ? Math.max(...list.map(spanOf)) : 0);
+      const above = reach(most(up)) + 6;
+      const below = reach(most(down)) + 6;
+      const mid = above + 14;
+      const height = mid + below + 16;
+      const widest = Math.max(...moved.map((bar) => Math.abs(bar.delta)), 0.001);
+      const arcs = moved.map((bar) => {
+        const i = FAMILY_ORDER.indexOf(bar.a);
+        const j = FAMILY_ORDER.indexOf(bar.b);
+        const rising = bar.delta >= 0;
+        return {
+          ...bar,
+          // A quadratic's apex sits at half its control offset, so the control
+          // point goes twice as far as the arc should actually reach.
+          d: `M ${seat(i).toFixed(1)} ${mid} Q ${((seat(i) + seat(j)) / 2).toFixed(1)} ${(
+            mid + (rising ? -1 : 1) * reach(Math.abs(j - i)) * 2
+          ).toFixed(1)} ${seat(j).toFixed(1)} ${mid}`,
+          rising,
+          // Thickness and ink are the size of the move. Nothing else on this
+          // form carries a magnitude, so a reader who wants one gets it from
+          // the weight of the stroke or from the tooltip.
+          weight: 1 + (2.6 * Math.abs(bar.delta)) / widest,
+          opacity: 0.35 + (0.5 * Math.abs(bar.delta)) / widest,
+        };
+      });
+      return { kind: "arcs", domain, height, mid, seat, arcs };
+    }
+
     if (form === "arrows" || form === "track") {
       const domain = AXIS;
-      const plotWidth = width - ARROW_BOX.left - ARROW_BOX.right;
-      const x = (v) =>
-        ARROW_BOX.left + plotWidth * ((v - domain[0]) / (domain[1] - domain[0] || 1));
+      // The pair form needs a wider left margin than the family form: two
+      // names and a tilde where there was one name.
+      const left = everyPair ? PAIR_LABEL(width) : ARROW_BOX.left;
+      const plotWidth = width - left - ARROW_BOX.right;
+      const x = (v) => left + plotWidth * ((v - domain[0]) / (domain[1] - domain[0] || 1));
       const moved = movements(partners, rows);
 
+      if (everyPair && form === "track") {
+        // The triangle. Columns are the six families that can be the left half
+        // of a pair, rows the six that can be the right, so every pair appears
+        // once and the diagonal stays empty — a family's agreement with itself
+        // is intra-group cohesion, a different measure on a different panel.
+        const cols = FAMILY_ORDER.slice(0, -1);
+        const rowFamilies = FAMILY_ORDER.slice(1);
+        const cellW = (width - MATRIX_BOX.left - MATRIX_BOX.right) / cols.length;
+        const height =
+          MATRIX_BOX.top + rowFamilies.length * MATRIX_CELL_H + MATRIX_BOX.bottom;
+        const byKey = new Map(moved.map((bar) => [bar.family, bar]));
+        const cells = [];
+        rowFamilies.forEach((rowFamily, rowIndex) => {
+          cols.forEach((colFamily, colIndex) => {
+            if (FAMILY_ORDER.indexOf(colFamily) >= FAMILY_ORDER.indexOf(rowFamily)) return;
+            const bar = byKey.get(pairKey(colFamily, rowFamily));
+            if (!bar) return;
+            const x0 = MATRIX_BOX.left + colIndex * cellW;
+            const y0 = MATRIX_BOX.top + rowIndex * MATRIX_CELL_H;
+            // Inside a cell the value runs across and time runs down, which is
+            // the Track form's own grammar at thumbnail size.
+            const cx = (v) => x0 + 5 + (cellW - 12) * v;
+            const cy = (k) =>
+              y0 + 8 + (k * (MATRIX_CELL_H - 20)) / Math.max(1, rows.length - 1);
+            return cells.push({
+              ...bar,
+              x0,
+              y0,
+              w: cellW,
+              h: MATRIX_CELL_H,
+              points: bar.values.map((value, k) =>
+                finite(value) ? { x: cx(value), y: cy(k), value, i: k, term: rows[k] } : null
+              ),
+            });
+          });
+        });
+        return {
+          kind: "matrix",
+          domain,
+          height,
+          cols,
+          rowFamilies,
+          cellW,
+          cellH: MATRIX_CELL_H,
+          cells,
+        };
+      }
+
       if (form === "arrows") {
-        const height = ARROW_BOX.top + ARROW_BOX.bottom + moved.length * ARROW_ROW;
-        const bars = moved.map((bar, rank) => {
+        // Six partners stay in seating order, so switching form or pivot does
+        // not reshuffle them under the reader. Twenty-one pairs rank by the
+        // size of the move instead: there is no seat to hold them in place —
+        // a pair belongs to two rows of any seating order at once — and the
+        // ranking is what makes the form legible, because the point where
+        // green turns to red lands exactly on the split in the chamber.
+        const order = everyPair
+          ? [...moved].sort((a, b) => b.delta - a.delta)
+          : moved;
+        const height = ARROW_BOX.top + ARROW_BOX.bottom + order.length * ARROW_ROW;
+        const bars = order.map((bar, rank) => {
           const last = bar.present.length - 1;
           const values = bar.present.map((point) => point.value);
           return {
@@ -477,7 +678,7 @@ export default function PartnerTrends({
               .map((point) => ({ ...point, ...waypointShade(point.i, rows.length - 1) })),
           };
         });
-        return { kind: "arrows", domain, height, x, bars };
+        return { kind: "arrows", domain, height, x, left, bars };
       }
 
       // One band per family, one step per *ticked* term rather than per term
@@ -502,7 +703,7 @@ export default function PartnerTrends({
           ),
         };
       });
-      return { kind: "track", domain, height, x, band, bars };
+      return { kind: "track", domain, height, x, left, band, bars };
     }
 
     if (form === "profile") {
@@ -634,7 +835,9 @@ export default function PartnerTrends({
     <section className="partners-panel" aria-labelledby={titleId} ref={panelRef}>
       <div className="sb-panel-head">
         <h3 className="sb-panel-title" id={titleId}>
-          {opening(FAMILIES[pivot].possessive)} partners
+          {pivot === ALL_PAIRS
+            ? "All twenty-one pairs"
+            : `${opening(FAMILIES[pivot].possessive)} partners`}
         </h3>
         <div className="sb-panel-controls">
           <button
@@ -651,8 +854,9 @@ export default function PartnerTrends({
 
       <div className={`collapsible-content ${!closed ? "expanded" : ""}`}>
         <p className="sb-panel-desc">
-          Agreement with each of the other families, term by term. Groups are
-          merged across renames, so the lines can cross multiple terms.
+          {pivot === ALL_PAIRS
+            ? "Seven families make 21 pairs, and a chart per family shows each of them twice. This is every pair once. Colour is the direction it moved, not the party."
+            : "Agreement with each of the other families, term by term. Groups are merged across renames, so the lines can cross multiple terms."}
         </p>
 
         <div className="partners-controls">
@@ -674,13 +878,26 @@ export default function PartnerTrends({
                 {FAMILIES[family].short}
               </button>
             ))}
+            {/* The eighth chip is not a family and does not pretend to be one:
+                its mark is the panel's two change colours rather than a party
+                hue, because that is what the forms behind it colour by. */}
+            <button
+              type="button"
+              className="partners-chip"
+              aria-pressed={pivot === ALL_PAIRS}
+              onClick={() => onPivotChange && onPivotChange(ALL_PAIRS)}
+              title="Draw all 21 pairs of families at once, with no family singled out"
+            >
+              <span className="partners-chip-dot partners-chip-dot-all" aria-hidden="true" />
+              All pairs
+            </button>
           </div>
 
           <div className="partners-row">
             <SegmentedToggle
               value={form}
               onChange={setForm}
-              options={FORMS}
+              options={forms}
               label="Draw as"
             />
           </div>
@@ -712,6 +929,12 @@ export default function PartnerTrends({
         )}
         {status === "ready" && geometry && geometry.kind === "track" && (
           <TrackChart geometry={geometry} width={width} pivot={pivot} />
+        )}
+        {status === "ready" && geometry && geometry.kind === "matrix" && (
+          <MatrixChart geometry={geometry} width={width} />
+        )}
+        {status === "ready" && geometry && geometry.kind === "arcs" && (
+          <ArcChart geometry={geometry} width={width} />
         )}
         {status === "ready" && geometry && geometry.kind === "profile" && (
           <ProfileChart
@@ -993,6 +1216,22 @@ function ArrowHeads({ id }) {
   );
 }
 
+/**
+ * What one row is about, in words.
+ *
+ * With a pivot the row is a partner, so it is named against the family the
+ * panel is drawn from. With every pair on screen the row already names both
+ * halves and there is nothing to hold it against.
+ */
+const pairName = (pivot, bar) =>
+  pivot === ALL_PAIRS ? bar.label : `${FAMILIES[pivot].label} and ${bar.label}`;
+
+/** What the whole chart is about, for the one sentence a screen reader gets. */
+const subjectOf = (pivot) =>
+  pivot === ALL_PAIRS
+    ? "each of the 21 pairs of political families"
+    : `${FAMILIES[pivot].label}'s agreement with each family`;
+
 /** Every term this pair reached, named with its value, for a tooltip. */
 const walk = (bar) =>
   bar.present.map((point) => `${point.term.short} ${pct(point.value)}`).join(" → ");
@@ -1017,7 +1256,7 @@ const walk = (bar) =>
  * visibly still on the row rather than adrift beside it.
  */
 function ArrowChart({ geometry, width, pivot }) {
-  const { domain, height, x, bars } = geometry;
+  const { domain, height, x, left, bars } = geometry;
   const ticks = AXIS_TICKS;
   const id = useId();
 
@@ -1028,7 +1267,7 @@ function ArrowChart({ geometry, width, pivot }) {
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
-      aria-label={`How far ${FAMILIES[pivot].label}'s agreement with each family moved, ${bars
+      aria-label={`How far ${subjectOf(pivot)} moved, ${bars
         .map((bar) => `${bar.label} ${points(bar.delta)} points`)
         .join(", ")}`}
     >
@@ -1092,7 +1331,7 @@ function ArrowChart({ geometry, width, pivot }) {
                 opacity={point.opacity}
               >
                 <title>
-                  {`${FAMILIES[pivot].label} and ${bar.label}, ${point.term.short}: ${pct(point.value)}`}
+                  {`${pairName(pivot, bar)}, ${point.term.short}: ${pct(point.value)}`}
                 </title>
               </circle>
             ))}
@@ -1106,7 +1345,7 @@ function ArrowChart({ geometry, width, pivot }) {
               {points(bar.delta)}
             </text>
             <title>
-              {`${FAMILIES[pivot].label} and ${bar.label}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
+              {`${pairName(pivot, bar)}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
             </title>
           </g>
         );
@@ -1137,7 +1376,7 @@ function ArrowChart({ geometry, width, pivot }) {
  * all five in all six bands would be thirty repetitions of one axis.
  */
 function TrackChart({ geometry, width, pivot }) {
-  const { height, x, bars } = geometry;
+  const { height, x, left, bars } = geometry;
   const ticks = AXIS_TICKS;
   const id = useId();
 
@@ -1148,7 +1387,7 @@ function TrackChart({ geometry, width, pivot }) {
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
-      aria-label={`The path ${FAMILIES[pivot].label}'s agreement with each family took through the terms, ${bars
+      aria-label={`The path ${subjectOf(pivot)} took through the terms, ${bars
         .map((bar) => `${bar.label} ${walk(bar)}`)
         .join("; ")}`}
     >
@@ -1216,7 +1455,7 @@ function TrackChart({ geometry, width, pivot }) {
                   strokeWidth={1.3}
                 >
                   <title>
-                    {`${FAMILIES[pivot].label} and ${bar.label}, ${point.term.short}: ${pct(point.value)}`}
+                    {`${pairName(pivot, bar)}, ${point.term.short}: ${pct(point.value)}`}
                   </title>
                 </circle>
               );
@@ -1224,7 +1463,7 @@ function TrackChart({ geometry, width, pivot }) {
             {[drawn[0], drawn[drawn.length - 1]].map((point, k) => {
               // Left of the point, unless that would run the label into the
               // family names down the left margin.
-              const flip = point.x - 8 < ARROW_BOX.left + 12;
+              const flip = point.x - 8 < left + 12;
               return (
                 <text
                   key={`${point.i}-${k}`}
@@ -1247,11 +1486,250 @@ function TrackChart({ geometry, width, pivot }) {
               {points(bar.delta)}
             </text>
             <title>
-              {`${FAMILIES[pivot].label} and ${bar.label}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
+              {`${pairName(pivot, bar)}: ${walk(bar)} (${points(bar.delta)} points, ${bar.fromTerm.short} to ${bar.toTerm.short})`}
             </title>
           </g>
         );
       })}
+    </svg>
+  );
+}
+
+/**
+ * All 21 pairs as a triangle, seating order on both axes.
+ *
+ * The Shift form ranks the pairs, which is what makes its split legible and
+ * what costs it the chamber: a ranked list cannot say that the pairs which
+ * fell are the ones touching the two families on the right. This form spends
+ * its layout on exactly that. Columns are the six families that can be the
+ * left half of a pair and rows the six that can be the right, so each pair
+ * appears once, the diagonal stays empty, and where a cell sits *is* which two
+ * families it joins. The red then arrives as a block along the bottom two rows
+ * rather than as a run of rows in a list.
+ *
+ * Inside a cell the Track form's own grammar, shrunk: value across, time down,
+ * oldest at the top, an arrowhead on the most recent term. At this size the
+ * path is texture rather than a thing to read values off — the tint behind it
+ * carries the size of the move, and the tooltip carries the figures. That is
+ * the trade the form makes, and why Shift stays the default.
+ *
+ * The cells share the panel's fixed 0-100 axis rather than fitting each cell
+ * to its own pair. Twenty-one little plots on twenty-one different scales
+ * would put two pairs 60 points apart at the same place in their boxes.
+ */
+function MatrixChart({ geometry, width }) {
+  const { height, cols, rowFamilies, cellW, cellH, cells } = geometry;
+  const id = useId();
+
+  return (
+    <svg
+      className="partners-chart"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-label={`All 21 pairs of political families in seating order, ${cells
+        .map((cell) => `${cell.label} ${points(cell.delta)} points`)
+        .join(", ")}`}
+    >
+      <ArrowHeads id={id} />
+
+      {cols.map((family, i) => (
+        <text
+          key={family}
+          className="partners-matrix-head"
+          x={MATRIX_BOX.left + i * cellW + cellW / 2}
+          y={MATRIX_BOX.top - 7}
+          textAnchor="middle"
+          fill={FAMILIES[family].color}
+        >
+          {FAMILIES[family].short}
+        </text>
+      ))}
+      {rowFamilies.map((family, j) => (
+        <text
+          key={family}
+          className="partners-matrix-head"
+          x={MATRIX_BOX.left - 6}
+          y={MATRIX_BOX.top + j * cellH + cellH / 2 + 3}
+          textAnchor="end"
+          fill={FAMILIES[family].color}
+        >
+          {FAMILIES[family].short}
+        </text>
+      ))}
+
+      {cells.map((cell) => {
+        const color = cell.delta >= 0 ? CLOSER : APART;
+        const runs = segments(cell.points);
+        const drawn = cell.points.filter(Boolean);
+        const headed = runs.length > 0 && runs[runs.length - 1].length > 1;
+        return (
+          <g key={cell.family}>
+            {/* The size of the move, as a wash. It is what makes the two
+                bottom rows read as one block before a single cell is read. */}
+            <rect
+              x={cell.x0 + 1}
+              y={cell.y0 + 1}
+              width={cell.w - 2}
+              height={cell.h - 2}
+              fill={color}
+              opacity={0.04 + Math.min(0.22, Math.abs(cell.delta) * 0.8)}
+            />
+            {runs.map((run, i) => (
+              <path
+                key={i}
+                d={toPath(run)}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.4}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                markerEnd={
+                  i === runs.length - 1 && headed
+                    ? `url(#${id}-head-${color.slice(1)})`
+                    : undefined
+                }
+              />
+            ))}
+            {/* A point per term the pair reached, not just the first. Under a
+                country scope the terms a pair reaches are often not a run —
+                Cyprus has a Left and an EPP in some terms and neither in
+                others — and `segments` correctly refuses to draw a line across
+                the hole. Marking only the start then left three cells in that
+                view showing a change of 17 to 29 points with a single dot and
+                nothing else in them. The first is filled and the last carries
+                the arrowhead, exactly as the full-size Track form does. */}
+            {drawn.map((point, k) => {
+              const isLast = k === drawn.length - 1;
+              if (isLast && headed) return null;
+              return (
+                <circle
+                  key={point.i}
+                  cx={point.x}
+                  cy={point.y}
+                  r={k === 0 ? 2.2 : 1.6}
+                  fill={k === 0 ? color : "#ffffff"}
+                  stroke={color}
+                  strokeWidth={1}
+                />
+              );
+            })}
+            <text
+              className="partners-matrix-delta"
+              x={cell.x0 + cell.w - 4}
+              y={cell.y0 + cell.h - 4}
+              textAnchor="end"
+              fill={color}
+            >
+              {points(cell.delta)}
+            </text>
+            <title>
+              {`${cell.label}: ${walk(cell)} (${points(cell.delta)} points)`}
+            </title>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/**
+ * The 21 pairs with no axis at all: converged above the seating line, separated
+ * below.
+ *
+ * Every other form here can be read for a value. This one cannot, on purpose.
+ * It answers one question — did the chamber spread along its axis, or split in
+ * two? — and answers it in a shape: the arcs that stay above the line are the
+ * ones joining families seated left of the split, the ones below all cross it,
+ * and the single fattest arc above sits on the right, joining the two families
+ * that left. A reader who wants figures has the other two forms and the
+ * tooltips; what this has instead is that it needs no reading at all.
+ *
+ * Arc height comes from the distance between the two seats rather than from
+ * the size of the move, which is the only thing that keeps 21 arcs off one
+ * another — neighbours hug the line, pairs across the chamber swing wide. The
+ * move is in the weight of the stroke instead.
+ */
+function ArcChart({ geometry, width }) {
+  const { height, mid, seat, arcs } = geometry;
+
+  return (
+    <svg
+      className="partners-chart"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-label={`The 21 pairs of political families, ${
+        arcs.filter((arc) => arc.rising).length
+      } of which converged and ${
+        arcs.filter((arc) => !arc.rising).length
+      } of which separated, arranged by where the families sit`}
+    >
+      <line
+        className="partners-arrow-rail"
+        x1={ARC_PAD - 12}
+        x2={width - ARC_PAD + 12}
+        y1={mid}
+        y2={mid}
+      />
+
+      {arcs.map((arc) => (
+        <path
+          key={arc.family}
+          d={arc.d}
+          fill="none"
+          stroke={arc.rising ? CLOSER : APART}
+          strokeWidth={arc.weight}
+          strokeLinecap="round"
+          opacity={arc.opacity}
+        >
+          <title>{`${arc.label}: ${walk(arc)} (${points(arc.delta)} points)`}</title>
+        </path>
+      ))}
+
+      {FAMILY_ORDER.map((family, i) => {
+        // The plate is cut to the name it carries. Fixed at one width it was
+        // right for "EPP" and half the width of "Far right", and the arcs run
+        // straight through this row — a name with an arc across it is the one
+        // thing on this form that cannot be read at all.
+        const plate = FAMILIES[family].short.length * 5.4 + 8;
+        return (
+        <g key={family}>
+          <rect
+            className="partners-arc-plate"
+            x={seat(i) - plate / 2}
+            y={mid + 5}
+            width={plate}
+            height={12}
+          />
+          <circle
+            cx={seat(i)}
+            cy={mid}
+            r={3.4}
+            fill={FAMILIES[family].color}
+            stroke="#ffffff"
+            strokeWidth={1.4}
+          />
+          <text
+            className="partners-arc-seat"
+            x={seat(i)}
+            y={mid + 14}
+            textAnchor="middle"
+          >
+            {FAMILIES[family].short}
+          </text>
+        </g>
+        );
+      })}
+
+      <text className="partners-arc-side" x={0} y={10} fill={CLOSER}>
+        closer
+      </text>
+      <text className="partners-arc-side" x={0} y={height - 3} fill={APART}>
+        further apart
+      </text>
     </svg>
   );
 }
