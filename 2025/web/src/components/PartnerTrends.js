@@ -192,9 +192,26 @@ const formsFor = (pivot) => (pivot === ALL_PAIRS ? ALL_FORMS : FORMS);
  */
 const PAIR_LABEL = (width) => ratio(width, 0.3, 96, 132);
 
-/** The triangle: label gutters, and the shape of one cell. */
+/** The triangle's label gutters. */
 const MATRIX_BOX = { top: 30, right: 2, bottom: 16, left: 74 };
-const MATRIX_CELL_H = 52;
+
+/**
+ * The shape the whole triangle is aimed at, and how short a cell may get.
+ *
+ * Height is the only dimension this form controls — the width is whatever the
+ * sidebar is — so the aspect is hit by choosing the cell height, and the cells
+ * come out wider than they are tall. That suits the form rather than fighting
+ * it: inside a cell the value runs across and time runs down, and only the
+ * across carries a quantity. The vertical needs to be enough to see a direction
+ * and a reversal in, not enough to measure.
+ *
+ * Clamped at both ends. On a narrow sidebar the target would squeeze cells past
+ * the point where five terms are distinguishable; on a wide one it would leave
+ * them taller than they are wide, which is the square this replaced.
+ */
+const MATRIX_ASPECT = 3 / 2;
+const MATRIX_CELL_MIN = 30;
+const MATRIX_CELL_MAX = 58;
 
 /**
  * The arcs' baseline, and how far the deepest arc reaches from it.
@@ -638,8 +655,19 @@ export default function PartnerTrends({
         const cols = FAMILY_ORDER.slice(0, -1);
         const rowFamilies = FAMILY_ORDER.slice(1);
         const cellW = (width - MATRIX_BOX.left - MATRIX_BOX.right) / cols.length;
-        const height =
-          MATRIX_BOX.top + rowFamilies.length * MATRIX_CELL_H + MATRIX_BOX.bottom;
+        // Work back from the shape: the height the whole drawing should have,
+        // less its two gutters, shared over the six rows.
+        const cellH = Math.round(
+          Math.max(
+            MATRIX_CELL_MIN,
+            Math.min(
+              MATRIX_CELL_MAX,
+              (width / MATRIX_ASPECT - MATRIX_BOX.top - MATRIX_BOX.bottom) /
+                rowFamilies.length
+            )
+          )
+        );
+        const height = MATRIX_BOX.top + rowFamilies.length * cellH + MATRIX_BOX.bottom;
         const byKey = new Map(moved.map((bar) => [bar.family, bar]));
         const cells = [];
         rowFamilies.forEach((rowFamily, rowIndex) => {
@@ -648,18 +676,18 @@ export default function PartnerTrends({
             const bar = byKey.get(pairKey(colFamily, rowFamily));
             if (!bar) return;
             const x0 = MATRIX_BOX.left + colIndex * cellW;
-            const y0 = MATRIX_BOX.top + rowIndex * MATRIX_CELL_H;
+            const y0 = MATRIX_BOX.top + rowIndex * cellH;
             // Inside a cell the value runs across and time runs down, which is
             // the Track form's own grammar at thumbnail size.
             const cx = (v) => x0 + 5 + (cellW - 12) * v;
             const cy = (k) =>
-              y0 + 8 + (k * (MATRIX_CELL_H - 20)) / Math.max(1, rows.length - 1);
+              y0 + 7 + (k * (cellH - 21)) / Math.max(1, rows.length - 1);
             return cells.push({
               ...bar,
               x0,
               y0,
               w: cellW,
-              h: MATRIX_CELL_H,
+              h: cellH,
               points: bar.values.map((value, k) =>
                 finite(value) ? { x: cx(value), y: cy(k), value, i: k, term: rows[k] } : null
               ),
@@ -673,7 +701,7 @@ export default function PartnerTrends({
           cols,
           rowFamilies,
           cellW,
-          cellH: MATRIX_CELL_H,
+          cellH,
           cells,
         };
       }

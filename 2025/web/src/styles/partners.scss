@@ -373,13 +373,19 @@
 // for the same reason twice over here: the cells are tinted, and the track runs
 // under the number.
 .partners-matrix-value {
-  font-size: var(--sb-fs-micro);
+  // A tier under the micro type the rest of the sidebar bottoms out at, and the
+  // only place that goes below it. These two are the quietest marks on the
+  // chart — a reference for the track beside them, not something to read down a
+  // column — and at 9px with the corner figure they crowded a cell that is now
+  // deliberately short. The halo is thinner for the same reason: at 2.5px it
+  // was a white slab behind four digits rather than an edge around them.
+  font-size: 8px;
   fill: var(--sb-faint);
   font-variant-numeric: tabular-nums;
 
   paint-order: stroke;
   stroke: #ffffff;
-  stroke-width: 2.5px;
+  stroke-width: 1.6px;
   stroke-linejoin: round;
 }
 
