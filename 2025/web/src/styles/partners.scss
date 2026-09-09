@@ -380,7 +380,13 @@
   // deliberately short. The halo is thinner for the same reason: at 2.5px it
   // was a white slab behind four digits rather than an edge around them.
   font-size: 8px;
-  fill: var(--sb-faint);
+  // The label tier, not the tick tier. These went to 8px and to a thin halo at
+  // once, and keeping the faintest ink with them took a third cut nobody asked
+  // for: #a6adb7 is sized for axis ticks on white paper, and these sit on a
+  // tinted cell with a line running under them. Smaller wants *more* contrast,
+  // not less. The corner figure stays the loud one — it is bold and carries the
+  // direction colour, so the two do not compete at the same weight.
+  fill: var(--sb-ink-soft);
   font-variant-numeric: tabular-nums;
 
   paint-order: stroke;
