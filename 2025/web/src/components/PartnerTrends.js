@@ -12,6 +12,8 @@ import {
   profileFor,
 } from "../lib/families.js";
 import SegmentedToggle from "./SegmentedToggle";
+import { snapshotName, snapshotSVG } from "../lib/chartSnapshot.js";
+import { downloadSVG } from "../lib/networkExport.js";
 import "../styles/profile.scss";
 import "../styles/partners.scss";
 
@@ -191,7 +193,7 @@ const formsFor = (pivot) => (pivot === ALL_PAIRS ? ALL_FORMS : FORMS);
 const PAIR_LABEL = (width) => ratio(width, 0.3, 96, 132);
 
 /** The triangle: label gutters, and the shape of one cell. */
-const MATRIX_BOX = { top: 22, right: 2, bottom: 16, left: 52 };
+const MATRIX_BOX = { top: 30, right: 2, bottom: 16, left: 74 };
 const MATRIX_CELL_H = 52;
 
 /**
@@ -384,6 +386,33 @@ function TermMark({ index, last, on }) {
   );
 }
 
+/**
+ * The mark on the panel's own save button.
+ *
+ * Drawn at the chevron's size and weight, in the same 24-unit box with the same
+ * round caps, because the two sit side by side in the heading row and a heavier
+ * or larger glyph beside the chevron reads as a different kind of control.
+ */
+function SaveIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3v12" />
+      <path d="M7 11l5 5 5-5" />
+      <path d="M4 20h16" />
+    </svg>
+  );
+}
+
 /** The chevron every collapsing section in the sidebar wears. */
 function Chevron({ collapsed }) {
   return (
@@ -447,6 +476,7 @@ export default function PartnerTrends({
   const [closed, setClosed] = useState(false);
   const [width, setWidth] = useState(ASSUMED_WIDTH);
   const panelRef = useRef(null);
+  const chartRef = useRef(null);
   const titleId = useId();
 
   const scopeKey = `${selectedCountry || ""}|${selectedSubject || ""}`;
@@ -819,6 +849,34 @@ export default function PartnerTrends({
     })).filter((entry) => entry.groups.length > 1);
   }, [rows]);
 
+  /**
+   * Save whichever chart is on screen, as it looks, to a file.
+   *
+   * Deliberately not routed through the sheet exporters: those redraw a panel
+   * from its data and have to be written once per form, which is how the
+   * partners sheet came to draw Lines no matter which of the seven forms was
+   * showing. This copies the node, so it is right for every form including the
+   * ones added after it.
+   *
+   * The scope goes in the filename rather than on the drawing. A caption
+   * belongs on a printed sheet; this is the chart itself, to be placed in
+   * something that will caption it.
+   */
+  const saveChart = () => {
+    const node = chartRef.current && chartRef.current.querySelector("svg");
+    if (!node) return;
+    const subject = pivot === ALL_PAIRS ? "all pairs" : FAMILIES[pivot].label;
+    const shape = (forms.find((entry) => entry.id === form) || {}).text || form;
+    try {
+      downloadSVG(
+        snapshotSVG(node, { title: `${subject}, ${shape}` }),
+        snapshotName("partners", subject, shape, selectedCountry, selectedSubject)
+      );
+    } catch (error) {
+      console.warn("The chart could not be saved:", error);
+    }
+  };
+
   const toggleTerm = (value) => {
     setChosen((current) => {
       if (current.includes(value)) {
@@ -840,6 +898,23 @@ export default function PartnerTrends({
             : `${opening(FAMILIES[pivot].possessive)} partners`}
         </h3>
         <div className="sb-panel-controls">
+          {/* Saves this chart alone, in whatever form it is showing — the
+              bundle behind the sidebar's own export button is a set of printed
+              sheets, and a sheet is not what you want when the chart is going
+              into something that will caption it. Hidden while the panel is
+              folded or has nothing drawn, since there would be no chart to
+              take. */}
+          {!closed && status === "ready" && geometry && (
+            <button
+              type="button"
+              className="sb-collapse partners-save"
+              onClick={saveChart}
+              title="Save this chart as an SVG"
+              aria-label="Save this chart as an SVG"
+            >
+              <SaveIcon />
+            </button>
+          )}
           <button
             type="button"
             className="sb-collapse"
@@ -903,6 +978,7 @@ export default function PartnerTrends({
           </div>
         </div>
 
+        <div ref={chartRef}>
         {status === "loading" && (
           <p className="sb-status partners-status">Reading twenty years of votes…</p>
         )}
@@ -950,6 +1026,7 @@ export default function PartnerTrends({
             This view has no group pairs to compare — it holds one family.
           </p>
         )}
+        </div>
 
         {/* Which terms are drawn, under the chart rather than over it: on the
             Shift form this row is also the chart's key, and a key belongs
@@ -1534,30 +1611,63 @@ function MatrixChart({ geometry, width }) {
     >
       <ArrowHeads id={id} />
 
-      {cols.map((family, i) => (
-        <text
-          key={family}
-          className="partners-matrix-head"
-          x={MATRIX_BOX.left + i * cellW + cellW / 2}
-          y={MATRIX_BOX.top - 7}
-          textAnchor="middle"
-          fill={FAMILIES[family].color}
-        >
-          {FAMILIES[family].short}
-        </text>
-      ))}
-      {rowFamilies.map((family, j) => (
-        <text
-          key={family}
-          className="partners-matrix-head"
-          x={MATRIX_BOX.left - 6}
-          y={MATRIX_BOX.top + j * cellH + cellH / 2 + 3}
-          textAnchor="end"
-          fill={FAMILIES[family].color}
-        >
-          {FAMILIES[family].short}
-        </text>
-      ))}
+      {/* A family is named in ink and marked with its own coloured square —
+          the sidebar's rule everywhere a list or an axis names political
+          groups, from the agreement heatmap's row labels to this panel's own
+          chips and legend. Colouring the words instead made these two axes the
+          one place in the sidebar where a group's colour was carried by its
+          name, and it collided with the cells besides, where colour has been
+          given over to direction. The column swatch sits above its name rather
+          than beside it: on a narrow sidebar the cells are about 43px and
+          "Liberal" with a swatch beside it does not fit between them. */}
+      {cols.map((family, i) => {
+        const cx = MATRIX_BOX.left + i * cellW + cellW / 2;
+        return (
+          <g key={family}>
+            <rect
+              className="partners-matrix-swatch"
+              x={cx - 3.5}
+              y={MATRIX_BOX.top - 22}
+              width={7}
+              height={7}
+              rx={1.5}
+              fill={FAMILIES[family].color}
+            />
+            <text
+              className="partners-matrix-head"
+              x={cx}
+              y={MATRIX_BOX.top - 6}
+              textAnchor="middle"
+            >
+              {FAMILIES[family].short}
+            </text>
+          </g>
+        );
+      })}
+      {rowFamilies.map((family, j) => {
+        const cy = MATRIX_BOX.top + j * cellH + cellH / 2;
+        return (
+          <g key={family}>
+            <text
+              className="partners-matrix-head"
+              x={MATRIX_BOX.left - 15}
+              y={cy + 3}
+              textAnchor="end"
+            >
+              {FAMILIES[family].short}
+            </text>
+            <rect
+              className="partners-matrix-swatch"
+              x={MATRIX_BOX.left - 11}
+              y={cy - 3.5}
+              width={7}
+              height={7}
+              rx={1.5}
+              fill={FAMILIES[family].color}
+            />
+          </g>
+        );
+      })}
 
       {cells.map((cell) => {
         const color = cell.delta >= 0 ? CLOSER : APART;

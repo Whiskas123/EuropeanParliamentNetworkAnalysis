@@ -356,12 +356,23 @@
 // family chips wear. Nothing here invents a convention the panel did not
 // already have.
 
-// Row and column names on the triangle. The family's own colour, because here
-// a name is the only thing saying which family a row or column is — inside the
-// cells colour has been given over to direction.
+// Row and column names on the triangle, in ink, each with its own coloured
+// square beside it. That pairing is the sidebar's rule wherever something names
+// a political group — the agreement heatmap's row labels, this panel's chips,
+// its legend — and it matters more here than usual: inside the cells colour has
+// been given over to direction, so a green word next to a green cell would be
+// two different meanings in one hue.
 .partners-matrix-head {
   font-size: var(--sb-fs-micro);
   font-weight: 600;
+  fill: var(--sb-ink);
+}
+
+.partners-matrix-swatch {
+  // The same 8px square the chips and the legend wear, a pixel down to sit on
+  // a 9px cap height without overhanging it.
+  stroke: rgba(0, 0, 0, 0.2);
+  stroke-width: 1;
 }
 
 // The change, in the corner of its cell. Sits over a tinted wash rather than
@@ -396,4 +407,16 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+// The panel's own save button, beside the chevron it borrows its shape from.
+// Quieter than the chevron until reached for: the chevron is how you get the
+// panel back, this is an occasional errand.
+.partners-save {
+  opacity: 0.55;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
 }
