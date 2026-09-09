@@ -1725,6 +1725,38 @@ function MatrixChart({ geometry, width }) {
                 />
               );
             })}
+            {/* Where the pair started and where it stands now, against the
+                points those are. The delta in the corner says how far it
+                moved and never what from — two pairs can share +12 and sit
+                thirty points apart, which on a fixed axis is visible in the
+                track's position but not readable off it. Muted rather than in
+                the row's red or green: these are levels, and colour on this
+                form has been given to direction.
+
+                Each sits on whichever side of its point has room, the rule
+                the full-size Track form uses for its term names, and carries
+                the halo that form's labels carry — the cells are tinted, and
+                a number laid straight on the wash loses its edges. */}
+            {[drawn[0], drawn[drawn.length - 1]].map((point, k) => {
+              if (!point || (k === 1 && drawn.length < 2)) return null;
+              // Below about this, a four-character number beside its point
+              // reaches into the next cell. The figures are in the tooltip
+              // either way, and a matrix that runs into itself is worse than
+              // one a reader has to hover.
+              if (cell.w < 46) return null;
+              const room = point.x - cell.x0 > cell.w * 0.5;
+              return (
+                <text
+                  key={`v${point.i}`}
+                  className="partners-matrix-value"
+                  x={room ? point.x - 5 : point.x + 5}
+                  y={point.y + 3}
+                  textAnchor={room ? "end" : "start"}
+                >
+                  {pct(point.value).replace("%", "")}
+                </text>
+              );
+            })}
             <text
               className="partners-matrix-delta"
               x={cell.x0 + cell.w - 4}
